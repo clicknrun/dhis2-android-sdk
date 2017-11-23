@@ -72,7 +72,8 @@ public abstract class DataSet extends BaseNameableObject {
     public static final Field<DataSet, String> displayDescription = Field.create(DISPLAY_DESCRIPTION);
     public static final Field<DataSet, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<DataSet, ValueType> periodType = Field.create(PERIOD_TYPE);
+    // TODO: Change String to PeriodType
+    public static final Field<DataSet, String> periodType = Field.create(PERIOD_TYPE);
     public static final Field<DataSet, Boolean> categoryCombo = Field.create(CATEGORY_COMBO);
     public static final Field<DataSet, String> mobile = Field.create(MOBILE);
     public static final Field<DataSet, String> version = Field.create(VERSION);
