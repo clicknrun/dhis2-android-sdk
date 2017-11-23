@@ -30,11 +30,8 @@ package org.hisp.dhis.android.core.dataset;
 
 import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-
-import java.util.Date;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 import static org.hisp.dhis.android.core.utils.Utils.isNull;
@@ -121,25 +118,9 @@ public class DataSetStoreImpl implements DataSetStore {
     }
 
     @Override
-    public long insert(@NonNull String uid, @Nullable String code, @NonNull String name,
-                       @NonNull String displayName, @NonNull Date created, @NonNull Date lastUpdated,
-                       @Nullable String shortName, @Nullable String displayShortName,
-                       @Nullable String description, @Nullable String displayDescription,
-
-                       @NonNull String periodType, @NonNull String categoryCombo,
-                       @Nullable Boolean mobile, @Nullable Integer version, @Nullable Integer expiryDays,
-                       @Nullable Integer timelyDays, @Nullable Boolean notifyCompletingUser,
-                       @Nullable Integer openFuturePeriods, @Nullable Boolean fieldCombinationRequired,
-                       @Nullable Boolean validCompleteOnly, @Nullable Boolean noValueRequiresComment,
-                       @Nullable Boolean skipOffline, @Nullable Boolean dataElementDecoration,
-                       @Nullable Boolean renderAsTabs, @Nullable Boolean renderHorizontally) {
-        isNull(uid);
-        bindArguments(insertStatement, uid, code, name, displayName, created, lastUpdated,
-                shortName, displayShortName, description, displayDescription,
-                periodType, categoryCombo, mobile, version, expiryDays, timelyDays,
-                notifyCompletingUser, openFuturePeriods, fieldCombinationRequired,
-                validCompleteOnly, noValueRequiresComment, skipOffline,
-                dataElementDecoration, renderAsTabs, renderHorizontally);
+    public long insert(@NonNull DataSetModel dataSetModel) {
+        isNull(dataSetModel);
+        bindArguments(insertStatement, dataSetModel);
 
         // execute and clear bindings
         Long insert = databaseAdapter.executeInsert(DataSetModel.TABLE, insertStatement);
@@ -160,27 +141,10 @@ public class DataSetStoreImpl implements DataSetStore {
     }
 
     @Override
-    public int update(@NonNull String uid, @Nullable String code, @NonNull String name,
-                      @NonNull String displayName, @NonNull Date created, @NonNull Date lastUpdated,
-                      @Nullable String shortName, @Nullable String displayShortName,
-                      @Nullable String description, @Nullable String displayDescription,
-
-                      @NonNull String periodType, @NonNull String categoryCombo,
-                      @Nullable Boolean mobile, @Nullable Integer version, @Nullable Integer expiryDays,
-                      @Nullable Integer timelyDays, @Nullable Boolean notifyCompletingUser,
-                      @Nullable Integer openFuturePeriods, @Nullable Boolean fieldCombinationRequired,
-                      @Nullable Boolean validCompleteOnly, @Nullable Boolean noValueRequiresComment,
-                      @Nullable Boolean skipOffline, @Nullable Boolean dataElementDecoration,
-                      @Nullable Boolean renderAsTabs, @Nullable Boolean renderHorizontally,
-                      @NonNull String whereDataSetUid) {
-        isNull(uid);
+    public int update(@NonNull DataSetModel dataSetModel, @NonNull String whereDataSetUid) {
+        isNull(dataSetModel);
         isNull(whereDataSetUid);
-        bindArguments(updateStatement, uid, code, name, displayName, created, lastUpdated,
-                shortName, displayShortName, description, displayDescription,
-                periodType, categoryCombo, mobile, version, expiryDays, timelyDays,
-                notifyCompletingUser, openFuturePeriods, fieldCombinationRequired,
-                validCompleteOnly, noValueRequiresComment, skipOffline,
-                dataElementDecoration, renderAsTabs, renderHorizontally);
+        bindArguments(updateStatement, dataSetModel);
 
         // bind the where argument
         sqLiteBind(updateStatement, 26, whereDataSetUid);
@@ -192,44 +156,33 @@ public class DataSetStoreImpl implements DataSetStore {
     }
 
     private void bindArguments(@NonNull SQLiteStatement sqLiteStatement,
-                               @NonNull String uid, @Nullable String code, @NonNull String name,
-                               @NonNull String displayName, @NonNull Date created, @NonNull Date lastUpdated,
-                               @Nullable String shortName, @Nullable String displayShortName,
-                               @Nullable String description, @Nullable String displayDescription,
+                               @NonNull DataSetModel dsm) {
 
-                               @NonNull String periodType, @NonNull String categoryCombo,
-                               @Nullable Boolean mobile, @Nullable Integer version, @Nullable Integer expiryDays,
-                               @Nullable Integer timelyDays, @Nullable Boolean notifyCompletingUser,
-                               @Nullable Integer openFuturePeriods, @Nullable Boolean fieldCombinationRequired,
-                               @Nullable Boolean validCompleteOnly, @Nullable Boolean noValueRequiresComment,
-                               @Nullable Boolean skipOffline, @Nullable Boolean dataElementDecoration,
-                               @Nullable Boolean renderAsTabs, @Nullable Boolean renderHorizontally) {
+        sqLiteBind(sqLiteStatement, 1, dsm.uid());
+        sqLiteBind(sqLiteStatement, 2, dsm.code());
+        sqLiteBind(sqLiteStatement, 3, dsm.name());
+        sqLiteBind(sqLiteStatement, 4, dsm.displayName());
+        sqLiteBind(sqLiteStatement, 5, dsm.created());
+        sqLiteBind(sqLiteStatement, 6, dsm.lastUpdated());
+        sqLiteBind(sqLiteStatement, 7, dsm.shortName());
+        sqLiteBind(sqLiteStatement, 8, dsm.displayShortName());
+        sqLiteBind(sqLiteStatement, 9, dsm.description());
+        sqLiteBind(sqLiteStatement, 10, dsm.displayDescription());
 
-        sqLiteBind(sqLiteStatement, 1, uid);
-        sqLiteBind(sqLiteStatement, 2, code);
-        sqLiteBind(sqLiteStatement, 3, name);
-        sqLiteBind(sqLiteStatement, 4, displayName);
-        sqLiteBind(sqLiteStatement, 5, created);
-        sqLiteBind(sqLiteStatement, 6, lastUpdated);
-        sqLiteBind(sqLiteStatement, 7, shortName);
-        sqLiteBind(sqLiteStatement, 8, displayShortName);
-        sqLiteBind(sqLiteStatement, 9, description);
-        sqLiteBind(sqLiteStatement, 10, displayDescription);
-
-        sqLiteBind(sqLiteStatement, 11, periodType);
-        sqLiteBind(sqLiteStatement, 12, categoryCombo);
-        sqLiteBind(sqLiteStatement, 13, mobile);
-        sqLiteBind(sqLiteStatement, 14, version);
-        sqLiteBind(sqLiteStatement, 15, expiryDays);
-        sqLiteBind(sqLiteStatement, 16, timelyDays);
-        sqLiteBind(sqLiteStatement, 17, notifyCompletingUser);
-        sqLiteBind(sqLiteStatement, 18, openFuturePeriods);
-        sqLiteBind(sqLiteStatement, 19, fieldCombinationRequired);
-        sqLiteBind(sqLiteStatement, 20, validCompleteOnly);
-        sqLiteBind(sqLiteStatement, 21, noValueRequiresComment);
-        sqLiteBind(sqLiteStatement, 22, skipOffline);
-        sqLiteBind(sqLiteStatement, 23, dataElementDecoration);
-        sqLiteBind(sqLiteStatement, 24, renderAsTabs);
-        sqLiteBind(sqLiteStatement, 25, renderHorizontally);
+        sqLiteBind(sqLiteStatement, 11, dsm.periodType());
+        sqLiteBind(sqLiteStatement, 12, dsm.categoryCombo());
+        sqLiteBind(sqLiteStatement, 13, dsm.mobile());
+        sqLiteBind(sqLiteStatement, 14, dsm.version());
+        sqLiteBind(sqLiteStatement, 15, dsm.expiryDays());
+        sqLiteBind(sqLiteStatement, 16, dsm.timelyDays());
+        sqLiteBind(sqLiteStatement, 17, dsm.notifyCompletingUser());
+        sqLiteBind(sqLiteStatement, 18, dsm.openFuturePeriods());
+        sqLiteBind(sqLiteStatement, 19, dsm.fieldCombinationRequired());
+        sqLiteBind(sqLiteStatement, 20, dsm.validCompleteOnly());
+        sqLiteBind(sqLiteStatement, 21, dsm.noValueRequiresComment());
+        sqLiteBind(sqLiteStatement, 22, dsm.skipOffline());
+        sqLiteBind(sqLiteStatement, 23, dsm.dataElementDecoration());
+        sqLiteBind(sqLiteStatement, 24, dsm.renderAsTabs());
+        sqLiteBind(sqLiteStatement, 25, dsm.renderHorizontally());
     }
 }

@@ -29,40 +29,12 @@
 package org.hisp.dhis.android.core.dataset;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-import java.util.Date;
 
 public interface DataSetStore {
 
-    long insert(
-            @NonNull String uid, @Nullable String code, @NonNull String name,
-            @NonNull String displayName, @NonNull Date created, @NonNull Date lastUpdated,
-            @Nullable String shortName, @Nullable String displayShortName,
-            @Nullable String description, @Nullable String displayDescription,
-            @NonNull String periodType, @NonNull String categoryCombo,
-            @Nullable Boolean mobile, @Nullable Integer version, @Nullable Integer expiryDays,
-            @Nullable Integer timelyDays, @Nullable Boolean notifyCompletingUser,
-            @Nullable Integer openFuturePeriods, @Nullable Boolean fieldCombinationRequired,
-            @Nullable Boolean validCompleteOnly, @Nullable Boolean noValueRequiresComment,
-            @Nullable Boolean skipOffline, @Nullable Boolean dataElementDecoration,
-            @Nullable Boolean renderAsTabs, @Nullable Boolean renderHorizontally
-    );
+    long insert(@NonNull DataSetModel dataSetModel);
 
     int delete(@NonNull String uid);
 
-    int update(
-            @NonNull String uid, @Nullable String code, @NonNull String name,
-            @NonNull String displayName, @NonNull Date created, @NonNull Date lastUpdated,
-            @Nullable String shortName, @Nullable String displayShortName,
-            @Nullable String description, @Nullable String displayDescription,
-            @NonNull String periodType, @NonNull String categoryCombo,
-            @Nullable Boolean mobile, @Nullable Integer version, @Nullable Integer expiryDays,
-            @Nullable Integer timelyDays, @Nullable Boolean notifyCompletingUser,
-            @Nullable Integer openFuturePeriods, @Nullable Boolean fieldCombinationRequired,
-            @Nullable Boolean validCompleteOnly, @Nullable Boolean noValueRequiresComment,
-            @Nullable Boolean skipOffline, @Nullable Boolean dataElementDecoration,
-            @Nullable Boolean renderAsTabs, @Nullable Boolean renderHorizontally,
-            @NonNull String whereDataSetUid
-    );
+    int update(@NonNull DataSetModel dataSetModel, @NonNull String whereDataSetUid);
 }
