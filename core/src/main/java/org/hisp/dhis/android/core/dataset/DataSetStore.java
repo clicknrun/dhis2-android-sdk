@@ -49,7 +49,7 @@ public interface DataSetStore {
             @Nullable Boolean renderAsTabs, @Nullable Boolean renderHorizontally
     );
 
-    int delete(String uid);
+    int delete(@NonNull String uid);
 
     int update(
             @NonNull String uid, @Nullable String code, @NonNull String name,
