@@ -74,20 +74,49 @@ public abstract class DataSet extends BaseNameableObject {
 
     // TODO: Change String to PeriodType
     public static final Field<DataSet, String> periodType = Field.create(PERIOD_TYPE);
-    public static final Field<DataSet, Boolean> categoryCombo = Field.create(CATEGORY_COMBO);
-    public static final Field<DataSet, String> mobile = Field.create(MOBILE);
-    public static final Field<DataSet, String> version = Field.create(VERSION);
-    public static final Field<DataSet, String> expiryDays = Field.create(EXPIRY_DAYS);
-    public static final Field<DataSet, String> timelyDays = Field.create(TIMELY_DAYS);
-    public static final Field<DataSet, String> notifyCompletingUser = Field.create(NOTIFY_COMPLETING_USER);
-    public static final Field<DataSet, String> openFuturePeriods = Field.create(OPEN_FUTURE_PERIODS);
-    public static final NestedField<DataSet, OptionSet> fieldCombinationRequired = NestedField.create(FIELD_COMBINATION_REQUIRED);
-    public static final NestedField<DataSet, OptionSet> validCompleteOnly = NestedField.create(VALID_COMPLETE_ONLY);
-    public static final NestedField<DataSet, OptionSet> noValueRequiresComment = NestedField.create(NO_VALUE_REQUIRES_COMMENT);
-    public static final Field<DataSet, String> skipOffline = Field.create(SKIP_OFFLINE);
-    public static final Field<DataSet, String> dataElementDecoration = Field.create(DATA_ELEMENT_DECORATION);
-    public static final NestedField<DataSet, OptionSet> renderAsTabs = NestedField.create(RENDER_AS_TABS);
-    public static final NestedField<DataSet, OptionSet> renderHorizontally = NestedField.create(RENDER_HORIZONTALLY);
+    public static final Field<DataSet, String> categoryCombo = Field.create(CATEGORY_COMBO);
+    public static final Field<DataSet, Boolean> mobile = Field.create(MOBILE);
+    public static final Field<DataSet, Integer> version = Field.create(VERSION);
+    public static final Field<DataSet, Integer> expiryDays = Field.create(EXPIRY_DAYS);
+    public static final Field<DataSet, Integer> timelyDays = Field.create(TIMELY_DAYS);
+    public static final Field<DataSet, Boolean> notifyCompletingUser = Field.create(NOTIFY_COMPLETING_USER);
+    public static final Field<DataSet, Integer> openFuturePeriods = Field.create(OPEN_FUTURE_PERIODS);
+    public static final Field<DataSet, Boolean> fieldCombinationRequired = Field.create(FIELD_COMBINATION_REQUIRED);
+    public static final Field<DataSet, Boolean> validCompleteOnly = Field.create(VALID_COMPLETE_ONLY);
+    public static final Field<DataSet, Boolean> noValueRequiresComment = Field.create(NO_VALUE_REQUIRES_COMMENT);
+    public static final Field<DataSet, Boolean> skipOffline = Field.create(SKIP_OFFLINE);
+    public static final Field<DataSet, Boolean> dataElementDecoration = Field.create(DATA_ELEMENT_DECORATION);
+    public static final Field<DataSet, Boolean> renderAsTabs = Field.create(RENDER_AS_TABS);
+    public static final Field<DataSet, Boolean> renderHorizontally = Field.create(RENDER_HORIZONTALLY);
+
+
+/*
+    @JsonProperty(UID) String uid,
+    @JsonProperty(CODE) String code,
+    @JsonProperty(NAME) String name,
+    @JsonProperty(DISPLAY_NAME) String displayName,
+    @JsonProperty(CREATED) Date created,
+    @JsonProperty(LAST_UPDATED) Date lastUpdated,
+    @JsonProperty(SHORT_NAME) String shortName,
+    @JsonProperty(DISPLAY_SHORT_NAME) String displayShortName,
+    @JsonProperty(DESCRIPTION) String description,
+    @JsonProperty(DISPLAY_DESCRIPTION) String displayDescription,
+    @JsonProperty(PERIOD_TYPE) String periodType,
+    @JsonProperty(CATEGORY_COMBO) String categoryCombo,
+    @JsonProperty(MOBILE) Boolean mobile,
+    @JsonProperty(VERSION) Integer version,
+    @JsonProperty(EXPIRY_DAYS) Integer expiryDays,
+    @JsonProperty(TIMELY_DAYS) Integer timelyDays,
+    @JsonProperty(NOTIFY_COMPLETING_USER) Boolean notifyCompletingUser,
+    @JsonProperty(OPEN_FUTURE_PERIODS) Integer openFuturePeriods,
+    @JsonProperty(FIELD_COMBINATION_REQUIRED) Boolean fieldCombinationRequired,
+    @JsonProperty(VALID_COMPLETE_ONLY) Boolean validCompleteOnly,
+    @JsonProperty(NO_VALUE_REQUIRES_COMMENT) Boolean noValueRequiresComment,
+    @JsonProperty(SKIP_OFFLINE) Boolean skipOffline,
+    @JsonProperty(DATA_ELEMENT_DECORATION) Boolean dataElementDecoration,
+    @JsonProperty(RENDER_AS_TABS) Boolean renderAsTabs,
+    @JsonProperty(RENDER_HORIZONTALLY) Boolean renderHorizontally,
+    @JsonProperty(DELETED) Boolean deleted) {*/
 
     /* TODO Change String to PeriodType
     @Nullable
