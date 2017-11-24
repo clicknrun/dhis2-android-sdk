@@ -39,6 +39,7 @@ import com.google.auto.value.AutoValue;
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 
 import java.util.Date;
+import java.util.List;
 
 @AutoValue
 public abstract class CategoryOptionModel extends BaseNameableObjectModel {
@@ -46,6 +47,7 @@ public abstract class CategoryOptionModel extends BaseNameableObjectModel {
     public static final String TABLE = "CategoryOption";
 
     public static class Columns extends BaseNameableObjectModel.Columns {
+        public static final String CATEGORY_OPTION_COMBOS = "categoryOptionCombos";
         public static final String START_DATE = "startDate";
         public static final String END_DATE = "endDate";
     }
@@ -64,6 +66,7 @@ public abstract class CategoryOptionModel extends BaseNameableObjectModel {
                 .lastUpdated(categoryOption.lastUpdated())
                 .shortName(categoryOption.shortName())
                 .displayShortName(categoryOption.displayShortName())
+                .categoryOptionCombos(categoryOption.categoryOptionCombos())
                 .startDate(categoryOption.startDate())
                 .endDate(categoryOption.endDate())
                 .build();
@@ -72,6 +75,10 @@ public abstract class CategoryOptionModel extends BaseNameableObjectModel {
     public static Builder builder() {
         return new $$AutoValue_CategoryOptionModel.Builder();
     }
+
+    @Nullable
+    @ColumnName(Columns.CATEGORY_OPTION_COMBOS)
+    public abstract List<CategoryOptionCombo> categoryOptionCombos();
 
     @Nullable
     @ColumnName(Columns.START_DATE)
@@ -86,6 +93,8 @@ public abstract class CategoryOptionModel extends BaseNameableObjectModel {
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseNameableObjectModel.Builder<Builder> {
+        public abstract Builder categoryOptionCombos(List<CategoryOptionCombo> categoryOptionCombos);
+
         public abstract Builder startDate(Date startDate);
 
         public abstract Builder endDate(Date endDate);
