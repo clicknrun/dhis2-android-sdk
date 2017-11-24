@@ -28,12 +28,36 @@
 
 package org.hisp.dhis.android.core.data.database;
 
-import org.hisp.dhis.android.core.common.PeriodType;
+import android.content.ContentValues;
+import android.database.Cursor;
 
-public class DbPeriodTypeColumnAdapter extends AbstractEnumAdapter<PeriodType> {
+import com.gabrielittner.auto.value.cursor.ColumnTypeAdapter;
+
+public abstract class AbstractEnumAdapter<T extends Enum<T>> implements ColumnTypeAdapter<T> {
+
+    public abstract T getFromSourceString(String sourceValue);
+
 
     @Override
-    public PeriodType getFromSourceString(String sourceValue) {
-        return PeriodType.valueOf(sourceValue);
+    public T fromCursor(Cursor cursor, String columnName) {
+        int columnIndex = cursor.getColumnIndex(columnName);
+        String sourceValue = cursor.getString(columnIndex);
+
+        if (sourceValue != null) {
+            try {
+                return getFromSourceString(sourceValue);
+            } catch (Exception exception) {
+                throw new RuntimeException("Unknown type value", exception);
+            }
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void toContentValues(ContentValues contentValues, String columnName, T typeValue) {
+        if (typeValue != null) {
+            contentValues.put(columnName, typeValue.name());
+        }
     }
 }
