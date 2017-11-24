@@ -32,6 +32,8 @@ import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
+import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
+import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 import static org.hisp.dhis.android.core.utils.Utils.isNull;
@@ -40,91 +42,52 @@ import static org.hisp.dhis.android.core.utils.Utils.isNull;
         "PMD.AvoidDuplicateLiterals"
 })
 public class DataSetStoreImpl implements DataSetStore {
-    private static final String INSERT_STATEMENT = "INSERT INTO " + DataSetModel.TABLE + " (" +
+    private static final SQLStatementBuilder builder = new SQLStatementBuilder(DataSetModel.TABLE, new String[] {
+            DataSetModel.Columns.UID,
+                    DataSetModel.Columns.CODE,
+                    DataSetModel.Columns.NAME,
+                    DataSetModel.Columns.DISPLAY_NAME,
+                    DataSetModel.Columns.CREATED,
+                    DataSetModel.Columns.LAST_UPDATED,
+                    DataSetModel.Columns.SHORT_NAME,
+                    DataSetModel.Columns.DISPLAY_SHORT_NAME,
+                    DataSetModel.Columns.DESCRIPTION,
+                    DataSetModel.Columns.DISPLAY_DESCRIPTION,
 
-            DataSetModel.Columns.UID + ", " +
-            DataSetModel.Columns.CODE + ", " +
-            DataSetModel.Columns.NAME + ", " +
-            DataSetModel.Columns.DISPLAY_NAME + ", " +
-            DataSetModel.Columns.CREATED + ", " +
-            DataSetModel.Columns.LAST_UPDATED + ", " +
-            DataSetModel.Columns.SHORT_NAME + ", " +
-            DataSetModel.Columns.DISPLAY_SHORT_NAME + ", " +
-            DataSetModel.Columns.DESCRIPTION + ", " +
-            DataSetModel.Columns.DISPLAY_DESCRIPTION + ", " +
+                    DataSetModel.Columns.PERIOD_TYPE,
+                    DataSetModel.Columns.CATEGORY_COMBO,
+                    DataSetModel.Columns.MOBILE,
+                    DataSetModel.Columns.VERSION,
+                    DataSetModel.Columns.EXPIRY_DAYS,
+                    DataSetModel.Columns.TIMELY_DAYS,
+                    DataSetModel.Columns.NOTIFY_COMPLETING_USER,
+                    DataSetModel.Columns.OPEN_FUTURE_PERIODS,
+                    DataSetModel.Columns.FIELD_COMBINATION_REQUIRED,
+                    DataSetModel.Columns.VALID_COMPLETE_ONLY,
+                    DataSetModel.Columns.NO_VALUE_REQUIRES_COMMENT,
+                    DataSetModel.Columns.SKIP_OFFLINE,
+                    DataSetModel.Columns.DATA_ELEMENT_DECORATION,
+                    DataSetModel.Columns.RENDER_AS_TABS,
+                    DataSetModel.Columns.RENDER_HORIZONTALLY
+    });
 
-            DataSetModel.Columns.PERIOD_TYPE + ", " +
-            DataSetModel.Columns.CATEGORY_COMBO + ", " +
-            DataSetModel.Columns.MOBILE + ", " +
-            DataSetModel.Columns.VERSION + ", " +
-            DataSetModel.Columns.EXPIRY_DAYS + ", " +
-            DataSetModel.Columns.TIMELY_DAYS + ", " +
-            DataSetModel.Columns.NOTIFY_COMPLETING_USER + ", " +
-            DataSetModel.Columns.OPEN_FUTURE_PERIODS + ", " +
-            DataSetModel.Columns.FIELD_COMBINATION_REQUIRED + ", " +
-            DataSetModel.Columns.VALID_COMPLETE_ONLY + ", " +
-            DataSetModel.Columns.NO_VALUE_REQUIRES_COMMENT + ", " +
-            DataSetModel.Columns.SKIP_OFFLINE + ", " +
-            DataSetModel.Columns.DATA_ELEMENT_DECORATION + ", " +
-            DataSetModel.Columns.RENDER_AS_TABS + ", " +
-            DataSetModel.Columns.RENDER_HORIZONTALLY + ") " +
-
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-
-    private static final String UPDATE_STATEMENT = "UPDATE " + DataSetModel.TABLE + " SET " +
-            DataSetModel.Columns.UID + ", " +
-            DataSetModel.Columns.CODE + ", " +
-            DataSetModel.Columns.NAME + ", " +
-            DataSetModel.Columns.DISPLAY_NAME + ", " +
-            DataSetModel.Columns.CREATED + ", " +
-            DataSetModel.Columns.LAST_UPDATED + ", " +
-            DataSetModel.Columns.SHORT_NAME + ", " +
-            DataSetModel.Columns.DISPLAY_SHORT_NAME + ", " +
-            DataSetModel.Columns.DESCRIPTION + ", " +
-            DataSetModel.Columns.DISPLAY_DESCRIPTION + ", " +
-
-            DataSetModel.Columns.PERIOD_TYPE + ", " +
-            DataSetModel.Columns.CATEGORY_COMBO + ", " +
-            DataSetModel.Columns.MOBILE + ", " +
-            DataSetModel.Columns.VERSION + ", " +
-            DataSetModel.Columns.EXPIRY_DAYS + ", " +
-            DataSetModel.Columns.TIMELY_DAYS + ", " +
-            DataSetModel.Columns.NOTIFY_COMPLETING_USER + ", " +
-            DataSetModel.Columns.OPEN_FUTURE_PERIODS + ", " +
-            DataSetModel.Columns.FIELD_COMBINATION_REQUIRED + ", " +
-            DataSetModel.Columns.VALID_COMPLETE_ONLY + ", " +
-            DataSetModel.Columns.NO_VALUE_REQUIRES_COMMENT + ", " +
-            DataSetModel.Columns.SKIP_OFFLINE + ", " +
-            DataSetModel.Columns.DATA_ELEMENT_DECORATION + ", " +
-            DataSetModel.Columns.RENDER_AS_TABS + ", " +
-            DataSetModel.Columns.RENDER_HORIZONTALLY + ") " +
-
-            " WHERE " + DataSetModel.Columns.UID + " =?;";
-
-    private static final String DELETE_STATEMENT = "DELETE FROM " + DataSetModel.TABLE +
-            " WHERE " + DataSetModel.Columns.UID + " =?;";
-
-    private final SQLiteStatement insertStatement;
-    private final SQLiteStatement updateStatement;
-    private final SQLiteStatement deleteStatement;
+    private final SQLStatementWrapper statements;
 
     private final DatabaseAdapter databaseAdapter;
 
     public DataSetStoreImpl(DatabaseAdapter databaseAdapter) {
         this.databaseAdapter = databaseAdapter;
-        this.insertStatement = databaseAdapter.compileStatement(INSERT_STATEMENT);
-        this.updateStatement = databaseAdapter.compileStatement(UPDATE_STATEMENT);
-        this.deleteStatement = databaseAdapter.compileStatement(DELETE_STATEMENT);
+        this.statements = new SQLStatementWrapper(builder, databaseAdapter);
     }
 
     @Override
     public long insert(@NonNull DataSetModel dataSetModel) {
         isNull(dataSetModel);
-        bindArguments(insertStatement, dataSetModel);
+        bindArguments(statements.insert, dataSetModel);
 
         // execute and clear bindings
-        Long insert = databaseAdapter.executeInsert(DataSetModel.TABLE, insertStatement);
-        insertStatement.clearBindings();
+        Long insert = databaseAdapter.executeInsert(DataSetModel.TABLE, statements.insert);
+        statements.insert.clearBindings();
         return insert;
     }
 
@@ -132,11 +95,11 @@ public class DataSetStoreImpl implements DataSetStore {
     public int delete(@NonNull String uid) {
         isNull(uid);
         // bind the where argument
-        sqLiteBind(deleteStatement, 1, uid);
+        sqLiteBind(statements.deleteById, 1, uid);
 
         // execute and clear bindings
-        int delete = databaseAdapter.executeUpdateDelete(DataSetModel.TABLE, deleteStatement);
-        deleteStatement.clearBindings();
+        int delete = databaseAdapter.executeUpdateDelete(DataSetModel.TABLE, statements.deleteById);
+        statements.deleteById.clearBindings();
         return delete;
     }
 
@@ -144,14 +107,14 @@ public class DataSetStoreImpl implements DataSetStore {
     public int update(@NonNull DataSetModel dataSetModel, @NonNull String whereDataSetUid) {
         isNull(dataSetModel);
         isNull(whereDataSetUid);
-        bindArguments(updateStatement, dataSetModel);
+        bindArguments(statements.update, dataSetModel);
 
         // bind the where argument
-        sqLiteBind(updateStatement, 26, whereDataSetUid);
+        sqLiteBind(statements.update, 26, whereDataSetUid);
 
         // execute and clear bindings
-        int update = databaseAdapter.executeUpdateDelete(DataSetModel.TABLE, updateStatement);
-        updateStatement.clearBindings();
+        int update = databaseAdapter.executeUpdateDelete(DataSetModel.TABLE, statements.update);
+        statements.update.clearBindings();
         return update;
     }
 
