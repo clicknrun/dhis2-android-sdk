@@ -30,10 +30,9 @@ package org.hisp.dhis.android.core.data.database;
 
 import org.hisp.dhis.android.core.common.PeriodType;
 
-public class DbPeriodTypeColumnAdapter extends ColumnTypeEnumAdapter<PeriodType> {
-
+public class DbPeriodTypeColumnAdapter extends EnumColumnAdapter<PeriodType> {
     @Override
-    public PeriodType getFromSourceString(String sourceValue) {
-        return PeriodType.valueOf(sourceValue);
+    protected Class<PeriodType> getEnumClass() {
+        return PeriodType.class;
     }
 }
