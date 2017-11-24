@@ -26,15 +26,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.dataset.utils;
 
+import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 
-public interface DataSetStore {
+import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 
-    long insert(@NonNull DataSetModel dataSetModel);
-
-    int delete(@NonNull String uid);
-
-    int update(@NonNull DataSetModel dataSetModel, @NonNull String whereDataSetUid);
+public interface SQLStatementBinder<M extends BaseIdentifiableObjectModel> {
+    public void bindArguments(@NonNull SQLiteStatement sqLiteStatement, @NonNull M t);
 }

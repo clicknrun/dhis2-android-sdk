@@ -33,8 +33,8 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import java.util.Arrays;
 
 public class SQLStatementBuilder {
-    private String tableName;
-    private String[] columns;
+    public final String tableName;
+    public final String[] columns;
 
     public SQLStatementBuilder(String tableName, String[] columns) {
         this.tableName = tableName;

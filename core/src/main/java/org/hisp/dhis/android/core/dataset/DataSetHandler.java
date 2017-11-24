@@ -27,12 +27,14 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
+import org.hisp.dhis.android.core.dataset.utils.GenericStore;
+
 import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
 
 public class DataSetHandler {
-    private final DataSetStore dataSetStore;
+    private final GenericStore<DataSetModel> dataSetStore;
 
-    public DataSetHandler(DataSetStore dataSetStore) {
+    public DataSetHandler(GenericStore<DataSetModel> dataSetStore) {
         this.dataSetStore = dataSetStore;
     }
 
@@ -53,12 +55,7 @@ public class DataSetHandler {
         if (isDeleted(dataSet)) {
             dataSetStore.delete(dataSet.uid());
         } else {
-            DataSetModel dataSetModel = DataSetModel.create(dataSet);
-            int updatedRow = dataSetStore.update(dataSetModel, dataSet.uid());
-
-            if (updatedRow <= 0) {
-                dataSetStore.insert(dataSetModel);
-            }
+            dataSetStore.updateOrInsert(DataSetModel.create(dataSet));
         }
     }
 }
