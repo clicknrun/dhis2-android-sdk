@@ -33,7 +33,7 @@ import android.database.Cursor;
 
 import com.gabrielittner.auto.value.cursor.ColumnTypeAdapter;
 
-public abstract class AbstractEnumAdapter<T extends Enum<T>> implements ColumnTypeAdapter<T> {
+public abstract class ColumnTypeEnumAdapter<T extends Enum<T>> implements ColumnTypeAdapter<T> {
 
     public abstract T getFromSourceString(String sourceValue);
 
