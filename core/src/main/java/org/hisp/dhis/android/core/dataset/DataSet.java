@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseNameableObject;
+import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.data.api.Field;
 
 import java.util.Date;
@@ -70,7 +71,7 @@ public abstract class DataSet extends BaseNameableObject {
     public static final Field<DataSet, Boolean> deleted = Field.create(DELETED);
 
     // TODO: Change String to PeriodType
-    public static final Field<DataSet, String> periodType = Field.create(PERIOD_TYPE);
+    public static final Field<DataSet, PeriodType> periodType = Field.create(PERIOD_TYPE);
     public static final Field<DataSet, String> categoryCombo = Field.create(CATEGORY_COMBO);
     public static final Field<DataSet, Boolean> mobile = Field.create(MOBILE);
     public static final Field<DataSet, Integer> version = Field.create(VERSION);
@@ -86,14 +87,9 @@ public abstract class DataSet extends BaseNameableObject {
     public static final Field<DataSet, Boolean> renderAsTabs = Field.create(RENDER_AS_TABS);
     public static final Field<DataSet, Boolean> renderHorizontally = Field.create(RENDER_HORIZONTALLY);
 
-    /* TODO Change String to PeriodType
     @Nullable
     @JsonProperty(PERIOD_TYPE)
-    public abstract String periodType();*/
-
-    @Nullable
-    @JsonProperty(PERIOD_TYPE)
-    public abstract String periodType();
+    public abstract PeriodType periodType();
 
     @Nullable
     @JsonProperty(CATEGORY_COMBO)
@@ -163,7 +159,7 @@ public abstract class DataSet extends BaseNameableObject {
             @JsonProperty(DISPLAY_SHORT_NAME) String displayShortName,
             @JsonProperty(DESCRIPTION) String description,
             @JsonProperty(DISPLAY_DESCRIPTION) String displayDescription,
-            @JsonProperty(PERIOD_TYPE) String periodType,
+            @JsonProperty(PERIOD_TYPE) PeriodType periodType,
             @JsonProperty(CATEGORY_COMBO) String categoryCombo,
             @JsonProperty(MOBILE) Boolean mobile,
             @JsonProperty(VERSION) Integer version,

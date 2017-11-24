@@ -33,6 +33,7 @@ import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +55,7 @@ public class DataSetModelTests {
     private static final String DESCRIPTION = "test_description";
     private static final String DISPLAY_DESCRIPTION = "test_display_description";
 
-    private static final String PERIOD_TYPE = "test_periodType";
+    private static final PeriodType PERIOD_TYPE = PeriodType.MONTHLY;
     private static final String CATEGORY_COMBO = "test_categoryCombo";
     private static final Integer MOBILE = 0;
     private static final Integer VERSION = 1;
@@ -196,7 +197,7 @@ public class DataSetModelTests {
         assertThat(contentValues.getAsString(Columns.DESCRIPTION)).isEqualTo(DESCRIPTION);
         assertThat(contentValues.getAsString(Columns.DISPLAY_DESCRIPTION)).isEqualTo(DISPLAY_DESCRIPTION);
 
-        assertThat(contentValues.getAsString(Columns.PERIOD_TYPE)).isEqualTo(PERIOD_TYPE);
+        assertThat(contentValues.getAsString(Columns.PERIOD_TYPE)).isEqualTo(PERIOD_TYPE.name());
         assertThat(contentValues.getAsString(Columns.CATEGORY_COMBO)).isEqualTo(CATEGORY_COMBO);
         assertThat(contentValues.getAsBoolean(Columns.MOBILE)).isEqualTo(toBoolean(MOBILE));
         assertThat(contentValues.getAsInteger(Columns.VERSION)).isEqualTo(VERSION);

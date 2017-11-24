@@ -33,10 +33,13 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.gabrielittner.auto.value.cursor.ColumnAdapter;
 import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
+import org.hisp.dhis.android.core.common.PeriodType;
+import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
 
 @AutoValue
 public abstract class DataSetModel extends BaseNameableObjectModel {
@@ -99,15 +102,10 @@ public abstract class DataSetModel extends BaseNameableObjectModel {
         return new $$AutoValue_DataSetModel.Builder();
     }
 
-    /* TODO Create PeriodType
     @Nullable
     @ColumnName(Columns.PERIOD_TYPE)
     @ColumnAdapter(DbPeriodTypeColumnAdapter.class)
-    public abstract PeriodType periodType();*/
-
-    @Nullable
-    @ColumnName(Columns.PERIOD_TYPE)
-    public abstract String periodType();
+    public abstract PeriodType periodType();
 
     @Nullable
     @ColumnName(Columns.CATEGORY_COMBO)
@@ -170,7 +168,7 @@ public abstract class DataSetModel extends BaseNameableObjectModel {
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseNameableObjectModel.Builder<Builder> {
-        public abstract Builder periodType(String periodType);
+        public abstract Builder periodType(PeriodType periodType);
 
         public abstract Builder categoryCombo(String categoryCombo);
 
