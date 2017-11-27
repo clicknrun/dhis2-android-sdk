@@ -38,13 +38,14 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 
 import java.util.Date;
 import java.util.Set;
 
 @AutoValue
-public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel {
+public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel implements StatementBinder {
 
     public static final String TABLE = "CategoryOption";
 

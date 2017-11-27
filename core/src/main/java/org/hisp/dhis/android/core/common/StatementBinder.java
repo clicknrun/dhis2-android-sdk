@@ -26,18 +26,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.common;
 
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
+import android.database.sqlite.SQLiteStatement;
+import android.support.annotation.NonNull;
 
-public class CategoryComboStoreFactory {
-    public static IdentifiableObjectStore<CategoryComboModel> create(DatabaseAdapter databaseAdapter) {
-        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryComboModel.TABLE,
-                CategoryComboModel.columnArray());
-        SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
-    }
+public interface StatementBinder {
+    public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement);
 }

@@ -40,6 +40,7 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 import org.hisp.dhis.android.core.common.PeriodType;
+import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
 
 import java.util.Set;
@@ -47,7 +48,7 @@ import java.util.Set;
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue
-public abstract class DataSetModel extends BaseNameableObjectModel {
+public abstract class DataSetModel extends BaseNameableObjectModel implements StatementBinder {
 
     public static final String TABLE = "DataSet";
 

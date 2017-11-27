@@ -37,11 +37,12 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.StatementBinder;
 
 import java.util.Set;
 
 @AutoValue
-public abstract class CategoryOptionComboModel extends BaseIdentifiableObjectModel {
+public abstract class CategoryOptionComboModel extends BaseIdentifiableObjectModel implements StatementBinder {
 
     public static final String TABLE = "CategoryOptionCombo";
 

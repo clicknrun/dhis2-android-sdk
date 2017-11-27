@@ -29,15 +29,15 @@
 package org.hisp.dhis.android.core.dataelement;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 
-public class CategoryComboStoreFactory {
-    public static IdentifiableObjectStore<CategoryComboModel> create(DatabaseAdapter databaseAdapter) {
-        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryComboModel.TABLE,
-                CategoryComboModel.columnArray());
+public class PeriodStoreFactory {
+    public static ObjectStore<PeriodModel> create(DatabaseAdapter databaseAdapter) {
+        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(PeriodModel.TABLE,
+                PeriodModel.columnArray());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
+        return new ObjectStore<>(databaseAdapter, statements, statementBuilder);
     }
 }

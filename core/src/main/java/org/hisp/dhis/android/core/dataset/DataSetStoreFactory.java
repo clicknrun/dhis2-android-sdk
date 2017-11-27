@@ -29,15 +29,15 @@
 package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.GenericStore;
+import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 
 public class DataSetStoreFactory {
-    public static GenericStore<DataSetModel> create(DatabaseAdapter databaseAdapter) {
+    public static IdentifiableObjectStore<DataSetModel> create(DatabaseAdapter databaseAdapter) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(DataSetModel.TABLE,
                 DataSetModel.columnArray());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new GenericStore<>(databaseAdapter, statements, statementBuilder);
+        return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
     }
 }

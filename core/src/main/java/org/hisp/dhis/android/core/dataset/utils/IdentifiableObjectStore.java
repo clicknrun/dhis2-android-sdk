@@ -26,62 +26,57 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.dataset.utils;
 
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.support.annotation.NonNull;
-
-import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
-import org.hisp.dhis.android.core.dataset.DataSet;
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-import java.util.Set;
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
+import static org.hisp.dhis.android.core.utils.Utils.isNull;
 
-@AutoValue
-public abstract class CategoryComboModel extends BaseIdentifiableObjectModel implements StatementBinder {
+@SuppressWarnings({
+        "PMD.AvoidDuplicateLiterals"
+})
+public class IdentifiableObjectStore<M extends BaseIdentifiableObjectModel & StatementBinder> extends ObjectStore<M> {
 
-    public static final String TABLE = "CategoryCombo";
-
-    public static class Columns extends BaseIdentifiableObjectModel.Columns {
+    public IdentifiableObjectStore(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
+                                   SQLStatementBuilder builder) {
+        super(databaseAdapter, statements, builder);
     }
 
-    public static CategoryComboModel create(Cursor cursor) {
-        return AutoValue_CategoryComboModel.createFromCursor(cursor);
+    public final int delete(@NonNull String uid) {
+        isNull(uid);
+        // bind the where argument
+        sqLiteBind(statements.deleteById, 1, uid);
+
+        // execute and clear bindings
+        int delete = databaseAdapter.executeUpdateDelete(builder.tableName, statements.deleteById);
+        statements.deleteById.clearBindings();
+        return delete;
     }
 
-    public static CategoryComboModel create(DataSet dataSet) {
-        return CategoryComboModel.builder()
-                .uid(dataSet.uid())
-                .code(dataSet.code())
-                .name(dataSet.name())
-                .displayName(dataSet.displayName())
-                .created(dataSet.created())
-                .lastUpdated(dataSet.lastUpdated())
-                .build();
+    public final int update(@NonNull M m) {
+        isNull(m);
+        m.bindToStatement(statements.update);
+
+        // bind the where argument
+        sqLiteBind(statements.update, builder.columns.length + 1, m.uid());
+
+        // execute and clear bindings
+        int update = databaseAdapter.executeUpdateDelete(builder.tableName, statements.update);
+        statements.update.clearBindings();
+        return update;
     }
 
-    public static Set<String> columnSet() {
-        return CategoryComboModel.builder().build().toContentValues().keySet();
-    }
-
-    public static String[] columnArray() {
-        Set<String> keySet = columnSet();
-        return keySet.toArray(new String[keySet.size()]);
-    }
-
-    public static Builder builder() {
-        return new $$AutoValue_CategoryComboModel.Builder();
-    }
-
-    @NonNull
-    public abstract ContentValues toContentValues();
-
-    @AutoValue.Builder
-    public static abstract class Builder extends BaseIdentifiableObjectModel.Builder<Builder> {
-
-        public abstract CategoryComboModel build();
+    public final void updateOrInsert(@NonNull M m) {
+        int updatedRow = update(m);
+        if (updatedRow <= 0) {
+            insert(m);
+        }
     }
 }
+
+

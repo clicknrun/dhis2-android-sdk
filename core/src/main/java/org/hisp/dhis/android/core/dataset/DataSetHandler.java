@@ -27,14 +27,14 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
-import org.hisp.dhis.android.core.dataset.utils.GenericStore;
+import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 
 import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
 
 public class DataSetHandler {
-    private final GenericStore<DataSetModel> dataSetStore;
+    private final IdentifiableObjectStore<DataSetModel> dataSetStore;
 
-    public DataSetHandler(GenericStore<DataSetModel> dataSetStore) {
+    public DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore) {
         this.dataSetStore = dataSetStore;
     }
 

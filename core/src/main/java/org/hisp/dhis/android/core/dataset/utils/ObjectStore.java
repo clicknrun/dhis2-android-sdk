@@ -30,28 +30,28 @@ package org.hisp.dhis.android.core.dataset.utils;
 
 import android.support.annotation.NonNull;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.Model;
+import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 import static org.hisp.dhis.android.core.utils.Utils.isNull;
 
 @SuppressWarnings({
         "PMD.AvoidDuplicateLiterals"
 })
-public class GenericStore<M extends BaseIdentifiableObjectModel> {
-    private final DatabaseAdapter databaseAdapter;
-    private final SQLStatementWrapper statements;
-    private final SQLStatementBuilder builder;
+public class ObjectStore<M extends Model & StatementBinder> {
+    protected final DatabaseAdapter databaseAdapter;
+    protected final SQLStatementWrapper statements;
+    protected final SQLStatementBuilder builder;
 
-    public GenericStore(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
-                        SQLStatementBuilder builder) {
+    public ObjectStore(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
+                       SQLStatementBuilder builder) {
         this.databaseAdapter = databaseAdapter;
         this.statements = statements;
         this.builder = builder;
     }
 
-    public long insert(@NonNull M m) {
+    public final long insert(@NonNull M m) {
         isNull(m);
         m.bindToStatement(statements.insert);
 
@@ -59,37 +59,6 @@ public class GenericStore<M extends BaseIdentifiableObjectModel> {
         Long insert = databaseAdapter.executeInsert(builder.tableName, statements.insert);
         statements.insert.clearBindings();
         return insert;
-    }
-
-    public int delete(@NonNull String uid) {
-        isNull(uid);
-        // bind the where argument
-        sqLiteBind(statements.deleteById, 1, uid);
-
-        // execute and clear bindings
-        int delete = databaseAdapter.executeUpdateDelete(builder.tableName, statements.deleteById);
-        statements.deleteById.clearBindings();
-        return delete;
-    }
-
-    public int update(@NonNull M m) {
-        isNull(m);
-        m.bindToStatement(statements.update);
-
-        // bind the where argument
-        sqLiteBind(statements.update, builder.columns.length + 1, m.uid());
-
-        // execute and clear bindings
-        int update = databaseAdapter.executeUpdateDelete(builder.tableName, statements.update);
-        statements.update.clearBindings();
-        return update;
-    }
-
-    public void updateOrInsert(@NonNull M m) {
-        int updatedRow = update(m);
-        if (updatedRow <= 0) {
-            insert(m);
-        }
     }
 }
 

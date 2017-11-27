@@ -30,6 +30,7 @@ package org.hisp.dhis.android.core.dataelement;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -39,14 +40,17 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.PeriodType;
+import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
 
 import java.util.Date;
 import java.util.Set;
 
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
+
 @AutoValue
-public abstract class PeriodModel extends BaseModel {
+public abstract class PeriodModel extends BaseModel implements StatementBinder {
 
     public static final String TABLE = "Period";
 
@@ -98,6 +102,13 @@ public abstract class PeriodModel extends BaseModel {
 
     @NonNull
     public abstract ContentValues toContentValues();
+
+    @Override
+    public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
+        sqLiteBind(sqLiteStatement, 1, periodType());
+        sqLiteBind(sqLiteStatement, 2, startDate());
+        sqLiteBind(sqLiteStatement, 3, endDate());
+    }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseModel.Builder<Builder> {
