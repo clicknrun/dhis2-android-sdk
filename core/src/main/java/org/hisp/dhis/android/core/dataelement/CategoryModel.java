@@ -41,7 +41,7 @@ import java.util.Set;
 @AutoValue
 public abstract class CategoryModel extends BaseNameableObjectModel {
 
-    public static final String TABLE = "DataSet";
+    public static final String TABLE = "Category";
 
     public static class Columns extends BaseNameableObjectModel.Columns {
     }
