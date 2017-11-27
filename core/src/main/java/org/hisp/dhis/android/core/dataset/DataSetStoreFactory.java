@@ -42,7 +42,7 @@ import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 public class DataSetStoreFactory {
     public static GenericStore<DataSetModel> create(DatabaseAdapter databaseAdapter) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(DataSetModel.TABLE,
-                DataSetModel.columns());
+                DataSetModel.columnArray());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
         return new GenericStore<>(databaseAdapter, statements, new DataSetBinder(), statementBuilder);
     }

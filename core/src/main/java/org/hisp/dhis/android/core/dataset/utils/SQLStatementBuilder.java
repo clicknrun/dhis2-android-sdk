@@ -37,9 +37,9 @@ public class SQLStatementBuilder {
     public final String tableName;
     public final String[] columns;
 
-    public SQLStatementBuilder(String tableName, Collection<String> columns) {
+    public SQLStatementBuilder(String tableName, String[] columns) {
         this.tableName = tableName;
-        this.columns = columns.toArray(new String[columns.size()]);
+        this.columns = columns;
     }
 
     private String commaSeparatedColumns() {

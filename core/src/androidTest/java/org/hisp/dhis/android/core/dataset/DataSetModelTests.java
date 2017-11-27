@@ -80,35 +80,7 @@ public class DataSetModelTests {
     }
     @Test
     public void create_shouldConvertToDataSetModel() {
-        MatrixCursor cursor = new MatrixCursor(new String[]{
-                Columns.ID,
-                Columns.UID,
-                Columns.CODE,
-                Columns.NAME,
-                Columns.DISPLAY_NAME,
-                Columns.CREATED,
-                Columns.LAST_UPDATED,
-                Columns.SHORT_NAME,
-                Columns.DISPLAY_SHORT_NAME,
-                Columns.DESCRIPTION,
-                Columns.DISPLAY_DESCRIPTION,
-
-                Columns.PERIOD_TYPE,
-                Columns.CATEGORY_COMBO,
-                Columns.MOBILE,
-                Columns.VERSION,
-                Columns.EXPIRY_DAYS,
-                Columns.TIMELY_DAYS,
-                Columns.NOTIFY_COMPLETING_USER,
-                Columns.OPEN_FUTURE_PERIODS,
-                Columns.FIELD_COMBINATION_REQUIRED,
-                Columns.VALID_COMPLETE_ONLY,
-                Columns.NO_VALUE_REQUIRES_COMMENT,
-                Columns.SKIP_OFFLINE,
-                Columns.DATA_ELEMENT_DECORATION,
-                Columns.RENDER_AS_TABS,
-                Columns.RENDER_HORIZONTALLY
-        });
+        MatrixCursor cursor = new MatrixCursor(DataSetModel.columnArray());
         cursor.addRow(new Object[]{
                 ID, UID, CODE, NAME, DISPLAY_NAME,
                 dateString, dateString,
@@ -216,6 +188,6 @@ public class DataSetModelTests {
 
     @Test
     public void columns_shouldReturnModelColumns() {
-        assertThat(DataSetModel.columns().contains(Columns.SKIP_OFFLINE)).isTrue();
+        assertThat(DataSetModel.columnSet().contains(Columns.SKIP_OFFLINE)).isTrue();
     }
 }
