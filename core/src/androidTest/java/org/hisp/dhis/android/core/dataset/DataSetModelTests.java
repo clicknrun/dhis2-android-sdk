@@ -213,4 +213,9 @@ public class DataSetModelTests {
         assertThat(contentValues.getAsBoolean(Columns.RENDER_AS_TABS)).isEqualTo(toBoolean(RENDER_AS_TABS));
         assertThat(contentValues.getAsBoolean(Columns.RENDER_HORIZONTALLY)).isEqualTo(toBoolean(RENDER_HORIZONTALLY));
     }
+
+    @Test
+    public void columns_shouldReturnModelColumns() {
+        assertThat(DataSetModel.columns().contains(Columns.SKIP_OFFLINE)).isTrue();
+    }
 }
