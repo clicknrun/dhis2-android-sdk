@@ -32,7 +32,6 @@ import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.data.database.SqLiteDatabaseAdapter;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 import static org.hisp.dhis.android.core.utils.Utils.isNull;
@@ -46,7 +45,7 @@ public class GenericStore<M extends BaseIdentifiableObjectModel> {
     private final SQLStatementBinder<M> binder;
     private final SQLStatementBuilder builder;
 
-    public GenericStore(SqLiteDatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
+    public GenericStore(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
                         SQLStatementBinder<M> binder, SQLStatementBuilder builder) {
         this.databaseAdapter = databaseAdapter;
         this.statements = statements;
