@@ -55,7 +55,7 @@ public class DataSetModelTests {
     private static final String DESCRIPTION = "test_description";
     private static final String DISPLAY_DESCRIPTION = "test_display_description";
 
-    private static final PeriodType PERIOD_TYPE = PeriodType.MONTHLY;
+    private static final PeriodType PERIOD_TYPE = PeriodType.Monthly;
     private static final String CATEGORY_COMBO = "test_categoryCombo";
     private static final Integer MOBILE = 0;
     private static final Integer VERSION = 1;

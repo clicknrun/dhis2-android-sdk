@@ -29,7 +29,7 @@
 package org.hisp.dhis.android.core.common;
 
 public enum PeriodType {
-    DAILY, WEEKLY, WEEKLY_WEDNESDAY, WEEKLY_THURSDAY, WEEKLY_SATURDAY, WEEKLY_SUNDAY,
-    MONTHLY, BI_MONTHLY, QUARTERLY, SIX_MONTHLY, SIX_MONTHLY_APRIL, YEARLY, FINANCIAL_APRIL,
-    FINANCIAL_JULY, FINANCIAL_OCT
+    Daily, Weekly, WeeklyWednesday, WeeklyThursday, WeeklySaturday, WeeklySunday,
+    Monthly, BiMonthly, Quarterly, SixMonthly, SixMonthlyApril, Yearly, FinancialApril,
+    FinancialJuly, FinancialOct
 }

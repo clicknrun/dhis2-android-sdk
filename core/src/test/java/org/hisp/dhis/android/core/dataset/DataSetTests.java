@@ -80,7 +80,7 @@ public class DataSetTests {
         assertThat(dataSet.mobile()).isEqualTo(false);
         assertThat(dataSet.version()).isEqualTo(22);
         assertThat(dataSet.timelyDays()).isEqualTo(0);
-        assertThat(dataSet.periodType()).isEqualTo("Monthly");
+        assertThat(dataSet.periodType()).isEqualTo(PeriodType.Monthly);
         assertThat(dataSet.openFuturePeriods()).isEqualTo(0);
         assertThat(dataSet.expiryDays()).isEqualTo(0);
         // TODO assertThat(dataSet.categoryCombo()).isEqualTo("");
