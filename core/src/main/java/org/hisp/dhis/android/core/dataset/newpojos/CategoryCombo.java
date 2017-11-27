@@ -38,27 +38,28 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
 
 import java.util.Date;
+import java.util.List;
 
 @AutoValue
-public abstract class NewCategoryOptionCombo extends BaseIdentifiableObject {
-    private static final String IGNORE_APPROVAL = "ignoreApproval";
+public abstract class CategoryCombo extends BaseIdentifiableObject {
+    private static final String CATEGORIES = "categories";
 
-    public static final Field<NewCategoryOptionCombo, String> uid = Field.create(UID);
-    public static final Field<NewCategoryOptionCombo, String> code = Field.create(CODE);
-    public static final Field<NewCategoryOptionCombo, String> name = Field.create(NAME);
-    public static final Field<NewCategoryOptionCombo, String> displayName = Field.create(DISPLAY_NAME);
-    public static final Field<NewCategoryOptionCombo, String> created = Field.create(CREATED);
-    public static final Field<NewCategoryOptionCombo, String> lastUpdated = Field.create(LAST_UPDATED);
-    public static final Field<NewCategoryOptionCombo, Boolean> deleted = Field.create(DELETED);
+    public static final Field<CategoryCombo, String> uid = Field.create(UID);
+    public static final Field<CategoryCombo, String> code = Field.create(CODE);
+    public static final Field<CategoryCombo, String> name = Field.create(NAME);
+    public static final Field<CategoryCombo, String> displayName = Field.create(DISPLAY_NAME);
+    public static final Field<CategoryCombo, String> created = Field.create(CREATED);
+    public static final Field<CategoryCombo, String> lastUpdated = Field.create(LAST_UPDATED);
+    public static final Field<CategoryCombo, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<NewCategoryOptionCombo, Boolean> ignoreApproval = Field.create(IGNORE_APPROVAL);
+    public static final Field<CategoryCombo, List<Category>> categories = Field.create(CATEGORIES);
 
     @Nullable
-    @JsonProperty(IGNORE_APPROVAL)
-    public abstract Boolean ignoreApproval();
+    @JsonProperty(CATEGORIES)
+    public abstract List<Category> categories();
 
     @JsonCreator
-    public static NewCategoryOptionCombo create(
+    public static CategoryCombo create(
             @JsonProperty(UID) String uid,
             @JsonProperty(CODE) String code,
             @JsonProperty(NAME) String name,
@@ -66,11 +67,12 @@ public abstract class NewCategoryOptionCombo extends BaseIdentifiableObject {
             @JsonProperty(CREATED) Date created,
             @JsonProperty(LAST_UPDATED) Date lastUpdated,
 
-            @JsonProperty(IGNORE_APPROVAL) Boolean ignoreApproval,
-
+            @JsonProperty(CATEGORIES) List<Category> categories,
             @JsonProperty(DELETED) Boolean deleted) {
 
-        return new AutoValue_NewCategoryOptionCombo(uid, code, name,
-                displayName, created, lastUpdated, deleted, ignoreApproval);
+        return new AutoValue_CategoryCombo(uid, code, name,
+                displayName, created, lastUpdated, deleted,
+                categories);
+
     }
 }

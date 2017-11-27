@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
-import org.hisp.dhis.android.core.dataset.newpojos.NewCategoryOptionCombo;
+import org.hisp.dhis.android.core.dataset.newpojos.CategoryOptionCombo;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class CategoryOptionComboTests {
     public void categoryOptionCombo_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
 
-        NewCategoryOptionCombo categoryOptionCombo = objectMapper.readValue("{" +
+        CategoryOptionCombo categoryOptionCombo = objectMapper.readValue("{" +
                         "\"code\":\"COC_358963\"," +
                         "\"lastUpdated\":\"2011-12-24T12:24:25.319\"," +
                         "\"id\":\"S34ULMcHMca\"," +
@@ -63,7 +63,7 @@ public class CategoryOptionComboTests {
                         "\"categoryOptions\":[{\"id\":\"FbLZS3ueWbQ\"}]," +
                         "\"userGroupAccesses\":[]," +
                         "\"attributeValues\":[]}",
-                NewCategoryOptionCombo.class);
+                CategoryOptionCombo.class);
 
         assertThat(categoryOptionCombo.uid()).isEqualTo("S34ULMcHMca");
         assertThat(categoryOptionCombo.code()).isEqualTo("COC_358963");

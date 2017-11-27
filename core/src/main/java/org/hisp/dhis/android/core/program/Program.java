@@ -37,7 +37,7 @@ import com.google.auto.value.AutoValue;
 import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.data.api.Field;
 import org.hisp.dhis.android.core.data.api.NestedField;
-import org.hisp.dhis.android.core.dataset.newpojos.NewCategoryCombo;
+import org.hisp.dhis.android.core.dataset.newpojos.CategoryCombo;
 import org.hisp.dhis.android.core.relationship.RelationshipType;
 import org.hisp.dhis.android.core.trackedentity.TrackedEntity;
 
@@ -136,7 +136,7 @@ public abstract class Program extends BaseNameableObject {
             = NestedField.create(RELATED_PROGRAM);
     public static final NestedField<Program, TrackedEntity> trackedEntity
             = NestedField.create(TRACKED_ENTITY);
-    public static final NestedField<Program, NewCategoryCombo> categoryCombo
+    public static final NestedField<Program, CategoryCombo> categoryCombo
             = NestedField.create(CATEGORY_COMBO);
     public static final NestedField<Program, ProgramIndicator> programIndicators
             = NestedField.create(PROGRAM_INDICATORS);
@@ -229,7 +229,7 @@ public abstract class Program extends BaseNameableObject {
 
     @Nullable
     @JsonProperty(CATEGORY_COMBO)
-    public abstract NewCategoryCombo categoryCombo();
+    public abstract CategoryCombo categoryCombo();
 
     @Nullable
     @JsonProperty(PROGRAM_INDICATORS)
@@ -279,7 +279,7 @@ public abstract class Program extends BaseNameableObject {
             @JsonProperty(PROGRAM_TRACKED_ENTITY_ATTRIBUTES) List<ProgramTrackedEntityAttribute> attributes,
             @JsonProperty(RELATED_PROGRAM) Program relatedProgram,
             @JsonProperty(TRACKED_ENTITY) TrackedEntity trackedEntity,
-            @JsonProperty(CATEGORY_COMBO) NewCategoryCombo categoryCombo,
+            @JsonProperty(CATEGORY_COMBO) CategoryCombo categoryCombo,
             @JsonProperty(PROGRAM_INDICATORS) List<ProgramIndicator> programIndicators,
             @JsonProperty(PROGRAM_STAGES) List<ProgramStage> programStages,
             @JsonProperty(PROGRAM_RULES) List<ProgramRule> programRules,

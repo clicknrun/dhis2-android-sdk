@@ -41,25 +41,25 @@ import java.util.Date;
 import java.util.List;
 
 @AutoValue
-public abstract class NewCategoryCombo extends BaseIdentifiableObject {
-    private static final String CATEGORIES = "categories";
+public abstract class Category extends BaseIdentifiableObject {
+    private static final String CATEGORY_OPTIONS = "categoryOptions";
 
-    public static final Field<NewCategoryCombo, String> uid = Field.create(UID);
-    public static final Field<NewCategoryCombo, String> code = Field.create(CODE);
-    public static final Field<NewCategoryCombo, String> name = Field.create(NAME);
-    public static final Field<NewCategoryCombo, String> displayName = Field.create(DISPLAY_NAME);
-    public static final Field<NewCategoryCombo, String> created = Field.create(CREATED);
-    public static final Field<NewCategoryCombo, String> lastUpdated = Field.create(LAST_UPDATED);
-    public static final Field<NewCategoryCombo, Boolean> deleted = Field.create(DELETED);
+    public static final Field<Category, String> uid = Field.create(UID);
+    public static final Field<Category, String> code = Field.create(CODE);
+    public static final Field<Category, String> name = Field.create(NAME);
+    public static final Field<Category, String> displayName = Field.create(DISPLAY_NAME);
+    public static final Field<Category, String> created = Field.create(CREATED);
+    public static final Field<Category, String> lastUpdated = Field.create(LAST_UPDATED);
+    public static final Field<Category, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<NewCategoryCombo, List<NewCategory>> categories = Field.create(CATEGORIES);
+    public static final Field<Category, List<CategoryOption>> categoryOptions = Field.create(CATEGORY_OPTIONS);
 
     @Nullable
-    @JsonProperty(CATEGORIES)
-    public abstract List<NewCategory> categories();
+    @JsonProperty(CATEGORY_OPTIONS)
+    public abstract List<CategoryOption> categoryOptions();
 
     @JsonCreator
-    public static NewCategoryCombo create(
+    public static Category create(
             @JsonProperty(UID) String uid,
             @JsonProperty(CODE) String code,
             @JsonProperty(NAME) String name,
@@ -67,12 +67,12 @@ public abstract class NewCategoryCombo extends BaseIdentifiableObject {
             @JsonProperty(CREATED) Date created,
             @JsonProperty(LAST_UPDATED) Date lastUpdated,
 
-            @JsonProperty(CATEGORIES) List<NewCategory> categories,
+            @JsonProperty(CATEGORY_OPTIONS) List<CategoryOption> categoryOptions,
             @JsonProperty(DELETED) Boolean deleted) {
 
-        return new AutoValue_NewCategoryCombo(uid, code, name,
+        return new AutoValue_Category(uid, code, name,
                 displayName, created, lastUpdated, deleted,
-                categories);
+                categoryOptions);
 
     }
 }
