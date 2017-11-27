@@ -76,8 +76,13 @@ public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel {
                 .build();
     }
 
-    public static Set<String> columns() {
+    public static Set<String> columnSet() {
         return CategoryOptionModel.builder().build().toContentValues().keySet();
+    }
+
+    public static String[] columnArray() {
+        Set<String> keySet = columnSet();
+        return keySet.toArray(new String[keySet.size()]);
     }
 
     public static Builder builder() {
