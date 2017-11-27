@@ -41,6 +41,8 @@ import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
 
+import java.util.Set;
+
 @AutoValue
 public abstract class DataSetModel extends BaseNameableObjectModel {
 
@@ -96,6 +98,10 @@ public abstract class DataSetModel extends BaseNameableObjectModel {
                 .renderAsTabs(dataSet.renderAsTabs())
                 .renderHorizontally(dataSet.renderHorizontally())
                 .build();
+    }
+
+    public static Set<String> columns() {
+        return DataSetModel.builder().build().toContentValues().keySet();
     }
 
     public static Builder builder() {

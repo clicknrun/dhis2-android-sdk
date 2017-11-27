@@ -41,34 +41,8 @@ import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 public class DataSetStoreFactory {
     public static GenericStore<DataSetModel> create(DatabaseAdapter databaseAdapter) {
-        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(DataSetModel.TABLE, new String[]{
-                DataSetModel.Columns.UID,
-                DataSetModel.Columns.CODE,
-                DataSetModel.Columns.NAME,
-                DataSetModel.Columns.DISPLAY_NAME,
-                DataSetModel.Columns.CREATED,
-                DataSetModel.Columns.LAST_UPDATED,
-                DataSetModel.Columns.SHORT_NAME,
-                DataSetModel.Columns.DISPLAY_SHORT_NAME,
-                DataSetModel.Columns.DESCRIPTION,
-                DataSetModel.Columns.DISPLAY_DESCRIPTION,
-
-                DataSetModel.Columns.PERIOD_TYPE,
-                DataSetModel.Columns.CATEGORY_COMBO,
-                DataSetModel.Columns.MOBILE,
-                DataSetModel.Columns.VERSION,
-                DataSetModel.Columns.EXPIRY_DAYS,
-                DataSetModel.Columns.TIMELY_DAYS,
-                DataSetModel.Columns.NOTIFY_COMPLETING_USER,
-                DataSetModel.Columns.OPEN_FUTURE_PERIODS,
-                DataSetModel.Columns.FIELD_COMBINATION_REQUIRED,
-                DataSetModel.Columns.VALID_COMPLETE_ONLY,
-                DataSetModel.Columns.NO_VALUE_REQUIRES_COMMENT,
-                DataSetModel.Columns.SKIP_OFFLINE,
-                DataSetModel.Columns.DATA_ELEMENT_DECORATION,
-                DataSetModel.Columns.RENDER_AS_TABS,
-                DataSetModel.Columns.RENDER_HORIZONTALLY
-        });
+        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(DataSetModel.TABLE,
+                DataSetModel.columns());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
         return new GenericStore<>(databaseAdapter, statements, new DataSetBinder(), statementBuilder);
     }

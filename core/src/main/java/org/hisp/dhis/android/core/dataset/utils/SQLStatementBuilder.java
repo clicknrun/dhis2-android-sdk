@@ -31,14 +31,15 @@ package org.hisp.dhis.android.core.dataset.utils;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public class SQLStatementBuilder {
     public final String tableName;
     public final String[] columns;
 
-    public SQLStatementBuilder(String tableName, String[] columns) {
+    public SQLStatementBuilder(String tableName, Collection<String> columns) {
         this.tableName = tableName;
-        this.columns = columns;
+        this.columns = columns.toArray(new String[columns.size()]);
     }
 
     private String commaSeparatedColumns() {
