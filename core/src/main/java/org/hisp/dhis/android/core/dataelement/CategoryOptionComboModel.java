@@ -33,14 +33,11 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.gabrielittner.auto.value.cursor.ColumnAdapter;
 import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
-import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 
-import java.util.Date;
 import java.util.Set;
 
 @AutoValue
@@ -69,8 +66,13 @@ public abstract class CategoryOptionComboModel extends BaseIdentifiableObjectMod
                 .build();
     }
 
-    public static Set<String> columns() {
+    public static Set<String> columnSet() {
         return CategoryOptionComboModel.builder().build().toContentValues().keySet();
+    }
+
+    public static String[] columnArray() {
+        Set<String> keySet = columnSet();
+        return keySet.toArray(new String[keySet.size()]);
     }
 
     public static Builder builder() {
