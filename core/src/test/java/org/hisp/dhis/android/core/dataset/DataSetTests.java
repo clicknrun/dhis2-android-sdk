@@ -32,9 +32,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.PeriodType;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -54,33 +56,9 @@ public class DataSetTests {
     @Test
     public void dataSet_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
-        DataSet dataSet = objectMapper.readValue("{" +
-                        "\"code\":\"DS_394131\"," +
-                        "\"lastUpdated\":\"2015-08-09T12:35:36.743\"," +
-                        "\"id\":\"lyLU2wR22tC\"," +
-                        "\"created\":\"2012-06-10T00:36:10.036\"," +
-                        "\"name\":\"ART monthly summary\"," +
-                        "\"shortName\":\"ART 2010\"," +
-                        "\"validCompleteOnly\":false," +
-                        "\"dataElementDecoration\":false," +
-                        "\"displayName\":\"ART monthly summary\"," +
-                        "\"notifyCompletingUser\":false," +
-                        "\"noValueRequiresComment\":false," +
-                        "\"skipOffline\":false," +
-                        "\"displayShortName\":\"ART 2010\"," +
-                        "\"fieldCombinationRequired\":false," +
-                        "\"renderHorizontally\":false," +
-                        "\"renderAsTabs\":false," +
-                        "\"mobile\":false," +
-                        "\"version\":22," +
-                        "\"timelyDays\":0," +
-                        "\"periodType\":\"Monthly\"," +
-                        "\"openFuturePeriods\":0," +
-                        "\"expiryDays\":0," +
-                        /*"\"categoryCombo\":{\"id\":\"O4VaNks6tta\"}" +*/
-                        "\"categoryCombo\":\"O4VaNks6tta\"" +
-                        "}",
-                DataSet.class);
+        InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream("./dataset.json");
+
+        DataSet dataSet = objectMapper.readValue(jsonStream, DataSet.class);
 
         assertThat(dataSet.code()).isEqualTo("DS_394131");
         assertThat(dataSet.lastUpdated()).isEqualTo(
