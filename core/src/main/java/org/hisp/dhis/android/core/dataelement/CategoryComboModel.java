@@ -34,17 +34,17 @@ import android.support.annotation.NonNull;
 
 import com.google.auto.value.AutoValue;
 
-import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.dataset.DataSet;
 
 import java.util.Set;
 
 @AutoValue
-public abstract class CategoryComboModel extends BaseNameableObjectModel {
+public abstract class CategoryComboModel extends BaseIdentifiableObjectModel {
 
     public static final String TABLE = "CategoryCombo";
 
-    public static class Columns extends BaseNameableObjectModel.Columns {
+    public static class Columns extends BaseIdentifiableObjectModel.Columns {
     }
 
     public static CategoryComboModel create(Cursor cursor) {
@@ -74,7 +74,7 @@ public abstract class CategoryComboModel extends BaseNameableObjectModel {
     public abstract ContentValues toContentValues();
 
     @AutoValue.Builder
-    public static abstract class Builder extends BaseNameableObjectModel.Builder<Builder> {
+    public static abstract class Builder extends BaseIdentifiableObjectModel.Builder<Builder> {
 
         public abstract CategoryComboModel build();
     }

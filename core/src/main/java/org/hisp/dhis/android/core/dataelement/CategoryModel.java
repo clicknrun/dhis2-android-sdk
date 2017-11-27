@@ -34,16 +34,16 @@ import android.support.annotation.NonNull;
 
 import com.google.auto.value.AutoValue;
 
-import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 
 import java.util.Set;
 
 @AutoValue
-public abstract class CategoryModel extends BaseNameableObjectModel {
+public abstract class CategoryModel extends BaseIdentifiableObjectModel {
 
     public static final String TABLE = "Category";
 
-    public static class Columns extends BaseNameableObjectModel.Columns {
+    public static class Columns extends BaseIdentifiableObjectModel.Columns {
     }
 
     public static CategoryModel create(Cursor cursor) {
@@ -73,7 +73,7 @@ public abstract class CategoryModel extends BaseNameableObjectModel {
     public abstract ContentValues toContentValues();
 
     @AutoValue.Builder
-    public static abstract class Builder extends BaseNameableObjectModel.Builder<Builder> {
+    public static abstract class Builder extends BaseIdentifiableObjectModel.Builder<Builder> {
 
         public abstract CategoryModel build();
     }
