@@ -42,20 +42,18 @@ import static org.hisp.dhis.android.core.utils.Utils.isNull;
 public class GenericStore<M extends BaseIdentifiableObjectModel> {
     private final DatabaseAdapter databaseAdapter;
     private final SQLStatementWrapper statements;
-    private final SQLStatementBinder<M> binder;
     private final SQLStatementBuilder builder;
 
     public GenericStore(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
-                        SQLStatementBinder<M> binder, SQLStatementBuilder builder) {
+                        SQLStatementBuilder builder) {
         this.databaseAdapter = databaseAdapter;
         this.statements = statements;
-        this.binder = binder;
         this.builder = builder;
     }
 
     public long insert(@NonNull M m) {
         isNull(m);
-        binder.bindArguments(statements.insert, m);
+        m.bindToStatement(statements.insert);
 
         // execute and clear bindings
         Long insert = databaseAdapter.executeInsert(builder.tableName, statements.insert);
@@ -76,7 +74,7 @@ public class GenericStore<M extends BaseIdentifiableObjectModel> {
 
     public int update(@NonNull M m) {
         isNull(m);
-        binder.bindArguments(statements.update, m);
+        m.bindToStatement(statements.update);
 
         // bind the where argument
         sqLiteBind(statements.update, builder.columns.length + 1, m.uid());

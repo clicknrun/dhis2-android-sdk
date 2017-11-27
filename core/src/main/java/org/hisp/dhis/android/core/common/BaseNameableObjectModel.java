@@ -28,9 +28,13 @@
 
 package org.hisp.dhis.android.core.common;
 
+import android.database.sqlite.SQLiteStatement;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.gabrielittner.auto.value.cursor.ColumnName;
+
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 public abstract class BaseNameableObjectModel extends BaseIdentifiableObjectModel implements NameableObject {
 
@@ -60,6 +64,15 @@ public abstract class BaseNameableObjectModel extends BaseIdentifiableObjectMode
     @Override
     @ColumnName(Columns.DISPLAY_DESCRIPTION)
     public abstract String displayDescription();
+
+    @Override
+    public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
+        super.bindToStatement(sqLiteStatement);
+        sqLiteBind(sqLiteStatement, 7, shortName());
+        sqLiteBind(sqLiteStatement, 8, displayShortName());
+        sqLiteBind(sqLiteStatement, 9, description());
+        sqLiteBind(sqLiteStatement, 10, displayDescription());
+    }
 
     protected static abstract class Builder<T extends Builder> extends BaseIdentifiableObjectModel.Builder<T> {
         public abstract T shortName(@Nullable String shortName);

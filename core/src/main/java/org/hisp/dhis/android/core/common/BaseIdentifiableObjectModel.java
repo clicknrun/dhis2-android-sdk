@@ -28,6 +28,8 @@
 
 package org.hisp.dhis.android.core.common;
 
+import android.database.sqlite.SQLiteStatement;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.gabrielittner.auto.value.cursor.ColumnAdapter;
@@ -36,6 +38,8 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 
 import java.util.Date;
+
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 public abstract class BaseIdentifiableObjectModel extends BaseModel implements IdentifiableObject {
 
@@ -79,6 +83,15 @@ public abstract class BaseIdentifiableObjectModel extends BaseModel implements I
     @ColumnName(Columns.LAST_UPDATED)
     @ColumnAdapter(DbDateColumnAdapter.class)
     public abstract Date lastUpdated();
+
+    public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
+        sqLiteBind(sqLiteStatement, 1, uid());
+        sqLiteBind(sqLiteStatement, 2, code());
+        sqLiteBind(sqLiteStatement, 3, name());
+        sqLiteBind(sqLiteStatement, 4, displayName());
+        sqLiteBind(sqLiteStatement, 5, created());
+        sqLiteBind(sqLiteStatement, 6, lastUpdated());
+    }
 
     protected static abstract class Builder<T extends Builder> extends BaseModel.Builder<T> {
         public abstract T uid(String uid);

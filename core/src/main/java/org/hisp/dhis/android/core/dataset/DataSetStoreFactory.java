@@ -28,54 +28,16 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import android.database.sqlite.SQLiteStatement;
-import android.support.annotation.NonNull;
-
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataset.utils.GenericStore;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementBinder;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
-
-import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 public class DataSetStoreFactory {
     public static GenericStore<DataSetModel> create(DatabaseAdapter databaseAdapter) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(DataSetModel.TABLE,
                 DataSetModel.columnArray());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new GenericStore<>(databaseAdapter, statements, new DataSetBinder(), statementBuilder);
-    }
-
-    private static class DataSetBinder implements SQLStatementBinder<DataSetModel> {
-        public void bindArguments(@NonNull SQLiteStatement sqLiteStatement,
-                                  @NonNull DataSetModel dsm) {
-            sqLiteBind(sqLiteStatement, 1, dsm.uid());
-            sqLiteBind(sqLiteStatement, 2, dsm.code());
-            sqLiteBind(sqLiteStatement, 3, dsm.name());
-            sqLiteBind(sqLiteStatement, 4, dsm.displayName());
-            sqLiteBind(sqLiteStatement, 5, dsm.created());
-            sqLiteBind(sqLiteStatement, 6, dsm.lastUpdated());
-            sqLiteBind(sqLiteStatement, 7, dsm.shortName());
-            sqLiteBind(sqLiteStatement, 8, dsm.displayShortName());
-            sqLiteBind(sqLiteStatement, 9, dsm.description());
-            sqLiteBind(sqLiteStatement, 10, dsm.displayDescription());
-
-            sqLiteBind(sqLiteStatement, 11, dsm.periodType());
-            sqLiteBind(sqLiteStatement, 12, dsm.categoryCombo());
-            sqLiteBind(sqLiteStatement, 13, dsm.mobile());
-            sqLiteBind(sqLiteStatement, 14, dsm.version());
-            sqLiteBind(sqLiteStatement, 15, dsm.expiryDays());
-            sqLiteBind(sqLiteStatement, 16, dsm.timelyDays());
-            sqLiteBind(sqLiteStatement, 17, dsm.notifyCompletingUser());
-            sqLiteBind(sqLiteStatement, 18, dsm.openFuturePeriods());
-            sqLiteBind(sqLiteStatement, 19, dsm.fieldCombinationRequired());
-            sqLiteBind(sqLiteStatement, 20, dsm.validCompleteOnly());
-            sqLiteBind(sqLiteStatement, 21, dsm.noValueRequiresComment());
-            sqLiteBind(sqLiteStatement, 22, dsm.skipOffline());
-            sqLiteBind(sqLiteStatement, 23, dsm.dataElementDecoration());
-            sqLiteBind(sqLiteStatement, 24, dsm.renderAsTabs());
-            sqLiteBind(sqLiteStatement, 25, dsm.renderHorizontally());
-        }
+        return new GenericStore<>(databaseAdapter, statements, statementBuilder);
     }
 }
