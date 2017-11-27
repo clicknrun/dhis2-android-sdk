@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset.newpojos;
+package org.hisp.dhis.android.core.dataelement;
 
 import android.support.annotation.Nullable;
 
@@ -70,7 +70,7 @@ public abstract class Category extends BaseIdentifiableObject {
             @JsonProperty(CATEGORY_OPTIONS) List<CategoryOption> categoryOptions,
             @JsonProperty(DELETED) Boolean deleted) {
 
-        return new AutoValue_Category(uid, code, name,
+        return new org.hisp.dhis.android.core.dataelement.AutoValue_Category(uid, code, name,
                 displayName, created, lastUpdated, deleted,
                 categoryOptions);
 
