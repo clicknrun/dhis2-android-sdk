@@ -42,11 +42,12 @@ import java.util.List;
 
 @AutoValue
 public abstract class CategoryOption extends BaseIdentifiableObject {
+    private static final String SHORT_NAME = "shortName";
+    private static final String DISPLAY_SHORT_NAME = "displayShortName";
+
     private static final String CATEGORY_OPTION_COMBOS = "categoryOptionCombos";
     private static final String START_DATE = "startDate";
     private static final String END_DATE = "endDate";
-    private static final String SHORT_NAME = "shortName";
-    private static final String DISPLAY_SHORT_NAME = "displayShortName";
 
     public static final Field<CategoryOption, String> uid = Field.create(UID);
     public static final Field<CategoryOption, String> code = Field.create(CODE);
