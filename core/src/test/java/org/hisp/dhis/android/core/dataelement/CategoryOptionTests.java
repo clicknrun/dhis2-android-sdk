@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.dataset.newpojos.NewCategoryOption;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class CategoryOptionTests {
     @Test
     public void categoryOption_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
-        CategoryOption option = objectMapper.readValue("{" +
+        NewCategoryOption option = objectMapper.readValue("{" +
                         "\"lastUpdated\":\"2016-08-08T11:17:59.448\"," +
                         "\"id\":\"cQYFfHX9oIT\"," +
                         "\"created\":\"2016-08-08T11:17:59.448\"," +
@@ -67,7 +68,7 @@ public class CategoryOptionTests {
                         "]," +
                         "\"categoryOptionGroups\":[]" +
                         "}",
-                CategoryOption.class);
+                NewCategoryOption.class);
 
         assertThat(option.uid()).isEqualTo("cQYFfHX9oIT");
         assertThat(option.created()).isEqualTo(

@@ -38,6 +38,7 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
 
 import java.util.Date;
+import java.util.List;
 
 @AutoValue
 public abstract class NewCategoryOption extends BaseIdentifiableObject {
@@ -57,9 +58,7 @@ public abstract class NewCategoryOption extends BaseIdentifiableObject {
     public static final Field<NewCategoryOption, String> displayShortName = Field.create(DISPLAY_SHORT_NAME);
     public static final Field<NewCategoryOption, Boolean> deleted = Field.create(DELETED);
 
-    /* TODO: Use the type List<CategoryOptionCombo>
-    public static final Field<NewCategoryOption, List<CategoryOptionCombo>> categoryOptionCombos = Field.create(CATEGORY_OPTION_COMBOS);*/
-    public static final Field<NewCategoryOption, String> categoryOptionCombos = Field.create(CATEGORY_OPTION_COMBOS);
+    public static final Field<NewCategoryOption, List<NewCategoryOptionCombo>> categoryOptionCombos = Field.create(CATEGORY_OPTION_COMBOS);
     public static final Field<NewCategoryOption, Date> startDate = Field.create(START_DATE);
     public static final Field<NewCategoryOption, Date> endDate = Field.create(END_DATE);
 
@@ -73,7 +72,7 @@ public abstract class NewCategoryOption extends BaseIdentifiableObject {
 
     @Nullable
     @JsonProperty(CATEGORY_OPTION_COMBOS)
-    public abstract String categoryOptionCombos();
+    public abstract List<NewCategoryOptionCombo> categoryOptionCombos();
 
     @Nullable
     @JsonProperty(START_DATE)
@@ -94,7 +93,7 @@ public abstract class NewCategoryOption extends BaseIdentifiableObject {
             @JsonProperty(SHORT_NAME) String shortName,
             @JsonProperty(DISPLAY_SHORT_NAME) String displayShortName,
 
-            @JsonProperty(CATEGORY_OPTION_COMBOS) String categoryOptionCombos,
+            @JsonProperty(CATEGORY_OPTION_COMBOS) List<NewCategoryOptionCombo> categoryOptionCombos,
             @JsonProperty(START_DATE) Date startDate,
             @JsonProperty(END_DATE) Date endDate,
             @JsonProperty(DELETED) Boolean deleted) {

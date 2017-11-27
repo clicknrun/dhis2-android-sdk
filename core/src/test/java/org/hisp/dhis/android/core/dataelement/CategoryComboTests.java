@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.dataset.newpojos.NewCategoryCombo;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class CategoryComboTests {
     public void categoryCombo_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
 
-        CategoryCombo combo = objectMapper.readValue("{" +
+        NewCategoryCombo combo = objectMapper.readValue("{" +
                         "\"code\":\"BIRTHS\"," +
                         "\"created\":\"2011-12-24T12:24:25.203\"," +
                         "\"lastUpdated\":\"2016-04-18T16:04:34.745\"," +
@@ -69,7 +70,7 @@ public class CategoryComboTests {
                         "{\"id\":\"cX5k9anHEHd\"}" +
                         "]" +
                         "}",
-                CategoryCombo.class);
+                NewCategoryCombo.class);
 
         assertThat(combo.uid()).isEqualTo("m2jTvAj5kkm");
         assertThat(combo.code()).isEqualTo("BIRTHS");
@@ -79,7 +80,6 @@ public class CategoryComboTests {
                 BaseIdentifiableObject.DATE_FORMAT.parse("2016-04-18T16:04:34.745"));
         assertThat(combo.name()).isEqualTo("Births");
         assertThat(combo.displayName()).isEqualTo("Births");
-        assertThat(combo.isDefault()).isEqualTo(false);
 
         // categories
         assertThat(combo.categories().get(0).uid()).isEqualTo("KfdsGBcoiCa");

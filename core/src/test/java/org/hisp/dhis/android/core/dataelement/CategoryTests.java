@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.dataset.newpojos.NewCategory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -44,7 +45,8 @@ public class CategoryTests {
     public void category_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
 
-        Category category = objectMapper.readValue("{\"" +
+        // TODO: Ensure the call is good implemented
+        NewCategory category = objectMapper.readValue("{\"" +
                         "lastUpdated\":\"2014-11-19T12:58:52.558\"," +
                         "\"id\":\"KfdsGBcoiCa\"," +
                         "\"href\":\"https://play.dhis2.org/demo/api/categories/KfdsGBcoiCa\"," +
@@ -72,7 +74,7 @@ public class CategoryTests {
                         "{\"id\":\"HTHvCohKoXt\"}]," +
                         "\"userGroupAccesses\":[]" +
                         "}",
-                Category.class);
+                NewCategory.class);
 
         assertThat(category.uid()).isEqualTo("KfdsGBcoiCa");
         assertThat(category.created()).isEqualTo(
@@ -82,9 +84,7 @@ public class CategoryTests {
 
         // names
         assertThat(category.name()).isEqualTo("Births attended by");
-        assertThat(category.shortName()).isEqualTo("Births attended by");
         assertThat(category.displayName()).isEqualTo("Births attended by");
-        assertThat(category.displayShortName()).isEqualTo("Births attended by");
 
         // checking options
         assertThat(category.categoryOptions().get(0).uid()).isEqualTo("TNYQzTHdoxL");

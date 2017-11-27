@@ -38,6 +38,7 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
 
 import java.util.Date;
+import java.util.List;
 
 @AutoValue
 public abstract class NewCategoryCombo extends BaseIdentifiableObject {
@@ -51,11 +52,11 @@ public abstract class NewCategoryCombo extends BaseIdentifiableObject {
     public static final Field<NewCategoryCombo, String> lastUpdated = Field.create(LAST_UPDATED);
     public static final Field<NewCategoryCombo, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<NewCategoryCombo, String> categories = Field.create(CATEGORIES);
+    public static final Field<NewCategoryCombo, List<NewCategory>> categories = Field.create(CATEGORIES);
 
     @Nullable
     @JsonProperty(CATEGORIES)
-    public abstract String categories();
+    public abstract List<NewCategory> categories();
 
     @JsonCreator
     public static NewCategoryCombo create(
@@ -66,7 +67,7 @@ public abstract class NewCategoryCombo extends BaseIdentifiableObject {
             @JsonProperty(CREATED) Date created,
             @JsonProperty(LAST_UPDATED) Date lastUpdated,
 
-            @JsonProperty(CATEGORIES) String categories,
+            @JsonProperty(CATEGORIES) List<NewCategory> categories,
             @JsonProperty(DELETED) Boolean deleted) {
 
         return new AutoValue_NewCategoryCombo(uid, code, name,

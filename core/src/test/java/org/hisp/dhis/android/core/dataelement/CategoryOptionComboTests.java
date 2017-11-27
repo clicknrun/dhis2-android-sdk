@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.dataset.newpojos.NewCategoryOptionCombo;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class CategoryOptionComboTests {
     public void categoryOptionCombo_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
 
-        CategoryOptionCombo categoryOptionCombo = objectMapper.readValue("{" +
+        NewCategoryOptionCombo categoryOptionCombo = objectMapper.readValue("{" +
                         "\"code\":\"COC_358963\"," +
                         "\"lastUpdated\":\"2011-12-24T12:24:25.319\"," +
                         "\"id\":\"S34ULMcHMca\"," +
@@ -62,7 +63,7 @@ public class CategoryOptionComboTests {
                         "\"categoryOptions\":[{\"id\":\"FbLZS3ueWbQ\"}]," +
                         "\"userGroupAccesses\":[]," +
                         "\"attributeValues\":[]}",
-                CategoryOptionCombo.class);
+                NewCategoryOptionCombo.class);
 
         assertThat(categoryOptionCombo.uid()).isEqualTo("S34ULMcHMca");
         assertThat(categoryOptionCombo.code()).isEqualTo("COC_358963");
@@ -73,8 +74,6 @@ public class CategoryOptionComboTests {
                 BaseIdentifiableObject.DATE_FORMAT.parse("2011-12-24T12:24:25.319"));
 
         assertThat(categoryOptionCombo.name()).isEqualTo("0-11m");
-        assertThat(categoryOptionCombo.shortName()).isEqualTo("0-11m");
         assertThat(categoryOptionCombo.displayName()).isEqualTo("0-11m");
-        assertThat(categoryOptionCombo.displayShortName()).isEqualTo("0-11m");
     }
 }
