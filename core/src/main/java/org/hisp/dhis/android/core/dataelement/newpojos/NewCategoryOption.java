@@ -35,12 +35,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
-import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.data.api.Field;
-import org.hisp.dhis.android.core.dataelement.CategoryOptionCombo;
 
 import java.util.Date;
-import java.util.List;
 
 @AutoValue
 public abstract class NewCategoryOption extends BaseIdentifiableObject {
@@ -60,7 +57,9 @@ public abstract class NewCategoryOption extends BaseIdentifiableObject {
     public static final Field<NewCategoryOption, String> displayShortName = Field.create(DISPLAY_SHORT_NAME);
     public static final Field<NewCategoryOption, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<NewCategoryOption, List<CategoryOptionCombo>> categoryOptionCombos = Field.create(CATEGORY_OPTION_COMBOS);
+    /* TODO: Use the type List<CategoryOptionCombo>
+    public static final Field<NewCategoryOption, List<CategoryOptionCombo>> categoryOptionCombos = Field.create(CATEGORY_OPTION_COMBOS);*/
+    public static final Field<NewCategoryOption, String> categoryOptionCombos = Field.create(CATEGORY_OPTION_COMBOS);
     public static final Field<NewCategoryOption, Date> startDate = Field.create(START_DATE);
     public static final Field<NewCategoryOption, Date> endDate = Field.create(END_DATE);
 
@@ -74,7 +73,7 @@ public abstract class NewCategoryOption extends BaseIdentifiableObject {
 
     @Nullable
     @JsonProperty(CATEGORY_OPTION_COMBOS)
-    public abstract List<CategoryOptionCombo> categoryOptionCombos();
+    public abstract String categoryOptionCombos();
 
     @Nullable
     @JsonProperty(START_DATE)
@@ -95,7 +94,7 @@ public abstract class NewCategoryOption extends BaseIdentifiableObject {
             @JsonProperty(SHORT_NAME) String shortName,
             @JsonProperty(DISPLAY_SHORT_NAME) String displayShortName,
 
-            @JsonProperty(CATEGORY_OPTION_COMBOS) List<CategoryOptionCombo> categoryOptionCombos,
+            @JsonProperty(CATEGORY_OPTION_COMBOS) String categoryOptionCombos,
             @JsonProperty(START_DATE) Date startDate,
             @JsonProperty(END_DATE) Date endDate,
             @JsonProperty(DELETED) Boolean deleted) {
