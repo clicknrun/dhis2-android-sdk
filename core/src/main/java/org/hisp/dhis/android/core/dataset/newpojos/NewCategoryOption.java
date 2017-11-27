@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement.newpojos;
+package org.hisp.dhis.android.core.dataset.newpojos;
 
 import android.support.annotation.Nullable;
 
