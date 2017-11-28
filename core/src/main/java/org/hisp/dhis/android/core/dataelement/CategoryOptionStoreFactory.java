@@ -36,7 +36,7 @@ import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 public class CategoryOptionStoreFactory {
     public static IdentifiableObjectStore<CategoryOptionModel> create(DatabaseAdapter databaseAdapter) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryOptionModel.TABLE,
-                CategoryOptionModel.columnArray());
+                CategoryOptionModel.Columns.all());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
         return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
     }

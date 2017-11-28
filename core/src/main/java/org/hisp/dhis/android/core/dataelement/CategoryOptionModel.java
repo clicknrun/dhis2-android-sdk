@@ -40,6 +40,7 @@ import com.google.auto.value.AutoValue;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
+import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
 import java.util.Set;
@@ -55,6 +56,11 @@ public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel im
 
         public static final String START_DATE = "startDate";
         public static final String END_DATE = "endDate";
+
+        public static String[] all() {
+            return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),
+                    SHORT_NAME, DISPLAY_SHORT_NAME, START_DATE, END_DATE);
+        }
     }
 
     public static CategoryOptionModel create(Cursor cursor) {
