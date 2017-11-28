@@ -35,6 +35,7 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -43,54 +44,28 @@ public class CategoryTests {
     @Test
     public void category_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
+        InputStream jsonStream = this.getClass().getClassLoader()
+                .getResourceAsStream("category/category.json");
 
-        // TODO: Ensure the call is good implemented
-        Category category = objectMapper.readValue("{\"" +
-                        "lastUpdated\":\"2014-11-19T12:58:52.558\"," +
-                        "\"id\":\"KfdsGBcoiCa\"," +
-                        "\"href\":\"https://play.dhis2.org/demo/api/categories/KfdsGBcoiCa\"," +
-                        "\"created\":\"2011-12-24T12:24:25.155\"," +
-                        "\"name\":\"Births attended by\"," +
-                        "\"shortName\":\"Births attended by\"," +
-                        "\"dataDimensionType\":\"DISAGGREGATION\"," +
-                        "\"dimensionType\":\"CATEGORY\"," +
-                        "\"displayName\":\"Births attended by\"," +
-                        "\"publicAccess\":\"rw------\"," +
-                        "\"displayShortName\":\"Births attended by\"," +
-                        "\"externalAccess\":false," +
-                        "\"dimension\":\"KfdsGBcoiCa\"," +
-                        "\"allItems\":false," +
-                        "\"dataDimension\":false," +
-                        "\"user\":{\"id\":\"GOLswS44mh8\"}," +
-                        "\"translations\":[]," +
-                        "\"categoryCombos\":[{\"id\":\"m2jTvAj5kkm\"}]," +
-                        "\"categoryOptions\":[" +
-                        "{\"id\":\"TNYQzTHdoxL\"}," +
-                        "{\"id\":\"TXGfLxZlInA\"}," +
-                        "{\"id\":\"QgULqw9YDu2\"}," +
-                        "{\"id\":\"OjIOxG7vgna\"}," +
-                        "{\"id\":\"uZUnebiT5DI\"}," +
-                        "{\"id\":\"HTHvCohKoXt\"}]," +
-                        "\"userGroupAccesses\":[]" +
-                        "}",
-                Category.class);
+        Category category = objectMapper.readValue(jsonStream, Category.class);
 
-        assertThat(category.uid()).isEqualTo("KfdsGBcoiCa");
+        assertThat(category.uid()).isEqualTo("LFsZ8v5v7rq");
         assertThat(category.created()).isEqualTo(
-                BaseIdentifiableObject.DATE_FORMAT.parse("2011-12-24T12:24:25.155"));
+                BaseIdentifiableObject.DATE_FORMAT.parse("2013-12-20T22:13:46.348"));
         assertThat(category.lastUpdated()).isEqualTo(
-                BaseIdentifiableObject.DATE_FORMAT.parse("2014-11-19T12:58:52.558"));
+                BaseIdentifiableObject.DATE_FORMAT.parse("2013-12-23T18:07:58.771"));
 
         // names
-        assertThat(category.name()).isEqualTo("Births attended by");
-        assertThat(category.displayName()).isEqualTo("Births attended by");
+        assertThat(category.name()).isEqualTo("Implementing Partner");
+        assertThat(category.displayName()).isEqualTo("Implementing Partner");
 
         // checking options
-        assertThat(category.categoryOptions().get(0).uid()).isEqualTo("TNYQzTHdoxL");
-        assertThat(category.categoryOptions().get(1).uid()).isEqualTo("TXGfLxZlInA");
-        assertThat(category.categoryOptions().get(2).uid()).isEqualTo("QgULqw9YDu2");
-        assertThat(category.categoryOptions().get(3).uid()).isEqualTo("OjIOxG7vgna");
-        assertThat(category.categoryOptions().get(4).uid()).isEqualTo("uZUnebiT5DI");
-        assertThat(category.categoryOptions().get(5).uid()).isEqualTo("HTHvCohKoXt");
+        assertThat(category.categoryOptions().size()).isEqualTo(16);
+        assertThat(category.categoryOptions().get(0).uid()).isEqualTo("C6nZpLKjEJr");
+        assertThat(category.categoryOptions().get(0).name())
+                .isEqualTo("African Medical and Research Foundation");
+
+        assertThat(category.categoryOptions().get(1).uid()).isEqualTo("CW81uF03hvV");
+        assertThat(category.categoryOptions().get(15).uid()).isEqualTo("uilaJSyXt7d");
     }
 }
