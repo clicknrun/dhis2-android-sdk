@@ -43,7 +43,6 @@ import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
-import java.util.Set;
 
 @AutoValue
 public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel implements StatementBinder {

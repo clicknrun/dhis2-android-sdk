@@ -38,8 +38,6 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.dataset.DataSet;
 
-import java.util.Set;
-
 @AutoValue
 public abstract class CategoryComboModel extends BaseIdentifiableObjectModel implements StatementBinder {
 

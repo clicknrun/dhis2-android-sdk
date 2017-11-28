@@ -46,7 +46,6 @@ import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
-import java.util.Set;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 

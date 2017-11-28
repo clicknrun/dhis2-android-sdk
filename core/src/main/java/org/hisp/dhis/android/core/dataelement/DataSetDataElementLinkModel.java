@@ -40,8 +40,6 @@ import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.utils.Utils;
 
-import java.util.Set;
-
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue

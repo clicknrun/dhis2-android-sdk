@@ -37,8 +37,6 @@ import com.google.auto.value.AutoValue;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 
-import java.util.Set;
-
 @AutoValue
 public abstract class CategoryModel extends BaseIdentifiableObjectModel implements StatementBinder {
 
