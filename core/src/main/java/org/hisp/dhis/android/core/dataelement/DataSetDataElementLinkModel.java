@@ -36,12 +36,13 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseModel;
+import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Set;
 
 @AutoValue
-public abstract class DataSetDataElementLinkModel extends BaseModel {
+public abstract class DataSetDataElementLinkModel extends BaseModel implements StatementBinder {
     public static final String TABLE = "DataSetDataElementLink";
 
     public static class Columns extends BaseModel.Columns {
