@@ -46,6 +46,10 @@ public abstract class CategoryComboModel extends BaseIdentifiableObjectModel imp
     public static final String TABLE = "CategoryCombo";
 
     public static class Columns extends BaseIdentifiableObjectModel.Columns {
+
+        public static String[] all() {
+            return BaseIdentifiableObjectModel.Columns.all();
+        }
     }
 
     public static CategoryComboModel create(Cursor cursor) {
