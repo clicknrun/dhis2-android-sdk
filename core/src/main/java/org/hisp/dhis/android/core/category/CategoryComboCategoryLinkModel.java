@@ -25,8 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -37,63 +36,74 @@ import android.support.annotation.Nullable;
 import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue
-public abstract class CategoryOptionComboModel extends BaseIdentifiableObjectModel implements StatementBinder {
+public abstract class CategoryComboCategoryLinkModel extends BaseModel implements StatementBinder {
+    public static final String TABLE = "CategoryComboCategoryLink";
 
-    public static final String TABLE = "CategoryOptionCombo";
-
-    public static class Columns extends BaseIdentifiableObjectModel.Columns {
-        public static final String IGNORE_APPROVAL = "ignoreApproval";
+    public static class Columns extends BaseModel.Columns {
+        public static final String CATEGORY = "category";
+        public static final String CATEGORY_COMBO = "categoryCombo";
+        public static final String SORT_ORDER = "sortOrder";
 
         public static String[] all() {
-            return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),IGNORE_APPROVAL);
+            return Utils.appendInNewArray(BaseModel.Columns.all(),
+                    CATEGORY, CATEGORY_COMBO, SORT_ORDER);
         }
     }
 
-    public static CategoryOptionComboModel create(Cursor cursor) {
-        return AutoValue_CategoryOptionComboModel.createFromCursor(cursor);
+    public static CategoryComboCategoryLinkModel create(Cursor cursor) {
+        return AutoValue_CategoryComboCategoryLinkModel.createFromCursor(cursor);
     }
 
-    public static CategoryOptionComboModel create(CategoryOptionCombo categoryOptionCombo) {
-        return CategoryOptionComboModel.builder()
-                .uid(categoryOptionCombo.uid())
-                .code(categoryOptionCombo.code())
-                .name(categoryOptionCombo.name())
-                .displayName(categoryOptionCombo.displayName())
-                .created(categoryOptionCombo.created())
-                .lastUpdated(categoryOptionCombo.lastUpdated())
-
-                .ignoreApproval(categoryOptionCombo.ignoreApproval())
+    public static CategoryComboCategoryLinkModel create(
+            String categoryUid, String categoryComboUid, int sortOrder) {
+        return CategoryComboCategoryLinkModel.builder()
+                .category(categoryUid)
+                .categoryCombo(categoryComboUid)
+                .sortOrder(sortOrder)
                 .build();
     }
 
     public static Builder builder() {
-        return new $$AutoValue_CategoryOptionComboModel.Builder();
+        return new $$AutoValue_CategoryComboCategoryLinkModel.Builder();
     }
 
     @Nullable
-    @ColumnName(Columns.IGNORE_APPROVAL)
-    public abstract Boolean ignoreApproval();
+    @ColumnName(Columns.CATEGORY)
+    public abstract String category();
+
+    @Nullable
+    @ColumnName(Columns.CATEGORY_COMBO)
+    public abstract String categoryCombo();
+
+    @NonNull
+    @ColumnName(Columns.SORT_ORDER)
+    public abstract int sortOrder();
 
     @NonNull
     public abstract ContentValues toContentValues();
 
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
-        super.bindToStatement(sqLiteStatement);
-        sqLiteBind(sqLiteStatement, 7, ignoreApproval());
+        sqLiteBind(sqLiteStatement, 1, category());
+        sqLiteBind(sqLiteStatement, 2, categoryCombo());
+        sqLiteBind(sqLiteStatement, 3, sortOrder());
     }
 
     @AutoValue.Builder
-    public static abstract class Builder extends BaseIdentifiableObjectModel.Builder<Builder> {
-        public abstract Builder ignoreApproval(Boolean ignoreApproval);
+    public static abstract class Builder extends BaseModel.Builder<Builder> {
+        public abstract Builder category(String category);
 
-        public abstract CategoryOptionComboModel build();
+        public abstract Builder categoryCombo(String categoryCombo);
+
+        public abstract Builder sortOrder(int sortOrder);
+
+        public abstract CategoryComboCategoryLinkModel build();
     }
 }

@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
 import android.support.annotation.Nullable;
 
@@ -38,28 +38,27 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
 
 import java.util.Date;
-import java.util.List;
 
 @AutoValue
-public abstract class Category extends BaseIdentifiableObject {
-    private static final String CATEGORY_OPTIONS = "categoryOptions";
+public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
+    private static final String IGNORE_APPROVAL = "ignoreApproval";
 
-    public static final Field<Category, String> uid = Field.create(UID);
-    public static final Field<Category, String> code = Field.create(CODE);
-    public static final Field<Category, String> name = Field.create(NAME);
-    public static final Field<Category, String> displayName = Field.create(DISPLAY_NAME);
-    public static final Field<Category, String> created = Field.create(CREATED);
-    public static final Field<Category, String> lastUpdated = Field.create(LAST_UPDATED);
-    public static final Field<Category, Boolean> deleted = Field.create(DELETED);
+    public static final Field<CategoryOptionCombo, String> uid = Field.create(UID);
+    public static final Field<CategoryOptionCombo, String> code = Field.create(CODE);
+    public static final Field<CategoryOptionCombo, String> name = Field.create(NAME);
+    public static final Field<CategoryOptionCombo, String> displayName = Field.create(DISPLAY_NAME);
+    public static final Field<CategoryOptionCombo, String> created = Field.create(CREATED);
+    public static final Field<CategoryOptionCombo, String> lastUpdated = Field.create(LAST_UPDATED);
+    public static final Field<CategoryOptionCombo, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<Category, List<CategoryOption>> categoryOptions = Field.create(CATEGORY_OPTIONS);
+    public static final Field<CategoryOptionCombo, Boolean> ignoreApproval = Field.create(IGNORE_APPROVAL);
 
     @Nullable
-    @JsonProperty(CATEGORY_OPTIONS)
-    public abstract List<CategoryOption> categoryOptions();
+    @JsonProperty(IGNORE_APPROVAL)
+    public abstract Boolean ignoreApproval();
 
     @JsonCreator
-    public static Category create(
+    public static CategoryOptionCombo create(
             @JsonProperty(UID) String uid,
             @JsonProperty(CODE) String code,
             @JsonProperty(NAME) String name,
@@ -67,12 +66,11 @@ public abstract class Category extends BaseIdentifiableObject {
             @JsonProperty(CREATED) Date created,
             @JsonProperty(LAST_UPDATED) Date lastUpdated,
 
-            @JsonProperty(CATEGORY_OPTIONS) List<CategoryOption> categoryOptions,
+            @JsonProperty(IGNORE_APPROVAL) Boolean ignoreApproval,
+
             @JsonProperty(DELETED) Boolean deleted) {
 
-        return new org.hisp.dhis.android.core.dataelement.AutoValue_Category(uid, code, name,
-                displayName, created, lastUpdated, deleted,
-                categoryOptions);
-
+        return new AutoValue_CategoryOptionCombo(uid, code, name,
+                displayName, created, lastUpdated, deleted, ignoreApproval);
     }
 }

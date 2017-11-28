@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
 import android.support.annotation.Nullable;
 
@@ -70,7 +70,7 @@ public abstract class CategoryCombo extends BaseIdentifiableObject {
             @JsonProperty(CATEGORIES) List<Category> categories,
             @JsonProperty(DELETED) Boolean deleted) {
 
-        return new org.hisp.dhis.android.core.dataelement.AutoValue_CategoryCombo(uid, code, name,
+        return new AutoValue_CategoryCombo(uid, code, name,
                 displayName, created, lastUpdated, deleted,
                 categories);
 

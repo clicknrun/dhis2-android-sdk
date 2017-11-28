@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.dataset;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -43,67 +43,67 @@ import org.hisp.dhis.android.core.utils.Utils;
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue
-public abstract class CategoryCategoryOptionLinkModel extends BaseModel implements StatementBinder {
-    public static final String TABLE = "CategoryCategoryOptionLink";
+public abstract class DataSetDataElementLinkModel extends BaseModel implements StatementBinder {
+    public static final String TABLE = "DataSetDataElementLink";
 
     public static class Columns extends BaseModel.Columns {
-        public static final String CATEGORY = "category";
-        public static final String CATEGORY_OPTION = "categoryOption";
-        public static final String SORT_ORDER = "sortOrder";
+        public static final String DATA_SET = "dataSet";
+        public static final String DATA_ELEMENT = "dataElement";
+        public static final String CATEGORY_COMBO = "categoryCombo";
 
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(),
-                    CATEGORY, CATEGORY_OPTION, SORT_ORDER);
+                    DATA_SET, DATA_ELEMENT, CATEGORY_COMBO);
         }
     }
 
-    public static CategoryCategoryOptionLinkModel create(Cursor cursor) {
-        return AutoValue_CategoryCategoryOptionLinkModel.createFromCursor(cursor);
+    public static DataSetDataElementLinkModel create(Cursor cursor) {
+        return AutoValue_DataSetDataElementLinkModel.createFromCursor(cursor);
     }
 
-    public static CategoryCategoryOptionLinkModel create(
-            String categoryUid, String categoryOptionUid, int sortOrder) {
-        return CategoryCategoryOptionLinkModel.builder()
-                .category(categoryUid)
-                .categoryOption(categoryOptionUid)
-                .sortOrder(sortOrder)
+    public static DataSetDataElementLinkModel create(
+            String dataSetUid, String dataElementUid, String categoryComboUid) {
+        return DataSetDataElementLinkModel.builder()
+                .dataSet(dataSetUid)
+                .dataElement(dataElementUid)
+                .categoryCombo(categoryComboUid)
                 .build();
     }
 
     public static Builder builder() {
-        return new $$AutoValue_CategoryCategoryOptionLinkModel.Builder();
+        return new $$AutoValue_DataSetDataElementLinkModel.Builder();
     }
 
     @Nullable
-    @ColumnName(Columns.CATEGORY)
-    public abstract String category();
+    @ColumnName(Columns.DATA_SET)
+    public abstract String dataSet();
 
     @Nullable
-    @ColumnName(Columns.CATEGORY_OPTION)
-    public abstract String categoryOption();
+    @ColumnName(Columns.DATA_ELEMENT)
+    public abstract String dataElement();
 
-    @NonNull
-    @ColumnName(Columns.SORT_ORDER)
-    public abstract int sortOrder();
+    @Nullable
+    @ColumnName(Columns.CATEGORY_COMBO)
+    public abstract String categoryCombo();
 
     @NonNull
     public abstract ContentValues toContentValues();
 
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
-        sqLiteBind(sqLiteStatement, 1, category());
-        sqLiteBind(sqLiteStatement, 2, categoryOption());
-        sqLiteBind(sqLiteStatement, 3, sortOrder());
+        sqLiteBind(sqLiteStatement, 1, dataSet());
+        sqLiteBind(sqLiteStatement, 2, dataElement());
+        sqLiteBind(sqLiteStatement, 3, categoryCombo());
     }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseModel.Builder<Builder> {
-        public abstract Builder category(String category);
+        public abstract Builder dataSet(String dataSet);
 
-        public abstract Builder categoryOption(String categoryOption);
+        public abstract Builder dataElement(String dataElement);
 
-        public abstract Builder sortOrder(int sortOrder);
+        public abstract Builder categoryCombo(String categoryCombo);
 
-        public abstract CategoryCategoryOptionLinkModel build();
+        public abstract DataSetDataElementLinkModel build();
     }
 }

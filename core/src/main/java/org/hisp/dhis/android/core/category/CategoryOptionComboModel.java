@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -34,78 +34,52 @@ import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.gabrielittner.auto.value.cursor.ColumnAdapter;
 import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
-import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 import org.hisp.dhis.android.core.utils.Utils;
-
-import java.util.Date;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue
-public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel implements StatementBinder {
+public abstract class CategoryOptionComboModel extends BaseIdentifiableObjectModel implements StatementBinder {
 
-    public static final String TABLE = "CategoryOption";
+    public static final String TABLE = "CategoryOptionCombo";
 
     public static class Columns extends BaseIdentifiableObjectModel.Columns {
-        public static final String SHORT_NAME = "shortName";
-        public static final String DISPLAY_SHORT_NAME = "displayShortName";
-
-        public static final String START_DATE = "startDate";
-        public static final String END_DATE = "endDate";
+        public static final String IGNORE_APPROVAL = "ignoreApproval";
 
         public static String[] all() {
-            return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),
-                    SHORT_NAME, DISPLAY_SHORT_NAME, START_DATE, END_DATE);
+            return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),IGNORE_APPROVAL);
         }
     }
 
-    public static CategoryOptionModel create(Cursor cursor) {
-        return AutoValue_CategoryOptionModel.createFromCursor(cursor);
+    public static CategoryOptionComboModel create(Cursor cursor) {
+        return AutoValue_CategoryOptionComboModel.createFromCursor(cursor);
     }
 
-    public static CategoryOptionModel create(CategoryOption categoryOption) {
-        return CategoryOptionModel.builder()
-                .uid(categoryOption.uid())
-                .code(categoryOption.code())
-                .name(categoryOption.name())
-                .displayName(categoryOption.displayName())
-                .created(categoryOption.created())
-                .lastUpdated(categoryOption.lastUpdated())
+    public static CategoryOptionComboModel create(CategoryOptionCombo categoryOptionCombo) {
+        return CategoryOptionComboModel.builder()
+                .uid(categoryOptionCombo.uid())
+                .code(categoryOptionCombo.code())
+                .name(categoryOptionCombo.name())
+                .displayName(categoryOptionCombo.displayName())
+                .created(categoryOptionCombo.created())
+                .lastUpdated(categoryOptionCombo.lastUpdated())
 
-                .shortName(categoryOption.shortName())
-                .displayShortName(categoryOption.displayShortName())
-                .startDate(categoryOption.startDate())
-                .endDate(categoryOption.endDate())
+                .ignoreApproval(categoryOptionCombo.ignoreApproval())
                 .build();
     }
 
     public static Builder builder() {
-        return new $$AutoValue_CategoryOptionModel.Builder();
+        return new $$AutoValue_CategoryOptionComboModel.Builder();
     }
 
     @Nullable
-    @ColumnName(Columns.SHORT_NAME)
-    public abstract String shortName();
-
-    @Nullable
-    @ColumnName(Columns.DISPLAY_SHORT_NAME)
-    public abstract String displayShortName();
-
-    @Nullable
-    @ColumnName(Columns.START_DATE)
-    @ColumnAdapter(DbDateColumnAdapter.class)
-    public abstract Date startDate();
-
-    @Nullable
-    @ColumnName(Columns.END_DATE)
-    @ColumnAdapter(DbDateColumnAdapter.class)
-    public abstract Date endDate();
+    @ColumnName(Columns.IGNORE_APPROVAL)
+    public abstract Boolean ignoreApproval();
 
     @NonNull
     public abstract ContentValues toContentValues();
@@ -113,22 +87,13 @@ public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel im
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
         super.bindToStatement(sqLiteStatement);
-        sqLiteBind(sqLiteStatement, 7, shortName());
-        sqLiteBind(sqLiteStatement, 8, displayShortName());
-        sqLiteBind(sqLiteStatement, 9, startDate());
-        sqLiteBind(sqLiteStatement, 10, endDate());
+        sqLiteBind(sqLiteStatement, 7, ignoreApproval());
     }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseIdentifiableObjectModel.Builder<Builder> {
-        public abstract Builder shortName(String shortName);
+        public abstract Builder ignoreApproval(Boolean ignoreApproval);
 
-        public abstract Builder displayShortName(String displayShortName);
-
-        public abstract Builder startDate(Date startDate);
-
-        public abstract Builder endDate(Date endDate);
-
-        public abstract CategoryOptionModel build();
+        public abstract CategoryOptionComboModel build();
     }
 }

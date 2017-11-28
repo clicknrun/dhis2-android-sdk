@@ -26,18 +26,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 
-public class CategoryComboStoreFactory {
-    public static IdentifiableObjectStore<CategoryComboModel> create(DatabaseAdapter databaseAdapter) {
-        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryComboModel.TABLE,
-                CategoryComboModel.Columns.all());
+public class DataSetDataElementLinkStoreFactory {
+    public static ObjectStore<DataSetDataElementLinkModel> create(DatabaseAdapter databaseAdapter) {
+        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(DataSetDataElementLinkModel.TABLE,
+                DataSetDataElementLinkModel.Columns.all());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
+        return new ObjectStore<>(databaseAdapter, statements, statementBuilder);
     }
 }

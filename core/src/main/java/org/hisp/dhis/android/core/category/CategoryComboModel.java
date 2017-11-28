@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -36,11 +36,12 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
+import org.hisp.dhis.android.core.dataset.DataSet;
 
 @AutoValue
-public abstract class CategoryModel extends BaseIdentifiableObjectModel implements StatementBinder {
+public abstract class CategoryComboModel extends BaseIdentifiableObjectModel implements StatementBinder {
 
-    public static final String TABLE = "Category";
+    public static final String TABLE = "CategoryCombo";
 
     public static class Columns extends BaseIdentifiableObjectModel.Columns {
 
@@ -49,23 +50,23 @@ public abstract class CategoryModel extends BaseIdentifiableObjectModel implemen
         }
     }
 
-    public static CategoryModel create(Cursor cursor) {
-        return AutoValue_CategoryModel.createFromCursor(cursor);
+    public static CategoryComboModel create(Cursor cursor) {
+        return AutoValue_CategoryComboModel.createFromCursor(cursor);
     }
 
-    public static CategoryModel create(Category category) {
-        return CategoryModel.builder()
-                .uid(category.uid())
-                .code(category.code())
-                .name(category.name())
-                .displayName(category.displayName())
-                .created(category.created())
-                .lastUpdated(category.lastUpdated())
+    public static CategoryComboModel create(DataSet dataSet) {
+        return CategoryComboModel.builder()
+                .uid(dataSet.uid())
+                .code(dataSet.code())
+                .name(dataSet.name())
+                .displayName(dataSet.displayName())
+                .created(dataSet.created())
+                .lastUpdated(dataSet.lastUpdated())
                 .build();
     }
 
     public static Builder builder() {
-        return new $$AutoValue_CategoryModel.Builder();
+        return new $$AutoValue_CategoryComboModel.Builder();
     }
 
     @NonNull
@@ -74,6 +75,6 @@ public abstract class CategoryModel extends BaseIdentifiableObjectModel implemen
     @AutoValue.Builder
     public static abstract class Builder extends BaseIdentifiableObjectModel.Builder<Builder> {
 
-        public abstract CategoryModel build();
+        public abstract CategoryComboModel build();
     }
 }

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -43,35 +43,35 @@ import org.hisp.dhis.android.core.utils.Utils;
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue
-public abstract class CategoryComboCategoryLinkModel extends BaseModel implements StatementBinder {
-    public static final String TABLE = "CategoryComboCategoryLink";
+public abstract class CategoryCategoryOptionLinkModel extends BaseModel implements StatementBinder {
+    public static final String TABLE = "CategoryCategoryOptionLink";
 
     public static class Columns extends BaseModel.Columns {
         public static final String CATEGORY = "category";
-        public static final String CATEGORY_COMBO = "categoryCombo";
+        public static final String CATEGORY_OPTION = "categoryOption";
         public static final String SORT_ORDER = "sortOrder";
 
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(),
-                    CATEGORY, CATEGORY_COMBO, SORT_ORDER);
+                    CATEGORY, CATEGORY_OPTION, SORT_ORDER);
         }
     }
 
-    public static CategoryComboCategoryLinkModel create(Cursor cursor) {
-        return AutoValue_CategoryComboCategoryLinkModel.createFromCursor(cursor);
+    public static CategoryCategoryOptionLinkModel create(Cursor cursor) {
+        return AutoValue_CategoryCategoryOptionLinkModel.createFromCursor(cursor);
     }
 
-    public static CategoryComboCategoryLinkModel create(
-            String categoryUid, String categoryComboUid, int sortOrder) {
-        return CategoryComboCategoryLinkModel.builder()
+    public static CategoryCategoryOptionLinkModel create(
+            String categoryUid, String categoryOptionUid, int sortOrder) {
+        return CategoryCategoryOptionLinkModel.builder()
                 .category(categoryUid)
-                .categoryCombo(categoryComboUid)
+                .categoryOption(categoryOptionUid)
                 .sortOrder(sortOrder)
                 .build();
     }
 
     public static Builder builder() {
-        return new $$AutoValue_CategoryComboCategoryLinkModel.Builder();
+        return new $$AutoValue_CategoryCategoryOptionLinkModel.Builder();
     }
 
     @Nullable
@@ -79,8 +79,8 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
     public abstract String category();
 
     @Nullable
-    @ColumnName(Columns.CATEGORY_COMBO)
-    public abstract String categoryCombo();
+    @ColumnName(Columns.CATEGORY_OPTION)
+    public abstract String categoryOption();
 
     @NonNull
     @ColumnName(Columns.SORT_ORDER)
@@ -92,7 +92,7 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
         sqLiteBind(sqLiteStatement, 1, category());
-        sqLiteBind(sqLiteStatement, 2, categoryCombo());
+        sqLiteBind(sqLiteStatement, 2, categoryOption());
         sqLiteBind(sqLiteStatement, 3, sortOrder());
     }
 
@@ -100,10 +100,10 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
     public static abstract class Builder extends BaseModel.Builder<Builder> {
         public abstract Builder category(String category);
 
-        public abstract Builder categoryCombo(String categoryCombo);
+        public abstract Builder categoryOption(String categoryOption);
 
         public abstract Builder sortOrder(int sortOrder);
 
-        public abstract CategoryComboCategoryLinkModel build();
+        public abstract CategoryCategoryOptionLinkModel build();
     }
 }

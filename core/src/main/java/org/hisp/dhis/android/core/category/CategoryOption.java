@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
 import android.support.annotation.Nullable;
 
@@ -99,7 +99,7 @@ public abstract class CategoryOption extends BaseIdentifiableObject {
             @JsonProperty(END_DATE) Date endDate,
             @JsonProperty(DELETED) Boolean deleted) {
 
-        return new org.hisp.dhis.android.core.dataelement.AutoValue_CategoryOption(uid, code, name,
+        return new AutoValue_CategoryOption(uid, code, name,
                 displayName, created, lastUpdated, deleted,
                 shortName, displayShortName, categoryOptionCombos,
                 startDate, endDate);
