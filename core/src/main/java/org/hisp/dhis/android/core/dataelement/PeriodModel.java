@@ -43,6 +43,7 @@ import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
+import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
 import java.util.Set;
@@ -58,6 +59,11 @@ public abstract class PeriodModel extends BaseModel implements StatementBinder {
         public static final String PERIOD_TYPE = "periodType";
         public static final String START_DATE = "startDate";
         public static final String END_DATE = "endDate";
+
+        public static String[] all() {
+            return Utils.appendInNewArray(BaseModel.Columns.all(),
+                    PERIOD_TYPE, START_DATE, END_DATE);
+        }
     }
 
     public static PeriodModel create(Cursor cursor) {

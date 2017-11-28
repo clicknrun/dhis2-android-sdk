@@ -36,7 +36,7 @@ import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 public class PeriodStoreFactory {
     public static ObjectStore<PeriodModel> create(DatabaseAdapter databaseAdapter) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(PeriodModel.TABLE,
-                PeriodModel.columnArray());
+                PeriodModel.Columns.all());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
         return new ObjectStore<>(databaseAdapter, statements, statementBuilder);
     }
