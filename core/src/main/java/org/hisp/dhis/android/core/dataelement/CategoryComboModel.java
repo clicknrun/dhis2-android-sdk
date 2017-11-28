@@ -67,15 +67,6 @@ public abstract class CategoryComboModel extends BaseIdentifiableObjectModel imp
                 .build();
     }
 
-    public static Set<String> columnSet() {
-        return CategoryComboModel.builder().build().toContentValues().keySet();
-    }
-
-    public static String[] columnArray() {
-        Set<String> keySet = columnSet();
-        return keySet.toArray(new String[keySet.size()]);
-    }
-
     public static Builder builder() {
         return new $$AutoValue_CategoryComboModel.Builder();
     }

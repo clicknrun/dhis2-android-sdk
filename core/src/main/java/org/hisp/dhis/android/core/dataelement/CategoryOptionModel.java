@@ -83,15 +83,6 @@ public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel im
                 .build();
     }
 
-    public static Set<String> columnSet() {
-        return CategoryOptionModel.builder().build().toContentValues().keySet();
-    }
-
-    public static String[] columnArray() {
-        Set<String> keySet = columnSet();
-        return keySet.toArray(new String[keySet.size()]);
-    }
-
     public static Builder builder() {
         return new $$AutoValue_CategoryOptionModel.Builder();
     }

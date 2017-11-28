@@ -78,15 +78,6 @@ public abstract class PeriodModel extends BaseModel implements StatementBinder {
                 .build();
     }
 
-    public static Set<String> columnSet() {
-        return PeriodModel.builder().build().toContentValues().keySet();
-    }
-
-    public static String[] columnArray() {
-        Set<String> keySet = columnSet();
-        return keySet.toArray(new String[keySet.size()]);
-    }
-
     public static Builder builder() {
         return new $$AutoValue_PeriodModel.Builder();
     }
