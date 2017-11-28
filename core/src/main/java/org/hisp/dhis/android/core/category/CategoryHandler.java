@@ -32,13 +32,17 @@ import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 
 public class CategoryHandler extends GenericHandler<Category, CategoryModel> {
 
-    public CategoryHandler(IdentifiableObjectStore<CategoryModel> store) {
+    private final CategoryOptionHandler categoryOptionHandler;
+
+    public CategoryHandler(IdentifiableObjectStore<CategoryModel> store,
+                           CategoryOptionHandler categoryOptionHandler) {
         super(store);
+        this.categoryOptionHandler = categoryOptionHandler;
     }
 
     @Override
     protected void afterObjectPersisted(Category category) {
-        // TODO handle children
+        this.categoryOptionHandler.handleMany(category.categoryOptions());
     }
 
     @Override
