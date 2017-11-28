@@ -28,6 +28,7 @@
 
 package org.hisp.dhis.android.core.dataset;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -37,6 +38,8 @@ import com.google.auto.value.AutoValue;
 import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.data.api.Field;
+import org.hisp.dhis.android.core.data.api.NestedField;
+import org.hisp.dhis.android.core.dataelement.CategoryCombo;
 
 import java.util.Date;
 
@@ -70,9 +73,8 @@ public abstract class DataSet extends BaseNameableObject {
     public static final Field<DataSet, String> displayDescription = Field.create(DISPLAY_DESCRIPTION);
     public static final Field<DataSet, Boolean> deleted = Field.create(DELETED);
 
-    // TODO: Change String to PeriodType
     public static final Field<DataSet, PeriodType> periodType = Field.create(PERIOD_TYPE);
-    public static final Field<DataSet, String> categoryCombo = Field.create(CATEGORY_COMBO);
+    public static final NestedField<DataSet, CategoryCombo> categoryCombo = NestedField.create(CATEGORY_COMBO);
     public static final Field<DataSet, Boolean> mobile = Field.create(MOBILE);
     public static final Field<DataSet, Integer> version = Field.create(VERSION);
     public static final Field<DataSet, Integer> expiryDays = Field.create(EXPIRY_DAYS);
@@ -91,9 +93,9 @@ public abstract class DataSet extends BaseNameableObject {
     @JsonProperty(PERIOD_TYPE)
     public abstract PeriodType periodType();
 
-    @Nullable
+    @NonNull
     @JsonProperty(CATEGORY_COMBO)
-    public abstract String categoryCombo();
+    public abstract CategoryCombo categoryCombo();
 
     @Nullable
     @JsonProperty(MOBILE)
@@ -160,7 +162,7 @@ public abstract class DataSet extends BaseNameableObject {
             @JsonProperty(DESCRIPTION) String description,
             @JsonProperty(DISPLAY_DESCRIPTION) String displayDescription,
             @JsonProperty(PERIOD_TYPE) PeriodType periodType,
-            @JsonProperty(CATEGORY_COMBO) String categoryCombo,
+            @JsonProperty(CATEGORY_COMBO) CategoryCombo categoryCombo,
             @JsonProperty(MOBILE) Boolean mobile,
             @JsonProperty(VERSION) Integer version,
             @JsonProperty(EXPIRY_DAYS) Integer expiryDays,

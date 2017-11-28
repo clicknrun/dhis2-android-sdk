@@ -83,6 +83,6 @@ public class DataSetTests {
         assertThat(dataSet.periodType()).isEqualTo(PeriodType.Monthly);
         assertThat(dataSet.openFuturePeriods()).isEqualTo(0);
         assertThat(dataSet.expiryDays()).isEqualTo(0);
-        // TODO assertThat(dataSet.categoryCombo()).isEqualTo("");
+        assertThat(dataSet.categoryCombo().uid()).isEqualTo("O4VaNks6tta");
     }
 }

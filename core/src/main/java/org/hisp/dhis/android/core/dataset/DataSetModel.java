@@ -94,7 +94,7 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
                 .description(dataSet.description())
                 .displayDescription(dataSet.displayDescription())
                 .periodType(dataSet.periodType())
-                .categoryCombo(dataSet.categoryCombo())
+                .categoryCombo(dataSet.categoryCombo().uid())
                 .mobile(dataSet.mobile())
                 .version(dataSet.version())
                 .expiryDays(dataSet.expiryDays())
