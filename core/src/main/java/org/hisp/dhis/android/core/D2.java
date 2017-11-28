@@ -37,6 +37,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hisp.dhis.android.core.calls.Call;
 import org.hisp.dhis.android.core.calls.MetadataCall;
 import org.hisp.dhis.android.core.calls.TrackedEntityInstancePostCall;
+import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.category.CategoryComboStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
+import org.hisp.dhis.android.core.category.CategoryOptionComboStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryOptionModel;
+import org.hisp.dhis.android.core.category.CategoryOptionStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryStoreFactory;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.data.api.FieldsConverterFactory;
@@ -45,6 +53,7 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataelement.DataElementStore;
 import org.hisp.dhis.android.core.dataelement.DataElementStoreImpl;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
+import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.dataset.DataSetStoreFactory;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStore;
@@ -142,6 +151,7 @@ public final class D2 {
     private final OrganisationUnitService organisationUnitService;
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
+    private final DataSetService dataSetService;
 
     // stores
     private final UserStore userStore;
@@ -170,6 +180,10 @@ public final class D2 {
     private final RelationshipTypeStore relationshipStore;
     private final TrackedEntityStore trackedEntityStore;
     private final IdentifiableObjectStore<DataSetModel> dataSetStore;
+    private final IdentifiableObjectStore<CategoryComboModel> categoryComboStore;
+    private final IdentifiableObjectStore<CategoryModel> categoryStore;
+    private final IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
+    private final IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
 
     private final TrackedEntityInstanceStore trackedEntityInstanceStore;
     private final TrackedEntityInstanceService trackedEntityInstanceService;
@@ -197,6 +211,7 @@ public final class D2 {
         this.optionSetService = retrofit.create(OptionSetService.class);
         this.trackedEntityInstanceService = retrofit.create(TrackedEntityInstanceService.class);
         this.eventService = retrofit.create(EventService.class);
+        this.dataSetService = retrofit.create(DataSetService.class);
 
         // stores
 
@@ -263,6 +278,12 @@ public final class D2 {
         this.organisationUnitProgramLinkStore =
                 new OrganisationUnitProgramLinkStoreImpl(databaseAdapter);
         this.dataSetStore = DataSetStoreFactory.create(databaseAdapter);
+
+
+        this.categoryComboStore = CategoryComboStoreFactory.create(databaseAdapter);
+        this.categoryStore = CategoryStoreFactory.create(databaseAdapter);
+        this.categoryOptionStore = CategoryOptionStoreFactory.create(databaseAdapter);
+        this.categoryOptionComboStore = CategoryOptionComboStoreFactory.create(databaseAdapter);
     }
 
     @NonNull
@@ -310,13 +331,14 @@ public final class D2 {
     public Call<Response> syncMetaData() {
         return new MetadataCall(
                 databaseAdapter, systemInfoService, userService, programService, organisationUnitService,
-                trackedEntityService, optionSetService, systemInfoStore, resourceStore, userStore,
+                trackedEntityService, optionSetService, dataSetService, systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore, optionStore,
                 optionSetStore, dataElementStore, programStageDataElementStore, programStageSectionStore,
-                programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore);
+                programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore,
+                dataSetStore, categoryComboStore, categoryStore, categoryOptionStore, categoryOptionComboStore);
     }
 
     @NonNull
