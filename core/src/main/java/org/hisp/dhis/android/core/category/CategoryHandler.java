@@ -27,27 +27,22 @@
  */
 package org.hisp.dhis.android.core.category;
 
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
+import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 
-public class CategoryComboHandler extends GenericHandler<CategoryCombo, CategoryComboModel> {
+public class CategoryHandler extends GenericHandler<Category, CategoryModel> {
 
-    private final CategoryHandler categoryHandler;
-
-    public CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store,
-                                CategoryHandler categoryHandler) {
+    public CategoryHandler(IdentifiableObjectStore<CategoryModel> store) {
         super(store);
-        this.categoryHandler = categoryHandler;
     }
 
     @Override
-    protected void afterObjectPersisted(CategoryCombo categoryCombo) {
+    protected void afterObjectPersisted(Category category) {
         // TODO handle children
-        this.categoryHandler.handleMany(categoryCombo.categories());
     }
 
     @Override
-    protected CategoryComboModel pojoToModel(CategoryCombo categoryCombo) {
-        return CategoryComboModel.create(categoryCombo);
+    protected CategoryModel pojoToModel(Category category) {
+        return CategoryModel.create(category);
     }
 }

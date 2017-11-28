@@ -28,7 +28,6 @@
 package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.category.CategoryComboHandler;
-import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 
@@ -44,7 +43,11 @@ public class DataSetHandler extends GenericHandler<DataSet, DataSetModel> {
 
     @Override
     protected void afterObjectPersisted(DataSet dataSet) {
-        this.categoryComboHandler.handle(dataSet.categoryCombo(),
-                CategoryComboModel.create(dataSet.categoryCombo()));
+        this.categoryComboHandler.handle(dataSet.categoryCombo());
+    }
+
+    @Override
+    protected DataSetModel pojoToModel(DataSet dataSet) {
+        return DataSetModel.create(dataSet);
     }
 }

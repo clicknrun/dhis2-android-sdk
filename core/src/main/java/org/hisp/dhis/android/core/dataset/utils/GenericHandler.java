@@ -31,9 +31,11 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 
+import java.util.Collection;
+
 import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
 
-public class GenericHandler<
+public abstract class GenericHandler<
         P extends BaseIdentifiableObject,
         M extends BaseIdentifiableObjectModel & StatementBinder> {
 
@@ -43,14 +45,21 @@ public class GenericHandler<
         this.store = store;
     }
 
-    public final void handle(P p, M m) {
-        if (p == null || m == null) {
+    public final void handle(P p) {
+        if (p == null) {
             return;
         }
-        deleteOrPersist(p, m);
+        deleteOrPersist(p);
     }
 
-    private void deleteOrPersist(P p, M m) {
+    public final void handleMany(Collection<P> pCollection) {
+        for(P p : pCollection) {
+            handle(p);
+        }
+    }
+
+    private void deleteOrPersist(P p) {
+        M m = pojoToModel(p);
         if (isDeleted(p) && m.uid() != null) {
             store.delete(m.uid());
         } else {
@@ -60,6 +69,7 @@ public class GenericHandler<
         this.afterObjectPersisted(p);
     }
 
-    protected void afterObjectPersisted(P p) {
-    }
+    protected void afterObjectPersisted(P p) {}
+
+    protected abstract M pojoToModel(P p);
 }
