@@ -25,36 +25,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataset.utils;
+package org.hisp.dhis.android.core.category;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
-import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
-import org.hisp.dhis.android.core.common.StatementBinder;
+import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
 
-import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
+public class CategoryComboHandler extends GenericHandler<CategoryCombo, CategoryComboModel> {
 
-public class SimpleHandler<
-        M extends BaseIdentifiableObjectModel & StatementBinder,
-        P extends BaseIdentifiableObject> {
-
-    private final IdentifiableObjectStore<M> store;
-
-    public SimpleHandler(IdentifiableObjectStore<M> store) {
-        this.store = store;
+    public CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store) {
+        super(store);
     }
 
-    public void handle(P p, M m) {
-        if (p == null || m == null) {
-            return;
-        }
-        deleteOrPersist(p, m);
-    }
-
-    private void deleteOrPersist(P p, M m) {
-        if (isDeleted(p) && m.uid() != null) {
-            store.delete(m.uid());
-        } else {
-            store.updateOrInsert(m);
-        }
+    @Override
+    protected void afterObjectPersisted(CategoryCombo categoryCombo) {
+        // TODO handle children
     }
 }

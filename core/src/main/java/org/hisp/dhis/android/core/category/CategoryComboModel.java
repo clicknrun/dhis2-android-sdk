@@ -54,14 +54,14 @@ public abstract class CategoryComboModel extends BaseIdentifiableObjectModel imp
         return AutoValue_CategoryComboModel.createFromCursor(cursor);
     }
 
-    public static CategoryComboModel create(DataSet dataSet) {
+    public static CategoryComboModel create(CategoryCombo categoryCombo) {
         return CategoryComboModel.builder()
-                .uid(dataSet.uid())
-                .code(dataSet.code())
-                .name(dataSet.name())
-                .displayName(dataSet.displayName())
-                .created(dataSet.created())
-                .lastUpdated(dataSet.lastUpdated())
+                .uid(categoryCombo.uid())
+                .code(categoryCombo.code())
+                .name(categoryCombo.name())
+                .displayName(categoryCombo.displayName())
+                .created(categoryCombo.created())
+                .lastUpdated(categoryCombo.lastUpdated())
                 .build();
     }
 

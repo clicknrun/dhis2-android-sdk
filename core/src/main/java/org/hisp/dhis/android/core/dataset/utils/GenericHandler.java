@@ -25,26 +25,41 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.dataset.utils;
 
-import org.hisp.dhis.android.core.category.CategoryComboHandler;
-import org.hisp.dhis.android.core.category.CategoryComboModel;
-import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.StatementBinder;
 
-public class DataSetHandler extends GenericHandler<DataSet, DataSetModel> {
+import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
 
-    private CategoryComboHandler categoryComboHandler;
+public class GenericHandler<
+        P extends BaseIdentifiableObject,
+        M extends BaseIdentifiableObjectModel & StatementBinder> {
 
-    public DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore,
-                          CategoryComboHandler categoryComboHandler) {
-        super(dataSetStore);
-        this.categoryComboHandler = categoryComboHandler;
+    private final IdentifiableObjectStore<M> store;
+
+    public GenericHandler(IdentifiableObjectStore<M> store) {
+        this.store = store;
     }
 
-    @Override
-    protected void afterObjectPersisted(DataSet dataSet) {
-        this.categoryComboHandler.handle(dataSet.categoryCombo(),
-                CategoryComboModel.create(dataSet.categoryCombo()));
+    public final void handle(P p, M m) {
+        if (p == null || m == null) {
+            return;
+        }
+        deleteOrPersist(p, m);
+    }
+
+    private void deleteOrPersist(P p, M m) {
+        if (isDeleted(p) && m.uid() != null) {
+            store.delete(m.uid());
+        } else {
+            store.updateOrInsert(m);
+        }
+
+        this.afterObjectPersisted(p);
+    }
+
+    protected void afterObjectPersisted(P p) {
     }
 }
