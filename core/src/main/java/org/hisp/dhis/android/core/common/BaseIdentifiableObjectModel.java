@@ -36,6 +36,7 @@ import com.gabrielittner.auto.value.cursor.ColumnAdapter;
 import com.gabrielittner.auto.value.cursor.ColumnName;
 
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
+import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
 
@@ -50,6 +51,10 @@ public abstract class BaseIdentifiableObjectModel extends BaseModel implements I
         public static final String DISPLAY_NAME = "displayName";
         public static final String CREATED = "created";
         public static final String LAST_UPDATED = "lastUpdated";
+
+        public static String[] all() {
+            return Utils.appendInNewArray(BaseModel.Columns.all(), UID, CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED);
+        }
     }
 
     @Override

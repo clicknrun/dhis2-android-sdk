@@ -38,7 +38,9 @@ import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.AndroidTestUtils.toBoolean;
@@ -80,7 +82,7 @@ public class DataSetModelTests {
     }
     @Test
     public void create_shouldConvertToDataSetModel() {
-        MatrixCursor cursor = new MatrixCursor(DataSetModel.columnArray());
+        MatrixCursor cursor = new MatrixCursor(DataSetModel.Columns.all());
         cursor.addRow(new Object[]{
                 ID, UID, CODE, NAME, DISPLAY_NAME,
                 dateString, dateString,
@@ -188,6 +190,13 @@ public class DataSetModelTests {
 
     @Test
     public void columns_shouldReturnModelColumns() {
-        assertThat(DataSetModel.columnSet().contains(Columns.SKIP_OFFLINE)).isTrue();
+        String[] columnArray = DataSetModel.Columns.all();
+        List<String> columnsList = Arrays.asList(columnArray);
+        assertThat(columnArray.length).isEqualTo(26);
+        assertThat(columnsList.contains(Columns.ID)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.UID)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.NAME)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.SHORT_NAME)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.SKIP_OFFLINE)).isEqualTo(true);
     }
 }

@@ -34,6 +34,8 @@ import android.support.annotation.Nullable;
 
 import com.gabrielittner.auto.value.cursor.ColumnName;
 
+import org.hisp.dhis.android.core.utils.Utils;
+
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 public abstract class BaseNameableObjectModel extends BaseIdentifiableObjectModel implements NameableObject {
@@ -43,6 +45,11 @@ public abstract class BaseNameableObjectModel extends BaseIdentifiableObjectMode
         public static final String DISPLAY_SHORT_NAME = "displayShortName";
         public static final String DESCRIPTION = "description";
         public static final String DISPLAY_DESCRIPTION = "displayDescription";
+
+        public static String[] all() {
+            return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),
+                    SHORT_NAME, DISPLAY_SHORT_NAME, DESCRIPTION, DISPLAY_DESCRIPTION);
+        }
     }
 
     @Nullable

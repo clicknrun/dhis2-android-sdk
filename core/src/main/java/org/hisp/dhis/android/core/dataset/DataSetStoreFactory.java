@@ -36,7 +36,7 @@ import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 public class DataSetStoreFactory {
     public static IdentifiableObjectStore<DataSetModel> create(DatabaseAdapter databaseAdapter) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(DataSetModel.TABLE,
-                DataSetModel.columnArray());
+                DataSetModel.Columns.all());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
         return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
     }

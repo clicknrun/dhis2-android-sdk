@@ -42,8 +42,7 @@ import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
-
-import java.util.Set;
+import org.hisp.dhis.android.core.utils.Utils;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
@@ -68,6 +67,14 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
         public static final String DATA_ELEMENT_DECORATION = "dataElementDecoration";
         public static final String RENDER_AS_TABS = "renderAsTabs";
         public static final String RENDER_HORIZONTALLY = "renderHorizontally";
+
+        public static String[] all() {
+            return Utils.appendInNewArray(BaseNameableObjectModel.Columns.all(),
+                    PERIOD_TYPE, CATEGORY_COMBO, MOBILE, VERSION, EXPIRY_DAYS, TIMELY_DAYS,
+                    NOTIFY_COMPLETING_USER, OPEN_FUTURE_PERIODS, FIELD_COMBINATION_REQUIRED,
+                    VALID_COMPLETE_ONLY, NO_VALUE_REQUIRES_COMMENT, SKIP_OFFLINE, DATA_ELEMENT_DECORATION,
+                    RENDER_AS_TABS, RENDER_HORIZONTALLY);
+        }
     }
 
     public static DataSetModel create(Cursor cursor) {
@@ -102,15 +109,6 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
                 .renderAsTabs(dataSet.renderAsTabs())
                 .renderHorizontally(dataSet.renderHorizontally())
                 .build();
-    }
-
-    public static Set<String> columnSet() {
-        return DataSetModel.builder().build().toContentValues().keySet();
-    }
-
-    public static String[] columnArray() {
-        Set<String> keySet = columnSet();
-        return keySet.toArray(new String[keySet.size()]);
     }
 
     public static Builder builder() {
