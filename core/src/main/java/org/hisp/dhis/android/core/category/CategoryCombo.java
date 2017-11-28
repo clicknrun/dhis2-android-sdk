@@ -43,6 +43,7 @@ import java.util.List;
 @AutoValue
 public abstract class CategoryCombo extends BaseIdentifiableObject {
     private static final String CATEGORIES = "categories";
+    private static final String CATEGORY_OPTION_COMBO = "categoryOptionCombos";
 
     public static final Field<CategoryCombo, String> uid = Field.create(UID);
     public static final Field<CategoryCombo, String> code = Field.create(CODE);
@@ -53,10 +54,16 @@ public abstract class CategoryCombo extends BaseIdentifiableObject {
     public static final Field<CategoryCombo, Boolean> deleted = Field.create(DELETED);
 
     public static final Field<CategoryCombo, List<Category>> categories = Field.create(CATEGORIES);
+    public static final Field<CategoryCombo, List<CategoryOptionCombo>> categoryOptionCombos =
+            Field.create(CATEGORY_OPTION_COMBO);
 
     @Nullable
     @JsonProperty(CATEGORIES)
     public abstract List<Category> categories();
+
+    @Nullable
+    @JsonProperty(CATEGORY_OPTION_COMBO)
+    public abstract List<CategoryOptionCombo> categoryOptionCombos();
 
     @JsonCreator
     public static CategoryCombo create(
@@ -68,11 +75,11 @@ public abstract class CategoryCombo extends BaseIdentifiableObject {
             @JsonProperty(LAST_UPDATED) Date lastUpdated,
 
             @JsonProperty(CATEGORIES) List<Category> categories,
+            @JsonProperty(CATEGORY_OPTION_COMBO) List<CategoryOptionCombo> categoryOptionCombos,
             @JsonProperty(DELETED) Boolean deleted) {
 
         return new AutoValue_CategoryCombo(uid, code, name,
                 displayName, created, lastUpdated, deleted,
-                categories);
-
+                categories, categoryOptionCombos);
     }
 }

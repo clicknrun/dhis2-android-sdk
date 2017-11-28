@@ -29,6 +29,15 @@
 package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.calls.Call;
+import org.hisp.dhis.android.core.category.CategoryComboHandler;
+import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.category.CategoryHandler;
+import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryOptionCombo;
+import org.hisp.dhis.android.core.category.CategoryOptionComboHandler;
+import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
+import org.hisp.dhis.android.core.category.CategoryOptionHandler;
+import org.hisp.dhis.android.core.category.CategoryOptionModel;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
@@ -50,25 +59,39 @@ public class DataSetCall implements Call<Response<Payload<DataSet>>> {
     private final DataSetService dataSetService;
 
     // database adapter and handler
-    private final IdentifiableObjectStore<DataSetModel> dataSetStore;
     private final DatabaseAdapter databaseAdapter;
     private final ResourceStore resourceStore;
     private final Date serverDate;
     private final Set<String> uids;
     private boolean isExecuted;
 
+    private final IdentifiableObjectStore<DataSetModel> dataSetStore;
+    private final IdentifiableObjectStore<CategoryComboModel> categoryComboStore;
+    private final IdentifiableObjectStore<CategoryModel> categoryStore;
+    private final IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
+    private final IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
+
     public DataSetCall(DataSetService dataSetService,
                        IdentifiableObjectStore<DataSetModel> dataSetStore,
+                       IdentifiableObjectStore<CategoryComboModel> categoryComboStore,
+                       IdentifiableObjectStore<CategoryModel> categoryStore,
+                       IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore,
+                       IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore,
                        DatabaseAdapter databaseAdapter,
                        ResourceStore resourceStore,
                        Set<String> uids,
                        Date serverDate) {
         this.dataSetService = dataSetService;
-        this.dataSetStore = dataSetStore;
         this.databaseAdapter = databaseAdapter;
         this.resourceStore = resourceStore;
         this.uids = uids;
         this.serverDate = new Date(serverDate.getTime());
+
+        this.dataSetStore = dataSetStore;
+        this.categoryComboStore = categoryComboStore;
+        this.categoryStore = categoryStore;
+        this.categoryOptionStore = categoryOptionStore;
+        this.categoryOptionComboStore = categoryOptionComboStore;
     }
 
 
@@ -112,15 +135,19 @@ public class DataSetCall implements Call<Response<Payload<DataSet>>> {
     private void saveDataSets(Response<Payload<DataSet>> response) {
         List<DataSet> dataSets = response.body().items();
         if (dataSets != null && !dataSets.isEmpty()) {
-            DataSetHandler dataSetHandler = new DataSetHandler(dataSetStore);
+            DataSetHandler dataSetHandler =
+                    new DataSetHandler(dataSetStore,
+                            new CategoryComboHandler(categoryComboStore,
+                                    new CategoryHandler(categoryStore,
+                                            new CategoryOptionHandler(categoryOptionStore)),
+                                    new CategoryOptionComboHandler(categoryOptionComboStore)));
+
             ResourceHandler resourceHandler = new ResourceHandler(resourceStore);
 
             Transaction transaction = databaseAdapter.beginNewTransaction();
 
             try {
-                for (DataSet dataSet: dataSets) {
-                    dataSetHandler.handleDataSet(dataSet);
-                }
+                dataSetHandler.handleMany(dataSets);
                 resourceHandler.handleResource(ResourceModel.Type.DATA_SET, serverDate);
 
                 transaction.setSuccessful();
