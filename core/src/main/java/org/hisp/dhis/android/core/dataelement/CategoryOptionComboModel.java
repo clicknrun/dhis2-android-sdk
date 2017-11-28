@@ -38,6 +38,7 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
+import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Set;
 
@@ -48,6 +49,10 @@ public abstract class CategoryOptionComboModel extends BaseIdentifiableObjectMod
 
     public static class Columns extends BaseIdentifiableObjectModel.Columns {
         public static final String IGNORE_APPROVAL = "ignoreApproval";
+
+        public static String[] all() {
+            return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),IGNORE_APPROVAL);
+        }
     }
 
     public static CategoryOptionComboModel create(Cursor cursor) {

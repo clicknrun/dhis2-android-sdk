@@ -36,7 +36,7 @@ import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 public class CategoryOptionComboStoreFactory {
     public static IdentifiableObjectStore<CategoryOptionComboModel> create(DatabaseAdapter databaseAdapter) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryOptionComboModel.TABLE,
-                CategoryOptionComboModel.columnArray());
+                CategoryOptionComboModel.Columns.all());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
         return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
     }
