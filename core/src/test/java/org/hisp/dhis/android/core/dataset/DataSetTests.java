@@ -56,7 +56,7 @@ public class DataSetTests {
     @Test
     public void dataSet_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
-        InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream("dataset/dataset.json");
+        InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream("dataset/dataSet.json");
 
         DataSet dataSet = objectMapper.readValue(jsonStream, DataSet.class);
 

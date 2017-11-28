@@ -1,0 +1,29 @@
+{
+  "code": "COC_1153397",
+  "lastUpdated": "2013-12-20T22:17:20.428",
+  "id": "ranftQIH5M9",
+  "created": "2013-12-20T22:17:20.428",
+  "name": "CARE International, Provide access to primary health care",
+  "shortName": "CARE International, Provide access to primary health care",
+  "displayName": "CARE International, Provide access to primary health care",
+  "displayShortName": "CARE International, Provide access to primary health care",
+  "externalAccess": false,
+  "ignoreApproval": false,
+  "dimensionItem": "ranftQIH5M9",
+  "categoryCombo": {
+    "id": "O4VaNks6tta"
+  },
+  "translations": [],
+  "categoryOptions": [
+    {
+      "id": "OUUdG3sdOqb"
+    },
+    {
+      "id": "RkbOhHwiOgW"
+    }
+  ],
+  "userGroupAccesses": [],
+  "attributeValues": [],
+  "userAccesses": [],
+  "legendSets": []
+}
