@@ -29,6 +29,7 @@ package org.hisp.dhis.android.core.dataelement;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -40,6 +41,8 @@ import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Set;
+
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue
 public abstract class DataSetDataElementLinkModel extends BaseModel implements StatementBinder {
@@ -69,15 +72,6 @@ public abstract class DataSetDataElementLinkModel extends BaseModel implements S
                 .build();
     }
 
-    public static Set<String> columnSet() {
-        return DataSetDataElementLinkModel.builder().build().toContentValues().keySet();
-    }
-
-    public static String[] columnArray() {
-        Set<String> keySet = columnSet();
-        return keySet.toArray(new String[keySet.size()]);
-    }
-
     public static Builder builder() {
         return new $$AutoValue_DataSetDataElementLinkModel.Builder();
     }
@@ -96,6 +90,13 @@ public abstract class DataSetDataElementLinkModel extends BaseModel implements S
 
     @NonNull
     public abstract ContentValues toContentValues();
+
+    @Override
+    public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
+        sqLiteBind(sqLiteStatement, 1, dataSet());
+        sqLiteBind(sqLiteStatement, 2, dataElement());
+        sqLiteBind(sqLiteStatement, 3, categoryCombo());
+    }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseModel.Builder<Builder> {
