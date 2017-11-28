@@ -1,25 +1,4311 @@
 {
-  "code": "DS_394131",
   "lastUpdated": "2015-08-09T12:35:36.743",
   "id": "lyLU2wR22tC",
   "created": "2012-06-10T00:36:10.036",
   "name": "ART monthly summary",
   "shortName": "ART 2010",
+  "code": "DS_394131",
   "validCompleteOnly": false,
+  "publicAccess": "rw------",
+  "skipOffline": false,
+  "formType": "CUSTOM",
+  "version": 22,
+  "timelyDays": 0,
+  "dimensionItemType": "REPORTING_RATE",
   "dataElementDecoration": false,
   "displayName": "ART monthly summary",
   "notifyCompletingUser": false,
   "noValueRequiresComment": false,
-  "skipOffline": false,
   "displayShortName": "ART 2010",
+  "externalAccess": false,
   "fieldCombinationRequired": false,
   "renderHorizontally": false,
   "renderAsTabs": false,
+  "dimensionItem": "lyLU2wR22tC",
   "mobile": false,
-  "version": 22,
-  "timelyDays": 0,
   "periodType": "Monthly",
   "openFuturePeriods": 0,
   "expiryDays": 0,
-  "categoryCombo": "O4VaNks6tta"
+  "dataEntryForm": {
+    "id": "rV5Un1vizeD"
+  },
+  "categoryCombo": {
+    "created": "2013-12-20T22:17:20.379",
+    "lastUpdated": "2013-12-20T22:17:20.472",
+    "name": "Implementing Partner and Projects",
+    "id": "O4VaNks6tta",
+    "dataDimensionType": "ATTRIBUTE",
+    "displayName": "Implementing Partner and Projects",
+    "externalAccess": false,
+    "isDefault": false,
+    "skipTotal": false,
+    "userGroupAccesses": [],
+    "attributeValues": [],
+    "categoryOptionCombos": [
+      {
+        "code": "COC_1153397",
+        "lastUpdated": "2013-12-20T22:17:20.428",
+        "id": "ranftQIH5M9",
+        "created": "2013-12-20T22:17:20.428",
+        "name": "CARE International, Provide access to primary health care",
+        "shortName": "CARE International, Provide access to primary health care",
+        "displayName": "CARE International, Provide access to primary health care",
+        "displayShortName": "CARE International, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "ranftQIH5M9",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "RkbOhHwiOgW"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153400",
+        "lastUpdated": "2013-12-20T22:17:20.430",
+        "id": "fC3z1lcAW5x",
+        "created": "2013-12-20T22:17:20.430",
+        "name": "CARE International, Improve access to clean water",
+        "shortName": "CARE International, Improve access to clean water",
+        "displayName": "CARE International, Improve access to clean water",
+        "displayShortName": "CARE International, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "fC3z1lcAW5x",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "RkbOhHwiOgW"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153405",
+        "lastUpdated": "2013-12-20T22:17:20.434",
+        "id": "UcWQppzD1it",
+        "created": "2013-12-20T22:17:20.434",
+        "name": "World Relief, Improve access to medicines",
+        "shortName": "World Relief, Improve access to medicines",
+        "displayName": "World Relief, Improve access to medicines",
+        "displayShortName": "World Relief, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "UcWQppzD1it",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "xEunk8LPzkb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153395",
+        "lastUpdated": "2013-12-20T22:17:20.426",
+        "id": "E5M2FZ1hReY",
+        "created": "2013-12-20T22:17:20.426",
+        "name": "World Vision, Provide access to basic education",
+        "shortName": "World Vision, Provide access to basic education",
+        "displayName": "World Vision, Provide access to basic education",
+        "displayShortName": "World Vision, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "E5M2FZ1hReY",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "uilaJSyXt7d"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153406",
+        "lastUpdated": "2013-12-20T22:17:20.434",
+        "id": "FcHCeH4jegz",
+        "created": "2013-12-20T22:17:20.434",
+        "name": "Family Health International, Provide access to primary health care",
+        "shortName": "Family Health International, Provide access to primary health care",
+        "displayName": "Family Health International, Provide access to primary health care",
+        "displayShortName": "Family Health International, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "FcHCeH4jegz",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "TY5rBQzlBRa"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153448",
+        "lastUpdated": "2013-12-20T22:17:20.465",
+        "id": "h5i1N1wcq9G",
+        "created": "2013-12-20T22:17:20.465",
+        "name": "Family Health International, Improve access to clean water",
+        "shortName": "Family Health International, Improve access to clean water",
+        "displayName": "Family Health International, Improve access to clean water",
+        "displayShortName": "Family Health International, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "h5i1N1wcq9G",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "TY5rBQzlBRa"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153414",
+        "lastUpdated": "2013-12-20T22:17:20.440",
+        "id": "ookIJtBen47",
+        "created": "2013-12-20T22:17:20.440",
+        "name": "Pathfinder International, Provide access to basic education",
+        "shortName": "Pathfinder International, Provide access to basic education",
+        "displayName": "Pathfinder International, Provide access to basic education",
+        "displayShortName": "Pathfinder International, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "ookIJtBen47",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "VLFVaH1MwnF"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153430",
+        "lastUpdated": "2013-12-20T22:17:20.451",
+        "id": "XjgA9fJK6bX",
+        "created": "2013-12-20T22:17:20.451",
+        "name": "CARE International, Provide access to basic education",
+        "shortName": "CARE International, Provide access to basic education",
+        "displayName": "CARE International, Provide access to basic education",
+        "displayShortName": "CARE International, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "XjgA9fJK6bX",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "RkbOhHwiOgW"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153445",
+        "lastUpdated": "2013-12-20T22:17:20.463",
+        "id": "hJ290dNYYXe",
+        "created": "2013-12-20T22:17:20.463",
+        "name": "International Rescue Committee, Provide access to primary health care",
+        "shortName": "International Rescue Committee, Provide access to primary health care",
+        "displayName": "International Rescue Committee, Provide access to primary health care",
+        "displayShortName": "International Rescue Committee, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "hJ290dNYYXe",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "g3bcPGD5Q5i"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153447",
+        "lastUpdated": "2013-12-20T22:17:20.464",
+        "id": "Um7S7APfj3M",
+        "created": "2013-12-20T22:17:20.464",
+        "name": "World Concern, Provide access to basic education",
+        "shortName": "World Concern, Provide access to basic education",
+        "displayName": "World Concern, Provide access to basic education",
+        "displayShortName": "World Concern, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "Um7S7APfj3M",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "LEWNFo4Qrrs"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153455",
+        "lastUpdated": "2013-12-20T22:17:20.470",
+        "id": "v2ZlaR9Uw99",
+        "created": "2013-12-20T22:17:20.470",
+        "name": "APHIAplus, Improve access to medicines",
+        "shortName": "APHIAplus, Improve access to medicines",
+        "displayName": "APHIAplus, Improve access to medicines",
+        "displayShortName": "APHIAplus, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "v2ZlaR9Uw99",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "B3nxOazOO2G"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153416",
+        "lastUpdated": "2013-12-20T22:17:20.441",
+        "id": "E29j0LFxvSV",
+        "created": "2013-12-20T22:17:20.441",
+        "name": "International Rescue Committee, Improve access to clean water",
+        "shortName": "International Rescue Committee, Improve access to clean water",
+        "displayName": "International Rescue Committee, Improve access to clean water",
+        "displayShortName": "International Rescue Committee, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "E29j0LFxvSV",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "g3bcPGD5Q5i"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153417",
+        "lastUpdated": "2013-12-20T22:17:20.442",
+        "id": "QjyqqJMm0X7",
+        "created": "2013-12-20T22:17:20.442",
+        "name": "World Vision, Improve access to clean water",
+        "shortName": "World Vision, Improve access to clean water",
+        "displayName": "World Vision, Improve access to clean water",
+        "displayShortName": "World Vision, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "QjyqqJMm0X7",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "uilaJSyXt7d"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153410",
+        "lastUpdated": "2013-12-20T22:17:20.437",
+        "id": "pN2UVP29cKQ",
+        "created": "2013-12-20T22:17:20.437",
+        "name": "World Vision, Provide access to primary health care",
+        "shortName": "World Vision, Provide access to primary health care",
+        "displayName": "World Vision, Provide access to primary health care",
+        "displayShortName": "World Vision, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "pN2UVP29cKQ",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "uilaJSyXt7d"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153435",
+        "lastUpdated": "2013-12-20T22:17:20.455",
+        "id": "h9eTWOH5od1",
+        "created": "2013-12-20T22:17:20.455",
+        "name": "Family Health International, Provide access to basic education",
+        "shortName": "Family Health International, Provide access to basic education",
+        "displayName": "Family Health International, Provide access to basic education",
+        "displayShortName": "Family Health International, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "h9eTWOH5od1",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "TY5rBQzlBRa"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153421",
+        "lastUpdated": "2013-12-20T22:17:20.445",
+        "id": "xJo2vQ5O1Sd",
+        "created": "2013-12-20T22:17:20.445",
+        "name": "Plan International, Improve access to medicines",
+        "shortName": "Plan International, Improve access to medicines",
+        "displayName": "Plan International, Improve access to medicines",
+        "displayShortName": "Plan International, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "xJo2vQ5O1Sd",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "e5YBV5F5iUd"
+          },
+          {
+            "id": "yMj2MnmNI8L"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153424",
+        "lastUpdated": "2013-12-20T22:17:20.447",
+        "id": "KBdt6dufS1O",
+        "created": "2013-12-20T22:17:20.447",
+        "name": "Path, Provide access to basic education",
+        "shortName": "Path, Provide access to basic education",
+        "displayName": "Path, Provide access to basic education",
+        "displayShortName": "Path, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "KBdt6dufS1O",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "yrwgRxRhBoU"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153438",
+        "lastUpdated": "2013-12-20T22:17:20.457",
+        "id": "SeWJkpLAyLt",
+        "created": "2013-12-20T22:17:20.457",
+        "name": "Unicef, Improve access to clean water",
+        "shortName": "Unicef, Improve access to clean water",
+        "displayName": "Unicef, Improve access to clean water",
+        "displayShortName": "Unicef, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "SeWJkpLAyLt",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "xwZ2u3WyQR0"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153446",
+        "lastUpdated": "2013-12-20T22:17:20.463",
+        "id": "B81quHGEY7H",
+        "created": "2013-12-20T22:17:20.463",
+        "name": "Unicef, Provide access to primary health care",
+        "shortName": "Unicef, Provide access to primary health care",
+        "displayName": "Unicef, Provide access to primary health care",
+        "displayShortName": "Unicef, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "B81quHGEY7H",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "xwZ2u3WyQR0"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153420",
+        "lastUpdated": "2013-12-20T22:17:20.444",
+        "id": "L27iqqRG0wk",
+        "created": "2013-12-20T22:17:20.444",
+        "name": "Population Services International, Improve access to medicines",
+        "shortName": "Population Services International, Improve access to medicines",
+        "displayName": "Population Services International, Improve access to medicines",
+        "displayShortName": "Population Services International, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "L27iqqRG0wk",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "XK6u6cJCR0t"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153443",
+        "lastUpdated": "2013-12-20T22:17:20.461",
+        "id": "VHj4WmtIGN4",
+        "created": "2013-12-20T22:17:20.461",
+        "name": "AIDSRelief Consortium, Provide access to basic education",
+        "shortName": "AIDSRelief Consortium, Provide access to basic education",
+        "displayName": "AIDSRelief Consortium, Provide access to basic education",
+        "displayShortName": "AIDSRelief Consortium, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "VHj4WmtIGN4",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "CW81uF03hvV"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153409",
+        "lastUpdated": "2013-12-20T22:17:20.437",
+        "id": "X0RDKeM4tBq",
+        "created": "2013-12-20T22:17:20.437",
+        "name": "Hope Worldwide, Provide access to basic education",
+        "shortName": "Hope Worldwide, Provide access to basic education",
+        "displayName": "Hope Worldwide, Provide access to basic education",
+        "displayShortName": "Hope Worldwide, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "X0RDKeM4tBq",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "hERJraxV8D9"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153399",
+        "lastUpdated": "2013-12-20T22:17:20.429",
+        "id": "N7QFN41eTN8",
+        "created": "2013-12-20T22:17:20.429",
+        "name": "Plan International, Improve access to clean water",
+        "shortName": "Plan International, Improve access to clean water",
+        "displayName": "Plan International, Improve access to clean water",
+        "displayShortName": "Plan International, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "N7QFN41eTN8",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "e5YBV5F5iUd"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153434",
+        "lastUpdated": "2013-12-20T22:17:20.454",
+        "id": "V2gbpszLQJm",
+        "created": "2013-12-20T22:17:20.454",
+        "name": "Unicef, Improve access to medicines",
+        "shortName": "Unicef, Improve access to medicines",
+        "displayName": "Unicef, Improve access to medicines",
+        "displayShortName": "Unicef, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "V2gbpszLQJm",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "xwZ2u3WyQR0"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153440",
+        "lastUpdated": "2013-12-20T22:17:20.458",
+        "id": "zW0OOUGLA48",
+        "created": "2013-12-20T22:17:20.458",
+        "name": "Plan International, Provide access to primary health care",
+        "shortName": "Plan International, Provide access to primary health care",
+        "displayName": "Plan International, Provide access to primary health care",
+        "displayShortName": "Plan International, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "zW0OOUGLA48",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "e5YBV5F5iUd"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153442",
+        "lastUpdated": "2013-12-20T22:17:20.460",
+        "id": "VYKHf8ucB2m",
+        "created": "2013-12-20T22:17:20.460",
+        "name": "IntraHealth International, Improve access to medicines",
+        "shortName": "IntraHealth International, Improve access to medicines",
+        "displayName": "IntraHealth International, Improve access to medicines",
+        "displayShortName": "IntraHealth International, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "VYKHf8ucB2m",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "yfWXlxYNbhy"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153394",
+        "lastUpdated": "2013-12-20T22:17:20.425",
+        "id": "XVl0bL5Bl4q",
+        "created": "2013-12-20T22:17:20.425",
+        "name": "APHIAplus, Improve access to clean water",
+        "shortName": "APHIAplus, Improve access to clean water",
+        "displayName": "APHIAplus, Improve access to clean water",
+        "displayShortName": "APHIAplus, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "XVl0bL5Bl4q",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "B3nxOazOO2G"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153457",
+        "lastUpdated": "2013-12-20T22:17:20.471",
+        "id": "ko7CWYAHvn1",
+        "created": "2013-12-20T22:17:20.471",
+        "name": "APHIAplus, Provide access to primary health care",
+        "shortName": "APHIAplus, Provide access to primary health care",
+        "displayName": "APHIAplus, Provide access to primary health care",
+        "displayShortName": "APHIAplus, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "ko7CWYAHvn1",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "B3nxOazOO2G"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153422",
+        "lastUpdated": "2013-12-20T22:17:20.446",
+        "id": "uLOKFxgYi27",
+        "created": "2013-12-20T22:17:20.446",
+        "name": "International Rescue Committee, Improve access to medicines",
+        "shortName": "International Rescue Committee, Improve access to medicines",
+        "displayName": "International Rescue Committee, Improve access to medicines",
+        "displayShortName": "International Rescue Committee, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "uLOKFxgYi27",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "g3bcPGD5Q5i"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153412",
+        "lastUpdated": "2013-12-20T22:17:20.439",
+        "id": "vcfEwePfiu6",
+        "created": "2013-12-20T22:17:20.439",
+        "name": "IntraHealth International, Provide access to primary health care",
+        "shortName": "IntraHealth International, Provide access to primary health care",
+        "displayName": "IntraHealth International, Provide access to primary health care",
+        "displayShortName": "IntraHealth International, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "vcfEwePfiu6",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yfWXlxYNbhy"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153426",
+        "lastUpdated": "2013-12-20T22:17:20.448",
+        "id": "M0PqoB8pblq",
+        "created": "2013-12-20T22:17:20.448",
+        "name": "Population Services International, Improve access to clean water",
+        "shortName": "Population Services International, Improve access to clean water",
+        "displayName": "Population Services International, Improve access to clean water",
+        "displayShortName": "Population Services International, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "M0PqoB8pblq",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "XK6u6cJCR0t"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153418",
+        "lastUpdated": "2013-12-20T22:17:20.443",
+        "id": "KnS3rABktqN",
+        "created": "2013-12-20T22:17:20.443",
+        "name": "IntraHealth International, Improve access to clean water",
+        "shortName": "IntraHealth International, Improve access to clean water",
+        "displayName": "IntraHealth International, Improve access to clean water",
+        "displayShortName": "IntraHealth International, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "KnS3rABktqN",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yfWXlxYNbhy"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153444",
+        "lastUpdated": "2013-12-20T22:17:20.462",
+        "id": "vp1qSLVMSc3",
+        "created": "2013-12-20T22:17:20.462",
+        "name": "African Medical and Research Foundation, Provide access to basic education",
+        "shortName": "African Medical and Research Foundation, Provide access to basic education",
+        "displayName": "African Medical and Research Foundation, Provide access to basic education",
+        "displayShortName": "African Medical and Research Foundation, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "vp1qSLVMSc3",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "C6nZpLKjEJr"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153398",
+        "lastUpdated": "2013-12-20T22:17:20.429",
+        "id": "WyOEpns2Qks",
+        "created": "2013-12-20T22:17:20.429",
+        "name": "World Concern, Provide access to primary health care",
+        "shortName": "World Concern, Provide access to primary health care",
+        "displayName": "World Concern, Provide access to primary health care",
+        "displayShortName": "World Concern, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "WyOEpns2Qks",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "LEWNFo4Qrrs"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153425",
+        "lastUpdated": "2013-12-20T22:17:20.447",
+        "id": "aFhAxppj7FG",
+        "created": "2013-12-20T22:17:20.447",
+        "name": "Population Services International, Provide access to primary health care",
+        "shortName": "Population Services International, Provide access to primary health care",
+        "displayName": "Population Services International, Provide access to primary health care",
+        "displayShortName": "Population Services International, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "aFhAxppj7FG",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "XK6u6cJCR0t"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153437",
+        "lastUpdated": "2013-12-20T22:17:20.456",
+        "id": "GZMZ9gZMvGs",
+        "created": "2013-12-20T22:17:20.456",
+        "name": "World Concern, Improve access to clean water",
+        "shortName": "World Concern, Improve access to clean water",
+        "displayName": "World Concern, Improve access to clean water",
+        "displayShortName": "World Concern, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "GZMZ9gZMvGs",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "LEWNFo4Qrrs"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153413",
+        "lastUpdated": "2013-12-20T22:17:20.439",
+        "id": "tzsPhPtE94U",
+        "created": "2013-12-20T22:17:20.439",
+        "name": "World Relief, Provide access to basic education",
+        "shortName": "World Relief, Provide access to basic education",
+        "displayName": "World Relief, Provide access to basic education",
+        "displayShortName": "World Relief, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "tzsPhPtE94U",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "xEunk8LPzkb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153423",
+        "lastUpdated": "2013-12-20T22:17:20.446",
+        "id": "hYYykLNO1Pk",
+        "created": "2013-12-20T22:17:20.446",
+        "name": "CARE International, Improve access to medicines",
+        "shortName": "CARE International, Improve access to medicines",
+        "displayName": "CARE International, Improve access to medicines",
+        "displayShortName": "CARE International, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "hYYykLNO1Pk",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "RkbOhHwiOgW"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153436",
+        "lastUpdated": "2013-12-20T22:17:20.456",
+        "id": "zBTkMNxXEvq",
+        "created": "2013-12-20T22:17:20.456",
+        "name": "World Vision, Improve access to medicines",
+        "shortName": "World Vision, Improve access to medicines",
+        "displayName": "World Vision, Improve access to medicines",
+        "displayShortName": "World Vision, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "zBTkMNxXEvq",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "uilaJSyXt7d"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153403",
+        "lastUpdated": "2013-12-20T22:17:20.432",
+        "id": "i3HQ1ziPjC7",
+        "created": "2013-12-20T22:17:20.432",
+        "name": "World Relief, Improve access to clean water",
+        "shortName": "World Relief, Improve access to clean water",
+        "displayName": "World Relief, Improve access to clean water",
+        "displayShortName": "World Relief, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "i3HQ1ziPjC7",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "xEunk8LPzkb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153456",
+        "lastUpdated": "2013-12-20T22:17:20.471",
+        "id": "BN9KwUloeSL",
+        "created": "2013-12-20T22:17:20.471",
+        "name": "Hope Worldwide, Improve access to clean water",
+        "shortName": "Hope Worldwide, Improve access to clean water",
+        "displayName": "Hope Worldwide, Improve access to clean water",
+        "displayShortName": "Hope Worldwide, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "BN9KwUloeSL",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "hERJraxV8D9"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153415",
+        "lastUpdated": "2013-12-20T22:17:20.441",
+        "id": "jsxBTh3eFsg",
+        "created": "2013-12-20T22:17:20.441",
+        "name": "Family Health International, Improve access to medicines",
+        "shortName": "Family Health International, Improve access to medicines",
+        "displayName": "Family Health International, Improve access to medicines",
+        "displayShortName": "Family Health International, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "jsxBTh3eFsg",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "TY5rBQzlBRa"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153404",
+        "lastUpdated": "2013-12-20T22:17:20.433",
+        "id": "EMbImyiN3qH",
+        "created": "2013-12-20T22:17:20.433",
+        "name": "World Concern, Improve access to medicines",
+        "shortName": "World Concern, Improve access to medicines",
+        "displayName": "World Concern, Improve access to medicines",
+        "displayShortName": "World Concern, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "EMbImyiN3qH",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "LEWNFo4Qrrs"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153408",
+        "lastUpdated": "2013-12-20T22:17:20.436",
+        "id": "AeOORUC0ISH",
+        "created": "2013-12-20T22:17:20.436",
+        "name": "World Relief, Provide access to primary health care",
+        "shortName": "World Relief, Provide access to primary health care",
+        "displayName": "World Relief, Provide access to primary health care",
+        "displayShortName": "World Relief, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "AeOORUC0ISH",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "xEunk8LPzkb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153454",
+        "lastUpdated": "2013-12-20T22:17:20.469",
+        "id": "Rwa6QbSEhUo",
+        "created": "2013-12-20T22:17:20.469",
+        "name": "Hope Worldwide, Provide access to primary health care",
+        "shortName": "Hope Worldwide, Provide access to primary health care",
+        "displayName": "Hope Worldwide, Provide access to primary health care",
+        "displayShortName": "Hope Worldwide, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "Rwa6QbSEhUo",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "hERJraxV8D9"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153396",
+        "lastUpdated": "2013-12-20T22:17:20.427",
+        "id": "RuYW1OENYhV",
+        "created": "2013-12-20T22:17:20.427",
+        "name": "African Medical and Research Foundation, Improve access to clean water",
+        "shortName": "African Medical and Research Foundation, Improve access to clean water",
+        "displayName": "African Medical and Research Foundation, Improve access to clean water",
+        "displayShortName": "African Medical and Research Foundation, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "RuYW1OENYhV",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "C6nZpLKjEJr"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153407",
+        "lastUpdated": "2013-12-20T22:17:20.435",
+        "id": "qsYRjnFqwe5",
+        "created": "2013-12-20T22:17:20.435",
+        "name": "African Medical and Research Foundation, Provide access to primary health care",
+        "shortName": "African Medical and Research Foundation, Provide access to primary health care",
+        "displayName": "African Medical and Research Foundation, Provide access to primary health care",
+        "displayShortName": "African Medical and Research Foundation, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "qsYRjnFqwe5",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "C6nZpLKjEJr"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153429",
+        "lastUpdated": "2013-12-20T22:17:20.450",
+        "id": "Xruyu4NqK8L",
+        "created": "2013-12-20T22:17:20.450",
+        "name": "APHIAplus, Provide access to basic education",
+        "shortName": "APHIAplus, Provide access to basic education",
+        "displayName": "APHIAplus, Provide access to basic education",
+        "displayShortName": "APHIAplus, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "Xruyu4NqK8L",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "B3nxOazOO2G"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153411",
+        "lastUpdated": "2013-12-20T22:17:20.438",
+        "id": "KKht3hCodcI",
+        "created": "2013-12-20T22:17:20.438",
+        "name": "Pathfinder International, Improve access to medicines",
+        "shortName": "Pathfinder International, Improve access to medicines",
+        "displayName": "Pathfinder International, Improve access to medicines",
+        "displayShortName": "Pathfinder International, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "KKht3hCodcI",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "VLFVaH1MwnF"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153402",
+        "lastUpdated": "2013-12-20T22:17:20.432",
+        "id": "cUb8seKgn2y",
+        "created": "2013-12-20T22:17:20.432",
+        "name": "AIDSRelief Consortium, Improve access to clean water",
+        "shortName": "AIDSRelief Consortium, Improve access to clean water",
+        "displayName": "AIDSRelief Consortium, Improve access to clean water",
+        "displayShortName": "AIDSRelief Consortium, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "cUb8seKgn2y",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "CW81uF03hvV"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153451",
+        "lastUpdated": "2013-12-20T22:17:20.467",
+        "id": "nmOB0bobSsj",
+        "created": "2013-12-20T22:17:20.467",
+        "name": "AIDSRelief Consortium, Provide access to primary health care",
+        "shortName": "AIDSRelief Consortium, Provide access to primary health care",
+        "displayName": "AIDSRelief Consortium, Provide access to primary health care",
+        "displayShortName": "AIDSRelief Consortium, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "nmOB0bobSsj",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "CW81uF03hvV"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153419",
+        "lastUpdated": "2013-12-20T22:17:20.443",
+        "id": "CQMZckgv9d2",
+        "created": "2013-12-20T22:17:20.443",
+        "name": "Pathfinder International, Improve access to clean water",
+        "shortName": "Pathfinder International, Improve access to clean water",
+        "displayName": "Pathfinder International, Improve access to clean water",
+        "displayShortName": "Pathfinder International, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "CQMZckgv9d2",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "VLFVaH1MwnF"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153449",
+        "lastUpdated": "2013-12-20T22:17:20.466",
+        "id": "jZGfkSermfa",
+        "created": "2013-12-20T22:17:20.466",
+        "name": "International Rescue Committee, Provide access to basic education",
+        "shortName": "International Rescue Committee, Provide access to basic education",
+        "displayName": "International Rescue Committee, Provide access to basic education",
+        "displayShortName": "International Rescue Committee, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "jZGfkSermfa",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "g3bcPGD5Q5i"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153453",
+        "lastUpdated": "2013-12-20T22:17:20.469",
+        "id": "RvzLp3fAVJM",
+        "created": "2013-12-20T22:17:20.469",
+        "name": "IntraHealth International, Provide access to basic education",
+        "shortName": "IntraHealth International, Provide access to basic education",
+        "displayName": "IntraHealth International, Provide access to basic education",
+        "displayShortName": "IntraHealth International, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "RvzLp3fAVJM",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "yfWXlxYNbhy"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153431",
+        "lastUpdated": "2013-12-20T22:17:20.452",
+        "id": "FLpJ2hYMbLO",
+        "created": "2013-12-20T22:17:20.452",
+        "name": "Pathfinder International, Provide access to primary health care",
+        "shortName": "Pathfinder International, Provide access to primary health care",
+        "displayName": "Pathfinder International, Provide access to primary health care",
+        "displayShortName": "Pathfinder International, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "FLpJ2hYMbLO",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "VLFVaH1MwnF"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153432",
+        "lastUpdated": "2013-12-20T22:17:20.453",
+        "id": "dH55kApJvz2",
+        "created": "2013-12-20T22:17:20.453",
+        "name": "Population Services International, Provide access to basic education",
+        "shortName": "Population Services International, Provide access to basic education",
+        "displayName": "Population Services International, Provide access to basic education",
+        "displayShortName": "Population Services International, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "dH55kApJvz2",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "XK6u6cJCR0t"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153401",
+        "lastUpdated": "2013-12-20T22:17:20.431",
+        "id": "LpTSTPshKQ8",
+        "created": "2013-12-20T22:17:20.431",
+        "name": "Hope Worldwide, Improve access to medicines",
+        "shortName": "Hope Worldwide, Improve access to medicines",
+        "displayName": "Hope Worldwide, Improve access to medicines",
+        "displayShortName": "Hope Worldwide, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "LpTSTPshKQ8",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "hERJraxV8D9"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153439",
+        "lastUpdated": "2013-12-20T22:17:20.458",
+        "id": "beytUtTPOiH",
+        "created": "2013-12-20T22:17:20.458",
+        "name": "Path, Improve access to medicines",
+        "shortName": "Path, Improve access to medicines",
+        "displayName": "Path, Improve access to medicines",
+        "displayShortName": "Path, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "beytUtTPOiH",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "yrwgRxRhBoU"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153428",
+        "lastUpdated": "2013-12-20T22:17:20.449",
+        "id": "ZnccT3c85pr",
+        "created": "2013-12-20T22:17:20.449",
+        "name": "African Medical and Research Foundation, Improve access to medicines",
+        "shortName": "African Medical and Research Foundation, Improve access to medicines",
+        "displayName": "African Medical and Research Foundation, Improve access to medicines",
+        "displayShortName": "African Medical and Research Foundation, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "ZnccT3c85pr",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "C6nZpLKjEJr"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153427",
+        "lastUpdated": "2013-12-20T22:17:20.449",
+        "id": "m0s4zXGlubC",
+        "created": "2013-12-20T22:17:20.449",
+        "name": "AIDSRelief Consortium, Improve access to medicines",
+        "shortName": "AIDSRelief Consortium, Improve access to medicines",
+        "displayName": "AIDSRelief Consortium, Improve access to medicines",
+        "displayShortName": "AIDSRelief Consortium, Improve access to medicines",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "m0s4zXGlubC",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "CW81uF03hvV"
+          },
+          {
+            "id": "yMj2MnmNI8L"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153441",
+        "lastUpdated": "2013-12-20T22:17:20.459",
+        "id": "RRJ9WsqSrVs",
+        "created": "2013-12-20T22:17:20.459",
+        "name": "Path, Improve access to clean water",
+        "shortName": "Path, Improve access to clean water",
+        "displayName": "Path, Improve access to clean water",
+        "displayShortName": "Path, Improve access to clean water",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "RRJ9WsqSrVs",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yrwgRxRhBoU"
+          },
+          {
+            "id": "i4Nbp8S2G6A"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153452",
+        "lastUpdated": "2013-12-20T22:17:20.468",
+        "id": "cr89ebDZrac",
+        "created": "2013-12-20T22:17:20.468",
+        "name": "Unicef, Provide access to basic education",
+        "shortName": "Unicef, Provide access to basic education",
+        "displayName": "Unicef, Provide access to basic education",
+        "displayShortName": "Unicef, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "cr89ebDZrac",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "xwZ2u3WyQR0"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153433",
+        "lastUpdated": "2013-12-20T22:17:20.453",
+        "id": "VafY6h3Ozda",
+        "created": "2013-12-20T22:17:20.453",
+        "name": "Path, Provide access to primary health care",
+        "shortName": "Path, Provide access to primary health care",
+        "displayName": "Path, Provide access to primary health care",
+        "displayShortName": "Path, Provide access to primary health care",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "VafY6h3Ozda",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "yrwgRxRhBoU"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      },
+      {
+        "code": "COC_1153450",
+        "lastUpdated": "2013-12-20T22:17:20.466",
+        "id": "ynACb30rXJx",
+        "created": "2013-12-20T22:17:20.466",
+        "name": "Plan International, Provide access to basic education",
+        "shortName": "Plan International, Provide access to basic education",
+        "displayName": "Plan International, Provide access to basic education",
+        "displayShortName": "Plan International, Provide access to basic education",
+        "externalAccess": false,
+        "ignoreApproval": false,
+        "dimensionItem": "ynACb30rXJx",
+        "categoryCombo": {
+          "id": "O4VaNks6tta"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "id": "M58XdOfhiJ7"
+          },
+          {
+            "id": "e5YBV5F5iUd"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "legendSets": []
+      }
+    ],
+    "translations": [],
+    "userAccesses": [],
+    "categories": [
+      {
+        "code": "IMPL_PARTNER",
+        "lastUpdated": "2013-12-23T18:07:58.771",
+        "id": "LFsZ8v5v7rq",
+        "created": "2013-12-20T22:13:46.348",
+        "name": "Implementing Partner",
+        "shortName": "Implementing Partner",
+        "dataDimensionType": "ATTRIBUTE",
+        "dimensionType": "CATEGORY",
+        "displayName": "Implementing Partner",
+        "publicAccess": "rw------",
+        "displayShortName": "Implementing Partner",
+        "externalAccess": false,
+        "dimension": "LFsZ8v5v7rq",
+        "allItems": false,
+        "dataDimension": true,
+        "user": {
+          "id": "GOLswS44mh8"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "code": "African Medical and Research Foundation",
+            "lastUpdated": "2013-12-20T22:09:34.204",
+            "id": "C6nZpLKjEJr",
+            "created": "2013-12-20T22:09:34.204",
+            "name": "African Medical and Research Foundation",
+            "shortName": "African Medical and Research Foundation",
+            "displayName": "African Medical and Research Foundation",
+            "publicAccess": "rw------",
+            "displayShortName": "African Medical and Research Foundation",
+            "externalAccess": false,
+            "dimensionItem": "C6nZpLKjEJr",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "RuYW1OENYhV"
+              },
+              {
+                "id": "qsYRjnFqwe5"
+              },
+              {
+                "id": "nvLjum6Xbv5"
+              },
+              {
+                "id": "ZnccT3c85pr"
+              },
+              {
+                "id": "vp1qSLVMSc3"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "OK2Nr4wdfrZ"
+              },
+              {
+                "id": "j3C417uW6J7"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "AIDSRelief Consortium",
+            "lastUpdated": "2014-06-22T21:35:54.100",
+            "id": "CW81uF03hvV",
+            "created": "2013-12-20T22:11:56.488",
+            "name": "AIDSRelief Consortium",
+            "shortName": "AIDSRelief Consortium",
+            "displayName": "AIDSRelief Consortium",
+            "publicAccess": "rw------",
+            "displayShortName": "AIDSRelief Consortium",
+            "externalAccess": false,
+            "dimensionItem": "CW81uF03hvV",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "VHj4WmtIGN4"
+              },
+              {
+                "id": "m0s4zXGlubC"
+              },
+              {
+                "id": "l5QR5hJ4u44"
+              },
+              {
+                "id": "cUb8seKgn2y"
+              },
+              {
+                "id": "nmOB0bobSsj"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "OK2Nr4wdfrZ"
+              },
+              {
+                "id": "j3C417uW6J7"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "APHIAplus",
+            "lastUpdated": "2013-12-20T22:12:04.994",
+            "id": "B3nxOazOO2G",
+            "created": "2013-12-20T22:12:04.994",
+            "name": "APHIAplus",
+            "shortName": "APHIAplus",
+            "displayName": "APHIAplus",
+            "publicAccess": "rw------",
+            "displayShortName": "APHIAplus",
+            "externalAccess": false,
+            "dimensionItem": "B3nxOazOO2G",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "Xruyu4NqK8L"
+              },
+              {
+                "id": "XVl0bL5Bl4q"
+              },
+              {
+                "id": "ko7CWYAHvn1"
+              },
+              {
+                "id": "NnZfgmFAyu0"
+              },
+              {
+                "id": "v2ZlaR9Uw99"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "OK2Nr4wdfrZ"
+              },
+              {
+                "id": "j3C417uW6J7"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "CARE International",
+            "lastUpdated": "2014-06-22T21:36:38.638",
+            "id": "RkbOhHwiOgW",
+            "created": "2013-12-20T22:10:12.394",
+            "name": "CARE International",
+            "shortName": "CARE International",
+            "displayName": "CARE International",
+            "publicAccess": "rw------",
+            "displayShortName": "CARE International",
+            "externalAccess": false,
+            "dimensionItem": "RkbOhHwiOgW",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "XjgA9fJK6bX"
+              },
+              {
+                "id": "amw2rQP6r6M"
+              },
+              {
+                "id": "ranftQIH5M9"
+              },
+              {
+                "id": "fC3z1lcAW5x"
+              },
+              {
+                "id": "hYYykLNO1Pk"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "OK2Nr4wdfrZ"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Family Health International",
+            "lastUpdated": "2013-12-20T22:09:14.155",
+            "id": "TY5rBQzlBRa",
+            "created": "2013-12-20T22:09:14.155",
+            "name": "Family Health International",
+            "shortName": "Family Health International",
+            "displayName": "Family Health International",
+            "publicAccess": "rw------",
+            "displayShortName": "Family Health International",
+            "externalAccess": false,
+            "dimensionItem": "TY5rBQzlBRa",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "h9eTWOH5od1"
+              },
+              {
+                "id": "uUJIRpWjNFt"
+              },
+              {
+                "id": "FcHCeH4jegz"
+              },
+              {
+                "id": "h5i1N1wcq9G"
+              },
+              {
+                "id": "jsxBTh3eFsg"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "ddAo6zmIHOk"
+              },
+              {
+                "id": "OK2Nr4wdfrZ"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Hope Worldwide",
+            "lastUpdated": "2013-12-20T22:11:45.448",
+            "id": "hERJraxV8D9",
+            "created": "2013-12-20T22:11:45.448",
+            "name": "Hope Worldwide",
+            "shortName": "Hope Worldwide",
+            "displayName": "Hope Worldwide",
+            "publicAccess": "rw------",
+            "displayShortName": "Hope Worldwide",
+            "externalAccess": false,
+            "dimensionItem": "hERJraxV8D9",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "X0RDKeM4tBq"
+              },
+              {
+                "id": "kOSbWTm0Qng"
+              },
+              {
+                "id": "BN9KwUloeSL"
+              },
+              {
+                "id": "LpTSTPshKQ8"
+              },
+              {
+                "id": "Rwa6QbSEhUo"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "ddAo6zmIHOk"
+              },
+              {
+                "id": "OK2Nr4wdfrZ"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "International Rescue Committee",
+            "lastUpdated": "2013-12-20T22:09:40.825",
+            "id": "g3bcPGD5Q5i",
+            "created": "2013-12-20T22:09:40.825",
+            "name": "International Rescue Committee",
+            "shortName": "International Rescue Committee",
+            "displayName": "International Rescue Committee",
+            "publicAccess": "rw------",
+            "displayShortName": "International Rescue Committee",
+            "externalAccess": false,
+            "dimensionItem": "g3bcPGD5Q5i",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "hJ290dNYYXe"
+              },
+              {
+                "id": "jZGfkSermfa"
+              },
+              {
+                "id": "w5hsiyYZfuR"
+              },
+              {
+                "id": "E29j0LFxvSV"
+              },
+              {
+                "id": "uLOKFxgYi27"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "sHZfCdB8TkN"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "IntraHealth International",
+            "lastUpdated": "2013-12-20T22:10:57.379",
+            "id": "yfWXlxYNbhy",
+            "created": "2013-12-20T22:10:57.379",
+            "name": "IntraHealth International",
+            "shortName": "IntraHealth International",
+            "displayName": "IntraHealth International",
+            "publicAccess": "rw------",
+            "displayShortName": "IntraHealth International",
+            "externalAccess": false,
+            "dimensionItem": "yfWXlxYNbhy",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "vcfEwePfiu6"
+              },
+              {
+                "id": "KnS3rABktqN"
+              },
+              {
+                "id": "VYKHf8ucB2m"
+              },
+              {
+                "id": "RvzLp3fAVJM"
+              },
+              {
+                "id": "dvw2J5ZsdFc"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "sHZfCdB8TkN"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Path",
+            "lastUpdated": "2013-12-20T22:12:45.831",
+            "id": "yrwgRxRhBoU",
+            "created": "2013-12-20T22:12:45.831",
+            "name": "Path",
+            "shortName": "Path",
+            "displayName": "Path",
+            "publicAccess": "rw------",
+            "displayShortName": "Path",
+            "externalAccess": false,
+            "dimensionItem": "yrwgRxRhBoU",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "KBdt6dufS1O"
+              },
+              {
+                "id": "hhSsZdKEChu"
+              },
+              {
+                "id": "RRJ9WsqSrVs"
+              },
+              {
+                "id": "beytUtTPOiH"
+              },
+              {
+                "id": "VafY6h3Ozda"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "sHZfCdB8TkN"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Pathfinder International",
+            "lastUpdated": "2013-12-20T22:11:09.858",
+            "id": "VLFVaH1MwnF",
+            "created": "2013-12-20T22:11:09.858",
+            "name": "Pathfinder International",
+            "shortName": "Pathfinder International",
+            "displayName": "Pathfinder International",
+            "publicAccess": "rw------",
+            "displayShortName": "Pathfinder International",
+            "externalAccess": false,
+            "dimensionItem": "VLFVaH1MwnF",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "ookIJtBen47"
+              },
+              {
+                "id": "CQMZckgv9d2"
+              },
+              {
+                "id": "KKht3hCodcI"
+              },
+              {
+                "id": "AqFKDa5c2bV"
+              },
+              {
+                "id": "FLpJ2hYMbLO"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "JLGV7lRQRAg"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Plan International",
+            "lastUpdated": "2013-12-20T22:09:23.467",
+            "id": "e5YBV5F5iUd",
+            "created": "2013-12-20T22:09:23.467",
+            "name": "Plan International",
+            "shortName": "Plan International",
+            "displayName": "Plan International",
+            "publicAccess": "rw------",
+            "displayShortName": "Plan International",
+            "externalAccess": false,
+            "dimensionItem": "e5YBV5F5iUd",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "xJo2vQ5O1Sd"
+              },
+              {
+                "id": "el3bfHS1QDV"
+              },
+              {
+                "id": "N7QFN41eTN8"
+              },
+              {
+                "id": "zW0OOUGLA48"
+              },
+              {
+                "id": "ynACb30rXJx"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "JLGV7lRQRAg"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Population Services International",
+            "lastUpdated": "2013-12-20T22:11:15.622",
+            "id": "XK6u6cJCR0t",
+            "created": "2013-12-20T22:11:15.622",
+            "name": "Population Services International",
+            "shortName": "Population Services International",
+            "displayName": "Population Services International",
+            "publicAccess": "rw------",
+            "displayShortName": "Population Services International",
+            "externalAccess": false,
+            "dimensionItem": "XK6u6cJCR0t",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "L27iqqRG0wk"
+              },
+              {
+                "id": "M0PqoB8pblq"
+              },
+              {
+                "id": "dH55kApJvz2"
+              },
+              {
+                "id": "aFhAxppj7FG"
+              },
+              {
+                "id": "W45gbOMzeJT"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "JLGV7lRQRAg"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Unicef",
+            "lastUpdated": "2013-12-20T22:11:21.298",
+            "id": "xwZ2u3WyQR0",
+            "created": "2013-12-20T22:11:21.298",
+            "name": "Unicef",
+            "shortName": "Unicef",
+            "displayName": "Unicef",
+            "publicAccess": "rw------",
+            "displayShortName": "Unicef",
+            "externalAccess": false,
+            "dimensionItem": "xwZ2u3WyQR0",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "SeWJkpLAyLt"
+              },
+              {
+                "id": "B81quHGEY7H"
+              },
+              {
+                "id": "V2gbpszLQJm"
+              },
+              {
+                "id": "cr89ebDZrac"
+              },
+              {
+                "id": "j9PqKr6Djnx"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "JLGV7lRQRAg"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "World Concern",
+            "lastUpdated": "2013-12-20T22:11:28.211",
+            "id": "LEWNFo4Qrrs",
+            "created": "2013-12-20T22:11:28.211",
+            "name": "World Concern",
+            "shortName": "World Concern",
+            "displayName": "World Concern",
+            "publicAccess": "rw------",
+            "displayShortName": "World Concern",
+            "externalAccess": false,
+            "dimensionItem": "LEWNFo4Qrrs",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "Um7S7APfj3M"
+              },
+              {
+                "id": "y8ncbotRdf1"
+              },
+              {
+                "id": "WyOEpns2Qks"
+              },
+              {
+                "id": "EMbImyiN3qH"
+              },
+              {
+                "id": "GZMZ9gZMvGs"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "p916ZCVGNyq"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "World Relief",
+            "lastUpdated": "2013-12-20T22:12:28.115",
+            "id": "xEunk8LPzkb",
+            "created": "2013-12-20T22:12:28.115",
+            "name": "World Relief",
+            "shortName": "World Relief",
+            "displayName": "World Relief",
+            "publicAccess": "rw------",
+            "displayShortName": "World Relief",
+            "externalAccess": false,
+            "dimensionItem": "xEunk8LPzkb",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "UcWQppzD1it"
+              },
+              {
+                "id": "i3HQ1ziPjC7"
+              },
+              {
+                "id": "tzsPhPtE94U"
+              },
+              {
+                "id": "iR1xska5MM2"
+              },
+              {
+                "id": "AeOORUC0ISH"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "p916ZCVGNyq"
+              },
+              {
+                "id": "sHZfCdB8TkN"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "World Vision",
+            "lastUpdated": "2013-12-20T22:12:36.187",
+            "id": "uilaJSyXt7d",
+            "created": "2013-12-20T22:12:36.187",
+            "name": "World Vision",
+            "shortName": "World Vision",
+            "displayName": "World Vision",
+            "publicAccess": "rw------",
+            "displayShortName": "World Vision",
+            "externalAccess": false,
+            "dimensionItem": "uilaJSyXt7d",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "LFsZ8v5v7rq"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "pN2UVP29cKQ"
+              },
+              {
+                "id": "doC37EbiwW5"
+              },
+              {
+                "id": "E5M2FZ1hReY"
+              },
+              {
+                "id": "QjyqqJMm0X7"
+              },
+              {
+                "id": "zBTkMNxXEvq"
+              }
+            ],
+            "categoryOptionGroups": [
+              {
+                "id": "p916ZCVGNyq"
+              },
+              {
+                "id": "B0bjKC0szQX"
+              }
+            ],
+            "userAccesses": [],
+            "legendSets": []
+          }
+        ],
+        "categoryCombos": [
+          {
+            "id": "nM3u9s5a52V"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "items": [
+          {
+            "id": "C6nZpLKjEJr"
+          },
+          {
+            "id": "CW81uF03hvV"
+          },
+          {
+            "id": "B3nxOazOO2G"
+          },
+          {
+            "id": "RkbOhHwiOgW"
+          },
+          {
+            "id": "TY5rBQzlBRa"
+          },
+          {
+            "id": "hERJraxV8D9"
+          },
+          {
+            "id": "g3bcPGD5Q5i"
+          },
+          {
+            "id": "yfWXlxYNbhy"
+          },
+          {
+            "id": "yrwgRxRhBoU"
+          },
+          {
+            "id": "VLFVaH1MwnF"
+          },
+          {
+            "id": "e5YBV5F5iUd"
+          },
+          {
+            "id": "XK6u6cJCR0t"
+          },
+          {
+            "id": "xwZ2u3WyQR0"
+          },
+          {
+            "id": "LEWNFo4Qrrs"
+          },
+          {
+            "id": "xEunk8LPzkb"
+          },
+          {
+            "id": "uilaJSyXt7d"
+          }
+        ]
+      },
+      {
+        "code": "PROJECT",
+        "lastUpdated": "2013-12-23T18:08:20.301",
+        "id": "yY2bQYqNt0o",
+        "created": "2013-12-20T22:16:13.684",
+        "name": "Project",
+        "shortName": "Project",
+        "dataDimensionType": "ATTRIBUTE",
+        "dimensionType": "CATEGORY",
+        "displayName": "Project",
+        "publicAccess": "rw------",
+        "displayShortName": "Project",
+        "externalAccess": false,
+        "dimension": "yY2bQYqNt0o",
+        "allItems": false,
+        "dataDimension": true,
+        "user": {
+          "id": "GOLswS44mh8"
+        },
+        "translations": [],
+        "categoryOptions": [
+          {
+            "code": "Project01",
+            "lastUpdated": "2016-07-04T18:26:53.030",
+            "id": "i4Nbp8S2G6A",
+            "created": "2013-12-20T22:14:03.322",
+            "name": "Improve access to clean water",
+            "shortName": "Improve access to clean water",
+            "displayName": "Improve access to clean water",
+            "publicAccess": "rw------",
+            "displayShortName": "Improve access to clean water",
+            "externalAccess": false,
+            "dimensionItem": "i4Nbp8S2G6A",
+            "startDate": "2016-04-01T00:00:00.000",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "yY2bQYqNt0o"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "SeWJkpLAyLt"
+              },
+              {
+                "id": "CQMZckgv9d2"
+              },
+              {
+                "id": "fC3z1lcAW5x"
+              },
+              {
+                "id": "N7QFN41eTN8"
+              },
+              {
+                "id": "XVl0bL5Bl4q"
+              },
+              {
+                "id": "h5i1N1wcq9G"
+              },
+              {
+                "id": "pO5CEqK6c1s"
+              },
+              {
+                "id": "M0PqoB8pblq"
+              },
+              {
+                "id": "KnS3rABktqN"
+              },
+              {
+                "id": "i3HQ1ziPjC7"
+              },
+              {
+                "id": "RRJ9WsqSrVs"
+              },
+              {
+                "id": "BN9KwUloeSL"
+              },
+              {
+                "id": "E29j0LFxvSV"
+              },
+              {
+                "id": "QjyqqJMm0X7"
+              },
+              {
+                "id": "RuYW1OENYhV"
+              },
+              {
+                "id": "cUb8seKgn2y"
+              },
+              {
+                "id": "GZMZ9gZMvGs"
+              }
+            ],
+            "categoryOptionGroups": [],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Project03",
+            "lastUpdated": "2013-12-20T22:14:27.023",
+            "id": "yMj2MnmNI8L",
+            "created": "2013-12-20T22:14:27.023",
+            "name": "Improve access to medicines",
+            "shortName": "Improve access to medicines",
+            "displayName": "Improve access to medicines",
+            "publicAccess": "rw------",
+            "displayShortName": "Improve access to medicines",
+            "externalAccess": false,
+            "dimensionItem": "yMj2MnmNI8L",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "yY2bQYqNt0o"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "xJo2vQ5O1Sd"
+              },
+              {
+                "id": "L27iqqRG0wk"
+              },
+              {
+                "id": "UcWQppzD1it"
+              },
+              {
+                "id": "V2gbpszLQJm"
+              },
+              {
+                "id": "VYKHf8ucB2m"
+              },
+              {
+                "id": "LpTSTPshKQ8"
+              },
+              {
+                "id": "beytUtTPOiH"
+              },
+              {
+                "id": "hYYykLNO1Pk"
+              },
+              {
+                "id": "uLOKFxgYi27"
+              },
+              {
+                "id": "zBTkMNxXEvq"
+              },
+              {
+                "id": "ZnccT3c85pr"
+              },
+              {
+                "id": "m0s4zXGlubC"
+              },
+              {
+                "id": "jsxBTh3eFsg"
+              },
+              {
+                "id": "v2ZlaR9Uw99"
+              },
+              {
+                "id": "sSeEjeQ0Rgt"
+              },
+              {
+                "id": "EMbImyiN3qH"
+              },
+              {
+                "id": "KKht3hCodcI"
+              }
+            ],
+            "categoryOptionGroups": [],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Project02",
+            "lastUpdated": "2016-07-04T18:27:15.401",
+            "id": "OUUdG3sdOqb",
+            "created": "2013-12-20T22:14:12.940",
+            "name": "Provide access to primary health care",
+            "shortName": "Provide access to primary health care",
+            "endDate": "2016-10-01T00:00:00.000",
+            "displayName": "Provide access to primary health care",
+            "publicAccess": "rw------",
+            "displayShortName": "Provide access to primary health care",
+            "externalAccess": false,
+            "dimensionItem": "OUUdG3sdOqb",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "yY2bQYqNt0o"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "B81quHGEY7H"
+              },
+              {
+                "id": "ranftQIH5M9"
+              },
+              {
+                "id": "FLpJ2hYMbLO"
+              },
+              {
+                "id": "zW0OOUGLA48"
+              },
+              {
+                "id": "FcHCeH4jegz"
+              },
+              {
+                "id": "ko7CWYAHvn1"
+              },
+              {
+                "id": "BqblOcSwGey"
+              },
+              {
+                "id": "vcfEwePfiu6"
+              },
+              {
+                "id": "hJ290dNYYXe"
+              },
+              {
+                "id": "AeOORUC0ISH"
+              },
+              {
+                "id": "VafY6h3Ozda"
+              },
+              {
+                "id": "Rwa6QbSEhUo"
+              },
+              {
+                "id": "qsYRjnFqwe5"
+              },
+              {
+                "id": "pN2UVP29cKQ"
+              },
+              {
+                "id": "WyOEpns2Qks"
+              },
+              {
+                "id": "aFhAxppj7FG"
+              },
+              {
+                "id": "nmOB0bobSsj"
+              }
+            ],
+            "categoryOptionGroups": [],
+            "userAccesses": [],
+            "legendSets": []
+          },
+          {
+            "code": "Project05",
+            "lastUpdated": "2013-12-20T22:14:47.949",
+            "id": "M58XdOfhiJ7",
+            "created": "2013-12-20T22:14:47.949",
+            "name": "Provide access to basic education",
+            "shortName": "Provide access to basic education",
+            "displayName": "Provide access to basic education",
+            "publicAccess": "rw------",
+            "displayShortName": "Provide access to basic education",
+            "externalAccess": false,
+            "dimensionItem": "M58XdOfhiJ7",
+            "dimensionItemType": "CATEGORY_OPTION",
+            "user": {
+              "id": "GOLswS44mh8"
+            },
+            "translations": [],
+            "categories": [
+              {
+                "id": "yY2bQYqNt0o"
+              }
+            ],
+            "userGroupAccesses": [],
+            "attributeValues": [],
+            "categoryOptionCombos": [
+              {
+                "id": "KBdt6dufS1O"
+              },
+              {
+                "id": "jZGfkSermfa"
+              },
+              {
+                "id": "tzsPhPtE94U"
+              },
+              {
+                "id": "RvzLp3fAVJM"
+              },
+              {
+                "id": "VHj4WmtIGN4"
+              },
+              {
+                "id": "X0RDKeM4tBq"
+              },
+              {
+                "id": "E5M2FZ1hReY"
+              },
+              {
+                "id": "dH55kApJvz2"
+              },
+              {
+                "id": "ookIJtBen47"
+              },
+              {
+                "id": "XjgA9fJK6bX"
+              },
+              {
+                "id": "oawMLLH7OjA"
+              },
+              {
+                "id": "Um7S7APfj3M"
+              },
+              {
+                "id": "vp1qSLVMSc3"
+              },
+              {
+                "id": "cr89ebDZrac"
+              },
+              {
+                "id": "h9eTWOH5od1"
+              },
+              {
+                "id": "Xruyu4NqK8L"
+              },
+              {
+                "id": "ynACb30rXJx"
+              }
+            ],
+            "categoryOptionGroups": [],
+            "userAccesses": [],
+            "legendSets": []
+          }
+        ],
+        "categoryCombos": [
+          {
+            "id": "idcDPkDtepR"
+          },
+          {
+            "id": "O4VaNks6tta"
+          }
+        ],
+        "userGroupAccesses": [],
+        "attributeValues": [],
+        "userAccesses": [],
+        "items": [
+          {
+            "id": "i4Nbp8S2G6A"
+          },
+          {
+            "id": "yMj2MnmNI8L"
+          },
+          {
+            "id": "OUUdG3sdOqb"
+          },
+          {
+            "id": "M58XdOfhiJ7"
+          }
+        ]
+      }
+    ]
+  },
+  "legendSet": {
+    "id": "k1JHPfXsJND"
+  },
+  "user": {
+    "id": "GOLswS44mh8"
+  },
+  "dataSetElements": [
+    {
+      "dataElement": {
+        "id": "n91IylSb1JQ"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "QrhlrvV6Xs8"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "ksGURIlASZB"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "aJ9oon0aJ87"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "TyQ1vOHM6JO"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "AyLbN9fhY4W"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "DlZORv7kWSl"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "PNlOOplRNOp"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "iCGDtgPA28k"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "cQxY2T8GenX"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "xETRo03ZfOM"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "mmHNj6THZNH"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "rFkRvm5Ns4a"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "lznF009R6XI"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "pq4msirdtpr"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "ZGKUt190yEn"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "iri7NSiuRc3"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "F53rTVTmSuF"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "zYkwbCBALhn"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "eRwOwCpMzyP"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "pVImQlMAla4"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "kxcIr99QcAO"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "a7Pue4ht1n1"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "YgsAnqU3I7B"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "LVaUdM3CERi"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "gVfwyHBGWec"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "V651s5yIbnR"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "ibL7BD2vn2C"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "LJBV91hapop"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "dAnZOL5kxlK"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "xrbIG3L9DdO"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "yB3qDR4Mlqk"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "un5mkYkVKqV"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "YTmhoGBxE2m"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "D33rH8UHKlZ"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "xUNvvqqhNwz"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "wIQ5ugpWYUH"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "YIDKw3om85t"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "ReljOufQV11"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "Sdfo0RBu1W3"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "HmBwa7GWGRG"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "HDZOFvdXsqE"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "x98jMXibptT"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "kVOiLDV4OC6"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "CUVDjGzRmmU"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "vhT3YzTev3B"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "yXZd6HTew4q"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "tlSucW8wn23"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "zTWitarSrae"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "E7QJ0voitk7"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "YX1MQLgAD92"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "MeAvt39JtqN"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "SLcj0Swq8rD"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "VZPWjoT6Iyb"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "jHxFwWMbXT2"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "supsI55QU7E"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "dGdeotKpRed"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "pgzNTiQwMES"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "gyudBBtgGCv"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "BtXmKYNBc3k"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "la1f7sqY9sb"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "GNY9KvEmRjy"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "jYYxzqd1dqM"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "ozmEltb5V8d"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "e1eDe6JsE9j"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "NV0OXpHu6x4"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "GgsWqA0YETj"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "FTy5pcJZ3yX"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "lmj0xtl5P6C"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "hI7NM78r3Rg"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "rNEpbBxSyu7"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "PBXQFnb2AOk"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "qUY0i7PnaLS"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "oJLoUSMs3Ud"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "BOSZApCrBni"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "w1554hhXNcq"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "CxlYcbqio4v"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "NJnhOzjaLYk"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "nvsNqhfSSxd"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "XMsORYe4ZcA"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "eCIPNNYj9ZM"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "Jw8BIUYVMGE"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "pSHgU0Wf4ir"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "hoj1wTJT6ZW"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "FQhY9n5Ft7t"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "Z5uEjG9zJNK"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "YknvQAH4LnL"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "gSD3Znye1hY"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "deGkTqbpTlS"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "GMd99K8gVut"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "FOWABOOZtPg"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "PxT44IblPCq"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "hUSSNufoUQz"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "D4PywWuIwy0"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "t6YgakIbFif"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "BI5CBuRJVSV"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "ZgIaamZjBjz"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "oYZug9IEm3Q"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "Yf4u4QOIdsi"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "I5MLuG16arn"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "soACnRV9gOI"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "IJ4yZ027EmK"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "Mow8dnhE6FJ"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "aIJZ2d2QgVV"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "tZLjsE0VXrL"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "wfKKFhBn0Q0"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "tnDQ80ycQus"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "FDpeT1lFQMM"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "a5MxE5H7d3q"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "o44j6gPqFlA"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "fDkcJaO15aQ"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "obbSEvaKTyW"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "vJSPn2R6gVe"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "BVU4XA3aL0Y"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "KD5UjA5V16r"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "q9CskFaFGE6"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "AzwEuYfWAtN"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "uN64b5MivTO"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "C6yhZddXLCX"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "ZecQS9lx4j9"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "EEEu3r8z1Rg"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "XVzfK55tu7h"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    },
+    {
+      "dataElement": {
+        "id": "y6noHe7ltxY"
+      },
+      "dataSet": {
+        "id": "lyLU2wR22tC"
+      }
+    }
+  ],
+  "translations": [
+    {
+      "property": "SHORT_NAME",
+      "locale": "en_GB",
+      "value": "ART 2010"
+    },
+    {
+      "property": "NAME",
+      "locale": "en_GB",
+      "value": "ART monthly summary"
+    }
+  ],
+  "dataInputPeriods": [],
+  "interpretations": [],
+  "userGroupAccesses": [
+    {
+      "access": "rw------",
+      "userGroupUid": "L4XTzgbdza3",
+      "displayName": "Wakiki",
+      "id": "L4XTzgbdza3"
+    }
+  ],
+  "attributeValues": [],
+  "indicators": [],
+  "sections": [],
+  "userAccesses": [],
+  "legendSets": [
+    {
+      "id": "k1JHPfXsJND"
+    }
+  ],
+  "compulsoryDataElementOperands": [
+    {
+      "lastUpdated": "2017-11-28T10:52:58.058",
+      "id": "NJnhOzjaLYk.qa0VqgYlgtN",
+      "created": "2017-11-28T10:52:58.058",
+      "name": "ART clients with new adverse clinical event Female, 25-49y",
+      "shortName": "ART.CnewAdv.Clin.Ev. Female, 25-49y",
+      "displayName": "ART clients with new adverse clinical event Female, 25-49y",
+      "displayShortName": "ART.CnewAdv.Clin.Ev. Female, 25-49y",
+      "externalAccess": false,
+      "dimensionItem": "NJnhOzjaLYk.qa0VqgYlgtN",
+      "dimensionItemType": "DATA_ELEMENT_OPERAND",
+      "categoryOptionCombo": {
+        "id": "qa0VqgYlgtN"
+      },
+      "dataElement": {
+        "id": "NJnhOzjaLYk"
+      },
+      "translations": [],
+      "userGroupAccesses": [],
+      "attributeValues": [],
+      "userAccesses": [],
+      "legendSets": []
+    },
+    {
+      "lastUpdated": "2017-11-28T10:52:58.058",
+      "id": "NJnhOzjaLYk.qNCMOhkoQju",
+      "created": "2017-11-28T10:52:58.058",
+      "name": "ART clients with new adverse clinical event Female, <15y",
+      "shortName": "ART.CnewAdv.Clin.Ev. Female, <15y",
+      "displayName": "ART clients with new adverse clinical event Female, <15y",
+      "displayShortName": "ART.CnewAdv.Clin.Ev. Female, <15y",
+      "externalAccess": false,
+      "dimensionItem": "NJnhOzjaLYk.qNCMOhkoQju",
+      "dimensionItemType": "DATA_ELEMENT_OPERAND",
+      "categoryOptionCombo": {
+        "id": "qNCMOhkoQju"
+      },
+      "dataElement": {
+        "id": "NJnhOzjaLYk"
+      },
+      "translations": [],
+      "userGroupAccesses": [],
+      "attributeValues": [],
+      "userAccesses": [],
+      "legendSets": []
+    },
+    {
+      "lastUpdated": "2017-11-28T10:52:58.058",
+      "id": "NJnhOzjaLYk.LbeIlyHEhKr",
+      "created": "2017-11-28T10:52:58.058",
+      "name": "ART clients with new adverse clinical event Female, 15-24y",
+      "shortName": "ART.CnewAdv.Clin.Ev. Female, 15-24y",
+      "displayName": "ART clients with new adverse clinical event Female, 15-24y",
+      "displayShortName": "ART.CnewAdv.Clin.Ev. Female, 15-24y",
+      "externalAccess": false,
+      "dimensionItem": "NJnhOzjaLYk.LbeIlyHEhKr",
+      "dimensionItemType": "DATA_ELEMENT_OPERAND",
+      "categoryOptionCombo": {
+        "id": "LbeIlyHEhKr"
+      },
+      "dataElement": {
+        "id": "NJnhOzjaLYk"
+      },
+      "translations": [],
+      "userGroupAccesses": [],
+      "attributeValues": [],
+      "userAccesses": [],
+      "legendSets": []
+    },
+    {
+      "lastUpdated": "2017-11-28T10:52:58.058",
+      "id": "NJnhOzjaLYk.rCMUTmcreqP",
+      "created": "2017-11-28T10:52:58.058",
+      "name": "ART clients with new adverse clinical event Female, >49y",
+      "shortName": "ART.CnewAdv.Clin.Ev. Female, >49y",
+      "displayName": "ART clients with new adverse clinical event Female, >49y",
+      "displayShortName": "ART.CnewAdv.Clin.Ev. Female, >49y",
+      "externalAccess": false,
+      "dimensionItem": "NJnhOzjaLYk.rCMUTmcreqP",
+      "dimensionItemType": "DATA_ELEMENT_OPERAND",
+      "categoryOptionCombo": {
+        "id": "rCMUTmcreqP"
+      },
+      "dataElement": {
+        "id": "NJnhOzjaLYk"
+      },
+      "translations": [],
+      "userGroupAccesses": [],
+      "attributeValues": [],
+      "userAccesses": [],
+      "legendSets": []
+    }
+  ]
 }
