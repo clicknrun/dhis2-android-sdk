@@ -45,6 +45,10 @@ public abstract class CategoryModel extends BaseIdentifiableObjectModel implemen
     public static final String TABLE = "Category";
 
     public static class Columns extends BaseIdentifiableObjectModel.Columns {
+
+        public static String[] all() {
+            return BaseIdentifiableObjectModel.Columns.all();
+        }
     }
 
     public static CategoryModel create(Cursor cursor) {
