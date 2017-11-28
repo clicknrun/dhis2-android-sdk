@@ -30,6 +30,7 @@ package org.hisp.dhis.android.core.dataelement;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -43,6 +44,8 @@ import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
+
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 @AutoValue
 public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel implements StatementBinder {
@@ -106,6 +109,15 @@ public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel im
 
     @NonNull
     public abstract ContentValues toContentValues();
+
+    @Override
+    public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
+        super.bindToStatement(sqLiteStatement);
+        sqLiteBind(sqLiteStatement, 7, shortName());
+        sqLiteBind(sqLiteStatement, 8, displayShortName());
+        sqLiteBind(sqLiteStatement, 9, startDate());
+        sqLiteBind(sqLiteStatement, 10, endDate());
+    }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseIdentifiableObjectModel.Builder<Builder> {
