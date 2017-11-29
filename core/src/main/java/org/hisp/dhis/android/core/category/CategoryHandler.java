@@ -29,24 +29,39 @@ package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 
 public class CategoryHandler extends GenericHandler<Category, CategoryModel> {
 
     private final CategoryOptionHandler categoryOptionHandler;
+    private final ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
 
     public CategoryHandler(IdentifiableObjectStore<CategoryModel> store,
-                           CategoryOptionHandler categoryOptionHandler) {
+                           CategoryOptionHandler categoryOptionHandler,
+                           ObjectStore<CategoryCategoryOptionLinkModel>
+                            categoryCategoryOptionStore) {
         super(store);
         this.categoryOptionHandler = categoryOptionHandler;
+        this.categoryCategoryOptionStore = categoryCategoryOptionStore;
     }
 
     @Override
     protected void afterObjectPersisted(Category category) {
-        this.categoryOptionHandler.handleMany(category.categoryOptions());
+        categoryOptionHandler.handleMany(category.categoryOptions());
+        saveCategoryCategoryOptionLinks(category);
     }
 
     @Override
     protected CategoryModel pojoToModel(Category category) {
         return CategoryModel.create(category);
+    }
+
+    private void saveCategoryCategoryOptionLinks(Category category) {
+        for (int i = 0; i < category.categoryOptions().size(); i++) {
+            CategoryOption categoryOption = category.categoryOptions().get(i);
+            this.categoryCategoryOptionStore.insert(
+                    CategoryCategoryOptionLinkModel.create(category.uid(), categoryOption.uid(),
+                            i + 1));
+        }
     }
 }
