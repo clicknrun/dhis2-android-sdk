@@ -32,11 +32,14 @@ import android.content.ContentValues;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 import org.hisp.dhis.android.core.common.IdentifiableObject;
 import org.hisp.dhis.android.core.common.Model;
 import org.hisp.dhis.android.core.common.NameableObject;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
+
+import java.util.Date;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -83,5 +86,30 @@ public class AndroidTestUtils {
         assertThat(contentValues.getAsString(DataSetModel.Columns.DISPLAY_SHORT_NAME)).isEqualTo(m.displayShortName());
         assertThat(contentValues.getAsString(DataSetModel.Columns.DESCRIPTION)).isEqualTo(m.description());
         assertThat(contentValues.getAsString(DataSetModel.Columns.DISPLAY_DESCRIPTION)).isEqualTo(m.displayDescription());
+    }
+
+    private static void fillModelProperties(BaseModel.Builder builder) {
+        builder
+                .id(2L);
+    }
+
+    public static void fillIdentifiableModelProperties(BaseIdentifiableObjectModel.Builder builder) {
+        fillModelProperties(builder);
+        builder
+                .uid("test_uid")
+                .code("test_code")
+                .name("test_name")
+                .displayName("test_display_name")
+                .created(new Date())
+                .lastUpdated(new Date());
+    }
+
+    public static void fillNameableModelProperties(BaseNameableObjectModel.Builder builder) {
+        fillIdentifiableModelProperties(builder);
+        builder
+                .shortName("test_short_name")
+                .displayShortName("test_display_short_name")
+                .description("test_description")
+                .displayDescription("test_display_description");
     }
 }

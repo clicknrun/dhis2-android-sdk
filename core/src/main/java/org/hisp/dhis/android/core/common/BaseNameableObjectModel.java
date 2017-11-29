@@ -81,7 +81,7 @@ public abstract class BaseNameableObjectModel extends BaseIdentifiableObjectMode
         sqLiteBind(sqLiteStatement, 10, displayDescription());
     }
 
-    protected static abstract class Builder<T extends Builder> extends BaseIdentifiableObjectModel.Builder<T> {
+    public static abstract class Builder<T extends Builder> extends BaseIdentifiableObjectModel.Builder<T> {
         public abstract T shortName(@Nullable String shortName);
 
         public abstract T displayShortName(@Nullable String displayShortName);

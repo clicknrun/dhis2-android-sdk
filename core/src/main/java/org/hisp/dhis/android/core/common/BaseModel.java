@@ -48,7 +48,7 @@ public abstract class BaseModel implements Model {
     @ColumnName(BaseModel.Columns.ID)
     public abstract Long id();
 
-    protected static abstract class Builder<T extends Builder> {
+    public static abstract class Builder<T extends Builder> {
         public abstract T id(Long id);
     }
 }

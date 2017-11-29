@@ -50,35 +50,29 @@ import static org.hisp.dhis.android.core.AndroidTestUtils.toInteger;
 public class DataSetModelTests {
     private final Date date = new Date();
     private final String dateString = BaseIdentifiableObject.DATE_FORMAT.format(date);
+    private final DataSetModel.Builder dataModelBuilder = DataSetModel.builder();
+    private final DataSetModel dm;
 
-    private final DataSetModel dm = DataSetModel.builder()
-            .id(2L)
-            .uid("test_uid")
-            .code("test_code")
-            .name("test_name")
-            .displayName("test_display_name")
-            .created(date)
-            .lastUpdated(date)
-            .shortName("test_short_name")
-            .displayShortName("test_display_short_name")
-            .description("test_description")
-            .displayDescription("test_display_description")
-            .periodType(PeriodType.Monthly)
-            .categoryCombo("test_categoryCombo")
-            .mobile(false)
-            .version(1)
-            .expiryDays(10)
-            .timelyDays(100)
-            .notifyCompletingUser(false)
-            .openFuturePeriods(0)
-            .fieldCombinationRequired(false)
-            .validCompleteOnly(false)
-            .noValueRequiresComment(false)
-            .skipOffline(false)
-            .dataElementDecoration(false)
-            .renderAsTabs(false)
-            .renderHorizontally(false)
-            .build();
+    public DataSetModelTests() {
+        AndroidTestUtils.fillNameableModelProperties(dataModelBuilder);
+        this.dm = dataModelBuilder
+                .periodType(PeriodType.Monthly)
+                .categoryCombo("test_categoryCombo")
+                .mobile(false)
+                .version(1)
+                .expiryDays(10)
+                .timelyDays(100)
+                .notifyCompletingUser(false)
+                .openFuturePeriods(0)
+                .fieldCombinationRequired(false)
+                .validCompleteOnly(false)
+                .noValueRequiresComment(false)
+                .skipOffline(false)
+                .dataElementDecoration(false)
+                .renderAsTabs(false)
+                .renderHorizontally(false)
+                .build();
+    }
 
     @Test
     public void create_shouldConvertToDataSetModel() {

@@ -98,7 +98,7 @@ public abstract class BaseIdentifiableObjectModel extends BaseModel implements I
         sqLiteBind(sqLiteStatement, 6, lastUpdated());
     }
 
-    protected static abstract class Builder<T extends Builder> extends BaseModel.Builder<T> {
+    public static abstract class Builder<T extends Builder> extends BaseModel.Builder<T> {
         public abstract T uid(String uid);
 
         public abstract T code(@Nullable String code);
