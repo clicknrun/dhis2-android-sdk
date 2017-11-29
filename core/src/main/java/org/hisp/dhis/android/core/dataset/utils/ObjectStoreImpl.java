@@ -26,19 +26,38 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.category;
+package org.hisp.dhis.android.core.dataset.utils;
 
+import android.support.annotation.NonNull;
+
+import org.hisp.dhis.android.core.common.Model;
+import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStoreImpl;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 
-public class CategoryOptionStoreFactory {
-    public static IdentifiableObjectStore<CategoryOptionModel> create(DatabaseAdapter databaseAdapter) {
-        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryOptionModel.TABLE,
-                CategoryOptionModel.Columns.all());
-        SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new IdentifiableObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
+import static org.hisp.dhis.android.core.utils.Utils.isNull;
+
+public class ObjectStoreImpl<M extends Model & StatementBinder> implements ObjectStore<M> {
+    protected final DatabaseAdapter databaseAdapter;
+    protected final SQLStatementWrapper statements;
+    protected final SQLStatementBuilder builder;
+
+    public ObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
+                       SQLStatementBuilder builder) {
+        this.databaseAdapter = databaseAdapter;
+        this.statements = statements;
+        this.builder = builder;
+    }
+
+    @Override
+    public final long insert(@NonNull M m) {
+        isNull(m);
+        m.bindToStatement(statements.insert);
+
+        // execute and clear bindings
+        Long insert = databaseAdapter.executeInsert(builder.tableName, statements.insert);
+        statements.insert.clearBindings();
+        return insert;
     }
 }
+
+

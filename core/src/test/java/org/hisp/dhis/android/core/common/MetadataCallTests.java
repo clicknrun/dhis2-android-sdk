@@ -28,11 +28,20 @@
 package org.hisp.dhis.android.core.common;
 
 import org.hisp.dhis.android.core.calls.MetadataCall;
+import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
+import org.hisp.dhis.android.core.category.CategoryOptionModel;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElementStore;
+import org.hisp.dhis.android.core.dataset.DataSet;
+import org.hisp.dhis.android.core.dataset.DataSetModel;
+import org.hisp.dhis.android.core.dataset.DataSetService;
+import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetService;
 import org.hisp.dhis.android.core.option.OptionSetStore;
@@ -83,6 +92,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -127,6 +137,9 @@ public class MetadataCallTests {
 
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private retrofit2.Call<Payload<OptionSet>> optionSetCall;
+
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private retrofit2.Call<Payload<DataSet>> dataSetCall;
 
     @Mock
     private SystemInfo systemInfo;
@@ -213,6 +226,21 @@ public class MetadataCallTests {
     private OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
 
     @Mock
+    private IdentifiableObjectStore<DataSetModel> dataSetStore;
+
+    @Mock
+    private IdentifiableObjectStore<CategoryComboModel> categoryComboStore;
+
+    @Mock
+    private IdentifiableObjectStore<CategoryModel> categoryStore;
+
+    @Mock
+    private IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
+
+    @Mock
+    private IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
+
+    @Mock
     private UserService userService;
 
     @Mock
@@ -228,6 +256,9 @@ public class MetadataCallTests {
     private OptionSetService optionSetService;
 
     @Mock
+    private DataSetService dataSetService;
+
+    @Mock
     private Date serverDateTime;
 
     @Mock
@@ -236,8 +267,7 @@ public class MetadataCallTests {
     @Mock
     private UserCredentials userCredentials;
 
-    @Mock
-    private List<UserRole> userRoles;
+    private List<UserRole> userRoles = new ArrayList<>();
 
     @Mock
     private OrganisationUnit organisationUnit;
@@ -255,6 +285,9 @@ public class MetadataCallTests {
     private Payload<OptionSet> optionSetPayload;
 
     @Mock
+    private Payload<DataSet> dataSetPayload;
+
+    @Mock
     private OptionSet optionSet;
 
     @Mock
@@ -262,6 +295,12 @@ public class MetadataCallTests {
 
     @Mock
     private TrackedEntity trackedEntity;
+
+    @Mock
+    private DataSet dataSet;
+
+    @Mock
+    private CategoryCombo categoryCombo;
 
 
     // object to test
@@ -293,6 +332,9 @@ public class MetadataCallTests {
         when(optionSetService.optionSets(
                 anyBoolean(), any(Fields.class), any(Filter.class))
         ).thenReturn(optionSetCall);
+        when(dataSetService.getDataSets(
+                any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
+        .thenReturn(dataSetCall);
 
         when(systemInfo.serverDate()).thenReturn(serverDateTime);
         when(userCredentials.userRoles()).thenReturn(userRoles);
@@ -306,20 +348,23 @@ public class MetadataCallTests {
         when(trackedEntityPayload.items()).thenReturn(Collections.singletonList(trackedEntity));
         when(trackedEntity.uid()).thenReturn("test_tracked_entity_uid");
         when(optionSetPayload.items()).thenReturn(Collections.singletonList(optionSet));
+        when(dataSetPayload.items()).thenReturn(Collections.singletonList(dataSet));
+        when(dataSet.categoryCombo()).thenReturn(categoryCombo);
 
         when(resourceStore.getLastUpdated(any(ResourceModel.Type.class))).thenReturn("2017-01-01");
 
         metadataCall = new MetadataCall(
                 databaseAdapter, systemInfoService, userService,
                 programService, organisationUnitService, trackedEntityService, optionSetService,
-                systemInfoStore, resourceStore, userStore,
+                dataSetService, systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
                 optionStore, optionSetStore, dataElementStore, programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
-                organisationUnitProgramLinkStore);
+                organisationUnitProgramLinkStore, dataSetStore, categoryComboStore, categoryStore,
+                categoryOptionStore, categoryOptionComboStore);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);
 
@@ -329,13 +374,14 @@ public class MetadataCallTests {
         when(programCall.execute()).thenReturn(Response.success(programPayload));
         when(trackedEntityCall.execute()).thenReturn(Response.success(trackedEntityPayload));
         when(optionSetCall.execute()).thenReturn(Response.success(optionSetPayload));
+        when(dataSetCall.execute()).thenReturn(Response.success(dataSetPayload));
     }
 
     @Test
     public void call_shouldExecuteCalls() throws Exception {
         Response response = metadataCall.call();
         // assert that last successful response is returned
-        assertThat(response.body()).isEqualTo(optionSetPayload);
+        assertThat(response.body()).isEqualTo(dataSetPayload);
     }
 
     @Test

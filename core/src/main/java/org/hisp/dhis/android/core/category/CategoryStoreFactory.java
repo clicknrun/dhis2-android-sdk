@@ -30,6 +30,7 @@ package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStoreImpl;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 
@@ -38,6 +39,6 @@ public class CategoryStoreFactory {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryModel.TABLE,
                 CategoryModel.Columns.all());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new IdentifiableObjectStore<>(databaseAdapter, statements, statementBuilder);
+        return new IdentifiableObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
     }
 }

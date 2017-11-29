@@ -30,6 +30,7 @@ package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStoreImpl;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
 import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
 
@@ -38,6 +39,6 @@ public class PeriodStoreFactory {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(PeriodModel.TABLE,
                 PeriodModel.Columns.all());
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new ObjectStore<>(databaseAdapter, statements, statementBuilder);
+        return new ObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
     }
 }

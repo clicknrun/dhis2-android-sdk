@@ -32,51 +32,15 @@ import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
-import static org.hisp.dhis.android.core.utils.Utils.isNull;
+public interface IdentifiableObjectStore<M extends BaseIdentifiableObjectModel & StatementBinder>
+        extends ObjectStore<M> {
 
-@SuppressWarnings({
-        "PMD.AvoidDuplicateLiterals"
-})
-public class IdentifiableObjectStore<M extends BaseIdentifiableObjectModel & StatementBinder> extends ObjectStore<M> {
+    public int delete(@NonNull String uid);
 
-    public IdentifiableObjectStore(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
-                                   SQLStatementBuilder builder) {
-        super(databaseAdapter, statements, builder);
-    }
+    public int update(@NonNull M m);
 
-    public final int delete(@NonNull String uid) {
-        isNull(uid);
-        // bind the where argument
-        sqLiteBind(statements.deleteById, 1, uid);
-
-        // execute and clear bindings
-        int delete = databaseAdapter.executeUpdateDelete(builder.tableName, statements.deleteById);
-        statements.deleteById.clearBindings();
-        return delete;
-    }
-
-    public final int update(@NonNull M m) {
-        isNull(m);
-        m.bindToStatement(statements.update);
-
-        // bind the where argument
-        sqLiteBind(statements.update, builder.columns.length + 1, m.uid());
-
-        // execute and clear bindings
-        int update = databaseAdapter.executeUpdateDelete(builder.tableName, statements.update);
-        statements.update.clearBindings();
-        return update;
-    }
-
-    public final void updateOrInsert(@NonNull M m) {
-        int updatedRow = update(m);
-        if (updatedRow <= 0) {
-            insert(m);
-        }
-    }
+    public void updateOrInsert(@NonNull M m);
 }
 
 

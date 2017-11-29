@@ -30,12 +30,54 @@ package org.hisp.dhis.android.core.dataset.utils;
 
 import android.support.annotation.NonNull;
 
-import org.hisp.dhis.android.core.common.Model;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-public interface ObjectStore<M extends Model & StatementBinder> {
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
+import static org.hisp.dhis.android.core.utils.Utils.isNull;
 
-    public long insert(@NonNull M m);
+public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel & StatementBinder>
+        extends ObjectStoreImpl<M> implements IdentifiableObjectStore<M> {
+
+    public IdentifiableObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
+                                   SQLStatementBuilder builder) {
+        super(databaseAdapter, statements, builder);
+    }
+
+    @Override
+    public final int delete(@NonNull String uid) {
+        isNull(uid);
+        // bind the where argument
+        sqLiteBind(statements.deleteById, 1, uid);
+
+        // execute and clear bindings
+        int delete = databaseAdapter.executeUpdateDelete(builder.tableName, statements.deleteById);
+        statements.deleteById.clearBindings();
+        return delete;
+    }
+
+    @Override
+    public final int update(@NonNull M m) {
+        isNull(m);
+        m.bindToStatement(statements.update);
+
+        // bind the where argument
+        sqLiteBind(statements.update, builder.columns.length + 1, m.uid());
+
+        // execute and clear bindings
+        int update = databaseAdapter.executeUpdateDelete(builder.tableName, statements.update);
+        statements.update.clearBindings();
+        return update;
+    }
+
+    @Override
+    public final void updateOrInsert(@NonNull M m) {
+        int updatedRow = update(m);
+        if (updatedRow <= 0) {
+            insert(m);
+        }
+    }
 }
 
 
