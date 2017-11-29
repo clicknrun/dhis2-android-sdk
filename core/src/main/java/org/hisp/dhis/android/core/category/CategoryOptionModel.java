@@ -38,6 +38,7 @@ import com.gabrielittner.auto.value.cursor.ColumnAdapter;
 import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
+import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
@@ -102,10 +103,18 @@ public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel im
     @ColumnAdapter(DbDateColumnAdapter.class)
     public abstract Date startDate();
 
+    public String startDateStr() {
+        return BaseIdentifiableObject.DATE_FORMAT.format(startDate());
+    }
+
     @Nullable
     @ColumnName(Columns.END_DATE)
     @ColumnAdapter(DbDateColumnAdapter.class)
     public abstract Date endDate();
+
+    public String endDateStr() {
+        return BaseIdentifiableObject.DATE_FORMAT.format(endDate());
+    }
 
     @NonNull
     public abstract ContentValues toContentValues();
