@@ -32,9 +32,9 @@ import android.content.ContentValues;
 import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.hisp.dhis.android.core.AndroidTestUtils;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
+import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -76,7 +76,7 @@ public class DataSetModelTests {
     @Test
     public void create_shouldConvertToDataSetModel() {
         MatrixCursor cursor = new MatrixCursor(DataSetModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(AndroidTestUtils.getNameableModelAsObjectArray(dm),
+        cursor.addRow(Utils.appendInNewArray(AsObjectArrrayTestUtils.getNameableModelAsObjectArray(dm),
                 dm.periodType(), dm.categoryCombo(), toInteger(dm.mobile()), dm.version(),
                 dm.expiryDays(), dm.timelyDays(), toInteger(dm.notifyCompletingUser()),
                 dm.openFuturePeriods(), toInteger(dm.fieldCombinationRequired()),

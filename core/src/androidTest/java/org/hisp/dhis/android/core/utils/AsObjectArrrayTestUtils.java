@@ -26,28 +26,34 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core;
+package org.hisp.dhis.android.core.utils;
+
+import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.BaseModel;
+import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 
 /**
  * A collection of convenience functions/abstractions to be used by the tests.
  */
-public class AndroidTestUtils {
+public class AsObjectArrrayTestUtils {
 
-    /* A helper method to convert an integer to Boolean, where 1 is true and 0 is false*/
-    public static Boolean toBoolean(Integer i) {
-        if (i == 0) {
-            return false;
-        } else {
-            return true;
-        }
+    private static Object[] getModelAsObjectArray(BaseModel m) {
+        return new Object[] {
+                m.id()
+        };
     }
 
-    /* A helper method to convert a Boolean to an Integer, where true is 1 and false is 0 */
-    public static Integer toInteger(Boolean b) {
-        if (b) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public static Object[] getIdentifiableModelAsObjectArray(BaseIdentifiableObjectModel m) {
+        return Utils.appendInNewArray(getModelAsObjectArray(m),
+                m.uid(), m.code(), m.name(), m.displayName(),
+                m.createdStr(), m.lastUpdatedStr()
+        );
+    }
+
+    public static Object[] getNameableModelAsObjectArray(BaseNameableObjectModel m) {
+        return Utils.appendInNewArray(getIdentifiableModelAsObjectArray(m),
+                m.shortName(), m.displayShortName(),
+                m.description(), m.displayDescription()
+        );
     }
 }

@@ -32,7 +32,7 @@ import android.content.ContentValues;
 import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.hisp.dhis.android.core.AndroidTestUtils;
+import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -57,7 +57,7 @@ public class CategoryComboModelTests {
     @Test
     public void create_shouldConvertToCategoryComboModel() {
         MatrixCursor cursor = new MatrixCursor(CategoryComboModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(AndroidTestUtils.getIdentifiableModelAsObjectArray(ccm)));
+        cursor.addRow(Utils.appendInNewArray(AsObjectArrrayTestUtils.getIdentifiableModelAsObjectArray(ccm)));
         cursor.moveToFirst();
 
         CategoryComboModel modelFromDB = CategoryComboModel.create(cursor);
