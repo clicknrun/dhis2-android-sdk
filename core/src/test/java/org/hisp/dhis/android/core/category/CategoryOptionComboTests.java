@@ -35,6 +35,7 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -44,35 +45,20 @@ public class CategoryOptionComboTests {
     @Test
     public void categoryOptionCombo_shouldMapFromJsonString() throws IOException, ParseException {
         ObjectMapper objectMapper = Inject.objectMapper();
+        InputStream jsonStream = this.getClass().getClassLoader()
+                .getResourceAsStream("category/categoryOptionCombo.json");
 
-        CategoryOptionCombo categoryOptionCombo = objectMapper.readValue("{" +
-                        "\"code\":\"COC_358963\"," +
-                        "\"lastUpdated\":\"2011-12-24T12:24:25.319\"," +
-                        "\"id\":\"S34ULMcHMca\"," +
-                        "\"created\":\"2011-12-24T12:24:25.319\"," +
-                        "\"name\":\"0-11m\"," +
-                        "\"shortName\":\"0-11m\"," +
-                        "\"displayName\":\"0-11m\"," +
-                        "\"displayShortName\":\"0-11m\"," +
-                        "\"externalAccess\":false," +
-                        "\"ignoreApproval\":false," +
-                        "\"dimensionItem\":\"S34ULMcHMca\"," +
-                        "\"categoryCombo\":{\"id\":\"t3aNCvHsoSn\"}," +
-                        "\"translations\":[]," +
-                        "\"categoryOptions\":[{\"id\":\"FbLZS3ueWbQ\"}]," +
-                        "\"userGroupAccesses\":[]," +
-                        "\"attributeValues\":[]}",
-                CategoryOptionCombo.class);
+        CategoryOptionCombo categoryOptionCombo = objectMapper.readValue(jsonStream, CategoryOptionCombo.class);
 
-        assertThat(categoryOptionCombo.uid()).isEqualTo("S34ULMcHMca");
-        assertThat(categoryOptionCombo.code()).isEqualTo("COC_358963");
+        assertThat(categoryOptionCombo.uid()).isEqualTo("ranftQIH5M9");
+        assertThat(categoryOptionCombo.code()).isEqualTo("COC_1153397");
 
         assertThat(categoryOptionCombo.created()).isEqualTo(
-                BaseIdentifiableObject.DATE_FORMAT.parse("2011-12-24T12:24:25.319"));
+                BaseIdentifiableObject.DATE_FORMAT.parse("2013-12-20T22:17:20.428"));
         assertThat(categoryOptionCombo.lastUpdated()).isEqualTo(
-                BaseIdentifiableObject.DATE_FORMAT.parse("2011-12-24T12:24:25.319"));
+                BaseIdentifiableObject.DATE_FORMAT.parse("2013-12-20T22:17:20.428"));
 
-        assertThat(categoryOptionCombo.name()).isEqualTo("0-11m");
-        assertThat(categoryOptionCombo.displayName()).isEqualTo("0-11m");
+        assertThat(categoryOptionCombo.name()).isEqualTo("CARE International, Provide access to primary health care");
+        assertThat(categoryOptionCombo.displayName()).isEqualTo("CARE International, Provide access to primary health care");
     }
 }
