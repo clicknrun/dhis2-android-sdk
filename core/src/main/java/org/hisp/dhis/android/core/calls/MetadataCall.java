@@ -29,8 +29,11 @@ package org.hisp.dhis.android.core.calls;
 
 import android.support.annotation.NonNull;
 
+import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkModel;
 import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
 import org.hisp.dhis.android.core.category.CategoryOptionModel;
 import org.hisp.dhis.android.core.common.Payload;
@@ -42,6 +45,7 @@ import org.hisp.dhis.android.core.dataset.DataSetCall;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.option.OptionSetCall;
 import org.hisp.dhis.android.core.option.OptionSetService;
 import org.hisp.dhis.android.core.option.OptionSetStore;
@@ -133,6 +137,9 @@ public class MetadataCall implements Call<Response> {
     private final IdentifiableObjectStore<CategoryModel> categoryStore;
     private final IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
     private final IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
+    private final ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
+    private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
+    private final ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore;
 
     private boolean isExecuted;
 
@@ -176,7 +183,10 @@ public class MetadataCall implements Call<Response> {
                         @NonNull IdentifiableObjectStore<CategoryComboModel> categoryComboStore,
                         @NonNull IdentifiableObjectStore<CategoryModel> categoryStore,
                         @NonNull IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore,
-                        @NonNull IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore) {
+                        @NonNull IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore,
+                        @NonNull ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore,
+                        @NonNull ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
+                        @NonNull ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore) {
         this.databaseAdapter = databaseAdapter;
         this.systemInfoService = systemInfoService;
         this.userService = userService;
@@ -215,6 +225,9 @@ public class MetadataCall implements Call<Response> {
         this.categoryStore = categoryStore;
         this.categoryOptionStore = categoryOptionStore;
         this.categoryOptionComboStore = categoryOptionComboStore;
+        this.categoryCategoryOptionStore = categoryCategoryOptionStore;
+        this.categoryComboCategoryStore = categoryComboCategoryStore;
+        this.categoryOptionComboCategoryOptionStore = categoryOptionComboCategoryOptionStore;
     }
 
     @Override
@@ -303,7 +316,9 @@ public class MetadataCall implements Call<Response> {
 
             Set<String> dataSetUids = getAssignedDataSetUids(user);
             response = new DataSetCall(dataSetService, dataSetStore, categoryComboStore,
-                    categoryStore, categoryOptionStore, categoryOptionComboStore, databaseAdapter,
+                    categoryStore, categoryOptionStore, categoryOptionComboStore,
+                    categoryCategoryOptionStore, categoryComboCategoryStore,
+                    categoryOptionComboCategoryOptionStore, databaseAdapter,
                     resourceStore, dataSetUids, serverDate).call();
             if (!response.isSuccessful()) {
                 return response;

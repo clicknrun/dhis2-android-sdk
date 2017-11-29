@@ -33,13 +33,13 @@ import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 
 public class CategoryHandler extends GenericHandler<Category, CategoryModel> {
 
-    private final CategoryOptionHandler categoryOptionHandler;
     private final ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
 
+    private final CategoryOptionHandler categoryOptionHandler;
+
     public CategoryHandler(IdentifiableObjectStore<CategoryModel> store,
-                           CategoryOptionHandler categoryOptionHandler,
-                           ObjectStore<CategoryCategoryOptionLinkModel>
-                            categoryCategoryOptionStore) {
+                           ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore,
+                           CategoryOptionHandler categoryOptionHandler) {
         super(store);
         this.categoryOptionHandler = categoryOptionHandler;
         this.categoryCategoryOptionStore = categoryCategoryOptionStore;

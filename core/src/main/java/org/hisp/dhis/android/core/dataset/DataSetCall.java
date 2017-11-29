@@ -29,11 +29,13 @@
 package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.calls.Call;
+import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
 import org.hisp.dhis.android.core.category.CategoryComboHandler;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryHandler;
 import org.hisp.dhis.android.core.category.CategoryModel;
-import org.hisp.dhis.android.core.category.CategoryOptionCombo;
+import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkModel;
 import org.hisp.dhis.android.core.category.CategoryOptionComboHandler;
 import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
 import org.hisp.dhis.android.core.category.CategoryOptionHandler;
@@ -43,6 +45,7 @@ import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 import org.hisp.dhis.android.core.resource.ResourceStore;
@@ -70,6 +73,9 @@ public class DataSetCall implements Call<Response<Payload<DataSet>>> {
     private final IdentifiableObjectStore<CategoryModel> categoryStore;
     private final IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
     private final IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
+    private final ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
+    private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
+    private final ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore;
 
     public DataSetCall(DataSetService dataSetService,
                        IdentifiableObjectStore<DataSetModel> dataSetStore,
@@ -77,6 +83,9 @@ public class DataSetCall implements Call<Response<Payload<DataSet>>> {
                        IdentifiableObjectStore<CategoryModel> categoryStore,
                        IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore,
                        IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore,
+                       ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore,
+                       ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
+                       ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore,
                        DatabaseAdapter databaseAdapter,
                        ResourceStore resourceStore,
                        Set<String> uids,
@@ -92,6 +101,9 @@ public class DataSetCall implements Call<Response<Payload<DataSet>>> {
         this.categoryStore = categoryStore;
         this.categoryOptionStore = categoryOptionStore;
         this.categoryOptionComboStore = categoryOptionComboStore;
+        this.categoryCategoryOptionStore = categoryCategoryOptionStore;
+        this.categoryComboCategoryStore = categoryComboCategoryStore;
+        this.categoryOptionComboCategoryOptionStore = categoryOptionComboCategoryOptionStore;
     }
 
 
@@ -139,6 +151,7 @@ public class DataSetCall implements Call<Response<Payload<DataSet>>> {
                     new DataSetHandler(dataSetStore,
                             new CategoryComboHandler(categoryComboStore,
                                     new CategoryHandler(categoryStore,
+                                            categoryCategoryOptionStore,
                                             new CategoryOptionHandler(categoryOptionStore)),
                                     new CategoryOptionComboHandler(categoryOptionComboStore)));
 

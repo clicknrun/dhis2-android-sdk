@@ -37,9 +37,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hisp.dhis.android.core.calls.Call;
 import org.hisp.dhis.android.core.calls.MetadataCall;
 import org.hisp.dhis.android.core.calls.TrackedEntityInstancePostCall;
+import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
+import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkStoreFactory;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryComboStoreFactory;
 import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkModel;
+import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkStoreFactory;
 import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
 import org.hisp.dhis.android.core.category.CategoryOptionComboStoreFactory;
 import org.hisp.dhis.android.core.category.CategoryOptionModel;
@@ -56,6 +62,7 @@ import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.dataset.DataSetStoreFactory;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStore;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStoreImpl;
 import org.hisp.dhis.android.core.event.EventPostCall;
@@ -184,6 +191,10 @@ public final class D2 {
     private final IdentifiableObjectStore<CategoryModel> categoryStore;
     private final IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
     private final IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
+    private final ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
+    private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
+    private final ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore;
+
 
     private final TrackedEntityInstanceStore trackedEntityInstanceStore;
     private final TrackedEntityInstanceService trackedEntityInstanceService;
@@ -284,6 +295,10 @@ public final class D2 {
         this.categoryStore = CategoryStoreFactory.create(databaseAdapter);
         this.categoryOptionStore = CategoryOptionStoreFactory.create(databaseAdapter);
         this.categoryOptionComboStore = CategoryOptionComboStoreFactory.create(databaseAdapter);
+        this.categoryCategoryOptionStore = CategoryCategoryOptionLinkStoreFactory.create(databaseAdapter);
+        this.categoryComboCategoryStore = CategoryComboCategoryLinkStoreFactory.create(databaseAdapter);
+        this.categoryOptionComboCategoryOptionStore =
+                CategoryOptionComboCategoryOptionLinkStoreFactory.create(databaseAdapter);
     }
 
     @NonNull
@@ -338,7 +353,8 @@ public final class D2 {
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore, optionStore,
                 optionSetStore, dataElementStore, programStageDataElementStore, programStageSectionStore,
                 programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore,
-                dataSetStore, categoryComboStore, categoryStore, categoryOptionStore, categoryOptionComboStore);
+                dataSetStore, categoryComboStore, categoryStore, categoryOptionStore, categoryOptionComboStore,
+                categoryCategoryOptionStore, categoryComboCategoryStore, categoryOptionComboCategoryOptionStore);
     }
 
     @NonNull
