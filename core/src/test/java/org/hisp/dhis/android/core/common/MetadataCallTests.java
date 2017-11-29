@@ -28,24 +28,19 @@
 package org.hisp.dhis.android.core.common;
 
 import org.hisp.dhis.android.core.calls.MetadataCall;
-import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
 import org.hisp.dhis.android.core.category.CategoryCombo;
-import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
+import org.hisp.dhis.android.core.category.CategoryComboHandler;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
-import org.hisp.dhis.android.core.category.CategoryModel;
-import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkModel;
-import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
-import org.hisp.dhis.android.core.category.CategoryOptionModel;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElementStore;
 import org.hisp.dhis.android.core.dataset.DataSet;
+import org.hisp.dhis.android.core.dataset.DataSetHandler;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetService;
 import org.hisp.dhis.android.core.option.OptionSetStore;
@@ -70,7 +65,6 @@ import org.hisp.dhis.android.core.relationship.RelationshipTypeStore;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 import org.hisp.dhis.android.core.resource.ResourceStore;
 import org.hisp.dhis.android.core.systeminfo.SystemInfo;
-import org.hisp.dhis.android.core.systeminfo.SystemInfoHandler;
 import org.hisp.dhis.android.core.systeminfo.SystemInfoService;
 import org.hisp.dhis.android.core.systeminfo.SystemInfoStore;
 import org.hisp.dhis.android.core.trackedentity.TrackedEntity;
@@ -152,9 +146,6 @@ public class MetadataCallTests {
     private SystemInfoService systemInfoService;
 
     @Mock
-    private SystemInfoHandler systemInfoHandler;
-
-    @Mock
     private SystemInfoStore systemInfoStore;
 
     @Mock
@@ -230,28 +221,10 @@ public class MetadataCallTests {
     private OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
 
     @Mock
-    private IdentifiableObjectStore<DataSetModel> dataSetStore;
+    GenericHandler<DataSet, DataSetModel> dataSetHandler;
 
     @Mock
-    private IdentifiableObjectStore<CategoryComboModel> categoryComboStore;
-
-    @Mock
-    private IdentifiableObjectStore<CategoryModel> categoryStore;
-
-    @Mock
-    private IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
-
-    @Mock
-    private IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
-
-    @Mock
-    private ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
-
-    @Mock
-    private ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
-
-    @Mock
-    private ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore;
+    GenericHandler<CategoryCombo, CategoryComboModel>  categoryComboHandler;
 
     @Mock
     private UserService userService;
@@ -376,9 +349,7 @@ public class MetadataCallTests {
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
                 optionStore, optionSetStore, dataElementStore, programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
-                organisationUnitProgramLinkStore, dataSetStore, categoryComboStore, categoryStore,
-                categoryOptionStore, categoryOptionComboStore, categoryCategoryOptionStore,
-                categoryComboCategoryStore, categoryOptionComboCategoryOptionStore);
+                organisationUnitProgramLinkStore, dataSetHandler, categoryComboHandler);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);
 

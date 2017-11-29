@@ -25,24 +25,53 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.dataset.utils;
 
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.GenericHandlerImpl;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.StatementBinder;
 
-public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
+import java.util.Collection;
 
-    private DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore) {
-        super(dataSetStore);
+import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
+
+public abstract class GenericHandlerImpl<
+        P extends BaseIdentifiableObject,
+        M extends BaseIdentifiableObjectModel & StatementBinder> implements GenericHandler<P, M> {
+
+    private final IdentifiableObjectStore<M> store;
+
+    public GenericHandlerImpl(IdentifiableObjectStore<M> store) {
+        this.store = store;
     }
 
     @Override
-    protected DataSetModel pojoToModel(DataSet dataSet) {
-        return DataSetModel.create(dataSet);
+    public final void handle(P p) {
+        if (p == null) {
+            return;
+        }
+        deleteOrPersist(p);
     }
 
-    public static DataSetHandler create(DatabaseAdapter databaseAdapter) {
-        return new DataSetHandler(DataSetStoreFactory.create(databaseAdapter));
+    @Override
+    public final void handleMany(Collection<P> pCollection) {
+        for(P p : pCollection) {
+            handle(p);
+        }
     }
+
+    private void deleteOrPersist(P p) {
+        M m = pojoToModel(p);
+        if (isDeleted(p) && m.uid() != null) {
+            store.delete(m.uid());
+        } else {
+            store.updateOrInsert(m);
+        }
+
+        this.afterObjectPersisted(p);
+    }
+
+    protected void afterObjectPersisted(P p) {}
+
+    protected abstract M pojoToModel(P p);
 }

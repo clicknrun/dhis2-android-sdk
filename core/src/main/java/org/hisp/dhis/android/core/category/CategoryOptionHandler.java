@@ -27,10 +27,10 @@
  */
 package org.hisp.dhis.android.core.category;
 
-import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
+import org.hisp.dhis.android.core.dataset.utils.GenericHandlerImpl;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 
-public class CategoryOptionHandler extends GenericHandler<CategoryOption, CategoryOptionModel> {
+public class CategoryOptionHandler extends GenericHandlerImpl<CategoryOption, CategoryOptionModel> {
 
     public CategoryOptionHandler(IdentifiableObjectStore<CategoryOptionModel> store) {
         super(store);

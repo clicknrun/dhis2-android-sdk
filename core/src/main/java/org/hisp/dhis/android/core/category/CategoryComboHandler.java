@@ -29,9 +29,9 @@ package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
+import org.hisp.dhis.android.core.dataset.utils.GenericHandlerImpl;
 
-public class CategoryComboHandler extends GenericHandler<CategoryCombo, CategoryComboModel> {
+public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, CategoryComboModel> {
 
     private final CategoryHandler categoryHandler;
     private final CategoryOptionComboHandler categoryOptionComboHandler;

@@ -29,7 +29,9 @@ package org.hisp.dhis.android.core.calls;
 
 import android.support.annotation.NonNull;
 
+import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboHandler;
+import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
@@ -37,8 +39,10 @@ import org.hisp.dhis.android.core.dataelement.DataElementStore;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetCall;
 import org.hisp.dhis.android.core.dataset.DataSetHandler;
+import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.dataset.utils.GenericCallData;
+import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
 import org.hisp.dhis.android.core.option.OptionSetCall;
 import org.hisp.dhis.android.core.option.OptionSetService;
 import org.hisp.dhis.android.core.option.OptionSetStore;
@@ -125,8 +129,8 @@ public class MetadataCall implements Call<Response> {
     private final ProgramStageStore programStageStore;
     private final RelationshipTypeStore relationshipStore;
     private final TrackedEntityStore trackedEntityStore;
-    private final DataSetHandler dataSetHandler;
-    private final CategoryComboHandler categoryComboHandler;
+    private final GenericHandler<DataSet, DataSetModel> dataSetHandler;
+    private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
 
     private boolean isExecuted;
 
@@ -166,8 +170,8 @@ public class MetadataCall implements Call<Response> {
                         @NonNull RelationshipTypeStore relationshipStore,
                         @NonNull TrackedEntityStore trackedEntityStore,
                         @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
-                        @NonNull DataSetHandler dataSetHandler,
-                        @NonNull CategoryComboHandler categoryComboHandler) {
+                        @NonNull GenericHandler<DataSet, DataSetModel> dataSetHandler,
+                        @NonNull GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler) {
         this.databaseAdapter = databaseAdapter;
         this.systemInfoService = systemInfoService;
         this.userService = userService;
