@@ -36,7 +36,6 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
-import org.hisp.dhis.android.core.dataset.DataSet;
 
 @AutoValue
 public abstract class CategoryComboModel extends BaseIdentifiableObjectModel implements StatementBinder {
