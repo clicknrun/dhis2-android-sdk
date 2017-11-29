@@ -35,6 +35,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
 import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
+import org.hisp.dhis.android.core.utils.ColumnsTestUtils;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -120,10 +121,23 @@ public class DataSetModelTests {
         String[] columnArray = DataSetModel.Columns.all();
         List<String> columnsList = Arrays.asList(columnArray);
         assertThat(columnArray.length).isEqualTo(26);
-        assertThat(columnsList.contains(Columns.ID)).isEqualTo(true);
-        assertThat(columnsList.contains(Columns.UID)).isEqualTo(true);
-        assertThat(columnsList.contains(Columns.NAME)).isEqualTo(true);
-        assertThat(columnsList.contains(Columns.SHORT_NAME)).isEqualTo(true);
+
+        ColumnsTestUtils.testNameableModelColumns(columnsList);
+
+        assertThat(columnsList.contains(Columns.PERIOD_TYPE)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.CATEGORY_COMBO)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.MOBILE)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.VERSION)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.EXPIRY_DAYS)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.TIMELY_DAYS)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.NOTIFY_COMPLETING_USER)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.OPEN_FUTURE_PERIODS)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.FIELD_COMBINATION_REQUIRED)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.VALID_COMPLETE_ONLY)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.NO_VALUE_REQUIRES_COMMENT)).isEqualTo(true);
         assertThat(columnsList.contains(Columns.SKIP_OFFLINE)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.DATA_ELEMENT_DECORATION)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.RENDER_AS_TABS)).isEqualTo(true);
+        assertThat(columnsList.contains(Columns.RENDER_HORIZONTALLY)).isEqualTo(true);
     }
 }

@@ -33,6 +33,7 @@ import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
+import org.hisp.dhis.android.core.utils.ColumnsTestUtils;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -78,8 +79,7 @@ public class CategoryComboModelTests {
         String[] columnArray = CategoryComboModel.Columns.all();
         List<String> columnsList = Arrays.asList(columnArray);
         assertThat(columnArray.length).isEqualTo(7);
-        assertThat(columnsList.contains(CategoryComboModel.Columns.ID)).isEqualTo(true);
-        assertThat(columnsList.contains(CategoryComboModel.Columns.UID)).isEqualTo(true);
-        assertThat(columnsList.contains(CategoryComboModel.Columns.NAME)).isEqualTo(true);
+
+        ColumnsTestUtils.testIdentifiableModelColumns(columnsList);
     }
 }
