@@ -26,37 +26,23 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.dataset.utils;
 
-import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.data.api.Fields;
-import org.hisp.dhis.android.core.dataset.utils.GenericCallData;
-import org.hisp.dhis.android.core.dataset.utils.GenericCallImpl;
-import org.hisp.dhis.android.core.resource.ResourceModel;
+import com.google.auto.value.AutoValue;
 
-import java.io.IOException;
-import java.util.Set;
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
+import org.hisp.dhis.android.core.resource.ResourceHandler;
 
-public class DataSetCall extends GenericCallImpl<DataSet> {
-    private final DataSetService dataSetService;
+import java.util.Date;
 
-    public DataSetCall(GenericCallData data, DataSetService dataSetService, DataSetHandler dataSetHandler,
-                       Set<String> uids) {
-        super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids);
-        this.dataSetService = dataSetService;
-    }
+@AutoValue
+public abstract class GenericCallData {
+    public abstract DatabaseAdapter databaseAdapter();
+    public abstract ResourceHandler resourceHandler();
+    public abstract Date serverDate();
 
-    @Override
-    protected retrofit2.Call<Payload<DataSet>> getCall(Set<String> uids, String lastUpdated)
-            throws IOException {
-        return dataSetService.getDataSets(getFields(), DataSet.lastUpdated.gt(lastUpdated),
-                DataSet.uid.in(uids), Boolean.FALSE);
-    }
-
-    // TODO insert and nest all fields
-    private Fields<DataSet> getFields() {
-        return Fields.<DataSet>builder().fields(
-                DataSet.uid
-        ).build();
+    public static GenericCallData create(DatabaseAdapter databaseAdapter,
+                                 ResourceHandler resourceHandler) {
+        return new AutoValue_GenericCallData(databaseAdapter, resourceHandler, new Date());
     }
 }

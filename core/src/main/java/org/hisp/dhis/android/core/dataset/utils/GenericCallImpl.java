@@ -31,42 +31,29 @@ package org.hisp.dhis.android.core.dataset.utils;
 import org.hisp.dhis.android.core.calls.Call;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.data.api.Filter;
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
-import org.hisp.dhis.android.core.dataset.DataSet;
-import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceModel;
-import org.hisp.dhis.android.core.resource.ResourceStore;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import retrofit2.Response;
 
 public abstract class GenericCallImpl<P extends BaseIdentifiableObject> implements Call<Response<Payload<P>>> {
-    private DatabaseAdapter databaseAdapter;
-    private ResourceHandler resourceHandler;
+    private GenericCallData data;
     private GenericHandler<P, ?> handler;
-    private Date serverDate;
-    private Set<String> uids;
     private boolean isExecuted;
-    private ResourceModel.Type resourceType;
 
-    public GenericCallImpl(DatabaseAdapter databaseAdapter,
-                           ResourceStore resourceStore,
-                           GenericHandler<P, ?> handler,
-                           Set<String> uids,
-                           Date serverDate,
-                           ResourceModel.Type resourceType) {
-        this.databaseAdapter = databaseAdapter;
-        this.resourceHandler = new ResourceHandler(resourceStore);
-        this.uids = uids;
-        this.serverDate = new Date(serverDate.getTime());
-        this.resourceType = resourceType;
+    private ResourceModel.Type resourceType;
+    private Set<String> uids;
+
+    public GenericCallImpl(GenericCallData data, GenericHandler<P, ?> handler,
+                           ResourceModel.Type resourceType, Set<String> uids) {
+        this.data = data;
         this.handler = handler;
+        this.resourceType = resourceType;
+        this.uids = uids;
     }
 
     @Override
@@ -91,9 +78,8 @@ public abstract class GenericCallImpl<P extends BaseIdentifiableObject> implemen
                     "Can't handle the amount of objects: " + uids.size() + ". " + "Max size is: " + MAX_UIDS);
         }
 
-        Filter<DataSet, String> lastSynced =
-                DataSet.lastUpdated.gt(resourceHandler.getLastUpdated(resourceType));
-        Response<Payload<P>> response = getCall(uids, lastSynced).execute();
+        String lastUpdated = data.resourceHandler().getLastUpdated(resourceType);
+        Response<Payload<P>> response = getCall(uids, lastUpdated).execute();
 
         if (response != null && response.isSuccessful()) {
             processResponse(response);
@@ -101,17 +87,17 @@ public abstract class GenericCallImpl<P extends BaseIdentifiableObject> implemen
         return response;
     }
 
-    protected abstract retrofit2.Call<Payload<P>> getCall(Set<String> uids,
-                                                          Filter<DataSet, String> lastUpdated) throws IOException;
+    protected abstract retrofit2.Call<Payload<P>> getCall(Set<String> uids, String lastUpdated)
+            throws IOException;
 
     private void processResponse(Response<Payload<P>> response) {
         List<P> pojoList = response.body().items();
         if (pojoList != null && !pojoList.isEmpty()) {
-            Transaction transaction = databaseAdapter.beginNewTransaction();
+            Transaction transaction = data.databaseAdapter().beginNewTransaction();
 
             try {
                 handler.handleMany(pojoList);
-                resourceHandler.handleResource(resourceType, serverDate);
+                data.resourceHandler().handleResource(resourceType, data.serverDate());
 
                 transaction.setSuccessful();
             } finally {

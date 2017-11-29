@@ -38,6 +38,7 @@ import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetCall;
 import org.hisp.dhis.android.core.dataset.DataSetHandler;
 import org.hisp.dhis.android.core.dataset.DataSetService;
+import org.hisp.dhis.android.core.dataset.utils.GenericCallData;
 import org.hisp.dhis.android.core.option.OptionSetCall;
 import org.hisp.dhis.android.core.option.OptionSetService;
 import org.hisp.dhis.android.core.option.OptionSetStore;
@@ -64,6 +65,7 @@ import org.hisp.dhis.android.core.program.ProgramStore;
 import org.hisp.dhis.android.core.program.ProgramTrackedEntityAttribute;
 import org.hisp.dhis.android.core.program.ProgramTrackedEntityAttributeStore;
 import org.hisp.dhis.android.core.relationship.RelationshipTypeStore;
+import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceStore;
 import org.hisp.dhis.android.core.systeminfo.SystemInfo;
 import org.hisp.dhis.android.core.systeminfo.SystemInfoCall;
@@ -83,7 +85,6 @@ import org.hisp.dhis.android.core.user.UserRoleStore;
 import org.hisp.dhis.android.core.user.UserService;
 import org.hisp.dhis.android.core.user.UserStore;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -232,7 +233,8 @@ public class MetadataCall implements Call<Response> {
                 return response;
             }
             SystemInfo systemInfo = (SystemInfo) response.body();
-            Date serverDate = systemInfo.serverDate();
+            GenericCallData data = GenericCallData.create(databaseAdapter,
+                    new ResourceHandler(resourceStore));
 
             response = new UserCall(
                     userService,
@@ -241,7 +243,7 @@ public class MetadataCall implements Call<Response> {
                     userCredentialsStore,
                     userRoleStore,
                     resourceStore,
-                    serverDate,
+                    data.serverDate(),
                     userRoleProgramLinkStore
             ).call();
             if (!response.isSuccessful()) {
@@ -251,7 +253,7 @@ public class MetadataCall implements Call<Response> {
             User user = (User) response.body();
             response = new OrganisationUnitCall(
                     user, organisationUnitService, databaseAdapter, organisationUnitStore,
-                    resourceStore, serverDate, userOrganisationUnitLinkStore,
+                    resourceStore, data.serverDate(), userOrganisationUnitLinkStore,
                     organisationUnitProgramLinkStore).call();
             if (!response.isSuccessful()) {
                 return response;
@@ -259,7 +261,7 @@ public class MetadataCall implements Call<Response> {
 
             Set<String> programUids = getAssignedProgramUids(user);
             response = new ProgramCall(
-                    programService, databaseAdapter, resourceStore, programUids, programStore, serverDate,
+                    programService, databaseAdapter, resourceStore, programUids, programStore, data.serverDate(),
                     trackedEntityAttributeStore, programTrackedEntityAttributeStore, programRuleVariableStore,
                     programIndicatorStore, programStageSectionProgramIndicatorLinkStore, programRuleActionStore,
                     programRuleStore, optionStore, optionSetStore, dataElementStore, programStageDataElementStore,
@@ -273,7 +275,7 @@ public class MetadataCall implements Call<Response> {
             Set<String> trackedEntityUids = getAssignedTrackedEntityUids(programs);
             response = new TrackedEntityCall(
                     trackedEntityUids, databaseAdapter, trackedEntityStore,
-                    resourceStore, trackedEntityService, serverDate
+                    resourceStore, trackedEntityService, data.serverDate()
             ).call();
             if (!response.isSuccessful()) {
                 return response;
@@ -282,15 +284,15 @@ public class MetadataCall implements Call<Response> {
             Set<String> optionSetUids = getAssignedOptionSetUids(programs);
             response = new OptionSetCall(
                     optionSetService, optionSetStore, databaseAdapter, resourceStore,
-                    optionSetUids, serverDate, optionStore
+                    optionSetUids, data.serverDate(), optionStore
             ).call();
             if (!response.isSuccessful()) {
                 return response;
             }
 
             Set<String> dataSetUids = getAssignedDataSetUids(user);
-            response = new DataSetCall(dataSetService, dataSetHandler, databaseAdapter,
-                    resourceStore, dataSetUids, serverDate).call();
+
+            response = new DataSetCall(data, dataSetService, dataSetHandler, dataSetUids).call();
             if (!response.isSuccessful()) {
                 return response;
             }

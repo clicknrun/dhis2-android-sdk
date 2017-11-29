@@ -25,38 +25,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
-import org.hisp.dhis.android.core.dataset.utils.GenericCallData;
-import org.hisp.dhis.android.core.dataset.utils.GenericCallImpl;
-import org.hisp.dhis.android.core.resource.ResourceModel;
+import org.hisp.dhis.android.core.data.api.Filter;
+import org.hisp.dhis.android.core.data.api.Where;
+import org.hisp.dhis.android.core.data.api.Which;
 
-import java.io.IOException;
-import java.util.Set;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-public class DataSetCall extends GenericCallImpl<DataSet> {
-    private final DataSetService dataSetService;
+public interface CategoryComboService {
+    @GET("categoryCombo")
+    Call<Payload<CategoryCombo>> getCategoryCombos(@Query("fields") @Which Fields<CategoryCombo> fields,
+                                             @Query("filter") @Where Filter<CategoryCombo, String> lastUpdated,
+                                             @Query("filter") @Where Filter<CategoryCombo, String> uids,
+                                             @Query("paging") Boolean paging);
 
-    public DataSetCall(GenericCallData data, DataSetService dataSetService, DataSetHandler dataSetHandler,
-                       Set<String> uids) {
-        super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids);
-        this.dataSetService = dataSetService;
-    }
-
-    @Override
-    protected retrofit2.Call<Payload<DataSet>> getCall(Set<String> uids, String lastUpdated)
-            throws IOException {
-        return dataSetService.getDataSets(getFields(), DataSet.lastUpdated.gt(lastUpdated),
-                DataSet.uid.in(uids), Boolean.FALSE);
-    }
-
-    // TODO insert and nest all fields
-    private Fields<DataSet> getFields() {
-        return Fields.<DataSet>builder().fields(
-                DataSet.uid
-        ).build();
-    }
 }

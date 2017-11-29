@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
@@ -37,26 +37,26 @@ import org.hisp.dhis.android.core.resource.ResourceModel;
 import java.io.IOException;
 import java.util.Set;
 
-public class DataSetCall extends GenericCallImpl<DataSet> {
-    private final DataSetService dataSetService;
+public class CategoryComboCall extends GenericCallImpl<CategoryCombo> {
+    private final CategoryComboService categoryComboService;
 
-    public DataSetCall(GenericCallData data, DataSetService dataSetService, DataSetHandler dataSetHandler,
-                       Set<String> uids) {
-        super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids);
-        this.dataSetService = dataSetService;
+    public CategoryComboCall(GenericCallData data, CategoryComboService categoryComboService,
+                             CategoryComboHandler categoryComboHandler, Set<String> uids) {
+        super(data, categoryComboHandler, ResourceModel.Type.DATA_SET, uids);
+        this.categoryComboService = categoryComboService;
     }
 
     @Override
-    protected retrofit2.Call<Payload<DataSet>> getCall(Set<String> uids, String lastUpdated)
+    protected retrofit2.Call<Payload<CategoryCombo>> getCall(Set<String> uids, String lastUpdated)
             throws IOException {
-        return dataSetService.getDataSets(getFields(), DataSet.lastUpdated.gt(lastUpdated),
-                DataSet.uid.in(uids), Boolean.FALSE);
+        return categoryComboService.getCategoryCombos(getFields(),
+                CategoryCombo.lastUpdated.gt(lastUpdated), CategoryCombo.uid.in(uids), Boolean.FALSE);
     }
 
     // TODO insert and nest all fields
-    private Fields<DataSet> getFields() {
-        return Fields.<DataSet>builder().fields(
-                DataSet.uid
+    private Fields<CategoryCombo> getFields() {
+        return Fields.<CategoryCombo>builder().fields(
+                CategoryCombo.uid
         ).build();
     }
 }
