@@ -93,7 +93,7 @@ public abstract class DataSet extends BaseNameableObject {
     @JsonProperty(PERIOD_TYPE)
     public abstract PeriodType periodType();
 
-    @NonNull
+    @Nullable
     @JsonProperty(CATEGORY_COMBO)
     public abstract CategoryCombo categoryCombo();
 
