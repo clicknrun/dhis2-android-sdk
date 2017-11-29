@@ -32,6 +32,7 @@ import android.content.ContentValues;
 import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hisp.dhis.android.core.AndroidTestUtils;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
@@ -66,10 +67,10 @@ public class DataSetModelTests {
             .categoryCombo("test_categoryCombo")
             .mobile(false)
             .version(1)
-            .expiryDays(1)
-            .timelyDays(1)
+            .expiryDays(10)
+            .timelyDays(100)
             .notifyCompletingUser(false)
-            .openFuturePeriods(1)
+            .openFuturePeriods(0)
             .fieldCombinationRequired(false)
             .validCompleteOnly(false)
             .noValueRequiresComment(false)
@@ -103,17 +104,7 @@ public class DataSetModelTests {
     public void create_shouldConvertToContentValues() {
         ContentValues contentValues = dm.toContentValues();
 
-        assertThat(contentValues.getAsLong(Columns.ID)).isEqualTo(dm.id());
-        assertThat(contentValues.getAsString(Columns.UID)).isEqualTo(dm.uid());
-        assertThat(contentValues.getAsString(Columns.CODE)).isEqualTo(dm.code());
-        assertThat(contentValues.getAsString(Columns.NAME)).isEqualTo(dm.name());
-        assertThat(contentValues.getAsString(Columns.DISPLAY_NAME)).isEqualTo(dm.displayName());
-        assertThat(contentValues.getAsString(Columns.CREATED)).isEqualTo(dateString);
-        assertThat(contentValues.getAsString(Columns.LAST_UPDATED)).isEqualTo(dateString);
-        assertThat(contentValues.getAsString(Columns.SHORT_NAME)).isEqualTo(dm.shortName());
-        assertThat(contentValues.getAsString(Columns.DISPLAY_SHORT_NAME)).isEqualTo(dm.displayShortName());
-        assertThat(contentValues.getAsString(Columns.DESCRIPTION)).isEqualTo(dm.description());
-        assertThat(contentValues.getAsString(Columns.DISPLAY_DESCRIPTION)).isEqualTo(dm.displayDescription());
+        AndroidTestUtils.testNameableModelContentValues(contentValues, dm);
 
         assertThat(contentValues.getAsString(Columns.PERIOD_TYPE)).isEqualTo(dm.periodType().name());
         assertThat(contentValues.getAsString(Columns.CATEGORY_COMBO)).isEqualTo(dm.categoryCombo());
