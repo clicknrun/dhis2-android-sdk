@@ -26,53 +26,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core;
+package org.hisp.dhis.android.core.utils;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
-import org.hisp.dhis.android.core.utils.Utils;
+
+import java.util.Date;
 
 /**
  * A collection of convenience functions/abstractions to be used by the tests.
  */
-public class AndroidTestUtils {
+public class FillPropertiesTestUtils {
 
-    /* A helper method to convert an integer to Boolean, where 1 is true and 0 is false*/
-    public static Boolean toBoolean(Integer i) {
-        if (i == 0) {
-            return false;
-        } else {
-            return true;
-        }
+    private static void fillModelProperties(BaseModel.Builder builder) {
+        builder
+                .id(2L);
     }
 
-    /* A helper method to convert a Boolean to an Integer, where true is 1 and false is 0 */
-    public static Integer toInteger(Boolean b) {
-        if (b) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public static void fillIdentifiableModelProperties(BaseIdentifiableObjectModel.Builder builder) {
+        fillModelProperties(builder);
+        builder
+                .uid("test_uid")
+                .code("test_code")
+                .name("test_name")
+                .displayName("test_display_name")
+                .created(new Date())
+                .lastUpdated(new Date());
     }
 
-    private static Object[] getModelAsObjectArray(BaseModel m) {
-        return new Object[] {
-            m.id()
-        };
-    }
-
-    public static Object[] getIdentifiableModelAsObjectArray(BaseIdentifiableObjectModel m) {
-        return Utils.appendInNewArray(getModelAsObjectArray(m),
-                m.uid(), m.code(), m.name(), m.displayName(),
-                m.createdStr(), m.lastUpdatedStr()
-        );
-    }
-
-    public static Object[] getNameableModelAsObjectArray(BaseNameableObjectModel m) {
-        return Utils.appendInNewArray(getIdentifiableModelAsObjectArray(m),
-                m.shortName(), m.displayShortName(),
-                m.description(), m.displayDescription()
-        );
+    public static void fillNameableModelProperties(BaseNameableObjectModel.Builder builder) {
+        fillIdentifiableModelProperties(builder);
+        builder
+                .shortName("test_short_name")
+                .displayShortName("test_display_short_name")
+                .description("test_description")
+                .displayDescription("test_display_description");
     }
 }

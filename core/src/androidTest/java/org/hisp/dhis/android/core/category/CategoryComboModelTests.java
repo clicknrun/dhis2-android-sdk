@@ -34,6 +34,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.AndroidTestUtils;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
+import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +50,7 @@ public class CategoryComboModelTests {
 
     public CategoryComboModelTests() {
         CategoryComboModel.Builder categoryComboModelBuilder = CategoryComboModel.builder();
-        AndroidTestUtils.fillIdentifiableModelProperties(categoryComboModelBuilder);
+        FillPropertiesTestUtils.fillIdentifiableModelProperties(categoryComboModelBuilder);
         this.ccm = categoryComboModelBuilder.build();
     }
 

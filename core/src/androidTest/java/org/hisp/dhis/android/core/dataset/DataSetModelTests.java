@@ -36,6 +36,7 @@ import org.hisp.dhis.android.core.AndroidTestUtils;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
+import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +53,7 @@ public class DataSetModelTests {
 
     public DataSetModelTests() {
         DataSetModel.Builder dataModelBuilder = DataSetModel.builder();
-        AndroidTestUtils.fillNameableModelProperties(dataModelBuilder);
+        FillPropertiesTestUtils.fillNameableModelProperties(dataModelBuilder);
         this.dm = dataModelBuilder
                 .periodType(PeriodType.Monthly)
                 .categoryCombo("test_categoryCombo")
