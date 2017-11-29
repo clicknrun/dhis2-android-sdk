@@ -29,24 +29,11 @@
 package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.calls.Call;
-import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
-import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
-import org.hisp.dhis.android.core.category.CategoryComboHandler;
-import org.hisp.dhis.android.core.category.CategoryComboModel;
-import org.hisp.dhis.android.core.category.CategoryHandler;
-import org.hisp.dhis.android.core.category.CategoryModel;
-import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkModel;
-import org.hisp.dhis.android.core.category.CategoryOptionComboHandler;
-import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
-import org.hisp.dhis.android.core.category.CategoryOptionHandler;
-import org.hisp.dhis.android.core.category.CategoryOptionModel;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataset.utils.GenericCallImpl;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 import org.hisp.dhis.android.core.resource.ResourceStore;
 
@@ -59,28 +46,10 @@ import retrofit2.Response;
 public class DataSetCall extends GenericCallImpl<DataSet> implements Call<Response<Payload<DataSet>>> {
     private final DataSetService dataSetService;
 
-    public DataSetCall(DataSetService dataSetService,
-                       IdentifiableObjectStore<DataSetModel> dataSetStore,
-                       IdentifiableObjectStore<CategoryComboModel> categoryComboStore,
-                       IdentifiableObjectStore<CategoryModel> categoryStore,
-                       IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore,
-                       IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore,
-                       ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore,
-                       ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
-                       ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore,
-                       DatabaseAdapter databaseAdapter,
-                       ResourceStore resourceStore,
-                       Set<String> uids,
-                       Date serverDate) {
-        super(databaseAdapter,
-                resourceStore,
-                new DataSetHandler(dataSetStore,
-                        new CategoryComboHandler(categoryComboStore,
-                                new CategoryHandler(categoryStore,
-                                        categoryCategoryOptionStore,
-                                        new CategoryOptionHandler(categoryOptionStore)),
-                                new CategoryOptionComboHandler(categoryOptionComboStore))),
-                uids, serverDate,
+    public DataSetCall(DataSetService dataSetService, DataSetHandler dataSetHandler,
+                       DatabaseAdapter databaseAdapter, ResourceStore resourceStore,
+                       Set<String> uids, Date serverDate) {
+        super(databaseAdapter, resourceStore, dataSetHandler, uids, serverDate,
                 ResourceModel.Type.DATA_SET);
         this.dataSetService = dataSetService;
     }

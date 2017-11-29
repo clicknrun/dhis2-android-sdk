@@ -27,6 +27,7 @@
  */
 package org.hisp.dhis.android.core.category;
 
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
 
@@ -35,7 +36,7 @@ public class CategoryComboHandler extends GenericHandler<CategoryCombo, Category
     private final CategoryHandler categoryHandler;
     private final CategoryOptionComboHandler categoryOptionComboHandler;
 
-    public CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store,
+    private CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store,
                                 CategoryHandler categoryHandler,
                                 CategoryOptionComboHandler categoryOptionComboHandler) {
         super(store);
@@ -53,5 +54,13 @@ public class CategoryComboHandler extends GenericHandler<CategoryCombo, Category
     @Override
     protected CategoryComboModel pojoToModel(CategoryCombo categoryCombo) {
         return CategoryComboModel.create(categoryCombo);
+    }
+
+    public static CategoryComboHandler create(DatabaseAdapter databaseAdapter) {
+        return new CategoryComboHandler(CategoryComboStoreFactory.create(databaseAdapter),
+                new CategoryHandler(CategoryStoreFactory.create(databaseAdapter),
+                        CategoryCategoryOptionLinkStoreFactory.create(databaseAdapter),
+                        new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter))),
+                new CategoryOptionComboHandler(CategoryOptionComboStoreFactory.create(databaseAdapter)));
     }
 }

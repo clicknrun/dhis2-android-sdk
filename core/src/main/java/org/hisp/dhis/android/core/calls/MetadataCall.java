@@ -29,23 +29,15 @@ package org.hisp.dhis.android.core.calls;
 
 import android.support.annotation.NonNull;
 
-import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
-import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
-import org.hisp.dhis.android.core.category.CategoryComboModel;
-import org.hisp.dhis.android.core.category.CategoryModel;
-import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkModel;
-import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
-import org.hisp.dhis.android.core.category.CategoryOptionModel;
+import org.hisp.dhis.android.core.category.CategoryComboHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElementStore;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetCall;
-import org.hisp.dhis.android.core.dataset.DataSetModel;
+import org.hisp.dhis.android.core.dataset.DataSetHandler;
 import org.hisp.dhis.android.core.dataset.DataSetService;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.option.OptionSetCall;
 import org.hisp.dhis.android.core.option.OptionSetService;
 import org.hisp.dhis.android.core.option.OptionSetStore;
@@ -132,14 +124,8 @@ public class MetadataCall implements Call<Response> {
     private final ProgramStageStore programStageStore;
     private final RelationshipTypeStore relationshipStore;
     private final TrackedEntityStore trackedEntityStore;
-    private final IdentifiableObjectStore<DataSetModel> dataSetStore;
-    private final IdentifiableObjectStore<CategoryComboModel> categoryComboStore;
-    private final IdentifiableObjectStore<CategoryModel> categoryStore;
-    private final IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore;
-    private final IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
-    private final ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
-    private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
-    private final ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore;
+    private final DataSetHandler dataSetHandler;
+    private final CategoryComboHandler categoryComboHandler;
 
     private boolean isExecuted;
 
@@ -179,14 +165,8 @@ public class MetadataCall implements Call<Response> {
                         @NonNull RelationshipTypeStore relationshipStore,
                         @NonNull TrackedEntityStore trackedEntityStore,
                         @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
-                        @NonNull IdentifiableObjectStore<DataSetModel> dataSetStore,
-                        @NonNull IdentifiableObjectStore<CategoryComboModel> categoryComboStore,
-                        @NonNull IdentifiableObjectStore<CategoryModel> categoryStore,
-                        @NonNull IdentifiableObjectStore<CategoryOptionModel> categoryOptionStore,
-                        @NonNull IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore,
-                        @NonNull ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore,
-                        @NonNull ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
-                        @NonNull ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore) {
+                        @NonNull DataSetHandler dataSetHandler,
+                        @NonNull CategoryComboHandler categoryComboHandler) {
         this.databaseAdapter = databaseAdapter;
         this.systemInfoService = systemInfoService;
         this.userService = userService;
@@ -220,14 +200,8 @@ public class MetadataCall implements Call<Response> {
         this.relationshipStore = relationshipStore;
         this.trackedEntityStore = trackedEntityStore;
         this.organisationUnitProgramLinkStore = organisationUnitProgramLinkStore;
-        this.dataSetStore = dataSetStore;
-        this.categoryComboStore = categoryComboStore;
-        this.categoryStore = categoryStore;
-        this.categoryOptionStore = categoryOptionStore;
-        this.categoryOptionComboStore = categoryOptionComboStore;
-        this.categoryCategoryOptionStore = categoryCategoryOptionStore;
-        this.categoryComboCategoryStore = categoryComboCategoryStore;
-        this.categoryOptionComboCategoryOptionStore = categoryOptionComboCategoryOptionStore;
+        this.dataSetHandler = dataSetHandler;
+        this.categoryComboHandler = categoryComboHandler;
     }
 
     @Override
@@ -315,10 +289,7 @@ public class MetadataCall implements Call<Response> {
             }
 
             Set<String> dataSetUids = getAssignedDataSetUids(user);
-            response = new DataSetCall(dataSetService, dataSetStore, categoryComboStore,
-                    categoryStore, categoryOptionStore, categoryOptionComboStore,
-                    categoryCategoryOptionStore, categoryComboCategoryStore,
-                    categoryOptionComboCategoryOptionStore, databaseAdapter,
+            response = new DataSetCall(dataSetService, dataSetHandler, databaseAdapter,
                     resourceStore, dataSetUids, serverDate).call();
             if (!response.isSuccessful()) {
                 return response;
