@@ -35,6 +35,7 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -43,33 +44,12 @@ public class CategoryComboTests {
 
     @Test
     public void categoryCombo_shouldMapFromJsonString() throws IOException, ParseException {
-        ObjectMapper objectMapper = Inject.objectMapper();
 
-        CategoryCombo combo = objectMapper.readValue("{" +
-                        "\"code\":\"BIRTHS\"," +
-                        "\"created\":\"2011-12-24T12:24:25.203\"," +
-                        "\"lastUpdated\":\"2016-04-18T16:04:34.745\"," +
-                        "\"name\":\"Births\"," +
-                        "\"id\":\"m2jTvAj5kkm\"," +
-                        "\"dataDimensionType\":\"DISAGGREGATION\"," +
-                        "\"displayName\":\"Births\"," +
-                        "\"publicAccess\":\"rw------\"," +
-                        "\"externalAccess\":false," +
-                        "\"isDefault\":false," +
-                        "\"skipTotal\":false," +
-                        "\"user\":{\"id\":\"GOLswS44mh8\"}," +
-                        "\"userGroupAccesses\":[]," +
-                        "\"attributeValues\":[]," +
-                        "\"categoryOptionCombos\":[" +
-                        "{\"id\":\"b19Ye0TWs1D\"}," +
-                        "{\"id\":\"YEmiuCcgNQI\"}," +
-                        "{\"id\":\"vP9xV78M67W\"}]," +
-                        "\"categories\":[" +
-                        "{\"id\":\"KfdsGBcoiCa\"}," +
-                        "{\"id\":\"cX5k9anHEHd\"}" +
-                        "]" +
-                        "}",
-                CategoryCombo.class);
+        ObjectMapper objectMapper = Inject.objectMapper();
+        InputStream jsonStream = this.getClass().getClassLoader()
+                .getResourceAsStream("category/categoryCombo.json");
+
+        CategoryCombo combo = objectMapper.readValue(jsonStream, CategoryCombo.class);
 
         assertThat(combo.uid()).isEqualTo("m2jTvAj5kkm");
         assertThat(combo.code()).isEqualTo("BIRTHS");
@@ -83,5 +63,11 @@ public class CategoryComboTests {
         // categories
         assertThat(combo.categories().get(0).uid()).isEqualTo("KfdsGBcoiCa");
         assertThat(combo.categories().get(1).uid()).isEqualTo("cX5k9anHEHd");
+
+        // categoryOptionCombos
+        assertThat(combo.categoryOptionCombos().get(0).uid()).isEqualTo("NZAKyj67WW2");
+        assertThat(combo.categoryOptionCombos().get(1).uid()).isEqualTo("CYHGl18lR0W");
+        assertThat(combo.categoryOptionCombos().get(9).uid()).isEqualTo("L4P9VSgHkF6");
+        assertThat(combo.categoryOptionCombos().get(23).uid()).isEqualTo("R3oRRwMRfMT");
     }
 }
