@@ -33,6 +33,7 @@ import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.AndroidTestUtils;
+import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,7 +69,7 @@ public class CategoryComboModelTests {
     public void create_shouldConvertToContentValues() {
         ContentValues contentValues = ccm.toContentValues();
 
-        AndroidTestUtils.testIdentifiableModelContentValues(contentValues, ccm);
+        ContentValuesTestUtils.testIdentifiableModelContentValues(contentValues, ccm);
     }
 
     @Test

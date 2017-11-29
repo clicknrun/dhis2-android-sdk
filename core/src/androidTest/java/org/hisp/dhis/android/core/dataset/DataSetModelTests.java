@@ -35,6 +35,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.hisp.dhis.android.core.AndroidTestUtils;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
+import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,7 +95,7 @@ public class DataSetModelTests {
     public void create_shouldConvertToContentValues() {
         ContentValues contentValues = dm.toContentValues();
 
-        AndroidTestUtils.testNameableModelContentValues(contentValues, dm);
+        ContentValuesTestUtils.testNameableModelContentValues(contentValues, dm);
 
         assertThat(contentValues.getAsString(Columns.PERIOD_TYPE)).isEqualTo(dm.periodType().name());
         assertThat(contentValues.getAsString(Columns.CATEGORY_COMBO)).isEqualTo(dm.categoryCombo());

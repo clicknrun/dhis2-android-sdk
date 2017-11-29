@@ -28,18 +28,12 @@
 
 package org.hisp.dhis.android.core;
 
-import android.content.ContentValues;
-
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
-import org.hisp.dhis.android.core.common.Model;
-import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * A collection of convenience functions/abstractions to be used by the tests.
@@ -62,28 +56,6 @@ public class AndroidTestUtils {
         } else {
             return 0;
         }
-    }
-
-    private static void testModelContentValues(ContentValues contentValues, Model m) {
-        assertThat(contentValues.getAsLong(DataSetModel.Columns.ID)).isEqualTo(m.id());
-    }
-
-    public static void testIdentifiableModelContentValues(ContentValues contentValues, BaseIdentifiableObjectModel m) {
-        testModelContentValues(contentValues, m);
-        assertThat(contentValues.getAsString(DataSetModel.Columns.UID)).isEqualTo(m.uid());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.CODE)).isEqualTo(m.code());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.NAME)).isEqualTo(m.name());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.DISPLAY_NAME)).isEqualTo(m.displayName());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.CREATED)).isEqualTo(m.createdStr());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.LAST_UPDATED)).isEqualTo(m.lastUpdatedStr());
-    }
-
-    public static void testNameableModelContentValues(ContentValues contentValues, BaseNameableObjectModel m) {
-        testIdentifiableModelContentValues(contentValues, m);
-        assertThat(contentValues.getAsString(DataSetModel.Columns.SHORT_NAME)).isEqualTo(m.shortName());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.DISPLAY_SHORT_NAME)).isEqualTo(m.displayShortName());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.DESCRIPTION)).isEqualTo(m.description());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.DISPLAY_DESCRIPTION)).isEqualTo(m.displayDescription());
     }
 
     private static void fillModelProperties(BaseModel.Builder builder) {
