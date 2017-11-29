@@ -33,14 +33,13 @@ import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.AndroidTestUtils;
-import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
+import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -48,12 +47,10 @@ import static org.hisp.dhis.android.core.AndroidTestUtils.toInteger;
 
 @RunWith(AndroidJUnit4.class)
 public class DataSetModelTests {
-    private final Date date = new Date();
-    private final String dateString = BaseIdentifiableObject.DATE_FORMAT.format(date);
-    private final DataSetModel.Builder dataModelBuilder = DataSetModel.builder();
     private final DataSetModel dm;
 
     public DataSetModelTests() {
+        DataSetModel.Builder dataModelBuilder = DataSetModel.builder();
         AndroidTestUtils.fillNameableModelProperties(dataModelBuilder);
         this.dm = dataModelBuilder
                 .periodType(PeriodType.Monthly)
@@ -77,15 +74,14 @@ public class DataSetModelTests {
     @Test
     public void create_shouldConvertToDataSetModel() {
         MatrixCursor cursor = new MatrixCursor(DataSetModel.Columns.all());
-        cursor.addRow(new Object[]{
-                dm.id(), dm.uid(), dm.code(), dm.name(), dm.displayName(),
-                dateString, dateString, dm.shortName(), dm.displayShortName(),
-                dm.description(), dm.displayDescription(), dm.periodType(), dm.categoryCombo(),
-                toInteger(dm.mobile()), dm.version(), dm.expiryDays(), dm.timelyDays(),
-                toInteger(dm.notifyCompletingUser()), dm.openFuturePeriods(), toInteger(dm.fieldCombinationRequired()),
-                toInteger(dm.validCompleteOnly()), toInteger(dm.noValueRequiresComment()), toInteger(dm.skipOffline()),
-                toInteger(dm.dataElementDecoration()), toInteger(dm.renderAsTabs()), toInteger(dm.renderHorizontally())
-        });
+        cursor.addRow(Utils.appendInNewArray(AndroidTestUtils.getNameableModelAsObjectArray(dm),
+                dm.periodType(), dm.categoryCombo(), toInteger(dm.mobile()), dm.version(),
+                dm.expiryDays(), dm.timelyDays(), toInteger(dm.notifyCompletingUser()),
+                dm.openFuturePeriods(), toInteger(dm.fieldCombinationRequired()),
+                toInteger(dm.validCompleteOnly()), toInteger(dm.noValueRequiresComment()),
+                toInteger(dm.skipOffline()),toInteger(dm.dataElementDecoration()),
+                toInteger(dm.renderAsTabs()), toInteger(dm.renderHorizontally())
+        ));
         cursor.moveToFirst();
 
         DataSetModel modelFromDB = DataSetModel.create(cursor);

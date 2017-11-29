@@ -30,14 +30,12 @@ package org.hisp.dhis.android.core;
 
 import android.content.ContentValues;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
-import org.hisp.dhis.android.core.common.IdentifiableObject;
 import org.hisp.dhis.android.core.common.Model;
-import org.hisp.dhis.android.core.common.NameableObject;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
+import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Date;
 
@@ -76,8 +74,8 @@ public class AndroidTestUtils {
         assertThat(contentValues.getAsString(DataSetModel.Columns.CODE)).isEqualTo(m.code());
         assertThat(contentValues.getAsString(DataSetModel.Columns.NAME)).isEqualTo(m.name());
         assertThat(contentValues.getAsString(DataSetModel.Columns.DISPLAY_NAME)).isEqualTo(m.displayName());
-        assertThat(contentValues.getAsString(DataSetModel.Columns.CREATED)).isEqualTo(BaseIdentifiableObject.DATE_FORMAT.format(m.created()));
-        assertThat(contentValues.getAsString(DataSetModel.Columns.LAST_UPDATED)).isEqualTo(BaseIdentifiableObject.DATE_FORMAT.format(m.lastUpdated()));
+        assertThat(contentValues.getAsString(DataSetModel.Columns.CREATED)).isEqualTo(m.createdStr());
+        assertThat(contentValues.getAsString(DataSetModel.Columns.LAST_UPDATED)).isEqualTo(m.lastUpdatedStr());
     }
 
     public static void testNameableModelContentValues(ContentValues contentValues, BaseNameableObjectModel m) {
@@ -111,5 +109,25 @@ public class AndroidTestUtils {
                 .displayShortName("test_display_short_name")
                 .description("test_description")
                 .displayDescription("test_display_description");
+    }
+
+    private static Object[] getModelAsObjectArray(BaseModel m) {
+        return new Object[] {
+            m.id()
+        };
+    }
+
+    public static Object[] getIdentifiableModelAsObjectArray(BaseIdentifiableObjectModel m) {
+        return Utils.appendInNewArray(getModelAsObjectArray(m),
+                m.uid(), m.code(), m.name(), m.displayName(),
+                m.createdStr(), m.lastUpdatedStr()
+        );
+    }
+
+    public static Object[] getNameableModelAsObjectArray(BaseNameableObjectModel m) {
+        return Utils.appendInNewArray(getIdentifiableModelAsObjectArray(m),
+                m.shortName(), m.displayShortName(),
+                m.description(), m.displayDescription()
+        );
     }
 }

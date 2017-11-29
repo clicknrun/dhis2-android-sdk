@@ -83,11 +83,19 @@ public abstract class BaseIdentifiableObjectModel extends BaseModel implements I
     @ColumnAdapter(DbDateColumnAdapter.class)
     public abstract Date created();
 
+    public String createdStr() {
+        return BaseIdentifiableObject.DATE_FORMAT.format(created());
+    }
+
     @Override
     @Nullable
     @ColumnName(Columns.LAST_UPDATED)
     @ColumnAdapter(DbDateColumnAdapter.class)
     public abstract Date lastUpdated();
+
+    public String lastUpdatedStr() {
+        return BaseIdentifiableObject.DATE_FORMAT.format(lastUpdated());
+    }
 
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
         sqLiteBind(sqLiteStatement, 1, uid());
