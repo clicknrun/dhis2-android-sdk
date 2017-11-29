@@ -28,9 +28,12 @@
 package org.hisp.dhis.android.core.common;
 
 import org.hisp.dhis.android.core.calls.MetadataCall;
+import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
 import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryOptionComboCategoryOptionLinkModel;
 import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
 import org.hisp.dhis.android.core.category.CategoryOptionModel;
 import org.hisp.dhis.android.core.data.api.Fields;
@@ -42,6 +45,7 @@ import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetService;
 import org.hisp.dhis.android.core.option.OptionSetStore;
@@ -241,6 +245,15 @@ public class MetadataCallTests {
     private IdentifiableObjectStore<CategoryOptionComboModel> categoryOptionComboStore;
 
     @Mock
+    private ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
+
+    @Mock
+    private ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
+
+    @Mock
+    private ObjectStore<CategoryOptionComboCategoryOptionLinkModel> categoryOptionComboCategoryOptionStore;
+
+    @Mock
     private UserService userService;
 
     @Mock
@@ -364,7 +377,8 @@ public class MetadataCallTests {
                 optionStore, optionSetStore, dataElementStore, programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
                 organisationUnitProgramLinkStore, dataSetStore, categoryComboStore, categoryStore,
-                categoryOptionStore, categoryOptionComboStore);
+                categoryOptionStore, categoryOptionComboStore, categoryCategoryOptionStore,
+                categoryComboCategoryStore, categoryOptionComboCategoryOptionStore);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);
 
