@@ -777,6 +777,9 @@ public class DbOpenHelper extends SQLiteOpenHelper {
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
             );
 
+    private static final String CREATE_CATEGORY_COMBO_TABLE =
+            SQLStatementBuilder.createIdentifiableModelTable(CategoryComboModel.TABLE);
+
     private static final String CREATE_CATEGORY_TABLE =
             SQLStatementBuilder.createIdentifiableModelTable(CategoryModel.TABLE);
 
@@ -827,6 +830,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_PROGRAM_STAGE_SECTION_PROGRAM_INDICATOR_LINK_TABLE);
         database.execSQL(CREATE_DATA_SET_TABLE);
         database.execSQL(CREATE_CATEGORY_TABLE);
+        database.execSQL(CREATE_CATEGORY_COMBO_TABLE);
         return database;
     }
 
