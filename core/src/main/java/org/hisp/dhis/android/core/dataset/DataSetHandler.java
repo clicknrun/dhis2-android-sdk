@@ -27,14 +27,19 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
+import org.hisp.dhis.android.core.common.ObjectStore;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.dataelement.DataElement;
 
 public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
+    private final ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore;
 
-    private DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore) {
+    private DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore,
+                           ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore) {
         super(dataSetStore);
+        this.dataSetDataElementStore = dataSetDataElementStore;
     }
 
     @Override
@@ -43,6 +48,27 @@ public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
     }
 
     public static DataSetHandler create(DatabaseAdapter databaseAdapter) {
-        return new DataSetHandler(DataSetStoreFactory.create(databaseAdapter));
+        return new DataSetHandler(DataSetStoreFactory.create(databaseAdapter),
+                DataSetDataElementLinkStoreFactory.create(databaseAdapter));
+    }
+
+    @Override
+    protected void afterObjectPersisted(DataSet dataSet) {
+        saveDataSetDataElementLinks(dataSet);
+    }
+
+    public void saveDataSetDataElementLinks(DataSet dataSet) {
+        for (DataElement dataElement : dataSet.dataElements()) {
+
+            System.out.println(dataElement.categoryCombo().uid());
+            System.out.println(dataSet.categoryCombo().uid());
+
+            this.dataSetDataElementStore.insert(
+                    DataSetDataElementLinkModel.create(
+                            dataSet.uid(),
+                            dataElement.uid(),
+                            dataElement.categoryCombo().uid()
+                    ));
+        }
     }
 }
