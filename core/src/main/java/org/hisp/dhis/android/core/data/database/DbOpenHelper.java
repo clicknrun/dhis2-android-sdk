@@ -47,6 +47,7 @@ import org.hisp.dhis.android.core.common.SQLStatementBuilder;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.constant.ConstantModel;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
+import org.hisp.dhis.android.core.dataset.DataSetDataElementLinkModel;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.enrollment.EnrollmentModel;
 import org.hisp.dhis.android.core.event.EventModel;
@@ -275,7 +276,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
                             " FOREIGN KEY ( " + DataElementModel.Columns.OPTION_SET + ")" +
                             " REFERENCES " + OptionSetModel.TABLE + " (" + OptionSetModel.Columns.UID + ")" +
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
-                    );
+            );
 
     private static final String CREATE_PROGRAM_STAGE_DATA_ELEMENT_TABLE = "CREATE TABLE " +
             ProgramStageDataElementModel.TABLE + " (" +
@@ -799,7 +800,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                             " UNIQUE (" + CategoryComboCategoryLinkModel.Columns.CATEGORY + ", " +
                             CategoryComboCategoryLinkModel.Columns.CATEGORY_COMBO + ")"
-                    );
+            );
 
     private static final String CREATE_CATEGORY_TABLE =
             SQLStatementBuilder.createIdentifiableModelTable(CategoryModel.TABLE);
@@ -854,9 +855,28 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_CATEGORY_OPTION_TABLE =
             SQLStatementBuilder.createIdentifiableModelTable(CategoryOptionModel.TABLE,
                     CategoryOptionModel.Columns.SHORT_NAME + " TEXT," +
-                    CategoryOptionModel.Columns.DISPLAY_SHORT_NAME + " TEXT," +
-                    CategoryOptionModel.Columns.START_DATE + " TEXT," +
-                    CategoryOptionModel.Columns.END_DATE + " TEXT");
+                            CategoryOptionModel.Columns.DISPLAY_SHORT_NAME + " TEXT," +
+                            CategoryOptionModel.Columns.START_DATE + " TEXT," +
+                            CategoryOptionModel.Columns.END_DATE + " TEXT");
+
+    private static final String CREATE_DATA_SET_DATA_ELEMENT_LINK_TABLE =
+            SQLStatementBuilder.createModelTable(DataSetDataElementLinkModel.TABLE,
+                    DataSetDataElementLinkModel.Columns.DATA_SET + " TEXT NOT NULL," +
+                            DataSetDataElementLinkModel.Columns.DATA_ELEMENT + " TEXT NOT NULL," +
+                            DataSetDataElementLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
+                            " FOREIGN KEY (" + DataSetDataElementLinkModel.Columns.DATA_SET + ") " +
+                            " REFERENCES " + DataSetModel.TABLE + " (" + DataSetModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " FOREIGN KEY (" + DataSetDataElementLinkModel.Columns.DATA_ELEMENT + ") " +
+                            " REFERENCES " + DataElementModel.TABLE + " (" + DataElementModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " FOREIGN KEY (" + DataSetDataElementLinkModel.Columns.CATEGORY_COMBO + ") " +
+                            " REFERENCES " + CategoryComboModel.TABLE + " (" + CategoryComboModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " UNIQUE (" + DataSetDataElementLinkModel.Columns.DATA_SET + ", " +
+                            DataSetDataElementLinkModel.Columns.DATA_ELEMENT + ", " +
+                            DataSetDataElementLinkModel.Columns.CATEGORY_COMBO + ")"
+            );
 
     /**
      * This method should be used only for testing purposes
@@ -912,6 +932,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_CATEGORY_CATEGORY_OPTION_LINK_TABLE);
         database.execSQL(CREATE_CATEGORY_OPTION_COMBO_CATEGORY_OPTION_LINK_TABLE);
         database.execSQL(CREATE_CATEGORY_OPTION_TABLE);
+        database.execSQL(CREATE_DATA_SET_DATA_ELEMENT_LINK_TABLE);
         return database;
     }
 
