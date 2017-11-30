@@ -88,8 +88,7 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
     }
 
     private void saveCategoryComboCategoryOptionComboLinks(CategoryCombo categoryCombo) {
-        for (int i = 0; i < categoryCombo.categoryOptionCombos().size(); i++) {
-            CategoryOptionCombo categoryOptionCombo = categoryCombo.categoryOptionCombos().get(i);
+        for (CategoryOptionCombo categoryOptionCombo : categoryCombo.categoryOptionCombos()) {
             this.categoryComboCategoryOptionComboStore.insert(
                     CategoryComboCategoryOptionComboLinkModel.create(
                             categoryCombo.uid(),
