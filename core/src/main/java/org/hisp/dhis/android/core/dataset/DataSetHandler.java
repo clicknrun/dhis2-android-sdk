@@ -27,11 +27,10 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
-import org.hisp.dhis.android.core.common.ObjectStore;
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataelement.DataElement;
+import org.hisp.dhis.android.core.common.ObjectStore;
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
     private final ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore;
@@ -58,16 +57,15 @@ public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
     }
 
     public void saveDataSetDataElementLinks(DataSet dataSet) {
-        for (DataElement dataElement : dataSet.dataElements()) {
-
-            System.out.println(dataElement.categoryCombo().uid());
-            System.out.println(dataSet.categoryCombo().uid());
-
+        for (DataSetDataElement dataSetDataElement : dataSet.dataSetElements()) {
+            String categoryComboUid = dataSetDataElement.categoryCombo() != null ?
+                    dataSetDataElement.categoryCombo().uid() :
+                    null;
             this.dataSetDataElementStore.insert(
                     DataSetDataElementLinkModel.create(
                             dataSet.uid(),
-                            dataElement.uid(),
-                            dataElement.categoryCombo().uid()
+                            dataSetDataElement.dataElement().uid(),
+                            categoryComboUid
                     ));
         }
     }

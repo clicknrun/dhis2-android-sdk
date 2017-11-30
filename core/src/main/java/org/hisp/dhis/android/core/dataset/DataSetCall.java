@@ -28,11 +28,10 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
+import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;
@@ -50,14 +49,7 @@ public class DataSetCall extends GenericCallImpl<DataSet> {
     @Override
     protected retrofit2.Call<Payload<DataSet>> getCall(Set<String> uids, String lastUpdated)
             throws IOException {
-        return dataSetService.getDataSets(getFields(), DataSet.lastUpdated.gt(lastUpdated),
+        return dataSetService.getDataSets(DataSet.allFields, DataSet.lastUpdated.gt(lastUpdated),
                 DataSet.uid.in(uids), Boolean.FALSE);
-    }
-
-    // TODO insert and nest all fields
-    private Fields<DataSet> getFields() {
-        return Fields.<DataSet>builder().fields(
-                DataSet.uid
-        ).build();
     }
 }

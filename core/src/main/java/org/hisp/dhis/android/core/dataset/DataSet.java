@@ -38,8 +38,8 @@ import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.data.api.Field;
+import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.NestedField;
-import org.hisp.dhis.android.core.dataelement.DataElement;
 
 import java.util.Date;
 import java.util.List;
@@ -61,7 +61,7 @@ public abstract class DataSet extends BaseNameableObject {
     private final static String DATA_ELEMENT_DECORATION = "dataElementDecoration";
     private final static String RENDER_AS_TABS = "renderAsTabs";
     private final static String RENDER_HORIZONTALLY = "renderHorizontally";
-    private final static String DATA_ELEMENTS = "dataSetElements";
+    private final static String DATA_SET_ELEMENTS = "dataSetElements";
 
     public static final Field<DataSet, String> uid = Field.create(UID);
     public static final Field<DataSet, String> code = Field.create(CODE);
@@ -90,7 +90,14 @@ public abstract class DataSet extends BaseNameableObject {
     public static final Field<DataSet, Boolean> dataElementDecoration = Field.create(DATA_ELEMENT_DECORATION);
     public static final Field<DataSet, Boolean> renderAsTabs = Field.create(RENDER_AS_TABS);
     public static final Field<DataSet, Boolean> renderHorizontally = Field.create(RENDER_HORIZONTALLY);
-    public static final NestedField<DataSet, DataElement> dataElements = NestedField.create(DATA_ELEMENTS);
+    public static final NestedField<DataSet, DataSetDataElement> dataSetElements = NestedField.create(DATA_SET_ELEMENTS);
+
+    public static final Fields<DataSet> allFields = Fields.<DataSet>builder().fields(
+            uid, code, name, displayName, created, lastUpdated, shortName, displayShortName, deleted,
+            periodType, categoryCombo.with(CategoryCombo.uid), mobile, version, expiryDays, timelyDays, notifyCompletingUser,
+            openFuturePeriods, fieldCombinationRequired, validCompleteOnly, noValueRequiresComment,
+            skipOffline, dataElementDecoration, renderAsTabs, renderHorizontally,
+            dataSetElements.with(DataSetDataElement.allFields)).build();
 
     @Nullable
     @JsonProperty(PERIOD_TYPE)
@@ -153,8 +160,8 @@ public abstract class DataSet extends BaseNameableObject {
     public abstract Boolean renderHorizontally();
 
     @Nullable
-    @JsonProperty(DATA_ELEMENTS)
-    public abstract List<DataElement> dataElements();
+    @JsonProperty(DATA_SET_ELEMENTS)
+    public abstract List<DataSetDataElement> dataSetElements();
 
     @JsonCreator
     public static DataSet create(
@@ -183,7 +190,7 @@ public abstract class DataSet extends BaseNameableObject {
             @JsonProperty(DATA_ELEMENT_DECORATION) Boolean dataElementDecoration,
             @JsonProperty(RENDER_AS_TABS) Boolean renderAsTabs,
             @JsonProperty(RENDER_HORIZONTALLY) Boolean renderHorizontally,
-            @JsonProperty(DATA_ELEMENTS) List<DataElement> dataElements,
+            @JsonProperty(DATA_SET_ELEMENTS) List<DataSetDataElement> dataSetElements,
             @JsonProperty(DELETED) Boolean deleted) {
 
         return new AutoValue_DataSet(uid, code, name,
@@ -192,6 +199,6 @@ public abstract class DataSet extends BaseNameableObject {
                 periodType, categoryCombo, mobile, version, expiryDays, timelyDays,
                 notifyCompletingUser, openFuturePeriods, fieldCombinationRequired,
                 validCompleteOnly, noValueRequiresComment, skipOffline,
-                dataElementDecoration, renderAsTabs, renderHorizontally, dataElements);
+                dataElementDecoration, renderAsTabs, renderHorizontally, dataSetElements);
     }
 }
