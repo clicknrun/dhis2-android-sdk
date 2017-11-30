@@ -38,10 +38,12 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
 
 import java.util.Date;
+import java.util.List;
 
 @AutoValue
 public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
     private static final String IGNORE_APPROVAL = "ignoreApproval";
+    private static final String CATEGORY_OPTIONS = "categoryOptions";
 
     public static final Field<CategoryOptionCombo, String> uid = Field.create(UID);
     public static final Field<CategoryOptionCombo, String> code = Field.create(CODE);
@@ -52,10 +54,15 @@ public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
     public static final Field<CategoryOptionCombo, Boolean> deleted = Field.create(DELETED);
 
     public static final Field<CategoryOptionCombo, Boolean> ignoreApproval = Field.create(IGNORE_APPROVAL);
+    public static final Field<Category, List<CategoryOption>> categoryOptions = Field.create(CATEGORY_OPTIONS);
 
     @Nullable
     @JsonProperty(IGNORE_APPROVAL)
     public abstract Boolean ignoreApproval();
+
+    @Nullable
+    @JsonProperty(CATEGORY_OPTIONS)
+    public abstract List<CategoryOption> categoryOptions();
 
     @JsonCreator
     public static CategoryOptionCombo create(
@@ -67,10 +74,11 @@ public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
             @JsonProperty(LAST_UPDATED) Date lastUpdated,
 
             @JsonProperty(IGNORE_APPROVAL) Boolean ignoreApproval,
+            @JsonProperty(CATEGORY_OPTIONS) List<CategoryOption> categoryOptions,
 
             @JsonProperty(DELETED) Boolean deleted) {
 
         return new AutoValue_CategoryOptionCombo(uid, code, name,
-                displayName, created, lastUpdated, deleted, ignoreApproval);
+                displayName, created, lastUpdated, deleted, ignoreApproval, categoryOptions);
     }
 }

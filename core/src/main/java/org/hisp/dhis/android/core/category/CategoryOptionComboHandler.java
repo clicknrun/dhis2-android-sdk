@@ -29,15 +29,39 @@ package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.common.ObjectStore;
 
 public class CategoryOptionComboHandler extends GenericHandlerImpl<CategoryOptionCombo, CategoryOptionComboModel> {
 
-    public CategoryOptionComboHandler(IdentifiableObjectStore<CategoryOptionComboModel> store) {
+    private final ObjectStore<CategoryOptionComboCategoryOptionLinkModel> CategoryOptionComboCategoryOptionStore;
+
+    private final CategoryOptionHandler categoryOptionHandler;
+
+    public CategoryOptionComboHandler(IdentifiableObjectStore<CategoryOptionComboModel> store,
+                                      ObjectStore<CategoryOptionComboCategoryOptionLinkModel> CategoryOptionComboCategoryOptionStore,
+                                      CategoryOptionHandler categoryOptionHandler) {
         super(store);
+        this.categoryOptionHandler = categoryOptionHandler;
+        this.CategoryOptionComboCategoryOptionStore = CategoryOptionComboCategoryOptionStore;
+    }
+
+    @Override
+    protected void afterObjectPersisted(CategoryOptionCombo categoryOptionCombo) {
+        categoryOptionHandler.handleMany(categoryOptionCombo.categoryOptions());
+        saveCategoryOptionComboCategoryOptionLinks(categoryOptionCombo);
     }
 
     @Override
     protected CategoryOptionComboModel pojoToModel(CategoryOptionCombo categoryOptionCombo) {
         return CategoryOptionComboModel.create(categoryOptionCombo);
+    }
+
+    private void saveCategoryOptionComboCategoryOptionLinks(CategoryOptionCombo categoryOptionCombo) {
+        for (CategoryOption categoryOption : categoryOptionCombo.categoryOptions()) {
+            this.CategoryOptionComboCategoryOptionStore.insert(
+                    CategoryOptionComboCategoryOptionLinkModel.create(
+                            categoryOptionCombo.uid(),
+                            categoryOption.uid()));
+        }
     }
 }

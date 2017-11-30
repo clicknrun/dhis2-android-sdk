@@ -73,7 +73,9 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
                 new CategoryHandler(CategoryStoreFactory.create(databaseAdapter),
                         CategoryCategoryOptionLinkStoreFactory.create(databaseAdapter),
                         new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter))),
-                new CategoryOptionComboHandler(CategoryOptionComboStoreFactory.create(databaseAdapter)));
+                new CategoryOptionComboHandler(CategoryOptionComboStoreFactory.create(databaseAdapter),
+                        CategoryOptionComboCategoryOptionLinkStoreFactory.create(databaseAdapter),
+                        new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter))));
     }
 
     private void saveCategoryComboCategoryLinks(CategoryCombo categoryCombo) {
