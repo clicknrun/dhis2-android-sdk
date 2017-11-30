@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import org.hisp.dhis.android.core.category.CategoryCategoryOptionLinkModel;
 import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
 import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkModel;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
@@ -787,8 +788,8 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_CATEGORY_COMBO_CATEGORY_LINK_TABLE =
             SQLStatementBuilder.createModelTable(CategoryComboCategoryLinkModel.TABLE,
                     CategoryComboCategoryLinkModel.Columns.CATEGORY + " TEXT NOT NULL," +
-                            CategoryComboCategoryLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
                             CategoryComboCategoryLinkModel.Columns.SORT_ORDER + " INTEGER," +
+                            CategoryComboCategoryLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
                             " FOREIGN KEY (" + CategoryComboCategoryLinkModel.Columns.CATEGORY + ") " +
                             " REFERENCES " + CategoryModel.TABLE + " (" + CategoryModel.Columns.UID + ")" +
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
@@ -804,13 +805,13 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_CATEGORY_COMBO_CATEGORY_OPTION_COMBO_LINK_TABLE =
             SQLStatementBuilder.createModelTable(CategoryComboCategoryOptionComboLinkModel.TABLE,
-                    CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
-                            CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_OPTION_COMBO + " TEXT NOT NULL," +
+                    CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_OPTION_COMBO + " TEXT NOT NULL," +
+                            CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
                             " FOREIGN KEY (" + CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_COMBO + ") " +
-                            " REFERENCES " + CategoryModel.TABLE + " (" + CategoryModel.Columns.UID + ")" +
+                            " REFERENCES " + CategoryComboModel.TABLE + " (" + CategoryComboModel.Columns.UID + ")" +
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                             " FOREIGN KEY (" + CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_OPTION_COMBO + ") " +
-                            " REFERENCES " + CategoryComboModel.TABLE + " (" + CategoryComboModel.Columns.UID + ")" +
+                            " REFERENCES " + CategoryOptionComboModel.TABLE + " (" + CategoryOptionComboModel.Columns.UID + ")" +
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                             " UNIQUE (" + CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_COMBO + ", " +
                             CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_OPTION_COMBO + ")"
@@ -819,6 +820,21 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_CATEGORY_OPTION_COMBO_TABLE =
             SQLStatementBuilder.createIdentifiableModelTable(CategoryOptionComboModel.TABLE,
                     CategoryOptionComboModel.Columns.IGNORE_APPROVAL + " INTEGER");
+
+    private static final String CREATE_CATEGORY_CATEGORY_OPTION_LINK_TABLE =
+            SQLStatementBuilder.createModelTable(CategoryCategoryOptionLinkModel.TABLE,
+                    CategoryCategoryOptionLinkModel.Columns.CATEGORY + " TEXT NOT NULL," +
+                            CategoryCategoryOptionLinkModel.Columns.SORT_ORDER + " INTEGER," +
+                            CategoryCategoryOptionLinkModel.Columns.CATEGORY_OPTION + " TEXT NOT NULL," +
+                            " FOREIGN KEY (" + CategoryCategoryOptionLinkModel.Columns.CATEGORY + ") " +
+                            " REFERENCES " + CategoryModel.TABLE + " (" + CategoryModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " FOREIGN KEY (" + CategoryCategoryOptionLinkModel.Columns.CATEGORY_OPTION + ") " +
+                            " REFERENCES " + CategoryOptionModel.TABLE + " (" + CategoryOptionModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " UNIQUE (" + CategoryCategoryOptionLinkModel.Columns.CATEGORY + ", " +
+                            CategoryCategoryOptionLinkModel.Columns.CATEGORY_OPTION + ")"
+            );
 
     private static final String CREATE_CATEGORY_OPTION_TABLE =
             SQLStatementBuilder.createIdentifiableModelTable(CategoryOptionModel.TABLE,
@@ -878,6 +894,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_CATEGORY_TABLE);
         database.execSQL(CREATE_CATEGORY_COMBO_CATEGORY_OPTION_COMBO_LINK_TABLE);
         database.execSQL(CREATE_CATEGORY_OPTION_COMBO_TABLE);
+        database.execSQL(CREATE_CATEGORY_CATEGORY_OPTION_LINK_TABLE);
         database.execSQL(CREATE_CATEGORY_OPTION_TABLE);
         return database;
     }

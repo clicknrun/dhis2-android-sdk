@@ -47,12 +47,12 @@ public abstract class CategoryComboCategoryOptionComboLinkModel extends BaseMode
     public static final String TABLE = "CategoryComboCategoryOptionComboLink";
 
     public static class Columns extends BaseModel.Columns {
-        public static final String CATEGORY_COMBO = "categoryCombo";
         public static final String CATEGORY_OPTION_COMBO = "categoryOptionCombo";
+        public static final String CATEGORY_COMBO = "categoryCombo";
 
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(),
-                    CATEGORY_COMBO, CATEGORY_OPTION_COMBO);
+                    CATEGORY_OPTION_COMBO, CATEGORY_COMBO);
         }
     }
 
@@ -63,8 +63,8 @@ public abstract class CategoryComboCategoryOptionComboLinkModel extends BaseMode
     public static CategoryComboCategoryOptionComboLinkModel create(
             String categoryComboUid, String categoryOptionComboUid) {
         return CategoryComboCategoryOptionComboLinkModel.builder()
-                .categoryCombo(categoryComboUid)
                 .categoryOptionCombo(categoryOptionComboUid)
+                .categoryCombo(categoryComboUid)
                 .build();
     }
 
@@ -73,27 +73,27 @@ public abstract class CategoryComboCategoryOptionComboLinkModel extends BaseMode
     }
 
     @Nullable
-    @ColumnName(Columns.CATEGORY_COMBO)
-    public abstract String categoryCombo();
-
-    @Nullable
     @ColumnName(Columns.CATEGORY_OPTION_COMBO)
     public abstract String categoryOptionCombo();
+
+    @Nullable
+    @ColumnName(Columns.CATEGORY_COMBO)
+    public abstract String categoryCombo();
 
     @NonNull
     public abstract ContentValues toContentValues();
 
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
-        sqLiteBind(sqLiteStatement, 1, categoryCombo());
-        sqLiteBind(sqLiteStatement, 2, categoryOptionCombo());
+        sqLiteBind(sqLiteStatement, 1, categoryOptionCombo());
+        sqLiteBind(sqLiteStatement, 2, categoryCombo());
     }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseModel.Builder<Builder> {
-        public abstract Builder categoryCombo(String categoryCombo);
-
         public abstract Builder categoryOptionCombo(String categoryOptionCombo);
+
+        public abstract Builder categoryCombo(String categoryCombo);
 
         public abstract CategoryComboCategoryOptionComboLinkModel build();
     }

@@ -48,12 +48,12 @@ public abstract class CategoryCategoryOptionLinkModel extends BaseModel implemen
 
     public static class Columns extends BaseModel.Columns {
         public static final String CATEGORY = "category";
-        public static final String CATEGORY_OPTION = "categoryOption";
         public static final String SORT_ORDER = "sortOrder";
+        public static final String CATEGORY_OPTION = "categoryOption";
 
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(),
-                    CATEGORY, CATEGORY_OPTION, SORT_ORDER);
+                    CATEGORY, SORT_ORDER, CATEGORY_OPTION);
         }
     }
 
@@ -65,8 +65,8 @@ public abstract class CategoryCategoryOptionLinkModel extends BaseModel implemen
             String categoryUid, String categoryOptionUid, int sortOrder) {
         return CategoryCategoryOptionLinkModel.builder()
                 .category(categoryUid)
-                .categoryOption(categoryOptionUid)
                 .sortOrder(sortOrder)
+                .categoryOption(categoryOptionUid)
                 .build();
     }
 
@@ -78,13 +78,13 @@ public abstract class CategoryCategoryOptionLinkModel extends BaseModel implemen
     @ColumnName(Columns.CATEGORY)
     public abstract String category();
 
-    @Nullable
-    @ColumnName(Columns.CATEGORY_OPTION)
-    public abstract String categoryOption();
-
     @NonNull
     @ColumnName(Columns.SORT_ORDER)
     public abstract int sortOrder();
+
+    @Nullable
+    @ColumnName(Columns.CATEGORY_OPTION)
+    public abstract String categoryOption();
 
     @NonNull
     public abstract ContentValues toContentValues();
@@ -92,17 +92,17 @@ public abstract class CategoryCategoryOptionLinkModel extends BaseModel implemen
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
         sqLiteBind(sqLiteStatement, 1, category());
-        sqLiteBind(sqLiteStatement, 2, categoryOption());
-        sqLiteBind(sqLiteStatement, 3, sortOrder());
+        sqLiteBind(sqLiteStatement, 2, sortOrder());
+        sqLiteBind(sqLiteStatement, 3, categoryOption());
     }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseModel.Builder<Builder> {
         public abstract Builder category(String category);
 
-        public abstract Builder categoryOption(String categoryOption);
-
         public abstract Builder sortOrder(int sortOrder);
+
+        public abstract Builder categoryOption(String categoryOption);
 
         public abstract CategoryCategoryOptionLinkModel build();
     }

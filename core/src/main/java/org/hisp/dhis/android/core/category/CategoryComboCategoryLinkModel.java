@@ -48,12 +48,12 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
 
     public static class Columns extends BaseModel.Columns {
         public static final String CATEGORY = "category";
-        public static final String CATEGORY_COMBO = "categoryCombo";
         public static final String SORT_ORDER = "sortOrder";
+        public static final String CATEGORY_COMBO = "categoryCombo";
 
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(),
-                    CATEGORY, CATEGORY_COMBO, SORT_ORDER);
+                    CATEGORY, SORT_ORDER, CATEGORY_COMBO);
         }
     }
 
@@ -65,8 +65,8 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
             String categoryUid, String categoryComboUid, int sortOrder) {
         return CategoryComboCategoryLinkModel.builder()
                 .category(categoryUid)
-                .categoryCombo(categoryComboUid)
                 .sortOrder(sortOrder)
+                .categoryCombo(categoryComboUid)
                 .build();
     }
 
@@ -78,13 +78,13 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
     @ColumnName(Columns.CATEGORY)
     public abstract String category();
 
-    @Nullable
-    @ColumnName(Columns.CATEGORY_COMBO)
-    public abstract String categoryCombo();
-
     @NonNull
     @ColumnName(Columns.SORT_ORDER)
     public abstract int sortOrder();
+
+    @Nullable
+    @ColumnName(Columns.CATEGORY_COMBO)
+    public abstract String categoryCombo();
 
     @NonNull
     public abstract ContentValues toContentValues();
@@ -92,17 +92,17 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {
         sqLiteBind(sqLiteStatement, 1, category());
-        sqLiteBind(sqLiteStatement, 2, categoryCombo());
-        sqLiteBind(sqLiteStatement, 3, sortOrder());
+        sqLiteBind(sqLiteStatement, 2, sortOrder());
+        sqLiteBind(sqLiteStatement, 3, categoryCombo());
     }
 
     @AutoValue.Builder
     public static abstract class Builder extends BaseModel.Builder<Builder> {
         public abstract Builder category(String category);
 
-        public abstract Builder categoryCombo(String categoryCombo);
-
         public abstract Builder sortOrder(int sortOrder);
+
+        public abstract Builder categoryCombo(String categoryCombo);
 
         public abstract CategoryComboCategoryLinkModel build();
     }
