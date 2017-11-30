@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.dataelement;
 
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
@@ -37,11 +37,11 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface DataSetService {
-    @GET("dataSets")
-    Call<Payload<DataSet>> getDataSets(@Query("fields") @Which Fields<DataSet> fields,
-                                       @Query("filter") @Where Filter<DataSet, String> lastUpdated,
-                                       @Query("filter") @Where Filter<DataSet, String> uids,
+public interface DataElementService {
+    @GET("dataElements")
+    Call<Payload<DataElement>> getDataElements(@Query("fields") @Which Fields<DataElement> fields,
+                                       @Query("filter") @Where Filter<DataElement, String> lastUpdated,
+                                       @Query("filter") @Where Filter<DataElement, String> uids,
                                        @Query("paging") Boolean paging);
 
 }

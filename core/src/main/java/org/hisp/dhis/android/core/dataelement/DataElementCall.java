@@ -25,23 +25,40 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataset;
 
+package org.hisp.dhis.android.core.dataelement;
+
+import org.hisp.dhis.android.core.common.GenericCallData;
+import org.hisp.dhis.android.core.common.GenericCallImpl;
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
-import org.hisp.dhis.android.core.data.api.Filter;
-import org.hisp.dhis.android.core.data.api.Where;
-import org.hisp.dhis.android.core.data.api.Which;
+import org.hisp.dhis.android.core.resource.ResourceModel;
 
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import java.io.IOException;
+import java.util.Set;
 
-public interface DataSetService {
-    @GET("dataSets")
-    Call<Payload<DataSet>> getDataSets(@Query("fields") @Which Fields<DataSet> fields,
-                                       @Query("filter") @Where Filter<DataSet, String> lastUpdated,
-                                       @Query("filter") @Where Filter<DataSet, String> uids,
-                                       @Query("paging") Boolean paging);
+public class DataElementCall extends GenericCallImpl<DataElement> {
+    private final DataElementService dataElementService;
 
+    public DataElementCall(GenericCallData data, DataElementService dataElementService,
+                           GenericHandler<DataElement, DataElementModel> dataElementHandler,
+                           Set<String> uids) {
+        super(data, dataElementHandler, ResourceModel.Type.DATA_ELEMENT, uids);
+        this.dataElementService = dataElementService;
+    }
+
+    @Override
+    protected retrofit2.Call<Payload<DataElement>> getCall(Set<String> uids, String lastUpdated)
+            throws IOException {
+        return dataElementService.getDataElements(getFields(), DataElement.lastUpdated.gt(lastUpdated),
+                DataElement.uid.in(uids), Boolean.FALSE);
+    }
+
+    // TODO insert and nest all fields
+    private Fields<DataElement> getFields() {
+        return Fields.<DataElement>builder().fields(
+                DataElement.uid
+        ).build();
+    }
 }
