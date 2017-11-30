@@ -35,10 +35,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.category.CategoryCombo;
-import org.hisp.dhis.android.core.category.CategoryOption;
 import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.data.api.Field;
+import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.NestedField;
 import org.hisp.dhis.android.core.option.OptionSet;
 
@@ -80,6 +80,12 @@ public abstract class DataElement extends BaseNameableObject {
     public static final NestedField<DataElement, OptionSet> optionSet = NestedField.create(OPTION_SET);
     public static final NestedField<DataElement, CategoryCombo> categoryCombo =
             NestedField.create(CATEGORY_COMBO);
+
+    public static final Fields<DataElement> allFields = Fields.<DataElement>builder().fields(
+            uid, code, name, displayName, created, lastUpdated, shortName, displayShortName, deleted,
+            valueType, zeroIsSignificant, aggregationType, formName, numberType, domainType, dimension, displayFormName,
+            optionSet.with(OptionSet.uid, OptionSet.version),
+            categoryCombo.with(CategoryCombo.uid)).build();
 
     @Nullable
     @JsonProperty(VALUE_TYPE)

@@ -32,7 +32,6 @@ import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;
@@ -51,14 +50,7 @@ public class DataElementCall extends GenericCallImpl<DataElement> {
     @Override
     protected retrofit2.Call<Payload<DataElement>> getCall(Set<String> uids, String lastUpdated)
             throws IOException {
-        return dataElementService.getDataElements(getFields(), DataElement.lastUpdated.gt(lastUpdated),
+        return dataElementService.getDataElements(DataElement.allFields, DataElement.lastUpdated.gt(lastUpdated),
                 DataElement.uid.in(uids), Boolean.FALSE);
-    }
-
-    // TODO insert and nest all fields
-    private Fields<DataElement> getFields() {
-        return Fields.<DataElement>builder().fields(
-                DataElement.uid
-        ).build();
     }
 }
