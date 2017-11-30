@@ -32,6 +32,7 @@ import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.text.ParseException;
 import java.util.Date;
 
 public abstract class BaseIdentifiableObject implements IdentifiableObject {
@@ -79,6 +80,10 @@ public abstract class BaseIdentifiableObject implements IdentifiableObject {
     @Nullable
     @JsonProperty(DELETED)
     public abstract Boolean deleted();
+
+    public static Date parseDate(String dateStr) throws ParseException {
+        return BaseIdentifiableObject.DATE_FORMAT.parse(dateStr);
+    }
 
     protected static abstract class Builder<T extends Builder> {
 

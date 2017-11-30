@@ -28,26 +28,17 @@
 
 package org.hisp.dhis.android.core.category;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 
-import org.hisp.dhis.android.core.Inject;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-
-public class CategoryOptionComboTests {
-
-    @Test
-    public void categoryOptionCombo_shouldMapFromJsonString() throws IOException, ParseException {
-        ObjectMapper objectMapper = Inject.objectMapper();
-        InputStream jsonStream = this.getClass().getClassLoader()
-                .getResourceAsStream("category/categoryOptionCombo.json");
-
-        CategoryOptionCombo categoryOptionCombo = objectMapper.readValue(jsonStream, CategoryOptionCombo.class);
-        assertThat(categoryOptionCombo).isEqualTo(CategoryMocks.getCategoryOptionCombo());
+public class CategoryMocks {
+    public static CategoryOptionCombo getCategoryOptionCombo() throws ParseException {
+        return CategoryOptionCombo.create("ranftQIH5M9", "COC_1153397",
+                "CARE International, Provide access to primary health care",
+                "CARE International, Provide access to primary health care",
+                BaseIdentifiableObject.parseDate("2013-12-20T22:17:20.428"),
+                BaseIdentifiableObject.parseDate("2013-12-20T22:17:20.428"),
+                false, null);
     }
 }
