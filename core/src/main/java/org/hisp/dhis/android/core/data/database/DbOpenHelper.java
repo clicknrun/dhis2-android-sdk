@@ -40,6 +40,7 @@ import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkM
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryModel;
 import org.hisp.dhis.android.core.category.CategoryOptionComboModel;
+import org.hisp.dhis.android.core.category.CategoryOptionModel;
 import org.hisp.dhis.android.core.common.SQLStatementBuilder;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.constant.ConstantModel;
@@ -819,6 +820,13 @@ public class DbOpenHelper extends SQLiteOpenHelper {
             SQLStatementBuilder.createIdentifiableModelTable(CategoryOptionComboModel.TABLE,
                     CategoryOptionComboModel.Columns.IGNORE_APPROVAL + " INTEGER");
 
+    private static final String CREATE_CATEGORY_OPTION_TABLE =
+            SQLStatementBuilder.createIdentifiableModelTable(CategoryOptionModel.TABLE,
+                    CategoryOptionModel.Columns.SHORT_NAME + " TEXT," +
+                    CategoryOptionModel.Columns.DISPLAY_SHORT_NAME + " TEXT," +
+                    CategoryOptionModel.Columns.START_DATE + " TEXT," +
+                    CategoryOptionModel.Columns.END_DATE + " TEXT");
+
     /**
      * This method should be used only for testing purposes
      */
@@ -870,6 +878,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_CATEGORY_TABLE);
         database.execSQL(CREATE_CATEGORY_COMBO_CATEGORY_OPTION_COMBO_LINK_TABLE);
         database.execSQL(CREATE_CATEGORY_OPTION_COMBO_TABLE);
+        database.execSQL(CREATE_CATEGORY_OPTION_TABLE);
         return database;
     }
 
