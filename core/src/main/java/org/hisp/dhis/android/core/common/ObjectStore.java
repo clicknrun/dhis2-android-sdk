@@ -26,21 +26,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset.utils;
+package org.hisp.dhis.android.core.common;
 
 import android.support.annotation.NonNull;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
-import org.hisp.dhis.android.core.common.StatementBinder;
+public interface ObjectStore<M extends Model & StatementBinder> {
 
-public interface IdentifiableObjectStore<M extends BaseIdentifiableObjectModel & StatementBinder>
-        extends ObjectStore<M> {
-
-    public int delete(@NonNull String uid);
-
-    public int update(@NonNull M m);
-
-    public void updateOrInsert(@NonNull M m);
+    public long insert(@NonNull M m);
 }
 
 

@@ -26,12 +26,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset.utils;
+package org.hisp.dhis.android.core.common;
 
 import android.support.annotation.NonNull;
 
-import org.hisp.dhis.android.core.common.Model;
-import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 import static org.hisp.dhis.android.core.utils.Utils.isNull;

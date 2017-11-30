@@ -29,10 +29,10 @@
 package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.IdentifiableObjectStoreImpl;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStoreImpl;
+import org.hisp.dhis.android.core.common.SQLStatementBuilder;
+import org.hisp.dhis.android.core.common.SQLStatementWrapper;
 
 public class CategoryStoreFactory {
     public static IdentifiableObjectStore<CategoryModel> create(DatabaseAdapter databaseAdapter) {

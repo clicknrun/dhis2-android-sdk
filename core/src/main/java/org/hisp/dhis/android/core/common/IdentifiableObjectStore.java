@@ -26,23 +26,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset.utils;
+package org.hisp.dhis.android.core.common;
 
-import android.database.sqlite.SQLiteStatement;
+import android.support.annotation.NonNull;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
+public interface IdentifiableObjectStore<M extends BaseIdentifiableObjectModel & StatementBinder>
+        extends ObjectStore<M> {
 
-import java.util.Arrays;
+    public int delete(@NonNull String uid);
 
-public class SQLStatementWrapper {
-    public final SQLiteStatement insert;
-    public final SQLiteStatement update;
-    public final SQLiteStatement deleteById;
+    public int update(@NonNull M m);
 
-    public SQLStatementWrapper(SQLStatementBuilder builder, DatabaseAdapter databaseAdapter) {
-        this.insert = databaseAdapter.compileStatement(builder.insert());
-        this.update = databaseAdapter.compileStatement(builder.update());
-        this.deleteById = databaseAdapter.compileStatement(builder.deleteById());
-    }
+    public void updateOrInsert(@NonNull M m);
 }
+
+

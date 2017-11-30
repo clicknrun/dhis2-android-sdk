@@ -30,9 +30,9 @@ package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
-import org.hisp.dhis.android.core.dataset.utils.GenericCallData;
-import org.hisp.dhis.android.core.dataset.utils.GenericCallImpl;
-import org.hisp.dhis.android.core.dataset.utils.GenericHandler;
+import org.hisp.dhis.android.core.common.GenericCallData;
+import org.hisp.dhis.android.core.common.GenericCallImpl;
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;

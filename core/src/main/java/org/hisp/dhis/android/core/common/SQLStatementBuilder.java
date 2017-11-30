@@ -26,12 +26,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset.utils;
-
-import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+package org.hisp.dhis.android.core.common;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class SQLStatementBuilder {
     public final String tableName;

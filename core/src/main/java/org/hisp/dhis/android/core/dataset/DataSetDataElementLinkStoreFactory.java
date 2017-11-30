@@ -29,10 +29,10 @@
 package org.hisp.dhis.android.core.dataset;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataset.utils.ObjectStore;
-import org.hisp.dhis.android.core.dataset.utils.ObjectStoreImpl;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementBuilder;
-import org.hisp.dhis.android.core.dataset.utils.SQLStatementWrapper;
+import org.hisp.dhis.android.core.common.ObjectStore;
+import org.hisp.dhis.android.core.common.ObjectStoreImpl;
+import org.hisp.dhis.android.core.common.SQLStatementBuilder;
+import org.hisp.dhis.android.core.common.SQLStatementWrapper;
 
 public class DataSetDataElementLinkStoreFactory {
     public static ObjectStore<DataSetDataElementLinkModel> create(DatabaseAdapter databaseAdapter) {

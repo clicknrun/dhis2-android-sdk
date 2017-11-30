@@ -25,19 +25,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataset.utils;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
-import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
-import org.hisp.dhis.android.core.common.StatementBinder;
+package org.hisp.dhis.android.core.common;
 
-import java.util.Collection;
+import com.google.auto.value.AutoValue;
 
-public interface GenericHandler<
-        P extends BaseIdentifiableObject,
-        M extends BaseIdentifiableObjectModel & StatementBinder> {
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
+import org.hisp.dhis.android.core.resource.ResourceHandler;
 
-    public void handle(P p);
+import java.util.Date;
 
-    public void handleMany(Collection<P> pCollection);
+@AutoValue
+public abstract class GenericCallData {
+    public abstract DatabaseAdapter databaseAdapter();
+    public abstract ResourceHandler resourceHandler();
+    public abstract Date serverDate();
+
+    public static GenericCallData create(DatabaseAdapter databaseAdapter,
+                                 ResourceHandler resourceHandler) {
+        return new AutoValue_GenericCallData(databaseAdapter, resourceHandler, new Date());
+    }
 }
