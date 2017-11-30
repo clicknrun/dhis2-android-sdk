@@ -28,20 +28,21 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
+import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.data.api.Field;
 import org.hisp.dhis.android.core.data.api.NestedField;
-import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.dataelement.DataElement;
 
 import java.util.Date;
+import java.util.List;
 
 @AutoValue
 public abstract class DataSet extends BaseNameableObject {
@@ -60,6 +61,7 @@ public abstract class DataSet extends BaseNameableObject {
     private final static String DATA_ELEMENT_DECORATION = "dataElementDecoration";
     private final static String RENDER_AS_TABS = "renderAsTabs";
     private final static String RENDER_HORIZONTALLY = "renderHorizontally";
+    private final static String DATA_ELEMENTS = "dataSetElements";
 
     public static final Field<DataSet, String> uid = Field.create(UID);
     public static final Field<DataSet, String> code = Field.create(CODE);
@@ -88,6 +90,7 @@ public abstract class DataSet extends BaseNameableObject {
     public static final Field<DataSet, Boolean> dataElementDecoration = Field.create(DATA_ELEMENT_DECORATION);
     public static final Field<DataSet, Boolean> renderAsTabs = Field.create(RENDER_AS_TABS);
     public static final Field<DataSet, Boolean> renderHorizontally = Field.create(RENDER_HORIZONTALLY);
+    public static final NestedField<DataSet, DataElement> dataElements = NestedField.create(DATA_ELEMENTS);
 
     @Nullable
     @JsonProperty(PERIOD_TYPE)
@@ -149,6 +152,10 @@ public abstract class DataSet extends BaseNameableObject {
     @JsonProperty(RENDER_HORIZONTALLY)
     public abstract Boolean renderHorizontally();
 
+    @Nullable
+    @JsonProperty(DATA_ELEMENTS)
+    public abstract List<DataElement> dataElements();
+
     @JsonCreator
     public static DataSet create(
             @JsonProperty(UID) String uid,
@@ -176,6 +183,7 @@ public abstract class DataSet extends BaseNameableObject {
             @JsonProperty(DATA_ELEMENT_DECORATION) Boolean dataElementDecoration,
             @JsonProperty(RENDER_AS_TABS) Boolean renderAsTabs,
             @JsonProperty(RENDER_HORIZONTALLY) Boolean renderHorizontally,
+            @JsonProperty(DATA_ELEMENTS) List<DataElement> dataElements,
             @JsonProperty(DELETED) Boolean deleted) {
 
         return new AutoValue_DataSet(uid, code, name,
@@ -184,6 +192,6 @@ public abstract class DataSet extends BaseNameableObject {
                 periodType, categoryCombo, mobile, version, expiryDays, timelyDays,
                 notifyCompletingUser, openFuturePeriods, fieldCombinationRequired,
                 validCompleteOnly, noValueRequiresComment, skipOffline,
-                dataElementDecoration, renderAsTabs, renderHorizontally);
+                dataElementDecoration, renderAsTabs, renderHorizontally, dataElements);
     }
 }

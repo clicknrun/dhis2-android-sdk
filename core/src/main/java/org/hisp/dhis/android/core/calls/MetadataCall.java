@@ -30,14 +30,18 @@ package org.hisp.dhis.android.core.calls;
 import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.category.CategoryComboCall;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.category.CategoryComboService;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
+import org.hisp.dhis.android.core.dataelement.DataElementCall;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
+import org.hisp.dhis.android.core.dataelement.DataElementService;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetCall;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
@@ -70,7 +74,6 @@ import org.hisp.dhis.android.core.program.ProgramTrackedEntityAttributeStore;
 import org.hisp.dhis.android.core.relationship.RelationshipTypeStore;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceStore;
-import org.hisp.dhis.android.core.systeminfo.SystemInfo;
 import org.hisp.dhis.android.core.systeminfo.SystemInfoCall;
 import org.hisp.dhis.android.core.systeminfo.SystemInfoService;
 import org.hisp.dhis.android.core.systeminfo.SystemInfoStore;
@@ -104,6 +107,8 @@ public class MetadataCall implements Call<Response> {
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
     private final DataSetService dataSetService;
+    private final DataElementService dataElementService;
+    private final CategoryComboService categoryComboService;
     private final SystemInfoStore systemInfoStore;
     private final ResourceStore resourceStore;
     private final UserStore userStore;
@@ -142,6 +147,8 @@ public class MetadataCall implements Call<Response> {
                         @NonNull TrackedEntityService trackedEntityService,
                         @NonNull OptionSetService optionSetService,
                         @NonNull DataSetService dataSetService,
+                        @NonNull DataElementService dataElementService,
+                        @NonNull CategoryComboService categoryComboService,
                         @NonNull SystemInfoStore systemInfoStore,
                         @NonNull ResourceStore resourceStore,
                         @NonNull UserStore userStore,
@@ -177,6 +184,8 @@ public class MetadataCall implements Call<Response> {
         this.trackedEntityService = trackedEntityService;
         this.optionSetService = optionSetService;
         this.dataSetService = dataSetService;
+        this.dataElementService = dataElementService;
+        this.categoryComboService = categoryComboService;
         this.systemInfoStore = systemInfoStore;
         this.resourceStore = resourceStore;
         this.userStore = userStore;
@@ -232,7 +241,6 @@ public class MetadataCall implements Call<Response> {
             if (!response.isSuccessful()) {
                 return response;
             }
-            SystemInfo systemInfo = (SystemInfo) response.body();
             GenericCallData data = GenericCallData.create(databaseAdapter,
                     new ResourceHandler(resourceStore));
 
@@ -290,10 +298,19 @@ public class MetadataCall implements Call<Response> {
 
             Set<String> dataSetUids = getAssignedDataSetUids(user);
 
-            response = new DataSetCall(data, dataSetService, dataSetHandler, dataSetUids).call();
+            Response<Payload<DataSet>> dataSetResponse
+                    = new DataSetCall(data, dataSetService, dataSetHandler, dataSetUids).call();
+            response = dataSetResponse;
             if (!response.isSuccessful()) {
                 return response;
             }
+            List<DataSet> dataSets = dataSetResponse.body().items();
+
+            response = new DataElementCall(data, dataElementService, dataElementHandler,
+                    getDataElementUids(dataSets)).call();
+
+            response = new CategoryComboCall(data, categoryComboService, categoryComboHandler,
+                    getCategoryComboUids(dataSets)).call();
 
             transaction.setSuccessful();
             return response;
@@ -458,5 +475,26 @@ public class MetadataCall implements Call<Response> {
                 dataSetUids.add(dataSet.uid());
             }
         }
+    }
+
+    private Set<String> getCategoryComboUids(List<DataSet> dataSets) {
+        Set<String> uids = new HashSet<>();
+        for (DataSet dataSet : dataSets) {
+            uids.add(dataSet.categoryCombo().uid());
+            for (DataElement dataElement : dataSet.dataElements()) {
+                uids.add(dataElement.categoryCombo().uid());
+            }
+        }
+        return uids;
+    }
+
+    private Set<String> getDataElementUids(List<DataSet> dataSets) {
+        Set<String> uids = new HashSet<>();
+        for (DataSet dataSet : dataSets) {
+            for (DataElement dataElement : dataSet.dataElements()) {
+                uids.add(dataElement.uid());
+            }
+        }
+        return uids;
     }
 }

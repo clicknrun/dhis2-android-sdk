@@ -40,6 +40,7 @@ import org.hisp.dhis.android.core.calls.TrackedEntityInstancePostCall;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboHandler;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.category.CategoryComboService;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
@@ -49,6 +50,7 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementHandler;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
+import org.hisp.dhis.android.core.dataelement.DataElementService;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetHandler;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
@@ -146,6 +148,8 @@ public final class D2 {
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
     private final DataSetService dataSetService;
+    private final DataElementService dataElementService;
+    private final CategoryComboService categoryComboService;
 
     // stores
     private final UserStore userStore;
@@ -203,6 +207,8 @@ public final class D2 {
         this.trackedEntityInstanceService = retrofit.create(TrackedEntityInstanceService.class);
         this.eventService = retrofit.create(EventService.class);
         this.dataSetService = retrofit.create(DataSetService.class);
+        this.dataElementService = retrofit.create(DataElementService.class);
+        this.categoryComboService = retrofit.create(CategoryComboService.class);
 
         // stores
         this.userStore =
@@ -314,7 +320,8 @@ public final class D2 {
     public Call<Response> syncMetaData() {
         return new MetadataCall(
                 databaseAdapter, systemInfoService, userService, programService, organisationUnitService,
-                trackedEntityService, optionSetService, dataSetService, systemInfoStore, resourceStore, userStore,
+                trackedEntityService, optionSetService, dataSetService, dataElementService, categoryComboService,
+                systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
