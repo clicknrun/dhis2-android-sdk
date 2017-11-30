@@ -38,9 +38,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -72,60 +69,8 @@ public class DataElementHandlerTests {
     }
 
     @Test
-    public void doNothing_shouldDoNothingWhenPassingInNull() throws Exception {
-        dataElementHandler.handle(null);
-
-        verify(dataElementStore, never()).delete(anyString());
-        verify(dataElementStore, never()).update(any(DataElementModel.class));
-        verify(dataElementStore, never()).insert(any(DataElementModel.class));
-        verify(optionSetHandler, never()).handle(any(OptionSet.class));
-    }
-
-    @Test
-    public void delete_shouldDeleteDataElement() throws Exception {
-        when(dataElement.deleted()).thenReturn(Boolean.TRUE);
-
+    public void handle_shouldCallOptionSetHandler() throws Exception {
         dataElementHandler.handle(dataElement);
-
-        // verify that delete is called once
-        verify(dataElementStore, times(1)).delete(dataElement.uid());
-
-        // verify that update and insert is never called
-        verify(dataElementStore, never()).update(any(DataElementModel.class));
-        verify(dataElementStore, never()).insert(any(DataElementModel.class));
-
-        // verify that option set handler is called once
-        verify(optionSetHandler, times(1)).handle(any(OptionSet.class));
-    }
-
-    @Test
-    public void update_shouldUpdateDataElement() throws Exception {
-        dataElementHandler.handle(dataElement);
-
-        verify(dataElementStore, times(1)).update(any(DataElementModel.class));
-
-        // verify that delete or insert is never called
-        verify(dataElementStore, never()).delete(anyString());
-        verify(dataElementStore, never()).insert(any(DataElementModel.class));
-
-        // verify that option set handler is called once
-        verify(optionSetHandler, times(1)).handle(any(OptionSet.class));
-    }
-
-    @Test
-    public void insert_shouldInsertDataElement() throws Exception {
-        dataElementHandler.handle(dataElement);
-
-        // verify that insert is called once
-        verify(dataElementStore, times(1)).insert(any(DataElementModel.class));
-
-        // verify that update is called once since we update before we insert
-        verify(dataElementStore, times(1)).update(any(DataElementModel.class));
-
-        // verify that delete is never called
-        verify(dataElementStore, never()).delete(anyString());
-
-        // verify that option set handler is called once
-        verify(optionSetHandler, times(1)).handle(any(OptionSet.class));
+        verify(optionSetHandler).handle(optionSet);
     }
 }

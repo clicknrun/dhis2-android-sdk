@@ -34,7 +34,7 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 public class OptionSetHandler extends GenericHandlerImpl<OptionSet, OptionSetModel> {
     private final OptionHandler optionHandler;
 
-    public OptionSetHandler(IdentifiableObjectStore<OptionSetModel> optionSetStore, OptionHandler optionHandler) {
+    OptionSetHandler(IdentifiableObjectStore<OptionSetModel> optionSetStore, OptionHandler optionHandler) {
         super(optionSetStore);
         this.optionHandler = optionHandler;
     }
