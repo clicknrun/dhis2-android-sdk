@@ -41,13 +41,10 @@ import org.hisp.dhis.android.core.data.api.FieldsConverterFactory;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.dataelement.DataElementHandler;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
-import org.hisp.dhis.android.core.dataelement.DataElementStore;
-import org.hisp.dhis.android.core.dataelement.DataElementStoreImpl;
 import org.hisp.dhis.android.core.option.OptionHandler;
 import org.hisp.dhis.android.core.option.OptionSetHandler;
 import org.hisp.dhis.android.core.option.OptionSetModel;
-import org.hisp.dhis.android.core.option.OptionSetStore;
-import org.hisp.dhis.android.core.option.OptionSetStoreImpl;
+import org.hisp.dhis.android.core.option.OptionSetStoreFactory;
 import org.hisp.dhis.android.core.option.OptionStore;
 import org.hisp.dhis.android.core.option.OptionStoreImpl;
 import org.hisp.dhis.android.core.relationship.RelationshipTypeHandler;
@@ -178,7 +175,7 @@ public class ProgramCallIntegrationTests extends AbsStoreTestCase {
         OptionStore optionStore = new OptionStoreImpl(databaseAdapter());
         OptionHandler optionHandler = new OptionHandler(optionStore);
 
-        OptionSetStore optionSetStore = new OptionSetStoreImpl(databaseAdapter());
+        OptionSetStoreFactory optionSetStore = new OptionSetStoreImpl(databaseAdapter());
         OptionSetHandler optionSetHandler = new OptionSetHandler(optionSetStore, optionHandler);
 
 

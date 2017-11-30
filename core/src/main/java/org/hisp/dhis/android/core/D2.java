@@ -41,17 +41,18 @@ import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboHandler;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.data.api.FieldsConverterFactory;
 import org.hisp.dhis.android.core.data.api.FilterConverterFactory;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.dataelement.DataElementStore;
-import org.hisp.dhis.android.core.dataelement.DataElementStoreImpl;
+import org.hisp.dhis.android.core.dataelement.DataElement;
+import org.hisp.dhis.android.core.dataelement.DataElementHandler;
+import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetHandler;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
-import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStore;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStoreImpl;
 import org.hisp.dhis.android.core.event.EventPostCall;
@@ -59,11 +60,8 @@ import org.hisp.dhis.android.core.event.EventService;
 import org.hisp.dhis.android.core.event.EventStore;
 import org.hisp.dhis.android.core.event.EventStoreImpl;
 import org.hisp.dhis.android.core.imports.WebResponse;
+import org.hisp.dhis.android.core.option.OptionSetHandler;
 import org.hisp.dhis.android.core.option.OptionSetService;
-import org.hisp.dhis.android.core.option.OptionSetStore;
-import org.hisp.dhis.android.core.option.OptionSetStoreImpl;
-import org.hisp.dhis.android.core.option.OptionStore;
-import org.hisp.dhis.android.core.option.OptionStoreImpl;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitProgramLinkStore;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitProgramLinkStoreImpl;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitService;
@@ -167,9 +165,6 @@ public final class D2 {
     private final ProgramStageSectionProgramIndicatorLinkStore programStageSectionProgramIndicatorLinkStore;
     private final ProgramRuleActionStore programRuleActionStore;
     private final ProgramRuleStore programRuleStore;
-    private final OptionStore optionStore;
-    private final OptionSetStore optionSetStore;
-    private final DataElementStore dataElementStore;
     private final ProgramStageDataElementStore programStageDataElementStore;
     private final ProgramStageSectionStore programStageSectionStore;
     private final ProgramStageStore programStageStore;
@@ -190,6 +185,8 @@ public final class D2 {
     // handlers
     private final GenericHandler<DataSet, DataSetModel> dataSetHandler;
     private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
+    private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
+    private final OptionSetHandler optionSetHandler;
 
     @VisibleForTesting
     D2(@NonNull Retrofit retrofit, @NonNull DatabaseAdapter databaseAdapter) {
@@ -242,12 +239,6 @@ public final class D2 {
                 new ProgramRuleActionStoreImpl(databaseAdapter);
         this.programRuleStore =
                 new ProgramRuleStoreImpl(databaseAdapter);
-        this.optionStore =
-                new OptionStoreImpl(databaseAdapter);
-        this.optionSetStore =
-                new OptionSetStoreImpl(databaseAdapter);
-        this.dataElementStore =
-                new DataElementStoreImpl(databaseAdapter);
         this.programStageDataElementStore =
                 new ProgramStageDataElementStoreImpl(databaseAdapter);
         this.programStageSectionStore =
@@ -274,6 +265,8 @@ public final class D2 {
         // handlers
         this.dataSetHandler = DataSetHandler.create(databaseAdapter);
         this.categoryComboHandler = CategoryComboHandler.create(databaseAdapter);
+        this.optionSetHandler = OptionSetHandler.create(databaseAdapter);
+        this.dataElementHandler = DataElementHandler.create(databaseAdapter, this.optionSetHandler);
     }
 
     @NonNull
@@ -325,10 +318,10 @@ public final class D2 {
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
-                programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore, optionStore,
-                optionSetStore, dataElementStore, programStageDataElementStore, programStageSectionStore,
+                programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
+                programStageDataElementStore, programStageSectionStore,
                 programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore,
-                dataSetHandler, categoryComboHandler);
+                dataSetHandler, optionSetHandler, dataElementHandler, categoryComboHandler);
     }
 
     @NonNull

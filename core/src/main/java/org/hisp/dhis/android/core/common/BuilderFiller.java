@@ -25,36 +25,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.hisp.dhis.android.core.dataelement;
 
-import org.hisp.dhis.android.core.common.GenericHandlerImpl;
-import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
-import org.hisp.dhis.android.core.option.OptionSetHandler;
+package org.hisp.dhis.android.core.common;
 
-
-public class DataElementHandler extends GenericHandlerImpl<DataElement, DataElementModel> {
-
-    private final OptionSetHandler optionSetHandler;
-
-
-    private DataElementHandler(IdentifiableObjectStore<DataElementModel> dataSetStore,
-                               OptionSetHandler optionSetHandler) {
-        super(dataSetStore);
-        this.optionSetHandler = optionSetHandler;
-    }
-
-    @Override
-    protected DataElementModel pojoToModel(DataElement dataElement) {
-        return DataElementModel.create(dataElement);
-    }
-
-    public static DataElementHandler create(DatabaseAdapter databaseAdapter,
-                                            OptionSetHandler optionSetHandler) {
-        return new DataElementHandler(DataElementStoreFactory.create(databaseAdapter), optionSetHandler);
-    }
-
-    protected void afterObjectPersisted(DataElement dateElement) {
-        optionSetHandler.handle(dateElement.optionSet());
+public class BuilderFiller {
+    public  static <B extends BaseIdentifiableObject.Builder> void fillIdentifiable(IdentifiableObject io,
+                                                                                    B builder) {
+        builder
+                .uid(io.uid())
+                .code(io.code())
+                .name(io.name())
+                .displayName(io.displayName())
+                .created(io.created())
+                .lastUpdated(io.lastUpdated());
     }
 }

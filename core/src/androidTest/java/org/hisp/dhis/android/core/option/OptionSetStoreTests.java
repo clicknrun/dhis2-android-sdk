@@ -64,7 +64,7 @@ public class OptionSetStoreTests extends AbsStoreTestCase {
             Columns.LAST_UPDATED, Columns.VERSION, Columns.VALUE_TYPE
     };
 
-    private OptionSetStore store;
+    private OptionSetStoreFactory store;
 
     public OptionSetStoreTests() throws ParseException {
         this.date = BaseIdentifiableObject.DATE_FORMAT.parse(DATE);

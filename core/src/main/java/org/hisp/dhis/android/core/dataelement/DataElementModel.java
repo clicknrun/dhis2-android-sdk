@@ -42,6 +42,7 @@ import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.data.database.DbValueTypeColumnAdapter;
+import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
@@ -71,6 +72,31 @@ public abstract class DataElementModel extends BaseNameableObjectModel implement
 
     public static DataElementModel create(Cursor cursor) {
         return AutoValue_DataElementModel.createFromCursor(cursor);
+    }
+
+    public static DataElementModel create(DataElement dataElement) {
+        OptionSet optionSet = dataElement.optionSet();
+        return DataElementModel.builder()
+                .uid(dataElement.uid())
+                .code(dataElement.code())
+                .name(dataElement.name())
+                .displayName(dataElement.displayName())
+                .created(dataElement.created())
+                .lastUpdated(dataElement.lastUpdated())
+                .shortName(dataElement.shortName())
+                .displayShortName(dataElement.displayShortName())
+                .description(dataElement.description())
+                .displayDescription(dataElement.displayDescription())
+                .valueType(dataElement.valueType())
+                .zeroIsSignificant(dataElement.zeroIsSignificant())
+                .aggregationType(dataElement.aggregationType())
+                .formName(dataElement.formName())
+                .numberType(dataElement.numberType())
+                .domainType(dataElement.domainType())
+                .dimension(dataElement.dimension())
+                .displayFormName(dataElement.displayFormName())
+                .optionSet(optionSet != null ? optionSet.uid() : null)
+                .build();
     }
 
     public static Builder builder() {

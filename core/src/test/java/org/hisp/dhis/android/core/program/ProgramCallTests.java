@@ -36,9 +36,8 @@ import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
-import org.hisp.dhis.android.core.dataelement.DataElementStore;
 import org.hisp.dhis.android.core.option.OptionSet;
-import org.hisp.dhis.android.core.option.OptionSetStore;
+import org.hisp.dhis.android.core.option.OptionSetStoreFactory;
 import org.hisp.dhis.android.core.option.OptionStore;
 import org.hisp.dhis.android.core.relationship.RelationshipType;
 import org.hisp.dhis.android.core.relationship.RelationshipTypeStore;
@@ -120,7 +119,7 @@ public class ProgramCallTests {
     private OptionStore optionStore;
 
     @Mock
-    private OptionSetStore optionSetStore;
+    private OptionSetStoreFactory optionSetStore;
 
     @Mock
     private DataElementStore dataElementStore;

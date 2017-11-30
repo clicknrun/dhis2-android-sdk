@@ -31,20 +31,21 @@ import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.common.GenericCallData;
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
-import org.hisp.dhis.android.core.dataelement.DataElementStore;
+import org.hisp.dhis.android.core.dataelement.DataElement;
+import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetCall;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
-import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericHandler;
+import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetCall;
+import org.hisp.dhis.android.core.option.OptionSetModel;
 import org.hisp.dhis.android.core.option.OptionSetService;
-import org.hisp.dhis.android.core.option.OptionSetStore;
-import org.hisp.dhis.android.core.option.OptionStore;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnit;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitCall;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitProgramLinkStore;
@@ -119,15 +120,14 @@ public class MetadataCall implements Call<Response> {
     private final ProgramStageSectionProgramIndicatorLinkStore programStageSectionProgramIndicatorLinkStore;
     private final ProgramRuleActionStore programRuleActionStore;
     private final ProgramRuleStore programRuleStore;
-    private final OptionStore optionStore;
-    private final OptionSetStore optionSetStore;
-    private final DataElementStore dataElementStore;
     private final ProgramStageDataElementStore programStageDataElementStore;
     private final ProgramStageSectionStore programStageSectionStore;
     private final ProgramStageStore programStageStore;
     private final RelationshipTypeStore relationshipStore;
     private final TrackedEntityStore trackedEntityStore;
     private final GenericHandler<DataSet, DataSetModel> dataSetHandler;
+    private final GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
+    private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
     private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
 
     private boolean isExecuted;
@@ -159,9 +159,6 @@ public class MetadataCall implements Call<Response> {
                                 programStageSectionProgramIndicatorLinkStore,
                         @NonNull ProgramRuleActionStore programRuleActionStore,
                         @NonNull ProgramRuleStore programRuleStore,
-                        @NonNull OptionStore optionStore,
-                        @NonNull OptionSetStore optionSetStore,
-                        @NonNull DataElementStore dataElementStore,
                         @NonNull ProgramStageDataElementStore programStageDataElementStore,
                         @NonNull ProgramStageSectionStore programStageSectionStore,
                         @NonNull ProgramStageStore programStageStore,
@@ -169,6 +166,8 @@ public class MetadataCall implements Call<Response> {
                         @NonNull TrackedEntityStore trackedEntityStore,
                         @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
                         @NonNull GenericHandler<DataSet, DataSetModel> dataSetHandler,
+                        @NonNull GenericHandler<OptionSet, OptionSetModel> optionSetHandler,
+                        @NonNull GenericHandler<DataElement, DataElementModel> dataElementHandler,
                         @NonNull GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler) {
         this.databaseAdapter = databaseAdapter;
         this.systemInfoService = systemInfoService;
@@ -194,9 +193,6 @@ public class MetadataCall implements Call<Response> {
         this.programStageSectionProgramIndicatorLinkStore = programStageSectionProgramIndicatorLinkStore;
         this.programRuleActionStore = programRuleActionStore;
         this.programRuleStore = programRuleStore;
-        this.optionStore = optionStore;
-        this.optionSetStore = optionSetStore;
-        this.dataElementStore = dataElementStore;
         this.programStageDataElementStore = programStageDataElementStore;
         this.programStageSectionStore = programStageSectionStore;
         this.programStageStore = programStageStore;
@@ -204,6 +200,8 @@ public class MetadataCall implements Call<Response> {
         this.trackedEntityStore = trackedEntityStore;
         this.organisationUnitProgramLinkStore = organisationUnitProgramLinkStore;
         this.dataSetHandler = dataSetHandler;
+        this.optionSetHandler = optionSetHandler;
+        this.dataElementHandler = dataElementHandler;
         this.categoryComboHandler = categoryComboHandler;
     }
 
@@ -266,8 +264,8 @@ public class MetadataCall implements Call<Response> {
                     programService, databaseAdapter, resourceStore, programUids, programStore, data.serverDate(),
                     trackedEntityAttributeStore, programTrackedEntityAttributeStore, programRuleVariableStore,
                     programIndicatorStore, programStageSectionProgramIndicatorLinkStore, programRuleActionStore,
-                    programRuleStore, optionStore, optionSetStore, dataElementStore, programStageDataElementStore,
-                    programStageSectionStore, programStageStore, relationshipStore
+                    programRuleStore, programStageDataElementStore, programStageSectionStore,
+                    programStageStore, relationshipStore, dataElementHandler
             ).call();
             if (!response.isSuccessful()) {
                 return response;
@@ -285,9 +283,7 @@ public class MetadataCall implements Call<Response> {
 
             Set<String> optionSetUids = getAssignedOptionSetUids(programs);
             response = new OptionSetCall(
-                    optionSetService, optionSetStore, databaseAdapter, resourceStore,
-                    optionSetUids, data.serverDate(), optionStore
-            ).call();
+                    data, optionSetService, optionSetHandler, optionSetUids).call();
             if (!response.isSuccessful()) {
                 return response;
             }

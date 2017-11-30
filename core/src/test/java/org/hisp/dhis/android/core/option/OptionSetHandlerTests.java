@@ -48,7 +48,7 @@ import static org.mockito.Mockito.when;
 @RunWith(JUnit4.class)
 public class OptionSetHandlerTests {
     @Mock
-    private OptionSetStore optionSetStore;
+    private OptionSetStoreFactory optionSetStore;
 
     @Mock
     private OptionSet optionSet;
