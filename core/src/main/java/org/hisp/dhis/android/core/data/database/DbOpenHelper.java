@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryModel;
 import org.hisp.dhis.android.core.common.SQLStatementBuilder;
@@ -780,6 +781,21 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_CATEGORY_COMBO_TABLE =
             SQLStatementBuilder.createIdentifiableModelTable(CategoryComboModel.TABLE);
 
+    private static final String CREATE_CATEGORY_COMBO_CATEGORY_LINK_TABLE =
+            SQLStatementBuilder.createModelTable(CategoryComboCategoryLinkModel.TABLE,
+                    CategoryComboCategoryLinkModel.Columns.CATEGORY + " TEXT NOT NULL," +
+                            CategoryComboCategoryLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
+                            CategoryComboCategoryLinkModel.Columns.SORT_ORDER + " INTEGER," +
+                            " FOREIGN KEY (" + CategoryComboCategoryLinkModel.Columns.CATEGORY + ") " +
+                            " REFERENCES " + CategoryModel.TABLE + " (" + CategoryModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " FOREIGN KEY (" + CategoryComboCategoryLinkModel.Columns.CATEGORY_COMBO + ") " +
+                            " REFERENCES " + CategoryComboModel.TABLE + " (" + CategoryComboModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " UNIQUE (" + CategoryComboCategoryLinkModel.Columns.CATEGORY + ", " +
+                            CategoryComboCategoryLinkModel.Columns.CATEGORY_COMBO + ")"
+                    );
+
     private static final String CREATE_CATEGORY_TABLE =
             SQLStatementBuilder.createIdentifiableModelTable(CategoryModel.TABLE);
 
@@ -831,6 +847,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_DATA_SET_TABLE);
         database.execSQL(CREATE_CATEGORY_TABLE);
         database.execSQL(CREATE_CATEGORY_COMBO_TABLE);
+        database.execSQL(CREATE_CATEGORY_COMBO_CATEGORY_LINK_TABLE);
         return database;
     }
 
