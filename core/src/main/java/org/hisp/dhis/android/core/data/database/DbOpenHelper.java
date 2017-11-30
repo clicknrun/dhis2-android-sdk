@@ -35,10 +35,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.common.SQLStatementBuilder;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.constant.ConstantModel;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
+import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.enrollment.EnrollmentModel;
 import org.hisp.dhis.android.core.event.EventModel;
 import org.hisp.dhis.android.core.option.OptionModel;
@@ -752,6 +754,28 @@ public class DbOpenHelper extends SQLiteOpenHelper {
             ProgramStageSectionProgramIndicatorLinkModel.Columns.PROGRAM_INDICATOR + ")" +
             ");";
 
+    private static final String CREATE_DATA_SET_LINK_TABLE =
+            SQLStatementBuilder.createNameableModelTable(DataSetModel.TABLE,
+                    DataSetModel.Columns.PERIOD_TYPE + " TEXT," +
+                            DataSetModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
+                            DataSetModel.Columns.MOBILE + " INTEGER," +
+                            DataSetModel.Columns.VERSION + " INTEGER," +
+                            DataSetModel.Columns.EXPIRY_DAYS + " INTEGER," +
+                            DataSetModel.Columns.TIMELY_DAYS + " INTEGER," +
+                            DataSetModel.Columns.NOTIFY_COMPLETING_USER + " INTEGER," +
+                            DataSetModel.Columns.OPEN_FUTURE_PERIODS + " INTEGER," +
+                            DataSetModel.Columns.FIELD_COMBINATION_REQUIRED + " INTEGER," +
+                            DataSetModel.Columns.VALID_COMPLETE_ONLY + " INTEGER," +
+                            DataSetModel.Columns.NO_VALUE_REQUIRES_COMMENT + " INTEGER," +
+                            DataSetModel.Columns.SKIP_OFFLINE + " INTEGER," +
+                            DataSetModel.Columns.DATA_ELEMENT_DECORATION + " INTEGER," +
+                            DataSetModel.Columns.RENDER_AS_TABS + " INTEGER," +
+                            DataSetModel.Columns.RENDER_HORIZONTALLY + " INTEGER," +
+                            " FOREIGN KEY ( " + DataSetModel.Columns.CATEGORY_COMBO + ")" +
+                            " REFERENCES " + CategoryComboModel.TABLE + " (" + CategoryComboModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
+            );
+
     /**
      * This method should be used only for testing purposes
      */
@@ -797,6 +821,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_USER_ROLE_TABLE);
         database.execSQL(CREATE_USER_ROLE_PROGRAM_TABLE);
         database.execSQL(CREATE_PROGRAM_STAGE_SECTION_PROGRAM_INDICATOR_LINK_TABLE);
+        database.execSQL(CREATE_DATA_SET_LINK_TABLE);
         return database;
     }
 
