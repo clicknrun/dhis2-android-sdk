@@ -34,18 +34,21 @@ import org.hisp.dhis.android.core.common.ObjectStore;
 
 public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, CategoryComboModel> {
     private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
+    private final ObjectStore<CategoryComboCategoryOptionComboLinkModel> categoryComboCategoryOptionComboStore;
 
     private final CategoryHandler categoryHandler;
     private final CategoryOptionComboHandler categoryOptionComboHandler;
 
     private CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store,
                                  ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
+                                 ObjectStore<CategoryComboCategoryOptionComboLinkModel> categoryComboCategoryOptionComboStore,
                                  CategoryHandler categoryHandler,
                                  CategoryOptionComboHandler categoryOptionComboHandler) {
         super(store);
         this.categoryHandler = categoryHandler;
         this.categoryOptionComboHandler = categoryOptionComboHandler;
         this.categoryComboCategoryStore = categoryComboCategoryStore;
+        this.categoryComboCategoryOptionComboStore = categoryComboCategoryOptionComboStore;
     }
 
     @Override
@@ -65,6 +68,7 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
         return new CategoryComboHandler(
                 CategoryComboStoreFactory.create(databaseAdapter),
                 CategoryComboCategoryLinkStoreFactory.create(databaseAdapter),
+                CategoryComboCategoryOptionComboLinkStoreFactory.create(databaseAdapter),
                 new CategoryHandler(CategoryStoreFactory.create(databaseAdapter),
                         CategoryCategoryOptionLinkStoreFactory.create(databaseAdapter),
                         new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter))),
@@ -75,8 +79,18 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
         for (int i = 0; i < categoryCombo.categories().size(); i++) {
             Category category = categoryCombo.categories().get(i);
             this.categoryComboCategoryStore.insert(
-                    CategoryComboCategoryLinkModel.create(categoryCombo.uid(), category.uid(),
+                    CategoryComboCategoryLinkModel.create(
+                            categoryCombo.uid(),
+                            category.uid(),
                             i + 1));
+        }
+
+        for (int i = 0; i < categoryCombo.categoryOptionCombos().size(); i++) {
+            CategoryOptionCombo categoryOptionCombo = categoryCombo.categoryOptionCombos().get(i);
+            this.categoryComboCategoryOptionComboStore.insert(
+                    CategoryComboCategoryOptionComboLinkModel.create(
+                            categoryCombo.uid(),
+                            categoryOptionCombo.uid()));
         }
     }
 }
