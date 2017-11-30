@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import org.hisp.dhis.android.core.common.SQLStatementBuilder;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.constant.ConstantModel;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
@@ -251,31 +252,21 @@ public class DbOpenHelper extends SQLiteOpenHelper {
             TrackedEntityModel.Columns.DISPLAY_DESCRIPTION + " TEXT" +
             ");";
 
-    private static final String CREATE_DATA_ELEMENT_TABLE = "CREATE TABLE " + DataElementModel.TABLE + " (" +
-            DataElementModel.Columns.ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            DataElementModel.Columns.UID + " TEXT NOT NULL UNIQUE," +
-            DataElementModel.Columns.CODE + " TEXT," +
-            DataElementModel.Columns.NAME + " TEXT," +
-            DataElementModel.Columns.DISPLAY_NAME + " TEXT," +
-            DataElementModel.Columns.CREATED + " TEXT," +
-            DataElementModel.Columns.LAST_UPDATED + " TEXT," +
-            DataElementModel.Columns.SHORT_NAME + " TEXT," +
-            DataElementModel.Columns.DISPLAY_SHORT_NAME + " TEXT," +
-            DataElementModel.Columns.DESCRIPTION + " TEXT," +
-            DataElementModel.Columns.DISPLAY_DESCRIPTION + " TEXT," +
-            DataElementModel.Columns.VALUE_TYPE + " TEXT," +
-            DataElementModel.Columns.ZERO_IS_SIGNIFICANT + " INTEGER," +
-            DataElementModel.Columns.AGGREGATION_TYPE + " TEXT," +
-            DataElementModel.Columns.FORM_NAME + " TEXT," +
-            DataElementModel.Columns.NUMBER_TYPE + " TEXT," +
-            DataElementModel.Columns.DOMAIN_TYPE + " TEXT," +
-            DataElementModel.Columns.DIMENSION + " TEXT," +
-            DataElementModel.Columns.DISPLAY_FORM_NAME + " TEXT," +
-            DataElementModel.Columns.OPTION_SET + " TEXT," +
-            " FOREIGN KEY ( " + DataElementModel.Columns.OPTION_SET + ")" +
-            " REFERENCES " + OptionSetModel.TABLE + " (" + OptionSetModel.Columns.UID + ")" +
-            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED" +
-            ");";
+    private static final String CREATE_DATA_ELEMENT_TABLE =
+            SQLStatementBuilder.createNameableModelTable(DataElementModel.TABLE,
+                    DataElementModel.Columns.VALUE_TYPE + " TEXT," +
+                            DataElementModel.Columns.ZERO_IS_SIGNIFICANT + " INTEGER," +
+                            DataElementModel.Columns.AGGREGATION_TYPE + " TEXT," +
+                            DataElementModel.Columns.FORM_NAME + " TEXT," +
+                            DataElementModel.Columns.NUMBER_TYPE + " TEXT," +
+                            DataElementModel.Columns.DOMAIN_TYPE + " TEXT," +
+                            DataElementModel.Columns.DIMENSION + " TEXT," +
+                            DataElementModel.Columns.DISPLAY_FORM_NAME + " TEXT," +
+                            DataElementModel.Columns.OPTION_SET + " TEXT," +
+                            " FOREIGN KEY ( " + DataElementModel.Columns.OPTION_SET + ")" +
+                            " REFERENCES " + OptionSetModel.TABLE + " (" + OptionSetModel.Columns.UID + ")" +
+                            " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
+                    );
 
     private static final String CREATE_PROGRAM_STAGE_DATA_ELEMENT_TABLE = "CREATE TABLE " +
             ProgramStageDataElementModel.TABLE + " (" +

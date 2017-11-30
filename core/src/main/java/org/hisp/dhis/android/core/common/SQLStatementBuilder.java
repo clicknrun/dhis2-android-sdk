@@ -28,6 +28,8 @@
 
 package org.hisp.dhis.android.core.common;
 
+import org.hisp.dhis.android.core.utils.Utils;
+
 import java.util.Arrays;
 
 public class SQLStatementBuilder {
@@ -45,7 +47,7 @@ public class SQLStatementBuilder {
 
     private static String commaSeparatedArrayValues(String[] values) {
         String withBrackets = Arrays.toString(values);
-        return withBrackets.substring(1, withBrackets.length() -1);
+        return withBrackets.substring(1, withBrackets.length() - 1);
     }
 
     private String commaSeparatedInterrogationMarks() {
@@ -67,7 +69,7 @@ public class SQLStatementBuilder {
 
     public String insert() {
         return "INSERT INTO " + tableName + " (" + commaSeparatedColumns() + ") " +
-                "VALUES ( " + commaSeparatedInterrogationMarks()+ " )";
+                "VALUES ( " + commaSeparatedInterrogationMarks() + " )";
     }
 
     public String deleteById() {
@@ -77,5 +79,46 @@ public class SQLStatementBuilder {
 
     public String update() {
         return "UPDATE " + tableName + " SET " + commaSeparatedColumnEqualInterrogationMark() + ";";
+    }
+
+    private static String createTableWrapper(String tableName, String[] columnsWithAttributes) {
+        return "CREATE TABLE " + tableName + " (" +
+                commaSeparatedArrayValues(columnsWithAttributes) + ");";
+    }
+
+    private static String[] idColumn() {
+        return new String[]{BaseModel.Columns.ID + " INTEGER PRIMARY KEY AUTOINCREMENT"};
+    }
+
+    private static String[] identifiableColumns() {
+        return Utils.appendInNewArray(idColumn(),
+                BaseIdentifiableObjectModel.Columns.UID + " TEXT NOT NULL UNIQUE",
+                BaseIdentifiableObjectModel.Columns.CODE + " TEXT",
+                BaseIdentifiableObjectModel.Columns.NAME + " TEXT",
+                BaseIdentifiableObjectModel.Columns.DISPLAY_NAME + " TEXT",
+                BaseIdentifiableObjectModel.Columns.CREATED + " TEXT",
+                BaseIdentifiableObjectModel.Columns.LAST_UPDATED + " TEXT"
+        );
+    }
+
+    private static String[] nameableColumns() {
+        return Utils.appendInNewArray(identifiableColumns(),
+                BaseNameableObjectModel.Columns.SHORT_NAME + " TEXT",
+                BaseNameableObjectModel.Columns.DISPLAY_SHORT_NAME + " TEXT",
+                BaseNameableObjectModel.Columns.DESCRIPTION + " TEXT",
+                BaseNameableObjectModel.Columns.DISPLAY_DESCRIPTION + " TEXT"
+        );
+    }
+
+    public static String createModelTable(String tableName, String... columnsWithAttributes) {
+        return createTableWrapper(tableName, Utils.appendInNewArray(idColumn(), columnsWithAttributes));
+    }
+
+    public static String createIdentifiableModelTable(String tableName, String... columnsWithAttributes) {
+        return createTableWrapper(tableName, Utils.appendInNewArray(identifiableColumns(), columnsWithAttributes));
+    }
+
+    public static String createNameableModelTable(String tableName, String... columnsWithAttributes) {
+        return createTableWrapper(tableName, Utils.appendInNewArray(nameableColumns(), columnsWithAttributes));
     }
 }
