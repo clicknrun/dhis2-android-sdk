@@ -65,7 +65,6 @@ public class ProgramCall implements Call<Response<Payload<Program>>> {
     private final Date serverDate;
 
     private final ProgramHandler programHandler;
-    private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
 
     public ProgramCall(ProgramService programService,
                        DatabaseAdapter databaseAdapter,
@@ -90,7 +89,6 @@ public class ProgramCall implements Call<Response<Payload<Program>>> {
         this.resourceStore = resourceStore;
         this.uids = uids;
         this.serverDate = new Date(serverDate.getTime());
-        this.dataElementHandler = dataElementHandler;
 
         //TODO: make this an argument to the constructor:
 

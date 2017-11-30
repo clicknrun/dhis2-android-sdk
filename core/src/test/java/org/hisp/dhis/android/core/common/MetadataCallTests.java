@@ -30,17 +30,20 @@ package org.hisp.dhis.android.core.common;
 import org.hisp.dhis.android.core.calls.MetadataCall;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.category.CategoryComboService;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
+import org.hisp.dhis.android.core.dataelement.DataElement;
+import org.hisp.dhis.android.core.dataelement.DataElementModel;
+import org.hisp.dhis.android.core.dataelement.DataElementService;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.option.OptionSet;
+import org.hisp.dhis.android.core.option.OptionSetModel;
 import org.hisp.dhis.android.core.option.OptionSetService;
-import org.hisp.dhis.android.core.option.OptionSetStoreFactory;
-import org.hisp.dhis.android.core.option.OptionStore;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnit;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitProgramLinkStore;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitService;
@@ -190,15 +193,6 @@ public class MetadataCallTests {
     private ProgramRuleStore programRuleStore;
 
     @Mock
-    private OptionStore optionStore;
-
-    @Mock
-    private OptionSetStoreFactory optionSetStore;
-
-    @Mock
-    private DataElementStore dataElementStore;
-
-    @Mock
     private ProgramStageDataElementStore programStageDataElementStore;
 
     @Mock
@@ -217,10 +211,10 @@ public class MetadataCallTests {
     private OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
 
     @Mock
-    GenericHandler<DataSet, DataSetModel> dataSetHandler;
+    private GenericHandler<DataSet, DataSetModel> dataSetHandler;
 
     @Mock
-    GenericHandler<CategoryCombo, CategoryComboModel>  categoryComboHandler;
+    private GenericHandler<CategoryCombo, CategoryComboModel>  categoryComboHandler;
 
     @Mock
     private UserService userService;
@@ -239,6 +233,12 @@ public class MetadataCallTests {
 
     @Mock
     private DataSetService dataSetService;
+
+    @Mock
+    private DataElementService dataElementService;
+
+    @Mock
+    private CategoryComboService categoryComboService;
 
     @Mock
     private Date serverDateTime;
@@ -283,6 +283,12 @@ public class MetadataCallTests {
 
     @Mock
     private CategoryCombo categoryCombo;
+
+    @Mock
+    private GenericHandler<DataElement, DataElementModel> dataElementHandler;
+
+    @Mock
+    private GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
 
 
     // object to test
@@ -338,14 +344,16 @@ public class MetadataCallTests {
         metadataCall = new MetadataCall(
                 databaseAdapter, systemInfoService, userService,
                 programService, organisationUnitService, trackedEntityService, optionSetService,
-                dataSetService, systemInfoStore, resourceStore, userStore,
+                dataSetService, dataElementService, categoryComboService, systemInfoStore, resourceStore,
+                userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
-                optionStore, optionSetStore, dataElementStore, programStageDataElementStore,
+                programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
-                organisationUnitProgramLinkStore, dataSetHandler, categoryComboHandler);
+                organisationUnitProgramLinkStore, dataSetHandler, optionSetHandler, dataElementHandler,
+                categoryComboHandler);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);
 

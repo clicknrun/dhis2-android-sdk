@@ -105,7 +105,7 @@ public class ProgramStageDataElementHandlerTests {
                 anyString(), anyString(), anyString());
 
         // verify that data element handler is never invoked
-        verify(dataElementHandler, never()).handleDataElement(any(DataElement.class));
+        verify(dataElementHandler, never()).handle(any(DataElement.class));
     }
 
     @Test
@@ -130,7 +130,7 @@ public class ProgramStageDataElementHandlerTests {
         );
 
         // verify that data element handler is invoked once
-        verify(dataElementHandler, times(1)).handleDataElement(any(DataElement.class));
+        verify(dataElementHandler, times(1)).handle(any(DataElement.class));
     }
 
     @Test
@@ -156,7 +156,7 @@ public class ProgramStageDataElementHandlerTests {
         verify(programStageDataElementStore, never()).delete(anyString());
 
         // verify that data element handler is called once
-        verify(dataElementHandler, times(1)).handleDataElement(any(DataElement.class));
+        verify(dataElementHandler, times(1)).handle(any(DataElement.class));
     }
 
     @Test
@@ -182,6 +182,6 @@ public class ProgramStageDataElementHandlerTests {
         verify(programStageDataElementStore, never()).delete(anyString());
 
         // verify that data element handler is never called
-        verify(dataElementHandler, times(1)).handleDataElement(any(DataElement.class));
+        verify(dataElementHandler, times(1)).handle(any(DataElement.class));
     }
 }

@@ -30,12 +30,14 @@ package org.hisp.dhis.android.core.program;
 import android.database.Cursor;
 
 import org.hisp.dhis.android.core.calls.Call;
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
+import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetStoreFactory;
 import org.hisp.dhis.android.core.option.OptionStore;
@@ -122,9 +124,6 @@ public class ProgramCallTests {
     private OptionSetStoreFactory optionSetStore;
 
     @Mock
-    private DataElementStore dataElementStore;
-
-    @Mock
     private ProgramStageDataElementStore programStageDataElementStore;
 
     @Mock
@@ -169,6 +168,9 @@ public class ProgramCallTests {
     @Mock
     private Date serverDate;
 
+    @Mock
+    private GenericHandler<DataElement, DataElementModel> dataElementHandler;
+
     private Set<String> uids;
 
     // the call we are testing
@@ -188,8 +190,8 @@ public class ProgramCallTests {
                 resourceStore, uids, programStore, serverDate, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
-                optionStore, optionSetStore, dataElementStore, programStageDataElementStore,
-                programStageSectionStore, programStageStore, relationshipStore
+                programStageDataElementStore, programStageSectionStore, programStageStore,
+                relationshipStore, dataElementHandler
         );
 
         when(program.uid()).thenReturn("test_program_uid");

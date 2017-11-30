@@ -27,7 +27,7 @@
  */
 package org.hisp.dhis.android.core.dataelement;
 
-import org.hisp.dhis.android.core.common.ValueType;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetHandler;
 import org.junit.Before;
@@ -37,10 +37,7 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Date;
-
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -51,7 +48,7 @@ import static org.mockito.Mockito.when;
 public class DataElementHandlerTests {
 
     @Mock
-    private DataElementStore dataElementStore;
+    private IdentifiableObjectStore<DataElementModel> dataElementStore;
 
     @Mock
     private OptionSetHandler optionSetHandler;
@@ -71,106 +68,64 @@ public class DataElementHandlerTests {
         dataElementHandler = new DataElementHandler(dataElementStore, optionSetHandler);
         when(dataElement.uid()).thenReturn("test_data_element_uid");
         when(dataElement.optionSet()).thenReturn(optionSet);
+        when(dataElementStore.update(any(DataElementModel.class))).thenReturn(1);
     }
 
     @Test
     public void doNothing_shouldDoNothingWhenPassingInNull() throws Exception {
-        dataElementHandler.handleDataElement(null);
+        dataElementHandler.handle(null);
 
-        // verify that delete, update and insert is never called
         verify(dataElementStore, never()).delete(anyString());
-
-        verify(dataElementStore, never()).update(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString(), anyString());
-
-        verify(dataElementStore, never()).insert(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString());
-
-        // verify that option set handler is never called
-        verify(optionSetHandler, never()).handleOptionSet(any(OptionSet.class));
+        verify(dataElementStore, never()).update(any(DataElementModel.class));
+        verify(dataElementStore, never()).insert(any(DataElementModel.class));
+        verify(optionSetHandler, never()).handle(any(OptionSet.class));
     }
 
     @Test
     public void delete_shouldDeleteDataElement() throws Exception {
         when(dataElement.deleted()).thenReturn(Boolean.TRUE);
 
-        dataElementHandler.handleDataElement(dataElement);
+        dataElementHandler.handle(dataElement);
 
         // verify that delete is called once
         verify(dataElementStore, times(1)).delete(dataElement.uid());
 
-
         // verify that update and insert is never called
-        verify(dataElementStore, never()).update(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString(), anyString());
-
-        verify(dataElementStore, never()).insert(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString());
+        verify(dataElementStore, never()).update(any(DataElementModel.class));
+        verify(dataElementStore, never()).insert(any(DataElementModel.class));
 
         // verify that option set handler is called once
-        verify(optionSetHandler, times(1)).handleOptionSet(any(OptionSet.class));
+        verify(optionSetHandler, times(1)).handle(any(OptionSet.class));
     }
 
     @Test
     public void update_shouldUpdateDataElement() throws Exception {
-        when(dataElementStore.update(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString(), anyString())).thenReturn(1);
+        dataElementHandler.handle(dataElement);
 
-        dataElementHandler.handleDataElement(dataElement);
-
-        verify(dataElementStore, times(1)).update(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString(), anyString());
+        verify(dataElementStore, times(1)).update(any(DataElementModel.class));
 
         // verify that delete or insert is never called
         verify(dataElementStore, never()).delete(anyString());
-
-        verify(dataElementStore, never()).insert(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString());
+        verify(dataElementStore, never()).insert(any(DataElementModel.class));
 
         // verify that option set handler is called once
-        verify(optionSetHandler, times(1)).handleOptionSet(any(OptionSet.class));
-
+        verify(optionSetHandler, times(1)).handle(any(OptionSet.class));
     }
 
     @Test
     public void insert_shouldInsertDataElement() throws Exception {
-        when(dataElementStore.update(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString(), anyString())).thenReturn(0);
-
-        dataElementHandler.handleDataElement(dataElement);
+        dataElementHandler.handle(dataElement);
 
         // verify that insert is called once
-        verify(dataElementStore, times(1)).insert(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString());
+        verify(dataElementStore, times(1)).insert(any(DataElementModel.class));
 
         // verify that update is called once since we update before we insert
-        verify(dataElementStore, times(1)).update(anyString(), anyString(), anyString(), anyString(),
-                any(Date.class), any(Date.class), anyString(), anyString(), anyString(), anyString(),
-                any(ValueType.class), anyBoolean(), anyString(), anyString(), anyString(), anyString(),
-                anyString(), anyString(), anyString(), anyString());
+        verify(dataElementStore, times(1)).update(any(DataElementModel.class));
 
         // verify that delete is never called
         verify(dataElementStore, never()).delete(anyString());
 
         // verify that option set handler is called once
-        verify(optionSetHandler, times(1)).handleOptionSet(any(OptionSet.class));
+        verify(optionSetHandler, times(1)).handle(any(OptionSet.class));
     }
 }

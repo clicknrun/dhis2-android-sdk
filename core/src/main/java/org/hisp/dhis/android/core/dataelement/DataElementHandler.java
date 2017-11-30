@@ -32,13 +32,10 @@ import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.option.OptionSetHandler;
 
-
 public class DataElementHandler extends GenericHandlerImpl<DataElement, DataElementModel> {
-
     private final OptionSetHandler optionSetHandler;
 
-
-    private DataElementHandler(IdentifiableObjectStore<DataElementModel> dataSetStore,
+    DataElementHandler(IdentifiableObjectStore<DataElementModel> dataSetStore,
                                OptionSetHandler optionSetHandler) {
         super(dataSetStore);
         this.optionSetHandler = optionSetHandler;
