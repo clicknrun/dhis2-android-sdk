@@ -36,6 +36,8 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
+import org.hisp.dhis.android.core.data.api.Fields;
+import org.hisp.dhis.android.core.data.api.NestedField;
 
 import java.util.Date;
 import java.util.List;
@@ -54,7 +56,11 @@ public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
     public static final Field<CategoryOptionCombo, Boolean> deleted = Field.create(DELETED);
 
     public static final Field<CategoryOptionCombo, Boolean> ignoreApproval = Field.create(IGNORE_APPROVAL);
-    public static final Field<Category, List<CategoryOption>> categoryOptions = Field.create(CATEGORY_OPTIONS);
+    public static final NestedField<CategoryOptionCombo, CategoryOption> categoryOptions = NestedField.create(CATEGORY_OPTIONS);
+
+    public static final Fields<CategoryOptionCombo> allFields = Fields.<CategoryOptionCombo>builder().fields(
+            uid, code, name, displayName, created, lastUpdated, deleted, ignoreApproval,
+            categoryOptions.with(CategoryOption.allFields)).build();
 
     @Nullable
     @JsonProperty(IGNORE_APPROVAL)

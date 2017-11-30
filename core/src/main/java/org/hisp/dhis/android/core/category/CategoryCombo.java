@@ -36,6 +36,8 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
+import org.hisp.dhis.android.core.data.api.Fields;
+import org.hisp.dhis.android.core.data.api.NestedField;
 
 import java.util.Date;
 import java.util.List;
@@ -53,9 +55,14 @@ public abstract class CategoryCombo extends BaseIdentifiableObject {
     public static final Field<CategoryCombo, String> lastUpdated = Field.create(LAST_UPDATED);
     public static final Field<CategoryCombo, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<CategoryCombo, List<Category>> categories = Field.create(CATEGORIES);
-    public static final Field<CategoryCombo, List<CategoryOptionCombo>> categoryOptionCombos =
-            Field.create(CATEGORY_OPTION_COMBO);
+    public static final NestedField<CategoryCombo, Category> categories = NestedField.create(CATEGORIES);
+    public static final NestedField<CategoryCombo, CategoryOptionCombo> categoryOptionCombos =
+            NestedField.create(CATEGORY_OPTION_COMBO);
+
+    public static final Fields<CategoryCombo> allFields = Fields.<CategoryCombo>builder().fields(
+            uid, code, name, displayName, created, lastUpdated, deleted,
+            categories.with(Category.allFields),
+            categoryOptionCombos.with(CategoryOptionCombo.allFields)).build();
 
     @Nullable
     @JsonProperty(CATEGORIES)

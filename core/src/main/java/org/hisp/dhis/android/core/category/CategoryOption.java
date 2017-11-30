@@ -36,6 +36,7 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.data.api.Field;
+import org.hisp.dhis.android.core.data.api.Fields;
 
 import java.util.Date;
 import java.util.List;
@@ -45,7 +46,6 @@ public abstract class CategoryOption extends BaseIdentifiableObject {
     private static final String SHORT_NAME = "shortName";
     private static final String DISPLAY_SHORT_NAME = "displayShortName";
 
-    private static final String CATEGORY_OPTION_COMBOS = "categoryOptionCombos";
     private static final String START_DATE = "startDate";
     private static final String END_DATE = "endDate";
 
@@ -59,9 +59,12 @@ public abstract class CategoryOption extends BaseIdentifiableObject {
     public static final Field<CategoryOption, String> displayShortName = Field.create(DISPLAY_SHORT_NAME);
     public static final Field<CategoryOption, Boolean> deleted = Field.create(DELETED);
 
-    public static final Field<CategoryOption, List<CategoryOptionCombo>> categoryOptionCombos = Field.create(CATEGORY_OPTION_COMBOS);
     public static final Field<CategoryOption, Date> startDate = Field.create(START_DATE);
     public static final Field<CategoryOption, Date> endDate = Field.create(END_DATE);
+
+    public static final Fields<CategoryOption> allFields = Fields.<CategoryOption>builder().fields(
+            uid, code, name, displayName, created, lastUpdated, shortName, displayShortName, deleted,
+            startDate, endDate).build();
 
     @Nullable
     @JsonProperty(SHORT_NAME)
@@ -70,10 +73,6 @@ public abstract class CategoryOption extends BaseIdentifiableObject {
     @Nullable
     @JsonProperty(DISPLAY_SHORT_NAME)
     public abstract String displayShortName();
-
-    @Nullable
-    @JsonProperty(CATEGORY_OPTION_COMBOS)
-    public abstract List<CategoryOptionCombo> categoryOptionCombos();
 
     @Nullable
     @JsonProperty(START_DATE)
@@ -94,15 +93,13 @@ public abstract class CategoryOption extends BaseIdentifiableObject {
             @JsonProperty(SHORT_NAME) String shortName,
             @JsonProperty(DISPLAY_SHORT_NAME) String displayShortName,
 
-            @JsonProperty(CATEGORY_OPTION_COMBOS) List<CategoryOptionCombo> categoryOptionCombos,
             @JsonProperty(START_DATE) Date startDate,
             @JsonProperty(END_DATE) Date endDate,
             @JsonProperty(DELETED) Boolean deleted) {
 
         return new AutoValue_CategoryOption(uid, code, name,
                 displayName, created, lastUpdated, deleted,
-                shortName, displayShortName, categoryOptionCombos,
+                shortName, displayShortName,
                 startDate, endDate);
-
     }
 }

@@ -51,14 +51,7 @@ public class CategoryComboCall extends GenericCallImpl<CategoryCombo> {
     @Override
     protected retrofit2.Call<Payload<CategoryCombo>> getCall(Set<String> uids, String lastUpdated)
             throws IOException {
-        return categoryComboService.getCategoryCombos(getFields(),
+        return categoryComboService.getCategoryCombos(CategoryCombo.allFields,
                 CategoryCombo.lastUpdated.gt(lastUpdated), CategoryCombo.uid.in(uids), Boolean.FALSE);
-    }
-
-    // TODO insert and nest all fields
-    private Fields<CategoryCombo> getFields() {
-        return Fields.<CategoryCombo>builder().fields(
-                CategoryCombo.uid
-        ).build();
     }
 }

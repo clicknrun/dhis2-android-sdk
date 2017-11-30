@@ -51,6 +51,7 @@ public class DataElementHandler extends GenericHandlerImpl<DataElement, DataElem
         return new DataElementHandler(DataElementStoreFactory.create(databaseAdapter), optionSetHandler);
     }
 
+    @Override
     protected void afterObjectPersisted(DataElement dateElement) {
         optionSetHandler.handle(dateElement.optionSet());
     }
