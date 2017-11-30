@@ -57,6 +57,7 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
         this.categoryHandler.handleMany(categoryCombo.categories());
         this.categoryOptionComboHandler.handleMany(categoryCombo.categoryOptionCombos());
         saveCategoryComboCategoryLinks(categoryCombo);
+        saveCategoryComboCategoryOptionComboLinks(categoryCombo);
     }
 
     @Override
@@ -84,7 +85,9 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
                             category.uid(),
                             i + 1));
         }
+    }
 
+    private void saveCategoryComboCategoryOptionComboLinks(CategoryCombo categoryCombo) {
         for (int i = 0; i < categoryCombo.categoryOptionCombos().size(); i++) {
             CategoryOptionCombo categoryOptionCombo = categoryCombo.categoryOptionCombos().get(i);
             this.categoryComboCategoryOptionComboStore.insert(
