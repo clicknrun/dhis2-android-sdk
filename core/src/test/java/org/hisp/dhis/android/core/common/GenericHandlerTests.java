@@ -36,9 +36,12 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -58,6 +61,9 @@ public class GenericHandlerTests {
     @Mock
     private DataElement pojo;
 
+    @Mock
+    private DataElement pojo2;
+
     private GenericHandler<DataElement, DataElementModel> genericHandler;
 
     @Before
@@ -65,6 +71,7 @@ public class GenericHandlerTests {
         MockitoAnnotations.initMocks(this);
 
         when(pojo.uid()).thenReturn("test_data_element_uid");
+        when(pojo2.uid()).thenReturn("another_pojo_uid");
 
         genericHandler = new GenericHandlerImpl<DataElement, DataElementModel>(store) {
             @Override
@@ -119,5 +126,18 @@ public class GenericHandlerTests {
     public void handle_shouldCallAfterObjectPersisted() throws Exception {
         genericHandler.handle(pojo);
         verify(testCall).call(pojo);
+    }
+
+    @Test
+    public void handleMany_shouldCallNTimesTheStoreAndNTimesAfterObjectPersisted() throws Exception {
+        genericHandler.handleMany(Arrays.asList(pojo, pojo2));
+
+        verify(store, times(2)).updateOrInsert(any(DataElementModel.class));
+        verify(store, never()).update(any(DataElementModel.class));
+        verify(store, never()).insert(any(DataElementModel.class));
+        verify(store, never()).delete(anyString());
+
+        verify(testCall).call(pojo);
+        verify(testCall).call(pojo2);
     }
 }
