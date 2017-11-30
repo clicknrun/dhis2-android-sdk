@@ -36,6 +36,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
 import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.category.CategoryModel;
 import org.hisp.dhis.android.core.common.SQLStatementBuilder;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.constant.ConstantModel;
@@ -754,7 +755,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
             ProgramStageSectionProgramIndicatorLinkModel.Columns.PROGRAM_INDICATOR + ")" +
             ");";
 
-    private static final String CREATE_DATA_SET_LINK_TABLE =
+    private static final String CREATE_DATA_SET_TABLE =
             SQLStatementBuilder.createNameableModelTable(DataSetModel.TABLE,
                     DataSetModel.Columns.PERIOD_TYPE + " TEXT," +
                             DataSetModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
@@ -775,6 +776,9 @@ public class DbOpenHelper extends SQLiteOpenHelper {
                             " REFERENCES " + CategoryComboModel.TABLE + " (" + CategoryComboModel.Columns.UID + ")" +
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
             );
+
+    private static final String CREATE_CATEGORY_TABLE =
+            SQLStatementBuilder.createIdentifiableModelTable(CategoryModel.TABLE);
 
     /**
      * This method should be used only for testing purposes
@@ -821,7 +825,8 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_USER_ROLE_TABLE);
         database.execSQL(CREATE_USER_ROLE_PROGRAM_TABLE);
         database.execSQL(CREATE_PROGRAM_STAGE_SECTION_PROGRAM_INDICATOR_LINK_TABLE);
-        database.execSQL(CREATE_DATA_SET_LINK_TABLE);
+        database.execSQL(CREATE_DATA_SET_TABLE);
+        database.execSQL(CREATE_CATEGORY_TABLE);
         return database;
     }
 
