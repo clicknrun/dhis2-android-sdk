@@ -27,8 +27,9 @@
  */
 package org.hisp.dhis.android.core.program;
 
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.dataelement.DataElement;
-import org.hisp.dhis.android.core.dataelement.DataElementHandler;
+import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,7 +56,7 @@ public class ProgramStageDataElementHandlerTests {
     private ProgramStageDataElementStore programStageDataElementStore;
 
     @Mock
-    private DataElementHandler dataElementHandler;
+    private GenericHandler<DataElement, DataElementModel> dataElementHandler;
 
     @Mock
     private ProgramStageDataElement programStageDataElement;

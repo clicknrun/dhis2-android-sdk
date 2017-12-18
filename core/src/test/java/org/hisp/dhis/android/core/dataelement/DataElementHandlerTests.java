@@ -27,9 +27,11 @@
  */
 package org.hisp.dhis.android.core.dataelement;
 
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetHandler;
+import org.hisp.dhis.android.core.option.OptionSetModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +50,7 @@ public class DataElementHandlerTests {
     private IdentifiableObjectStore<DataElementModel> dataElementStore;
 
     @Mock
-    private OptionSetHandler optionSetHandler;
+    private GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
 
     @Mock
     private DataElement dataElement;
@@ -62,6 +64,7 @@ public class DataElementHandlerTests {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        System.out.println(dataElementStore);
         dataElementHandler = new DataElementHandler(dataElementStore, optionSetHandler);
         when(dataElement.uid()).thenReturn("test_data_element_uid");
         when(dataElement.optionSet()).thenReturn(optionSet);

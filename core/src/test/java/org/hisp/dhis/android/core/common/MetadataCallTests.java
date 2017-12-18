@@ -138,6 +138,12 @@ public class MetadataCallTests {
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private retrofit2.Call<Payload<DataSet>> dataSetCall;
 
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private retrofit2.Call<Payload<DataElement>> dataElementCall;
+
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private retrofit2.Call<Payload<CategoryCombo>> categoryComboCall;
+
     @Mock
     private SystemInfo systemInfo;
 
@@ -217,6 +223,12 @@ public class MetadataCallTests {
     private GenericHandler<CategoryCombo, CategoryComboModel>  categoryComboHandler;
 
     @Mock
+    private GenericHandler<DataElement, DataElementModel> dataElementHandler;
+
+    @Mock
+    private GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
+
+    @Mock
     private UserService userService;
 
     @Mock
@@ -270,6 +282,12 @@ public class MetadataCallTests {
     private Payload<DataSet> dataSetPayload;
 
     @Mock
+    private Payload<CategoryCombo> categoryComboPayload;
+
+    @Mock
+    private Payload<DataElement> dataElementPayload;
+
+    @Mock
     private OptionSet optionSet;
 
     @Mock
@@ -283,13 +301,6 @@ public class MetadataCallTests {
 
     @Mock
     private CategoryCombo categoryCombo;
-
-    @Mock
-    private GenericHandler<DataElement, DataElementModel> dataElementHandler;
-
-    @Mock
-    private GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
-
 
     // object to test
     private MetadataCall metadataCall;
@@ -322,7 +333,13 @@ public class MetadataCallTests {
         ).thenReturn(optionSetCall);
         when(dataSetService.getDataSets(
                 any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
-        .thenReturn(dataSetCall);
+                .thenReturn(dataSetCall);
+        when(dataElementService.getDataElements(
+                any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
+                .thenReturn(dataElementCall);
+        when(categoryComboService.getCategoryCombos(
+                any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
+                .thenReturn(categoryComboCall);
 
         when(systemInfo.serverDate()).thenReturn(serverDateTime);
         when(userCredentials.userRoles()).thenReturn(userRoles);
@@ -364,13 +381,15 @@ public class MetadataCallTests {
         when(trackedEntityCall.execute()).thenReturn(Response.success(trackedEntityPayload));
         when(optionSetCall.execute()).thenReturn(Response.success(optionSetPayload));
         when(dataSetCall.execute()).thenReturn(Response.success(dataSetPayload));
+        when(dataElementCall.execute()).thenReturn(Response.success(dataElementPayload));
+        when(categoryComboCall.execute()).thenReturn(Response.success(categoryComboPayload));
     }
 
     @Test
     public void call_shouldExecuteCalls() throws Exception {
         Response response = metadataCall.call();
         // assert that last successful response is returned
-        assertThat(response.body()).isEqualTo(dataSetPayload);
+        assertThat(response.body()).isEqualTo(categoryComboPayload);
     }
 
     @Test

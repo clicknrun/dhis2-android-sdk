@@ -53,7 +53,6 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
 
     @Override
     protected void afterObjectPersisted(CategoryCombo categoryCombo) {
-        // TODO handle children
         this.categoryHandler.handleMany(categoryCombo.categories());
         this.categoryOptionComboHandler.handleMany(categoryCombo.categoryOptionCombos());
         saveCategoryComboCategoryLinks(categoryCombo);
