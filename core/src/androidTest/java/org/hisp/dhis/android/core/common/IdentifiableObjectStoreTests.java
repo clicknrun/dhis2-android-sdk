@@ -32,10 +32,10 @@ import android.database.Cursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
+import org.hisp.dhis.android.core.option.OptionSetModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 
 import java.io.IOException;
 import java.util.Date;
@@ -46,47 +46,42 @@ import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCu
 @RunWith(AndroidJUnit4.class)
 public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
 
-    private IdentifiableObjectStore<MockModel> store;
+    private IdentifiableObjectStore<OptionSetModel> store;
 
-    private MockModel model;
-
-    @Mock
-    private SQLStatementWrapper statements;
-
-    @Mock
-    private SQLStatementBuilder builder;
+    private OptionSetModel model;
 
     @Override
     @Before
     public void setUp() throws IOException {
         super.setUp();
-        this.store = new IdentifiableObjectStoreImpl<MockModel>(databaseAdapter(),
-                statements, builder){
 
-        };
-
-        this.model = MockModel.builder()
+        this.model = OptionSetModel.builder()
                 .uid("uid")
                 .code("code")
                 .name("name")
                 .displayName("displayName")
                 .created(new Date())
                 .lastUpdated(new Date())
-                .shortName("shortName")
-                .displayShortName("displayShortName")
-                .description("description")
-                .displayDescription("displayDescription")
-                .value1(true)
-                .value2("value2")
+                .version(1)
+                .valueType(ValueType.AGE)
                 .build();
+
+        String[] OPTION_SET_PROJECTION = {
+                OptionSetModel.Columns.UID, OptionSetModel.Columns.CODE, OptionSetModel.Columns.NAME,
+                OptionSetModel.Columns.DISPLAY_NAME, OptionSetModel.Columns.CREATED,
+                OptionSetModel.Columns.LAST_UPDATED, OptionSetModel.Columns.VERSION, OptionSetModel.Columns.VALUE_TYPE
+        };
+
+        this.store = StoreFactory.identifiableStore(databaseAdapter(),
+                OptionSetModel.TABLE, OPTION_SET_PROJECTION);
     }
 
     @Test
-    public void insert_shouldPersistDataElementInDatabase() {
+    public void insert_shouldPersistModelInDatabase() {
 
         long rowId = store.insert(model);
 
-        Cursor cursor = database().query(MockModel.TABLE, MockModel.Columns.all(),
+        Cursor cursor = database().query(OptionSetModel.TABLE, OptionSetModel.Columns.all(),
                 null, null, null, null, null);
         // Checking if rowId == 1.
         // If it is 1, then it means it is first successful insert into db
@@ -99,12 +94,8 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
                 model.displayName(),
                 model.created(),
                 model.lastUpdated(),
-                model.shortName(),
-                model.displayShortName(),
-                model.description(),
-                model.displayDescription(),
-                model.value1(),
-                model.value2()
+                model.version(),
+                model.valueType()
         ).isExhausted();
     }
 /*
