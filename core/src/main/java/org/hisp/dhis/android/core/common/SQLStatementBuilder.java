@@ -61,7 +61,7 @@ public class SQLStatementBuilder {
     private String commaSeparatedColumnEqualInterrogationMark() {
         String[] array = new String[columns.length];
         for (int i = 0; i < columns.length; i++) {
-            array[i] = columns[i] = "=?";
+            array[i] = columns[i] + "=?";
         }
         return commaSeparatedArrayValues(array);
     }

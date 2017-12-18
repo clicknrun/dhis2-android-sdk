@@ -37,6 +37,18 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class SQLStatementBuilderTests {
 
     @Test
+    public void update_shouldGenerateUpdateTableStatement() throws Exception {
+        SQLStatementBuilder builder = new SQLStatementBuilder("Test_Table", new String[]{
+                "Test_Column_Name1",
+                "Test_Column_Name2"
+        });
+
+        assertThat(builder.update()).isEqualTo(
+                "UPDATE Test_Table SET Test_Column_Name1=?, Test_Column_Name2=?;"
+        );
+    }
+
+    @Test
     public void createModelTable_shouldGenerateCreateTableStatement() throws Exception {
         String statement = SQLStatementBuilder.createModelTable("Test_Table",
                 "Test_Column_Name TEXT");
