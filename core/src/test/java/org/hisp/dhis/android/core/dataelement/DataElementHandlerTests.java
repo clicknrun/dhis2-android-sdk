@@ -64,7 +64,6 @@ public class DataElementHandlerTests {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        System.out.println(dataElementStore);
         dataElementHandler = new DataElementHandler(dataElementStore, optionSetHandler);
         when(dataElement.uid()).thenReturn("test_data_element_uid");
         when(dataElement.optionSet()).thenReturn(optionSet);

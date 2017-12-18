@@ -31,6 +31,9 @@ package org.hisp.dhis.android.core.category;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CategoryMocks {
     public static CategoryOptionCombo getCategoryOptionCombo() throws ParseException {
@@ -39,6 +42,17 @@ public class CategoryMocks {
                 "CARE International, Provide access to primary health care",
                 BaseIdentifiableObject.parseDate("2013-12-20T22:17:20.428"),
                 BaseIdentifiableObject.parseDate("2013-12-20T22:17:20.428"),
-                false, null,null);
+                false, getCategoryOptions(),null);
+    }
+
+    public static List<CategoryOption> getCategoryOptions() throws ParseException {
+        return new ArrayList<>(Arrays.asList(new CategoryOption[] {
+                CategoryOption.create("OUUdG3sdOqb", null, null, null,
+                        null, null, null, null,
+                        null, null, null),
+                CategoryOption.create("RkbOhHwiOgW", null, null, null,
+                        null, null, null, null,
+                        null, null, null)
+        }));
     }
 }
