@@ -38,7 +38,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface CategoryComboService {
-    @GET("categoryCombo")
+    @GET("categoryCombos")
     Call<Payload<CategoryCombo>> getCategoryCombos(@Query("fields") @Which Fields<CategoryCombo> fields,
                                              @Query("filter") @Where Filter<CategoryCombo, String> lastUpdated,
                                              @Query("filter") @Where Filter<CategoryCombo, String> uids,
