@@ -69,12 +69,12 @@ public class SQLStatementBuilder {
 
     public String insert() {
         return "INSERT INTO " + tableName + " (" + commaSeparatedColumns() + ") " +
-                "VALUES ( " + commaSeparatedInterrogationMarks() + " )";
+                "VALUES (" + commaSeparatedInterrogationMarks() + ");";
     }
 
     public String deleteById() {
         return "DELETE FROM " + tableName +
-                " WHERE " + BaseIdentifiableObjectModel.Columns.UID + " =?;";
+                " WHERE " + BaseIdentifiableObjectModel.Columns.UID + "=?;";
     }
 
     public String update() {

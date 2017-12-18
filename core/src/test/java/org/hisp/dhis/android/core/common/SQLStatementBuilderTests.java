@@ -27,24 +27,46 @@
  */
 package org.hisp.dhis.android.core.common;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(JUnit4.class)
 public class SQLStatementBuilderTests {
 
-    @Test
-    public void update_shouldGenerateUpdateTableStatement() throws Exception {
-        SQLStatementBuilder builder = new SQLStatementBuilder("Test_Table", new String[]{
+    private SQLStatementBuilder builder;
+
+    @Before
+    public void setUp() throws IOException {
+        this.builder = new SQLStatementBuilder("Test_Table", new String[]{
                 "Test_Column_Name1",
                 "Test_Column_Name2"
         });
+    }
 
+    @Test
+    public void insert_shouldGenerateInsertTableStatement() throws Exception {
+        assertThat(builder.insert()).isEqualTo(
+                "INSERT INTO Test_Table (Test_Column_Name1, Test_Column_Name2) VALUES (?, ?);"
+        );
+    }
+
+    @Test
+    public void update_shouldGenerateUpdateTableStatement() throws Exception {
         assertThat(builder.update()).isEqualTo(
                 "UPDATE Test_Table SET Test_Column_Name1=?, Test_Column_Name2=?;"
+        );
+    }
+
+    @Test
+    public void delete_shouldGenerateDeleteTableStatement() throws Exception {
+        assertThat(builder.deleteById()).isEqualTo(
+                "DELETE FROM Test_Table WHERE uid=?;"
         );
     }
 
