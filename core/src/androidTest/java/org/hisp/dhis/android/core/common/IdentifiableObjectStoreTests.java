@@ -56,7 +56,7 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
         super.setUp();
 
         this.model = OptionSetModel.builder()
-                .uid("uid")
+                .uid("1234567890")
                 .code("code")
                 .name("name")
                 .displayName("displayName")
@@ -66,14 +66,8 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
                 .valueType(ValueType.AGE)
                 .build();
 
-        String[] OPTION_SET_PROJECTION = {
-                OptionSetModel.Columns.UID, OptionSetModel.Columns.CODE, OptionSetModel.Columns.NAME,
-                OptionSetModel.Columns.DISPLAY_NAME, OptionSetModel.Columns.CREATED,
-                OptionSetModel.Columns.LAST_UPDATED, OptionSetModel.Columns.VERSION, OptionSetModel.Columns.VALUE_TYPE
-        };
-
         this.store = StoreFactory.identifiableStore(databaseAdapter(),
-                OptionSetModel.TABLE, OPTION_SET_PROJECTION);
+                OptionSetModel.TABLE, OptionSetModel.Columns.all());
     }
 
     @Test
@@ -85,9 +79,10 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
                 null, null, null, null, null);
         // Checking if rowId == 1.
         // If it is 1, then it means it is first successful insert into db
-        assertThat(rowId).isEqualTo(1L);
+        // assertThat(rowId).isEqualTo(1L);
 
         assertThatCursor(cursor).hasRow(
+                1L,
                 model.uid(),
                 model.code(),
                 model.name(),
@@ -95,7 +90,7 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
                 model.created(),
                 model.lastUpdated(),
                 model.version(),
-                model.valueType()
+                model.valueType().toString()
         ).isExhausted();
     }
 /*
