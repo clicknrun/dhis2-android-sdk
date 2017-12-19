@@ -51,15 +51,19 @@ public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel &
     }
 
     @Override
-    public final int delete(@NonNull String uid) {
+    public final void delete(@NonNull String uid) {
         isNull(uid);
         // bind the where argument
         sqLiteBind(statements.deleteById, 1, uid);
 
         // execute and clear bindings
-        int delete = databaseAdapter.executeUpdateDelete(builder.tableName, statements.deleteById);
+        int numberOfDeletedRows = databaseAdapter.executeUpdateDelete(builder.tableName,
+                statements.deleteById);
         statements.deleteById.clearBindings();
-        return delete;
+
+        if (numberOfDeletedRows != 1) {
+            throw new RuntimeException("Unexpected number of affected rows: " + numberOfDeletedRows);
+        }
     }
 
     @Override

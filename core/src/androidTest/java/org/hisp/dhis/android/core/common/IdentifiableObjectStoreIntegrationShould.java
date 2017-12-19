@@ -45,7 +45,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 @RunWith(AndroidJUnit4.class)
-public class IdentifiableObjectStoreIntegrationTests extends AbsStoreTestCase {
+public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
 
     private IdentifiableObjectStore<OptionSetModel> store;
 
@@ -60,12 +60,15 @@ public class IdentifiableObjectStoreIntegrationTests extends AbsStoreTestCase {
                 OptionSetModel.TABLE, OptionSetModel.Columns.all());
     }
 
+    private Cursor getCursor() {
+        return getCursor(OptionSetModel.TABLE, OptionSetModel.Columns.all());
+    }
+
     @Test
-    public void insert_shouldPersistModelInDatabase() {
+    public void insert_model() {
         long rowId = store.insert(model);
 
-        Cursor cursor = database().query(OptionSetModel.TABLE, OptionSetModel.Columns.all(),
-                null, null, null, null, null);
+        Cursor cursor = getCursor();
         // Checking if rowId == 1.
         // If it is 1, then it means it is first successful insert into db
         assertThat(rowId).isEqualTo(1L);
@@ -83,7 +86,7 @@ public class IdentifiableObjectStoreIntegrationTests extends AbsStoreTestCase {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void insert_shouldThrowExceptionForNull() {
+    public void throw_exception_for_null_when_inserting() {
         store.insert(null);
     }
 
@@ -94,144 +97,29 @@ public class IdentifiableObjectStoreIntegrationTests extends AbsStoreTestCase {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void insert_shouldThrowExceptionModelWithoutUid() {
+    public void throw_exception_for_model_without_uid_inserting() {
         OptionSetModel withoutUid = OptionSetModel.builder().code("code").build();
         store.insert(withoutUid);
     }
 
+    @Test
+    public void delete_existing_model() {
+        store.insert(model);
+        store.delete(model.uid());
+        assertThatCursor(getCursor()).isExhausted();
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void throw_exception_deleting_non_existing_model() {
+        store.delete("new-id");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throw_exception_deleting_with_null_uid() {
+        store.delete(null);
+    }
+
     /*
-    @Test
-    public void insert_shouldPersistDeferrableDataElementInDatabase() {
-        final String deferredOptionSetUid = "deferredOptionSetUid";
-
-        database().beginTransaction();
-        long rowId = store.insert(UID, CODE, NAME, DISPLAY_NAME, date, date, SHORT_NAME,
-                DISPLAY_SHORT_NAME, DESCRIPTION, DISPLAY_DESCRIPTION, VALUE_TYPE, ZERO_IS_SIGNIFICANT,
-                AGGREGATION_OPERATOR, FORM_NAME, NUMBER_TYPE, DOMAIN_TYPE, DIMENSION, DISPLAY_FORM_NAME,
-                deferredOptionSetUid
-        );
-        ContentValues optionSet = CreateOptionSetUtils.create(2L, deferredOptionSetUid);
-        database().insert(OptionSetModel.TABLE, null, optionSet);
-        database().setTransactionSuccessful();
-        database().endTransaction();
-
-        Cursor cursor = database().query(DataElementModel.TABLE, DATA_ELEMENT_PROJECTION, null, null, null, null, null);
-        assertThat(rowId).isEqualTo(1L);
-        assertThatCursor(cursor).hasRow(UID, CODE, NAME, DISPLAY_NAME, dateString, dateString, SHORT_NAME,
-                DISPLAY_SHORT_NAME, DESCRIPTION, DISPLAY_DESCRIPTION, VALUE_TYPE, 0, AGGREGATION_OPERATOR,
-                FORM_NAME, NUMBER_TYPE, DOMAIN_TYPE, DIMENSION, DISPLAY_FORM_NAME,
-                deferredOptionSetUid
-        ).isExhausted();
-    }
-
-    @Test
-    public void insert_shouldPersistDataElementInDatabaseWithoutOptionSet() {
-        long rowId = store.insert(
-                UID,
-                CODE,
-                NAME,
-                DISPLAY_NAME,
-                date,
-                date,
-                SHORT_NAME,
-                DISPLAY_SHORT_NAME,
-                DESCRIPTION,
-                DISPLAY_DESCRIPTION,
-                VALUE_TYPE,
-                ZERO_IS_SIGNIFICANT,
-                AGGREGATION_OPERATOR,
-                FORM_NAME,
-                NUMBER_TYPE,
-                DOMAIN_TYPE,
-                DIMENSION,
-                DISPLAY_FORM_NAME,
-                null
-        );
-
-        Cursor cursor = database().query(DataElementModel.TABLE, DATA_ELEMENT_PROJECTION,
-                null, null, null, null, null);
-
-        // Checking if rowId == 1.
-        // If it is 1, then it means it is first successful insert into db
-        assertThat(rowId).isEqualTo(1L);
-
-        assertThatCursor(cursor).hasRow(
-                UID,
-                CODE,
-                NAME,
-                DISPLAY_NAME,
-                dateString,
-                dateString,
-                SHORT_NAME,
-                DISPLAY_SHORT_NAME,
-                DESCRIPTION,
-                DISPLAY_DESCRIPTION,
-                VALUE_TYPE,
-                0, // ZERO_IS_SIGNIFICANT = Boolean.FALSE
-                AGGREGATION_OPERATOR,
-                FORM_NAME,
-                NUMBER_TYPE,
-                DOMAIN_TYPE,
-                DIMENSION,
-                DISPLAY_FORM_NAME,
-                null
-        ).isExhausted();
-    }
-
-    @Test(expected = SQLiteConstraintException.class)
-    public void exception_persistDataElementWithInvalidForeignKey() {
-        String fakeOptionSetUid = "fake_option_set_uid";
-        store.insert(
-                UID,
-                CODE,
-                NAME,
-                DISPLAY_NAME,
-                date,
-                date,
-                SHORT_NAME,
-                DISPLAY_SHORT_NAME,
-                DESCRIPTION,
-                DISPLAY_DESCRIPTION,
-                VALUE_TYPE,
-                ZERO_IS_SIGNIFICANT,
-                AGGREGATION_OPERATOR,
-                FORM_NAME,
-                NUMBER_TYPE,
-                DOMAIN_TYPE,
-                DIMENSION,
-                DISPLAY_FORM_NAME,
-                fakeOptionSetUid
-        );
-    }
-
-    @Test
-    public void delete_shouldDeleteDataElementWhenDeletingOptionSetForeignKey() {
-        ContentValues optionSet = CreateOptionSetUtils.create(ID, OPTION_SET);
-        database().insert(OptionSetModel.TABLE, null, optionSet);
-
-        ContentValues dataElement = new ContentValues();
-        dataElement.put(Columns.ID, ID);
-        dataElement.put(Columns.UID, UID);
-        dataElement.put(Columns.OPTION_SET, OPTION_SET);
-
-        database().insert(DataElementModel.TABLE, null, dataElement);
-
-        String[] PROJECTION = {Columns.ID, Columns.UID, Columns.OPTION_SET};
-
-        Cursor cursor = database().query(DataElementModel.TABLE, PROJECTION, null, null, null, null, null);
-
-        // checking that dataElement was successfully inserted
-        assertThatCursor(cursor).hasRow(ID, UID, OPTION_SET).isExhausted();
-
-        // deleting option set
-        database().delete(OptionSetModel.TABLE, OptionSetModel.Columns.UID + "=?", new String[]{OPTION_SET});
-
-        cursor = database().query(DataElementModel.TABLE, PROJECTION, null, null, null, null, null);
-
-        // checking that dataElement was deleted by option set on delete cascade
-        assertThatCursor(cursor).isExhausted();
-    }
-
     @Test
     public void update_shouldUpdateDataElement() throws Exception {
         // insert dataElement into database

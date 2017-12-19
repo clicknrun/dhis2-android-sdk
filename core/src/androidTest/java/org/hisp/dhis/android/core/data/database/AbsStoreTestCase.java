@@ -28,6 +28,7 @@
 
 package org.hisp.dhis.android.core.data.database;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 
@@ -62,5 +63,10 @@ public abstract class AbsStoreTestCase {
 
     protected DatabaseAdapter databaseAdapter() {
         return databaseAdapter;
+    }
+
+    protected Cursor getCursor(String table, String[] columns) {
+        return sqLiteDatabase.query(table, columns,
+                null, null, null, null, null);
     }
 }

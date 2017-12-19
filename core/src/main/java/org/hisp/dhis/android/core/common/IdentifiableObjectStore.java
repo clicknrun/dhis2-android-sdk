@@ -33,7 +33,7 @@ import android.support.annotation.NonNull;
 public interface IdentifiableObjectStore<M extends BaseIdentifiableObjectModel & StatementBinder>
         extends ObjectStore<M> {
 
-    public int delete(@NonNull String uid);
+    public void delete(@NonNull String uid);
 
     public int update(@NonNull M m);
 
