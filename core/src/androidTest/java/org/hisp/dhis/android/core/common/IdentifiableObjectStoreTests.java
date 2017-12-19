@@ -50,6 +50,14 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
 
     private OptionSetModel model;
 
+    private final Date date;
+    private final String dateString;
+
+    public IdentifiableObjectStoreTests() {
+        this.date = new Date();
+        this.dateString = BaseIdentifiableObject.DATE_FORMAT.format(date);
+    }
+
     @Override
     @Before
     public void setUp() throws IOException {
@@ -60,8 +68,8 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
                 .code("code")
                 .name("name")
                 .displayName("displayName")
-                .created(new Date())
-                .lastUpdated(new Date())
+                .created(date)
+                .lastUpdated(date)
                 .version(1)
                 .valueType(ValueType.AGE)
                 .build();
@@ -79,18 +87,17 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
                 null, null, null, null, null);
         // Checking if rowId == 1.
         // If it is 1, then it means it is first successful insert into db
-        // assertThat(rowId).isEqualTo(1L);
+        assertThat(rowId).isEqualTo(1L);
 
         assertThatCursor(cursor).hasRow(
-                1L,
                 model.uid(),
                 model.code(),
                 model.name(),
                 model.displayName(),
-                model.created(),
-                model.lastUpdated(),
+                dateString,
+                dateString,
                 model.version(),
-                model.valueType().toString()
+                model.valueType()
         ).isExhausted();
     }
 /*

@@ -39,7 +39,7 @@ public abstract class BaseModel implements Model {
         public static final String ID = BaseColumns._ID;
 
         public static String[] all() {
-            return new String[] { ID };
+            return new String[] { };
         }
     }
 
