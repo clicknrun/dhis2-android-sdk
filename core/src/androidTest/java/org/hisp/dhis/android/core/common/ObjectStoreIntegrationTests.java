@@ -44,7 +44,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 @RunWith(AndroidJUnit4.class)
-public class ObjectStoreTests extends AbsStoreTestCase {
+public class ObjectStoreIntegrationTests extends AbsStoreTestCase {
 
     private IdentifiableObjectStore<OptionSetModel> store;
 
