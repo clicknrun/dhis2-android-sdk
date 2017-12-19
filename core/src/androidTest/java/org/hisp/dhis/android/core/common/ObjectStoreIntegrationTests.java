@@ -38,7 +38,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.Date;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
@@ -54,18 +53,7 @@ public class ObjectStoreIntegrationTests extends AbsStoreTestCase {
     @Before
     public void setUp() throws IOException {
         super.setUp();
-
-        this.model = OptionSetModel.builder()
-                .uid("1234567890")
-                .code("code")
-                .name("name")
-                .displayName("displayName")
-                .created(new Date())
-                .lastUpdated(new Date())
-                .version(1)
-                .valueType(ValueType.AGE)
-                .build();
-
+        this.model = StoreMocks.generateOptionSetModel();
         this.store = StoreFactory.identifiableStore(databaseAdapter(),
                 OptionSetModel.TABLE, OptionSetModel.Columns.all());
     }

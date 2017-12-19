@@ -44,7 +44,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 @RunWith(AndroidJUnit4.class)
-public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
+public class IdentifiableObjectStoreIntegrationTests extends AbsStoreTestCase {
 
     private IdentifiableObjectStore<OptionSetModel> store;
 
@@ -53,7 +53,7 @@ public class IdentifiableObjectStoreTests extends AbsStoreTestCase {
     private final Date date;
     private final String dateString;
 
-    public IdentifiableObjectStoreTests() {
+    public IdentifiableObjectStoreIntegrationTests() {
         this.date = new Date();
         this.dateString = BaseIdentifiableObject.DATE_FORMAT.format(date);
     }
