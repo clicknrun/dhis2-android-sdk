@@ -30,7 +30,6 @@ package org.hisp.dhis.android.core.dataelement;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.option.OptionSet;
-import org.hisp.dhis.android.core.option.OptionSetHandler;
 import org.hisp.dhis.android.core.option.OptionSetModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +38,6 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -67,7 +65,6 @@ public class DataElementHandlerTests {
         dataElementHandler = new DataElementHandler(dataElementStore, optionSetHandler);
         when(dataElement.uid()).thenReturn("test_data_element_uid");
         when(dataElement.optionSet()).thenReturn(optionSet);
-        when(dataElementStore.update(any(DataElementModel.class))).thenReturn(1);
     }
 
     @Test

@@ -84,10 +84,6 @@ public class GenericHandlerTests {
                 testCall.call(dataElement);
             }
         };
-
-        when(store.update(any(DataElementModel.class))).thenReturn(1);
-        when(store.insert(any(DataElementModel.class))).thenReturn(198L);
-        when(store.delete(anyString())).thenReturn(1);
     }
 
     @Test
