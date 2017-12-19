@@ -39,7 +39,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.Date;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
@@ -72,17 +71,7 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
         // Checking if rowId == 1.
         // If it is 1, then it means it is first successful insert into db
         assertThat(rowId).isEqualTo(1L);
-
-        assertThatCursor(cursor).hasRow(
-                model.uid(),
-                model.code(),
-                model.name(),
-                model.displayName(),
-                model.createdStr(),
-                model.lastUpdatedStr(),
-                model.version(),
-                model.valueType()
-        ).isExhausted();
+        cursorAssert(cursor, model);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -119,95 +108,41 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
         store.delete(null);
     }
 
-    /*
     @Test
-    public void update_shouldUpdateDataElement() throws Exception {
-        // insert dataElement into database
-        ContentValues dataElement = new ContentValues();
-        dataElement.put(Columns.UID, UID);
-        dataElement.put(Columns.CODE, CODE);
-        dataElement.put(Columns.NAME, NAME);
-        database().insert(DataElementModel.TABLE, null, dataElement);
+    public void update_model() {
+        store.insert(model);
+        OptionSetModel updatedModel = StoreMocks.generateUpdatedOptionSetModel();
+        store.update(updatedModel);
 
-        String[] projection = {Columns.UID, Columns.CODE, Columns.NAME};
-
-        Cursor cursor = database().query(DataElementModel.TABLE, projection, null, null, null, null, null);
-
-        // checking if data element was successfully inserted
-        assertThatCursor(cursor).hasRow(UID, CODE, NAME).isExhausted();
-
-        String updatedName = "new_updated_data_element_name";
-        int update = store.update(UID, CODE, updatedName, DISPLAY_NAME, date, date, null, null,
-                DESCRIPTION,
-                DISPLAY_DESCRIPTION,
-                VALUE_TYPE,
-                ZERO_IS_SIGNIFICANT,
-                AGGREGATION_OPERATOR,
-                FORM_NAME,
-                NUMBER_TYPE,
-                DOMAIN_TYPE,
-                DIMENSION,
-                DISPLAY_FORM_NAME,
-                null, // null OptionSetUid
-                UID);
-
-        // checking that update was successful
-        assertThat(update).isEqualTo(1);
-
-        cursor = database().query(DataElementModel.TABLE, projection, null, null, null, null, null);
-
-        // checking that row was updated
-        assertThatCursor(cursor).hasRow(UID, CODE, updatedName).isExhausted();
-
+        Cursor cursor = getCursor();
+        cursorAssert(cursor, updatedModel);
     }
 
-    @Test
-    public void delete_shouldDeleteDataElement() throws Exception {
-
-        // insert dataElement into database
-        ContentValues dataElement = new ContentValues();
-        dataElement.put(Columns.UID, UID);
-        database().insert(DataElementModel.TABLE, null, dataElement);
-
-        String[] projection = {Columns.UID};
-
-        Cursor cursor = database().query(DataElementModel.TABLE, projection, null, null, null, null, null);
-
-        // checking if data element was successfully inserted
-        assertThatCursor(cursor).hasRow(UID).isExhausted();
-
-        int delete = store.delete(UID);
-        // checking that store returns 1 (deletion happens)
-        assertThat(delete).isEqualTo(1);
-        cursor = database().query(DataElementModel.TABLE, projection, null, null, null, null, null);
-
-        // check that row is deleted
-        assertThatCursor(cursor).isExhausted();
+    @Test(expected = RuntimeException.class)
+    public void throw_exception_updating_null() {
+        store.update(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void insert_null_uid() {
-        store.insert(null, CODE, NAME, DISPLAY_NAME, date, date, SHORT_NAME, DISPLAY_SHORT_NAME, DESCRIPTION,
-                DISPLAY_DESCRIPTION, VALUE_TYPE, ZERO_IS_SIGNIFICANT, AGGREGATION_OPERATOR, FORM_NAME, NUMBER_TYPE,
-                DOMAIN_TYPE, DIMENSION, DISPLAY_FORM_NAME, OPTION_SET);
+    @Test(expected = RuntimeException.class)
+    public void throw_exception_updating_with_null_uid() {
+        store.update(StoreMocks.generateOptionSetModelWithoutUid());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void update_null_uid() {
-        store.update(null, CODE, NAME, DISPLAY_NAME, date, date, SHORT_NAME, DISPLAY_SHORT_NAME, DESCRIPTION,
-                DISPLAY_DESCRIPTION, VALUE_TYPE, ZERO_IS_SIGNIFICANT, AGGREGATION_OPERATOR, FORM_NAME, NUMBER_TYPE,
-                DOMAIN_TYPE, DIMENSION, DISPLAY_FORM_NAME, OPTION_SET, UID);
+    @Test(expected = RuntimeException.class)
+    public void throw_exception_updating_non_existing_model() {
+        store.update(model);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void update_null_whereUid() {
-        store.update(UID, CODE, NAME, DISPLAY_NAME, date, date, SHORT_NAME, DISPLAY_SHORT_NAME, DESCRIPTION,
-                DISPLAY_DESCRIPTION, VALUE_TYPE, ZERO_IS_SIGNIFICANT, AGGREGATION_OPERATOR, FORM_NAME, NUMBER_TYPE,
-                DOMAIN_TYPE, DIMENSION, DISPLAY_FORM_NAME, OPTION_SET, null);
+    private void cursorAssert(Cursor cursor, OptionSetModel m) {
+        assertThatCursor(cursor).hasRow(
+                m.uid(),
+                m.code(),
+                m.name(),
+                m.displayName(),
+                m.createdStr(),
+                m.lastUpdatedStr(),
+                m.version(),
+                m.valueType()
+        ).isExhausted();
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void delete_null_uid() {
-        store.delete(null);
-    }*/
 }

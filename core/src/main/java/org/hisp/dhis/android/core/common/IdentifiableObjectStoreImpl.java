@@ -28,6 +28,7 @@
 
 package org.hisp.dhis.android.core.common;
 
+import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
@@ -44,47 +45,42 @@ public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel &
     }
 
     @Override
-    public final long insert(@NonNull M m) {
+    public final void insert(@NonNull M m) throws RuntimeException {
         isNull(m);
         isNull(m.uid());
-        return super.insert(m);
+        super.insert(m);
     }
 
     @Override
-    public final void delete(@NonNull String uid) {
+    public final void delete(@NonNull String uid) throws RuntimeException {
         isNull(uid);
-        // bind the where argument
         sqLiteBind(statements.deleteById, 1, uid);
+        executeUpdateDelete(statements.deleteById);
+    }
 
-        // execute and clear bindings
-        int numberOfDeletedRows = databaseAdapter.executeUpdateDelete(builder.tableName,
-                statements.deleteById);
-        statements.deleteById.clearBindings();
+    @Override
+    public final void update(@NonNull M m) throws RuntimeException {
+        isNull(m);
+        m.bindToStatement(statements.update);
+        sqLiteBind(statements.update, builder.columns.length + 1, m.uid());
+        executeUpdateDelete(statements.update);
+    }
 
-        if (numberOfDeletedRows != 1) {
-            throw new RuntimeException("Unexpected number of affected rows: " + numberOfDeletedRows);
+    @Override
+    public final void updateOrInsert(@NonNull M m) throws RuntimeException {
+        try {
+            update(m);
+        } catch (Exception e){
+            insert(m);
         }
     }
 
-    @Override
-    public final int update(@NonNull M m) {
-        isNull(m);
-        m.bindToStatement(statements.update);
+    private void executeUpdateDelete(SQLiteStatement statement) throws RuntimeException {
+        int numberOfAffectedRows = databaseAdapter.executeUpdateDelete(builder.tableName, statement);
+        statement.clearBindings();
 
-        // bind the where argument
-        sqLiteBind(statements.update, builder.columns.length + 1, m.uid());
-
-        // execute and clear bindings
-        int update = databaseAdapter.executeUpdateDelete(builder.tableName, statements.update);
-        statements.update.clearBindings();
-        return update;
-    }
-
-    @Override
-    public final void updateOrInsert(@NonNull M m) {
-        int updatedRow = update(m);
-        if (updatedRow <= 0) {
-            insert(m);
+        if (numberOfAffectedRows != 1) {
+            throw new RuntimeException("Unexpected number of affected rows: " + numberOfAffectedRows);
         }
     }
 }

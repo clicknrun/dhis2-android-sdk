@@ -78,7 +78,8 @@ public class SQLStatementBuilder {
     }
 
     public String update() {
-        return "UPDATE " + tableName + " SET " + commaSeparatedColumnEqualInterrogationMark() + ";";
+        return "UPDATE " + tableName + " SET " + commaSeparatedColumnEqualInterrogationMark() +
+                " WHERE " + BaseIdentifiableObjectModel.Columns.UID + "=?;";
     }
 
     private static String createTableWrapper(String tableName, String[] columnsWithAttributes) {

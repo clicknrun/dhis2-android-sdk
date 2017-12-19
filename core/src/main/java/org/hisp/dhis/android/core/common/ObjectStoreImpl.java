@@ -47,13 +47,13 @@ public class ObjectStoreImpl<M extends Model & StatementBinder> implements Objec
     }
 
     @Override
-    public long insert(@NonNull M m) {
+    public void insert(@NonNull M m) throws RuntimeException {
         isNull(m);
         m.bindToStatement(statements.insert);
-
-        // execute and clear bindings
-        Long insert = databaseAdapter.executeInsert(builder.tableName, statements.insert);
+        Long insertedRowId = databaseAdapter.executeInsert(builder.tableName, statements.insert);
         statements.insert.clearBindings();
-        return insert;
+        if (insertedRowId == -1) {
+            throw new RuntimeException("Nothing was inserted.");
+        }
     }
 }
