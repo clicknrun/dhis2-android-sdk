@@ -1,8 +1,12 @@
 package org.hisp.dhis.android.core.common;
 
+import android.database.Cursor;
+
 import org.hisp.dhis.android.core.option.OptionSetModel;
 
 import java.util.Date;
+
+import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 public class StoreMocks {
     public static OptionSetModel generateOptionSetModel() {
@@ -42,5 +46,18 @@ public class StoreMocks {
                 .version(1)
                 .valueType(ValueType.AGE)
                 .build();
+    }
+
+    public static void optionSetCursorAssert(Cursor cursor, OptionSetModel m) {
+        assertThatCursor(cursor).hasRow(
+                m.uid(),
+                m.code(),
+                m.name(),
+                m.displayName(),
+                m.createdStr(),
+                m.lastUpdatedStr(),
+                m.version(),
+                m.valueType()
+        ).isExhausted();
     }
 }

@@ -41,6 +41,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.hisp.dhis.android.core.common.StoreMocks.optionSetCursorAssert;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 @RunWith(AndroidJUnit4.class)
@@ -61,24 +62,9 @@ public class ObjectStoreIntegrationShould extends AbsStoreTestCase {
 
     @Test
     public void insert_model() {
-        long rowId = store.insert(model);
-
-        Cursor cursor = database().query(OptionSetModel.TABLE, OptionSetModel.Columns.all(),
-                null, null, null, null, null);
-        // Checking if rowId == 1.
-        // If it is 1, then it means it is first successful insert into db
-        assertThat(rowId).isEqualTo(1L);
-
-        assertThatCursor(cursor).hasRow(
-                model.uid(),
-                model.code(),
-                model.name(),
-                model.displayName(),
-                model.createdStr(),
-                model.lastUpdatedStr(),
-                model.version(),
-                model.valueType()
-        ).isExhausted();
+        store.insert(model);
+        Cursor cursor = getCursor(OptionSetModel.TABLE, OptionSetModel.Columns.all());
+        optionSetCursorAssert(cursor, model);
     }
 
     @Test(expected = IllegalArgumentException.class)

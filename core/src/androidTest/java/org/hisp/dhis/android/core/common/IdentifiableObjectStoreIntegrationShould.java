@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hisp.dhis.android.core.common.StoreMocks.optionSetCursorAssert;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 @RunWith(AndroidJUnit4.class)
@@ -65,13 +65,9 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
 
     @Test
     public void insert_model() {
-        long rowId = store.insert(model);
-
+        store.insert(model);
         Cursor cursor = getCursor();
-        // Checking if rowId == 1.
-        // If it is 1, then it means it is first successful insert into db
-        assertThat(rowId).isEqualTo(1L);
-        cursorAssert(cursor, model);
+        optionSetCursorAssert(cursor, model);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -113,9 +109,8 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
         store.insert(model);
         OptionSetModel updatedModel = StoreMocks.generateUpdatedOptionSetModel();
         store.update(updatedModel);
-
         Cursor cursor = getCursor();
-        cursorAssert(cursor, updatedModel);
+        optionSetCursorAssert(cursor, updatedModel);
     }
 
     @Test(expected = RuntimeException.class)
@@ -131,18 +126,5 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
     @Test(expected = RuntimeException.class)
     public void throw_exception_updating_non_existing_model() {
         store.update(model);
-    }
-
-    private void cursorAssert(Cursor cursor, OptionSetModel m) {
-        assertThatCursor(cursor).hasRow(
-                m.uid(),
-                m.code(),
-                m.name(),
-                m.displayName(),
-                m.createdStr(),
-                m.lastUpdatedStr(),
-                m.version(),
-                m.valueType()
-        ).isExhausted();
     }
 }
