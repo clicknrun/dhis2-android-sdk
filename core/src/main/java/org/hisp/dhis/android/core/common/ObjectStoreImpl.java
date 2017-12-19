@@ -47,7 +47,7 @@ public class ObjectStoreImpl<M extends Model & StatementBinder> implements Objec
     }
 
     @Override
-    public final long insert(@NonNull M m) {
+    public long insert(@NonNull M m) {
         isNull(m);
         m.bindToStatement(statements.insert);
 
@@ -57,5 +57,3 @@ public class ObjectStoreImpl<M extends Model & StatementBinder> implements Objec
         return insert;
     }
 }
-
-

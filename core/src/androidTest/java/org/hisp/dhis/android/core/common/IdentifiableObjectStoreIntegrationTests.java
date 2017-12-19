@@ -29,6 +29,7 @@
 package org.hisp.dhis.android.core.common;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
@@ -50,37 +51,17 @@ public class IdentifiableObjectStoreIntegrationTests extends AbsStoreTestCase {
 
     private OptionSetModel model;
 
-    private final Date date;
-    private final String dateString;
-
-    public IdentifiableObjectStoreIntegrationTests() {
-        this.date = new Date();
-        this.dateString = BaseIdentifiableObject.DATE_FORMAT.format(date);
-    }
-
     @Override
     @Before
     public void setUp() throws IOException {
         super.setUp();
-
-        this.model = OptionSetModel.builder()
-                .uid("1234567890")
-                .code("code")
-                .name("name")
-                .displayName("displayName")
-                .created(date)
-                .lastUpdated(date)
-                .version(1)
-                .valueType(ValueType.AGE)
-                .build();
-
+        this.model = StoreMocks.generateOptionSetModel();
         this.store = StoreFactory.identifiableStore(databaseAdapter(),
                 OptionSetModel.TABLE, OptionSetModel.Columns.all());
     }
 
     @Test
     public void insert_shouldPersistModelInDatabase() {
-
         long rowId = store.insert(model);
 
         Cursor cursor = database().query(OptionSetModel.TABLE, OptionSetModel.Columns.all(),
@@ -94,13 +75,31 @@ public class IdentifiableObjectStoreIntegrationTests extends AbsStoreTestCase {
                 model.code(),
                 model.name(),
                 model.displayName(),
-                dateString,
-                dateString,
+                model.createdStr(),
+                model.lastUpdatedStr(),
                 model.version(),
                 model.valueType()
         ).isExhausted();
     }
-/*
+
+    @Test(expected = IllegalArgumentException.class)
+    public void insert_shouldThrowExceptionForNull() {
+        store.insert(null);
+    }
+
+    @Test(expected = SQLiteConstraintException.class)
+    public void throw_exception_for_second_identical_insertion() {
+        store.insert(this.model);
+        store.insert(this.model);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void insert_shouldThrowExceptionModelWithoutUid() {
+        OptionSetModel withoutUid = OptionSetModel.builder().code("code").build();
+        store.insert(withoutUid);
+    }
+
+    /*
     @Test
     public void insert_shouldPersistDeferrableDataElementInDatabase() {
         final String deferredOptionSetUid = "deferredOptionSetUid";

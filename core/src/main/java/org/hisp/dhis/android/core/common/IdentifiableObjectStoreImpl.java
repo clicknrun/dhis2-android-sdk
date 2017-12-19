@@ -44,6 +44,13 @@ public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel &
     }
 
     @Override
+    public final long insert(@NonNull M m) {
+        isNull(m);
+        isNull(m.uid());
+        return super.insert(m);
+    }
+
+    @Override
     public final int delete(@NonNull String uid) {
         isNull(uid);
         // bind the where argument

@@ -29,6 +29,7 @@
 package org.hisp.dhis.android.core.common;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
@@ -43,9 +44,9 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 @RunWith(AndroidJUnit4.class)
-public class ObjectStoreIntegrationTests extends AbsStoreTestCase {
+public class ObjectStoreIntegrationShould extends AbsStoreTestCase {
 
-    private IdentifiableObjectStore<OptionSetModel> store;
+    private ObjectStore<OptionSetModel> store;
 
     private OptionSetModel model;
 
@@ -54,12 +55,12 @@ public class ObjectStoreIntegrationTests extends AbsStoreTestCase {
     public void setUp() throws IOException {
         super.setUp();
         this.model = StoreMocks.generateOptionSetModel();
-        this.store = StoreFactory.identifiableStore(databaseAdapter(),
+        this.store = StoreFactory.objectStore(databaseAdapter(),
                 OptionSetModel.TABLE, OptionSetModel.Columns.all());
     }
 
     @Test
-    public void insert_shouldPersistModelInDatabase() {
+    public void insert_model() {
         long rowId = store.insert(model);
 
         Cursor cursor = database().query(OptionSetModel.TABLE, OptionSetModel.Columns.all(),
@@ -78,5 +79,16 @@ public class ObjectStoreIntegrationTests extends AbsStoreTestCase {
                 model.version(),
                 model.valueType()
         ).isExhausted();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throw_exception_for_null_when_inserting() {
+        store.insert(null);
+    }
+
+    @Test(expected = SQLiteConstraintException.class)
+    public void throw_exception_for_second_identical_insertion() {
+        store.insert(this.model);
+        store.insert(this.model);
     }
 }
