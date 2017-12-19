@@ -34,5 +34,3 @@ public interface ObjectStore<M extends Model & StatementBinder> {
 
     public long insert(@NonNull M m);
 }
-
-
