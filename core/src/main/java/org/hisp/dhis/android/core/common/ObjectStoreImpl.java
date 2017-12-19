@@ -28,6 +28,7 @@
 
 package org.hisp.dhis.android.core.common;
 
+import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
@@ -36,22 +37,22 @@ import static org.hisp.dhis.android.core.utils.Utils.isNull;
 
 public class ObjectStoreImpl<M extends Model & StatementBinder> implements ObjectStore<M> {
     protected final DatabaseAdapter databaseAdapter;
-    protected final SQLStatementWrapper statements;
+    protected final SQLiteStatement insertStatement;
     protected final SQLStatementBuilder builder;
 
-    public ObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
+    public ObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLiteStatement insertStatement,
                        SQLStatementBuilder builder) {
         this.databaseAdapter = databaseAdapter;
-        this.statements = statements;
+        this.insertStatement = insertStatement;
         this.builder = builder;
     }
 
     @Override
     public void insert(@NonNull M m) throws RuntimeException {
         isNull(m);
-        m.bindToStatement(statements.insert);
-        Long insertedRowId = databaseAdapter.executeInsert(builder.tableName, statements.insert);
-        statements.insert.clearBindings();
+        m.bindToStatement(insertStatement);
+        Long insertedRowId = databaseAdapter.executeInsert(builder.tableName, insertStatement);
+        insertStatement.clearBindings();
         if (insertedRowId == -1) {
             throw new RuntimeException("Nothing was inserted.");
         }

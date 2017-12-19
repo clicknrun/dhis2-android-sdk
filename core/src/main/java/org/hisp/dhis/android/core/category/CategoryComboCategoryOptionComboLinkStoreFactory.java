@@ -29,16 +29,12 @@
 package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.common.ObjectStore;
-import org.hisp.dhis.android.core.common.ObjectStoreImpl;
-import org.hisp.dhis.android.core.common.SQLStatementBuilder;
-import org.hisp.dhis.android.core.common.SQLStatementWrapper;
+import org.hisp.dhis.android.core.common.StoreFactory;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 public class CategoryComboCategoryOptionComboLinkStoreFactory {
     public static ObjectStore<CategoryComboCategoryOptionComboLinkModel> create(DatabaseAdapter databaseAdapter) {
-        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(CategoryComboCategoryOptionComboLinkModel.TABLE,
+        return StoreFactory.objectStore(databaseAdapter, CategoryComboCategoryOptionComboLinkModel.TABLE,
                 CategoryComboCategoryOptionComboLinkModel.Columns.all());
-        SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new ObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
     }
 }

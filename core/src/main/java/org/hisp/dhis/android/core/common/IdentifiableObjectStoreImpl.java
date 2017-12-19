@@ -39,9 +39,12 @@ import static org.hisp.dhis.android.core.utils.Utils.isNull;
 public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel & StatementBinder>
         extends ObjectStoreImpl<M> implements IdentifiableObjectStore<M> {
 
+    private final SQLStatementWrapper statements;
+
     public IdentifiableObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
                                    SQLStatementBuilder builder) {
-        super(databaseAdapter, statements, builder);
+        super(databaseAdapter, statements.insert, builder);
+        this.statements = statements;
     }
 
     @Override

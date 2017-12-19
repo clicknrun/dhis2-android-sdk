@@ -28,17 +28,14 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkModel;
 import org.hisp.dhis.android.core.common.ObjectStore;
-import org.hisp.dhis.android.core.common.ObjectStoreImpl;
-import org.hisp.dhis.android.core.common.SQLStatementBuilder;
-import org.hisp.dhis.android.core.common.SQLStatementWrapper;
+import org.hisp.dhis.android.core.common.StoreFactory;
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 public class PeriodStoreFactory {
     public static ObjectStore<PeriodModel> create(DatabaseAdapter databaseAdapter) {
-        SQLStatementBuilder statementBuilder = new SQLStatementBuilder(PeriodModel.TABLE,
+        return StoreFactory.objectStore(databaseAdapter, PeriodModel.TABLE,
                 PeriodModel.Columns.all());
-        SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new ObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
     }
 }

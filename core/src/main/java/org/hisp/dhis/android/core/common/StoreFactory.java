@@ -39,10 +39,10 @@ public class StoreFactory {
         return new IdentifiableObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
     }
 
-    public static <I extends BaseIdentifiableObjectModel & StatementBinder> ObjectStore<I>
+    public static <I extends BaseModel & StatementBinder> ObjectStore<I>
     objectStore(DatabaseAdapter databaseAdapter, String tableName, String[] columns) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(tableName, columns);
-        SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new ObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
+        return new ObjectStoreImpl<>(databaseAdapter, databaseAdapter.compileStatement(
+                statementBuilder.insert()), statementBuilder);
     }
 }
