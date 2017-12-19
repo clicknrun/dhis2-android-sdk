@@ -49,12 +49,14 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
     private IdentifiableObjectStore<OptionSetModel> store;
 
     private OptionSetModel model;
+    private OptionSetModel updatedModel;
 
     @Override
     @Before
     public void setUp() throws IOException {
         super.setUp();
         this.model = StoreMocks.generateOptionSetModel();
+        this.updatedModel = StoreMocks.generateUpdatedOptionSetModel();
         this.store = StoreFactory.identifiableStore(databaseAdapter(),
                 OptionSetModel.TABLE, OptionSetModel.Columns.all());
     }
@@ -107,7 +109,6 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
     @Test
     public void update_model() {
         store.insert(model);
-        OptionSetModel updatedModel = StoreMocks.generateUpdatedOptionSetModel();
         store.update(updatedModel);
         Cursor cursor = getCursor();
         optionSetCursorAssert(cursor, updatedModel);
@@ -126,5 +127,20 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
     @Test(expected = RuntimeException.class)
     public void throw_exception_updating_non_existing_model() {
         store.update(model);
+    }
+
+    @Test
+    public void insert_when_no_model_and_update_or_insert() {
+        store.updateOrInsert(model);
+        Cursor cursor = getCursor();
+        optionSetCursorAssert(cursor, model);
+    }
+
+    @Test
+    public void update_when_model_and_update_or_insert() {
+        store.insert(model);
+        store.updateOrInsert(updatedModel);
+        Cursor cursor = getCursor();
+        optionSetCursorAssert(cursor, updatedModel);
     }
 }
