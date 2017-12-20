@@ -310,9 +310,17 @@ public class MetadataCall implements Call<Response> {
             response = new DataElementCall(data, dataElementService, dataElementHandler,
                     getDataElementUids(dataSets)).call();
 
+            if (!response.isSuccessful()) {
+                return response;
+            }
+
             response = new CategoryComboCall(data, categoryComboService, categoryComboHandler,
                     getCategoryComboUids(dataSets)).call();
 
+            if (!response.isSuccessful()) {
+                return response;
+            }
+            
             transaction.setSuccessful();
             return response;
         } finally {
