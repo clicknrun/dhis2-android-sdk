@@ -44,7 +44,7 @@ public class CategoryComboCall extends GenericCallImpl<CategoryCombo> {
     public CategoryComboCall(GenericCallData data, CategoryComboService categoryComboService,
                              GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
                              Set<String> uids) {
-        super(data, categoryComboHandler, ResourceModel.Type.DATA_SET, uids);
+        super(data, categoryComboHandler, ResourceModel.Type.CATEGORY_COMBO, uids);
         this.categoryComboService = categoryComboService;
     }
 

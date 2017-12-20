@@ -481,9 +481,9 @@ public class MetadataCall implements Call<Response> {
     private Set<String> getCategoryComboUids(List<DataSet> dataSets) {
         Set<String> uids = new HashSet<>();
         for (DataSet dataSet : dataSets) {
-            uids.add(dataSet.categoryCombo().uid());
+            uids.add(dataSet.categoryComboUid());
             for (DataSetDataElement dataSetElement : dataSet.dataSetElements()) {
-                uids.add(dataSetElement.categoryCombo().uid());
+                uids.add(dataSetElement.categoryComboUid());
             }
         }
         return uids;

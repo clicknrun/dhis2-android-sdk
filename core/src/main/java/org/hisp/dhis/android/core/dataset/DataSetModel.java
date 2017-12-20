@@ -82,6 +82,7 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
     }
 
     public static DataSetModel create(DataSet dataSet) {
+
         return DataSetModel.builder()
                 .uid(dataSet.uid())
                 .code(dataSet.code())
@@ -94,7 +95,7 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
                 .description(dataSet.description())
                 .displayDescription(dataSet.displayDescription())
                 .periodType(dataSet.periodType())
-                .categoryCombo(dataSet.categoryCombo().uid())
+                .categoryCombo(dataSet.categoryComboUid())
                 .mobile(dataSet.mobile())
                 .version(dataSet.version())
                 .expiryDays(dataSet.expiryDays())

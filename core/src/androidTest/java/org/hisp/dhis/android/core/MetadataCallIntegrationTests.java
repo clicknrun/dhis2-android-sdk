@@ -2,6 +2,7 @@ package org.hisp.dhis.android.core;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hisp.dhis.android.core.common.D2Factory;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
 import org.hisp.dhis.android.core.data.api.BasicAuthenticatorFactory;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
@@ -29,19 +30,7 @@ public class MetadataCallIntegrationTests extends AbsStoreTestCase {
     @Override
     public void setUp() throws IOException {
         super.setUp();
-
-        ConfigurationModel config = ConfigurationModel.builder()
-                .serverUrl(HttpUrl.parse("https://play.dhis2.org/dev/api/"))
-                .build();
-
-        d2 = new D2.Builder()
-                .configuration(config)
-                .databaseAdapter(databaseAdapter())
-                .okHttpClient(
-                        new OkHttpClient.Builder()
-                                .addInterceptor(BasicAuthenticatorFactory.create(databaseAdapter()))
-                                .build()
-                ).build();
+        d2 = D2Factory.create("https://play.dhis2.org/android-current/api/", databaseAdapter());
     }
 
 
@@ -64,8 +53,10 @@ public class MetadataCallIntegrationTests extends AbsStoreTestCase {
     //@Test
     public void metadataSyncTest() throws Exception {
         retrofit2.Response response = null;
-        response = d2.logIn("android", "Android123").call();
-        assertThat(response.isSuccessful()).isTrue();
+        if (!d2.isUserLoggedIn().call()) {
+            response = d2.logIn("android", "Android123").call();
+            assertThat(response.isSuccessful()).isTrue();
+        }
 
         //first sync:
         response = d2.syncMetaData().call();

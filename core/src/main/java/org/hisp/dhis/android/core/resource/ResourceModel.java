@@ -59,7 +59,8 @@ public abstract class ResourceModel extends BaseModel {
         TRACKED_ENTITY,
         TRACKED_ENTITY_INSTANCE,
         DATA_SET,
-        DATA_ELEMENT
+        DATA_ELEMENT,
+        CATEGORY_COMBO
     }
 
     @Nullable

@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.data.api.Field;
@@ -106,6 +107,11 @@ public abstract class DataSet extends BaseNameableObject {
     @Nullable
     @JsonProperty(CATEGORY_COMBO)
     public abstract CategoryCombo categoryCombo();
+
+    public String categoryComboUid() {
+        return categoryCombo() != null ? categoryCombo().uid() :
+                CategoryComboModel.DEFAULT_UID;
+    }
 
     @Nullable
     @JsonProperty(MOBILE)

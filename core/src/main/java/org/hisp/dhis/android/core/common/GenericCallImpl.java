@@ -73,7 +73,8 @@ public abstract class GenericCallImpl<P extends BaseIdentifiableObject> implemen
 
         if (uids.size() > MAX_UIDS) {
             throw new IllegalArgumentException(
-                    "Can't handle the amount of objects: " + uids.size() + ". " + "Max size is: " + MAX_UIDS);
+                    "Can't handle the amount of objects of type " + resourceType +
+                            ": " + uids.size() + ". " + "Max size is: " + MAX_UIDS);
         }
 
         String lastUpdated = data.resourceHandler().getLastUpdated(resourceType);

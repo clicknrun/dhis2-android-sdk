@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.NestedField;
 import org.hisp.dhis.android.core.dataelement.DataElement;
@@ -65,6 +66,11 @@ public abstract class DataSetDataElement {
     @Nullable
     @JsonProperty(CATEGORY_COMBO)
     public abstract CategoryCombo categoryCombo();
+
+    public String categoryComboUid() {
+        return categoryCombo() != null ? categoryCombo().uid() :
+                CategoryComboModel.DEFAULT_UID;
+    }
 
     @JsonCreator
     public static DataSetDataElement create(
