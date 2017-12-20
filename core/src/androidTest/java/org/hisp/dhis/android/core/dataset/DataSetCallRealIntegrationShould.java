@@ -47,7 +47,7 @@ public class DataSetCallRealIntegrationShould extends AbsStoreTestCase {
                 new ResourceHandler(new ResourceStoreImpl(databaseAdapter()));
         GenericCallData data = GenericCallData.create(databaseAdapter(), resourceHandler);
 
-        Set<String> uids = new HashSet<String>();
+        Set<String> uids = new HashSet<>();
 
         uids.add("BfMAe6Itzgt");
         uids.add("Lpw6GcnTrmS");
@@ -56,18 +56,14 @@ public class DataSetCallRealIntegrationShould extends AbsStoreTestCase {
         return new DataSetCall(data, dataSetService, dataSetHandler, uids);
     }
 
-    @Test
-    public void metadataSyncTest() throws Exception {
+    // @Test
+    public void download_data_sets() throws Exception {
         retrofit2.Response loginResponse = d2.logIn("android", "Android123").call();
         assertThat(loginResponse.isSuccessful()).isTrue();
 
+        /* TODO This test won't independently of DataElementCall and CategoryComboCall, as
+            the foreign keys constraints won't be satisfied */
         retrofit2.Response dataSetResponse = dataSetCall.call();
         assertThat(dataSetResponse.isSuccessful()).isTrue();
-
-        //TODO: add aditional sync + break point.
-        //when debugger stops at the new break point manually change metadata online & resume.
-        //This way I can make sure that additive (updates) work as well.
-        //The changes could be to one of the programs, adding stuff to it.
-        // adding a new program..etc.
     }
 }

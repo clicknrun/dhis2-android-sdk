@@ -42,6 +42,8 @@ public abstract class CategoryComboModel extends BaseIdentifiableObjectModel imp
 
     public static final String TABLE = "CategoryCombo";
 
+    public static final String DEFAULT_UID = "p0KPaWEg3cf";
+
     public static class Columns extends BaseIdentifiableObjectModel.Columns {
 
         public static String[] all() {

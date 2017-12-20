@@ -27,6 +27,7 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
+import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.ObjectStore;
@@ -60,7 +61,7 @@ public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
         for (DataSetDataElement dataSetDataElement : dataSet.dataSetElements()) {
             String categoryComboUid = dataSetDataElement.categoryCombo() != null ?
                     dataSetDataElement.categoryCombo().uid() :
-                    null;
+                    CategoryComboModel.DEFAULT_UID;
             this.dataSetDataElementStore.insert(
                     DataSetDataElementLinkModel.create(
                             dataSet.uid(),
