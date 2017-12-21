@@ -42,7 +42,7 @@ public class DataSetEndpointCall extends GenericEndpointCallImpl<DataSet> {
 
     public DataSetEndpointCall(GenericCallData data, DataSetService dataSetService,
                                GenericHandler<DataSet, DataSetModel> dataSetHandler, Set<String> uids) {
-        super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids);
+        super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids, 64);
         this.dataSetService = dataSetService;
     }
 

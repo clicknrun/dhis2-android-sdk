@@ -46,13 +46,16 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
 
     private ResourceModel.Type resourceType;
     private Set<String> uids;
+    private Integer limit;
 
     public GenericEndpointCallImpl(GenericCallData data, GenericHandler<P, ?> handler,
-                                   ResourceModel.Type resourceType, Set<String> uids) {
+                                   ResourceModel.Type resourceType, Set<String> uids,
+                                   Integer limit) {
         this.data = data;
         this.handler = handler;
         this.resourceType = resourceType;
         this.uids = uids;
+        this.limit = limit;
     }
 
     @Override
@@ -72,7 +75,7 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
             isExecuted = true;
         }
 
-        if (uids.size() > MAX_UIDS) {
+        if (limit != null && uids.size() > MAX_UIDS) {
             throw new IllegalArgumentException(
                     "Can't handle the amount of objects of type " + resourceType +
                             ": " + uids.size() + ". " + "Max size is: " + MAX_UIDS);

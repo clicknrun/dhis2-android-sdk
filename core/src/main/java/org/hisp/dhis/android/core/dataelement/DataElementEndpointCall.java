@@ -43,7 +43,7 @@ public class DataElementEndpointCall extends GenericEndpointCallImpl<DataElement
     public DataElementEndpointCall(GenericCallData data, DataElementService dataElementService,
                                    GenericHandler<DataElement, DataElementModel> dataElementHandler,
                                    Set<String> uids) {
-        super(data, dataElementHandler, ResourceModel.Type.DATA_ELEMENT, uids);
+        super(data, dataElementHandler, ResourceModel.Type.DATA_ELEMENT, uids, null);
         this.dataElementService = dataElementService;
     }
 
