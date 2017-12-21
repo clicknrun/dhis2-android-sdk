@@ -43,7 +43,7 @@ public class CategoryEndpointCall extends GenericEndpointCallImpl<Category> {
     public CategoryEndpointCall(GenericCallData data, CategoryService categoryService,
                                 GenericHandler<Category, CategoryModel> categoryHandler,
                                 Set<String> uids) {
-        super(data, categoryHandler, ResourceModel.Type.CATEGORY_COMBO, uids, null);
+        super(data, categoryHandler, ResourceModel.Type.CATEGORY, uids, null);
         this.categoryService = categoryService;
     }
 
