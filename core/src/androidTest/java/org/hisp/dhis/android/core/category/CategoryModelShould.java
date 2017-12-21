@@ -46,9 +46,9 @@ import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.UID;
 import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.fillIdentifiableModelProperties;
 
 @RunWith(AndroidJUnit4.class)
-public class CategoryModelTests extends IdentifiableModelShould<CategoryModel, Category> {
+public class CategoryModelShould extends IdentifiableModelShould<CategoryModel, Category> {
 
-    public CategoryModelTests() {
+    public CategoryModelShould() {
         super(CategoryModel.Columns.all(), 6, CategoryModel.Factory);
     }
 
