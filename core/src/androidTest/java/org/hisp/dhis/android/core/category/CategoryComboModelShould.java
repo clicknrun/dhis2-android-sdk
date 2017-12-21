@@ -28,58 +28,45 @@
 
 package org.hisp.dhis.android.core.category;
 
-import android.content.ContentValues;
-import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hisp.dhis.android.core.common.IdentifiableModelShould;
 import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
-import org.hisp.dhis.android.core.utils.ColumnsAsserts;
-import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
-import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CODE;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CREATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DELETED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DISPLAY_NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.LAST_UPDATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.UID;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.fillIdentifiableModelProperties;
 
 @RunWith(AndroidJUnit4.class)
-public class CategoryComboModelTests {
-    private final CategoryComboModel ccm;
+public class CategoryComboModelShould extends IdentifiableModelShould<CategoryComboModel, CategoryCombo> {
 
-    public CategoryComboModelTests() {
+    public CategoryComboModelShould() {
+        super(CategoryComboModel.Columns.all(), 6, CategoryComboModel.Factory);
+    }
+
+    @Override
+    protected CategoryComboModel buildModel() {
         CategoryComboModel.Builder categoryComboModelBuilder = CategoryComboModel.builder();
-        FillPropertiesTestUtils.fillIdentifiableModelProperties(categoryComboModelBuilder);
-        this.ccm = categoryComboModelBuilder.build();
+        fillIdentifiableModelProperties(categoryComboModelBuilder);
+        return categoryComboModelBuilder.build();
     }
 
-    @Test
-    public void create_shouldConvertToCategoryComboModel() {
-        MatrixCursor cursor = new MatrixCursor(ColumnsArrayUtils.getColumnsWithId(
-                CategoryComboModel.Columns.all()));
-        cursor.addRow(ColumnsArrayUtils.getIdentifiableModelAsObjectArray(ccm));
-        cursor.moveToFirst();
-
-        CategoryComboModel modelFromDB = CategoryComboModel.create(cursor);
-        cursor.close();
-
-        assertThat(modelFromDB).isEqualTo(ccm);
+    @Override
+    protected CategoryCombo buildPojo() {
+        return CategoryCombo.create(UID, CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED,
+                new ArrayList<Category>(), new ArrayList<CategoryOptionCombo>(), DELETED);
     }
 
-    @Test
-    public void create_shouldConvertToContentValues() {
-        ContentValues contentValues = ccm.toContentValues();
-
-        ContentValuesTestUtils.testIdentifiableModelContentValues(contentValues, ccm);
-    }
-
-    @Test
-    public void columns_shouldReturnModelColumns() {
-        String[] columnArray = CategoryComboModel.Columns.all();
-        List<String> columnsList = Arrays.asList(columnArray);
-        assertThat(columnArray.length).isEqualTo(6);
-
-        ColumnsAsserts.testIdentifiableModelColumns(columnsList);
+    @Override
+    protected Object[] getModelAsObjectArray() {
+        return ColumnsArrayUtils.getIdentifiableModelAsObjectArray(model);
     }
 }

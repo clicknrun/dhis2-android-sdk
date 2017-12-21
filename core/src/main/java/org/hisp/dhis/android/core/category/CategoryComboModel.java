@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.StatementBinder;
 
 @AutoValue
@@ -55,16 +56,26 @@ public abstract class CategoryComboModel extends BaseIdentifiableObjectModel imp
         return AutoValue_CategoryComboModel.createFromCursor(cursor);
     }
 
-    public static CategoryComboModel create(CategoryCombo categoryCombo) {
-        return CategoryComboModel.builder()
-                .uid(categoryCombo.uid())
-                .code(categoryCombo.code())
-                .name(categoryCombo.name())
-                .displayName(categoryCombo.displayName())
-                .created(categoryCombo.created())
-                .lastUpdated(categoryCombo.lastUpdated())
-                .build();
-    }
+    public static ModelFactory<CategoryComboModel, CategoryCombo> Factory
+            = new ModelFactory<CategoryComboModel, CategoryCombo>() {
+
+                @Override
+                public CategoryComboModel fromCursor(Cursor cursor) {
+                    return create(cursor);
+                }
+
+                @Override
+                public CategoryComboModel fromPojo(CategoryCombo categoryCombo) {
+                    return CategoryComboModel.builder()
+                            .uid(categoryCombo.uid())
+                            .code(categoryCombo.code())
+                            .name(categoryCombo.name())
+                            .displayName(categoryCombo.displayName())
+                            .created(categoryCombo.created())
+                            .lastUpdated(categoryCombo.lastUpdated())
+                            .build();
+                }
+             };
 
     public static Builder builder() {
         return new $$AutoValue_CategoryComboModel.Builder();

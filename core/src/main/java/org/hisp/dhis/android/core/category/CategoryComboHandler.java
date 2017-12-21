@@ -57,7 +57,7 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
 
     @Override
     protected CategoryComboModel pojoToModel(CategoryCombo categoryCombo) {
-        return CategoryComboModel.create(categoryCombo);
+        return CategoryComboModel.Factory.fromPojo(categoryCombo);
     }
 
     public static CategoryComboHandler create(DatabaseAdapter databaseAdapter) {
