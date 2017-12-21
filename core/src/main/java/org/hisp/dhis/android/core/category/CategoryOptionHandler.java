@@ -38,6 +38,6 @@ public class CategoryOptionHandler extends GenericHandlerImpl<CategoryOption, Ca
 
     @Override
     protected CategoryOptionModel pojoToModel(CategoryOption categoryOption) {
-        return CategoryOptionModel.create(categoryOption);
+        return CategoryOptionModel.Factory.fromPojo(categoryOption);
     }
 }

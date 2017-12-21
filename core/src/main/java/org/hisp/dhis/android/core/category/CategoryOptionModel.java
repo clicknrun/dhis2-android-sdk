@@ -40,6 +40,7 @@ import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbDateColumnAdapter;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -70,21 +71,31 @@ public abstract class CategoryOptionModel extends BaseIdentifiableObjectModel im
         return AutoValue_CategoryOptionModel.createFromCursor(cursor);
     }
 
-    public static CategoryOptionModel create(CategoryOption categoryOption) {
-        return CategoryOptionModel.builder()
-                .uid(categoryOption.uid())
-                .code(categoryOption.code())
-                .name(categoryOption.name())
-                .displayName(categoryOption.displayName())
-                .created(categoryOption.created())
-                .lastUpdated(categoryOption.lastUpdated())
+    public static ModelFactory<CategoryOptionModel, CategoryOption> Factory
+            = new ModelFactory<CategoryOptionModel, CategoryOption>() {
 
-                .shortName(categoryOption.shortName())
-                .displayShortName(categoryOption.displayShortName())
-                .startDate(categoryOption.startDate())
-                .endDate(categoryOption.endDate())
-                .build();
-    }
+        @Override
+        public CategoryOptionModel fromCursor(Cursor cursor) {
+            return create(cursor);
+        }
+
+        @Override
+        public CategoryOptionModel fromPojo(CategoryOption categoryOption) {
+            return CategoryOptionModel.builder()
+                    .uid(categoryOption.uid())
+                    .code(categoryOption.code())
+                    .name(categoryOption.name())
+                    .displayName(categoryOption.displayName())
+                    .created(categoryOption.created())
+                    .lastUpdated(categoryOption.lastUpdated())
+
+                    .shortName(categoryOption.shortName())
+                    .displayShortName(categoryOption.displayShortName())
+                    .startDate(categoryOption.startDate())
+                    .endDate(categoryOption.endDate())
+                    .build();
+        }
+    };
 
     public static Builder builder() {
         return new $$AutoValue_CategoryOptionModel.Builder();
