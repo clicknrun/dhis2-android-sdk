@@ -26,32 +26,30 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.category;
+package org.hisp.dhis.android.core.dataset;
 
-import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericCallImpl;
+import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
+import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;
 import java.util.Set;
 
-public class CategoryComboCall extends GenericCallImpl<CategoryCombo> {
-    private final CategoryComboService categoryComboService;
+public class DataSetEndpointCall extends GenericEndpointCallImpl<DataSet> {
+    private final DataSetService dataSetService;
 
-    public CategoryComboCall(GenericCallData data, CategoryComboService categoryComboService,
-                             GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
-                             Set<String> uids) {
-        super(data, categoryComboHandler, ResourceModel.Type.CATEGORY_COMBO, uids);
-        this.categoryComboService = categoryComboService;
+    public DataSetEndpointCall(GenericCallData data, DataSetService dataSetService,
+                               GenericHandler<DataSet, DataSetModel> dataSetHandler, Set<String> uids) {
+        super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids);
+        this.dataSetService = dataSetService;
     }
 
     @Override
-    protected retrofit2.Call<Payload<CategoryCombo>> getCall(Set<String> uids, String lastUpdated)
+    protected retrofit2.Call<Payload<DataSet>> getCall(Set<String> uids, String lastUpdated)
             throws IOException {
-        return categoryComboService.getCategoryCombos(CategoryCombo.allFields,
-                CategoryCombo.lastUpdated.gt(lastUpdated), CategoryCombo.uid.in(uids), Boolean.FALSE);
+        return dataSetService.getDataSets(DataSet.allFields, DataSet.lastUpdated.gt(lastUpdated),
+                DataSet.uid.in(uids), Boolean.FALSE);
     }
 }

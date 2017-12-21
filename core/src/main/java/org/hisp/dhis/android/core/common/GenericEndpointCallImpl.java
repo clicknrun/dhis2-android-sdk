@@ -38,7 +38,8 @@ import java.util.Set;
 
 import retrofit2.Response;
 
-public abstract class GenericCallImpl<P extends BaseIdentifiableObject> implements Call<Response<Payload<P>>> {
+public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
+        implements Call<Response<Payload<P>>> {
     private GenericCallData data;
     private GenericHandler<P, ?> handler;
     private boolean isExecuted;
@@ -46,8 +47,8 @@ public abstract class GenericCallImpl<P extends BaseIdentifiableObject> implemen
     private ResourceModel.Type resourceType;
     private Set<String> uids;
 
-    public GenericCallImpl(GenericCallData data, GenericHandler<P, ?> handler,
-                           ResourceModel.Type resourceType, Set<String> uids) {
+    public GenericEndpointCallImpl(GenericCallData data, GenericHandler<P, ?> handler,
+                                   ResourceModel.Type resourceType, Set<String> uids) {
         this.data = data;
         this.handler = handler;
         this.resourceType = resourceType;

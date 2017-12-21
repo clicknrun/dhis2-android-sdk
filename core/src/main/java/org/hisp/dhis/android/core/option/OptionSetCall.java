@@ -29,7 +29,7 @@
 package org.hisp.dhis.android.core.option;
 
 import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericCallImpl;
+import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.api.Fields;
@@ -38,7 +38,7 @@ import org.hisp.dhis.android.core.resource.ResourceModel;
 import java.io.IOException;
 import java.util.Set;
 
-public class OptionSetCall extends GenericCallImpl<OptionSet> {
+public class OptionSetCall extends GenericEndpointCallImpl<OptionSet> {
     private final OptionSetService optionSetService;
 
     public OptionSetCall(GenericCallData data, OptionSetService optionSetService,

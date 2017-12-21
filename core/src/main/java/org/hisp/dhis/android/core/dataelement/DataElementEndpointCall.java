@@ -26,10 +26,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.dataelement;
 
 import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericCallImpl;
+import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.resource.ResourceModel;
@@ -37,19 +37,20 @@ import org.hisp.dhis.android.core.resource.ResourceModel;
 import java.io.IOException;
 import java.util.Set;
 
-public class DataSetCall extends GenericCallImpl<DataSet> {
-    private final DataSetService dataSetService;
+public class DataElementEndpointCall extends GenericEndpointCallImpl<DataElement> {
+    private final DataElementService dataElementService;
 
-    public DataSetCall(GenericCallData data, DataSetService dataSetService,
-                       GenericHandler<DataSet, DataSetModel> dataSetHandler, Set<String> uids) {
-        super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids);
-        this.dataSetService = dataSetService;
+    public DataElementEndpointCall(GenericCallData data, DataElementService dataElementService,
+                                   GenericHandler<DataElement, DataElementModel> dataElementHandler,
+                                   Set<String> uids) {
+        super(data, dataElementHandler, ResourceModel.Type.DATA_ELEMENT, uids);
+        this.dataElementService = dataElementService;
     }
 
     @Override
-    protected retrofit2.Call<Payload<DataSet>> getCall(Set<String> uids, String lastUpdated)
+    protected retrofit2.Call<Payload<DataElement>> getCall(Set<String> uids, String lastUpdated)
             throws IOException {
-        return dataSetService.getDataSets(DataSet.allFields, DataSet.lastUpdated.gt(lastUpdated),
-                DataSet.uid.in(uids), Boolean.FALSE);
+        return dataElementService.getDataElements(DataElement.allFields, DataElement.lastUpdated.gt(lastUpdated),
+                DataElement.uid.in(uids), Boolean.FALSE);
     }
 }

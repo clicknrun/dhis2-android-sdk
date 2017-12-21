@@ -30,7 +30,7 @@ package org.hisp.dhis.android.core.calls;
 import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.category.CategoryCombo;
-import org.hisp.dhis.android.core.category.CategoryComboCall;
+import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryComboService;
 import org.hisp.dhis.android.core.common.GenericCallData;
@@ -39,11 +39,11 @@ import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
-import org.hisp.dhis.android.core.dataelement.DataElementCall;
+import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.dataelement.DataElementService;
 import org.hisp.dhis.android.core.dataset.DataSet;
-import org.hisp.dhis.android.core.dataset.DataSetCall;
+import org.hisp.dhis.android.core.dataset.DataSetEndpointCall;
 import org.hisp.dhis.android.core.dataset.DataSetDataElement;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
@@ -300,21 +300,21 @@ public class MetadataCall implements Call<Response> {
             Set<String> dataSetUids = getAssignedDataSetUids(user);
 
             Response<Payload<DataSet>> dataSetResponse
-                    = new DataSetCall(data, dataSetService, dataSetHandler, dataSetUids).call();
+                    = new DataSetEndpointCall(data, dataSetService, dataSetHandler, dataSetUids).call();
             response = dataSetResponse;
             if (!response.isSuccessful()) {
                 return response;
             }
             List<DataSet> dataSets = dataSetResponse.body().items();
 
-            response = new DataElementCall(data, dataElementService, dataElementHandler,
+            response = new DataElementEndpointCall(data, dataElementService, dataElementHandler,
                     getDataElementUids(dataSets)).call();
 
             if (!response.isSuccessful()) {
                 return response;
             }
 
-            response = new CategoryComboCall(data, categoryComboService, categoryComboHandler,
+            response = new CategoryComboEndpointCall(data, categoryComboService, categoryComboHandler,
                     getCategoryComboUids(dataSets)).call();
 
             if (!response.isSuccessful()) {

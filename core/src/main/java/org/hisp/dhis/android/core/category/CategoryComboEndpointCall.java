@@ -26,31 +26,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataelement;
+package org.hisp.dhis.android.core.category;
 
-import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericCallImpl;
-import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
+import org.hisp.dhis.android.core.common.GenericCallData;
+import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;
 import java.util.Set;
 
-public class DataElementCall extends GenericCallImpl<DataElement> {
-    private final DataElementService dataElementService;
+public class CategoryComboEndpointCall extends GenericEndpointCallImpl<CategoryCombo> {
+    private final CategoryComboService categoryComboService;
 
-    public DataElementCall(GenericCallData data, DataElementService dataElementService,
-                           GenericHandler<DataElement, DataElementModel> dataElementHandler,
-                           Set<String> uids) {
-        super(data, dataElementHandler, ResourceModel.Type.DATA_ELEMENT, uids);
-        this.dataElementService = dataElementService;
+    public CategoryComboEndpointCall(GenericCallData data, CategoryComboService categoryComboService,
+                                     GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
+                                     Set<String> uids) {
+        super(data, categoryComboHandler, ResourceModel.Type.CATEGORY_COMBO, uids);
+        this.categoryComboService = categoryComboService;
     }
 
     @Override
-    protected retrofit2.Call<Payload<DataElement>> getCall(Set<String> uids, String lastUpdated)
+    protected retrofit2.Call<Payload<CategoryCombo>> getCall(Set<String> uids, String lastUpdated)
             throws IOException {
-        return dataElementService.getDataElements(DataElement.allFields, DataElement.lastUpdated.gt(lastUpdated),
-                DataElement.uid.in(uids), Boolean.FALSE);
+        return categoryComboService.getCategoryCombos(CategoryCombo.allFields,
+                CategoryCombo.lastUpdated.gt(lastUpdated), CategoryCombo.uid.in(uids), Boolean.FALSE);
     }
 }

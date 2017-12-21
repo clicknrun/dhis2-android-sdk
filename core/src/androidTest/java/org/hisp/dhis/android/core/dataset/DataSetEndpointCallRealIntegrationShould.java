@@ -10,7 +10,6 @@ import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceStoreImpl;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
@@ -20,13 +19,13 @@ import java.util.Set;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-public class DataSetCallRealIntegrationShould extends AbsStoreTestCase {
+public class DataSetEndpointCallRealIntegrationShould extends AbsStoreTestCase {
     /**
      * A quick integration test that is probably flaky, but will help with finding bugs related to the
      * metadataSyncCall. It works against the demo server.
      */
     private D2 d2;
-    private DataSetCall dataSetCall;
+    private DataSetEndpointCall dataSetCall;
 
     @Before
     @Override
@@ -36,7 +35,7 @@ public class DataSetCallRealIntegrationShould extends AbsStoreTestCase {
         dataSetCall = createCall();
     }
 
-    private DataSetCall createCall() {
+    private DataSetEndpointCall createCall() {
         DataSetService dataSetService =
                 d2.retrofit().create(DataSetService.class);
 
@@ -53,7 +52,7 @@ public class DataSetCallRealIntegrationShould extends AbsStoreTestCase {
         uids.add("Lpw6GcnTrmS");
         uids.add("TuL8IOPzpHh");
 
-        return new DataSetCall(data, dataSetService, dataSetHandler, uids);
+        return new DataSetEndpointCall(data, dataSetService, dataSetHandler, uids);
     }
 
     // @Test
@@ -61,7 +60,7 @@ public class DataSetCallRealIntegrationShould extends AbsStoreTestCase {
         retrofit2.Response loginResponse = d2.logIn("android", "Android123").call();
         assertThat(loginResponse.isSuccessful()).isTrue();
 
-        /* TODO This test won't independently of DataElementCall and CategoryComboCall, as
+        /* TODO This test won't independently of DataElementEndpointCall and CategoryComboEndpointCall, as
             the foreign keys constraints won't be satisfied */
         retrofit2.Response dataSetResponse = dataSetCall.call();
         assertThat(dataSetResponse.isSuccessful()).isTrue();
