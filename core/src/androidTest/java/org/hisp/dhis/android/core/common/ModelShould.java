@@ -28,18 +28,57 @@
 
 package org.hisp.dhis.android.core.common;
 
-import org.hisp.dhis.android.core.utils.ColumnsAsserts;
+import android.database.Cursor;
+import android.database.MatrixCursor;
+
+import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
 import org.junit.Test;
 
-public abstract class IdentifiableModelShould<M extends BaseIdentifiableObjectModel,
-        P extends BaseIdentifiableObject> extends ModelShould<M, P> {
+import static com.google.common.truth.Truth.assertThat;
 
-    public IdentifiableModelShould(String[] columns, int columnsLength) {
-        super(columns, columnsLength);
+public abstract class ModelShould<M extends BaseModel, P> {
+
+    protected final M model;
+    protected final P pojo;
+    protected final String[] columns;
+    protected final int columnsLength;
+
+    public ModelShould(String[] columns, int columnsLength) {
+        this.model = buildModel();
+        this.pojo = buildPojo();
+        this.columns = columns;
+        this.columnsLength = columnsLength;
+    }
+
+    protected abstract M buildModel();
+
+    protected abstract P buildPojo();
+
+    protected abstract M createModelFromCursor(Cursor cursor);
+
+    protected abstract M createModelFromPojo(P pojo);
+
+    protected abstract Object[] getModelAsObjectArray();
+
+    @Test
+    public void create_model_from_cursor() {
+        MatrixCursor cursor = new MatrixCursor(ColumnsArrayUtils.getColumnsWithId(columns));
+        cursor.addRow(getModelAsObjectArray());
+        cursor.moveToFirst();
+
+        M modelFromDB = createModelFromCursor(cursor);
+        cursor.close();
+
+        assertThat(modelFromDB).isEqualTo(model);
     }
 
     @Test
-    public void have_identifiable_model_columns() {
-        ColumnsAsserts.testIdentifiableModelColumns(columns);
+    public void create_model_from_pojo() {
+        assertThat(createModelFromPojo(pojo)).isEqualTo(model);
+    }
+
+    @Test
+    public void have_correct_number_of_columns() {
+        assertThat(columns.length).isEqualTo(columnsLength);
     }
 }

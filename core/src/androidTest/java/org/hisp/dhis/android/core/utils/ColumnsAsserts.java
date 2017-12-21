@@ -56,8 +56,6 @@ public class ColumnsAsserts {
     }
 
     public static void testNameableModelColumns(List<String> columnsList) {
-        testIdentifiableModelColumns(columnsList);
-
         assertThat(columnsList.contains(BaseNameableObjectModel.Columns.SHORT_NAME)).isEqualTo(true);
         assertThat(columnsList.contains(BaseNameableObjectModel.Columns.DISPLAY_SHORT_NAME)).isEqualTo(true);
         assertThat(columnsList.contains(BaseNameableObjectModel.Columns.DESCRIPTION)).isEqualTo(true);
