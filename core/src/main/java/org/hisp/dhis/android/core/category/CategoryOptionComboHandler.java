@@ -53,7 +53,7 @@ public class CategoryOptionComboHandler extends GenericHandlerImpl<CategoryOptio
 
     @Override
     protected CategoryOptionComboModel pojoToModel(CategoryOptionCombo categoryOptionCombo) {
-        return CategoryOptionComboModel.create(categoryOptionCombo);
+        return CategoryOptionComboModel.Factory.fromPojo(categoryOptionCombo);
     }
 
     private void saveCategoryOptionComboCategoryOptionLinks(CategoryOptionCombo categoryOptionCombo) {

@@ -28,68 +28,60 @@
 
 package org.hisp.dhis.android.core.category;
 
-import android.content.ContentValues;
-import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hisp.dhis.android.core.common.IdentifiableModelShould;
 import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
-import org.hisp.dhis.android.core.utils.ColumnsAsserts;
-import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
-import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.AndroidTestUtils.toInteger;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CODE;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CREATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DELETED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DISPLAY_NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.LAST_UPDATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.UID;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.fillIdentifiableModelProperties;
 
 @RunWith(AndroidJUnit4.class)
-public class CategoryOptionComboModelTests {
-    private final CategoryOptionComboModel cocm;
+public class CategoryOptionComboModelShould extends IdentifiableModelShould<CategoryOptionComboModel, CategoryOptionCombo> {
 
-    public CategoryOptionComboModelTests() {
-        CategoryOptionComboModel.Builder categoryOptionComboModelBuilder = CategoryOptionComboModel.builder();
-        FillPropertiesTestUtils.fillIdentifiableModelProperties(categoryOptionComboModelBuilder);
-        this.cocm = categoryOptionComboModelBuilder
-                .ignoreApproval(false)
-                .build();
+    public CategoryOptionComboModelShould() {
+        super(CategoryOptionComboModel.Columns.all(), 7, CategoryOptionComboModel.Factory);
+    }
+
+    @Override
+    protected CategoryOptionComboModel buildModel() {
+        CategoryOptionComboModel.Builder categoryOptionComboModel = CategoryOptionComboModel.builder();
+        fillIdentifiableModelProperties(categoryOptionComboModel);
+        return categoryOptionComboModel.ignoreApproval(false).build();
+    }
+
+    @Override
+    protected CategoryOptionCombo buildPojo() {
+        return CategoryOptionCombo.create(UID, CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED,
+                false, new ArrayList<CategoryOption>(), DELETED);
+    }
+
+    @Override
+    protected Object[] getModelAsObjectArray() {
+        return Utils.appendInNewArray(ColumnsArrayUtils.getIdentifiableModelAsObjectArray(model),
+                toInteger(model.ignoreApproval()));
     }
 
     @Test
-    public void create_shouldConvertToCategoryOptionComboModel() {
-        MatrixCursor cursor = new MatrixCursor(CategoryOptionComboModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(ColumnsArrayUtils.getIdentifiableModelAsObjectArray(cocm),
-                toInteger(cocm.ignoreApproval())));
-        cursor.moveToFirst();
+    public void have_extra_category_option_combo_model_columns() {
+        List<String> columnsList = Arrays.asList(columns);
 
-        CategoryOptionComboModel modelFromDB = CategoryOptionComboModel.create(cursor);
-        cursor.close();
-
-        assertThat(modelFromDB).isEqualTo(cocm);
-    }
-
-    @Test
-    public void create_shouldConvertToContentValues() {
-        ContentValues contentValues = cocm.toContentValues();
-
-        ContentValuesTestUtils.testIdentifiableModelContentValues(contentValues, cocm);
-
-        assertThat(contentValues.getAsBoolean(
-                CategoryOptionComboModel.Columns.IGNORE_APPROVAL)).isEqualTo(cocm.ignoreApproval());
-    }
-
-    @Test
-    public void columns_shouldReturnModelColumns() {
-        String[] columnArray = CategoryOptionComboModel.Columns.all();
-        List<String> columnsList = Arrays.asList(columnArray);
-        assertThat(columnArray.length).isEqualTo(7);
-
-        ColumnsAsserts.testIdentifiableModelColumns(columnsList);
-
-        assertThat(columnsList.contains(
-                CategoryOptionComboModel.Columns.IGNORE_APPROVAL)).isEqualTo(true);
+        assertThat(columnsList.contains(CategoryOptionComboModel.Columns.IGNORE_APPROVAL))
+                .isEqualTo(true);
     }
 }

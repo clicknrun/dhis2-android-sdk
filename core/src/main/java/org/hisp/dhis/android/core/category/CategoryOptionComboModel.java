@@ -38,6 +38,7 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.utils.Utils;
 
@@ -60,18 +61,27 @@ public abstract class CategoryOptionComboModel extends BaseIdentifiableObjectMod
         return AutoValue_CategoryOptionComboModel.createFromCursor(cursor);
     }
 
-    public static CategoryOptionComboModel create(CategoryOptionCombo categoryOptionCombo) {
-        return CategoryOptionComboModel.builder()
-                .uid(categoryOptionCombo.uid())
-                .code(categoryOptionCombo.code())
-                .name(categoryOptionCombo.name())
-                .displayName(categoryOptionCombo.displayName())
-                .created(categoryOptionCombo.created())
-                .lastUpdated(categoryOptionCombo.lastUpdated())
+    public static ModelFactory<CategoryOptionComboModel, CategoryOptionCombo> Factory
+            = new ModelFactory<CategoryOptionComboModel, CategoryOptionCombo>() {
 
-                .ignoreApproval(categoryOptionCombo.ignoreApproval())
-                .build();
-    }
+        @Override
+        public CategoryOptionComboModel fromCursor(Cursor cursor) {
+            return create(cursor);
+        }
+
+        @Override
+        public CategoryOptionComboModel fromPojo(CategoryOptionCombo categoryOptionCombo) {
+            return CategoryOptionComboModel.builder()
+                    .uid(categoryOptionCombo.uid())
+                    .code(categoryOptionCombo.code())
+                    .name(categoryOptionCombo.name())
+                    .displayName(categoryOptionCombo.displayName())
+                    .created(categoryOptionCombo.created())
+                    .lastUpdated(categoryOptionCombo.lastUpdated())
+                    .ignoreApproval(categoryOptionCombo.ignoreApproval())
+                    .build();
+        }
+    };
 
     public static Builder builder() {
         return new $$AutoValue_CategoryOptionComboModel.Builder();
