@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.StatementBinder;
 
 @AutoValue
@@ -53,16 +54,26 @@ public abstract class CategoryModel extends BaseIdentifiableObjectModel implemen
         return AutoValue_CategoryModel.createFromCursor(cursor);
     }
 
-    public static CategoryModel create(Category category) {
-        return CategoryModel.builder()
-                .uid(category.uid())
-                .code(category.code())
-                .name(category.name())
-                .displayName(category.displayName())
-                .created(category.created())
-                .lastUpdated(category.lastUpdated())
-                .build();
-    }
+    public static ModelFactory<CategoryModel, Category> Factory
+            = new ModelFactory<CategoryModel, Category>() {
+
+                @Override
+                public CategoryModel fromCursor(Cursor cursor) {
+                    return create(cursor);
+                }
+
+                @Override
+                public CategoryModel fromPojo(Category category) {
+                    return CategoryModel.builder()
+                            .uid(category.uid())
+                            .code(category.code())
+                            .name(category.name())
+                            .displayName(category.displayName())
+                            .created(category.created())
+                            .lastUpdated(category.lastUpdated())
+                            .build();
+                }
+            };
 
     public static Builder builder() {
         return new $$AutoValue_CategoryModel.Builder();

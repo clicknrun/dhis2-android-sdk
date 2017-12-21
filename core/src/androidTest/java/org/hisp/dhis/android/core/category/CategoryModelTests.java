@@ -28,7 +28,6 @@
 
 package org.hisp.dhis.android.core.category;
 
-import android.database.Cursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.common.IdentifiableModelShould;
@@ -50,7 +49,7 @@ import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.fillIdent
 public class CategoryModelTests extends IdentifiableModelShould<CategoryModel, Category> {
 
     public CategoryModelTests() {
-        super(CategoryModel.Columns.all(), 6);
+        super(CategoryModel.Columns.all(), 6, CategoryModel.Factory);
     }
 
     @Override
@@ -64,16 +63,6 @@ public class CategoryModelTests extends IdentifiableModelShould<CategoryModel, C
     protected Category buildPojo() {
         return Category.create(UID, CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED,
                 new ArrayList<CategoryOption>(), DELETED);
-    }
-
-    @Override
-    protected CategoryModel createModelFromCursor(Cursor cursor) {
-        return CategoryModel.create(cursor);
-    }
-
-    @Override
-    protected CategoryModel createModelFromPojo(Category pojo) {
-        return CategoryModel.create(pojo);
     }
 
     @Override

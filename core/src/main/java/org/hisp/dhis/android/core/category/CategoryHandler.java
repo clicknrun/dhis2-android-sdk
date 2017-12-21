@@ -53,7 +53,7 @@ public class CategoryHandler extends GenericHandlerImpl<Category, CategoryModel>
 
     @Override
     protected CategoryModel pojoToModel(Category category) {
-        return CategoryModel.create(category);
+        return CategoryModel.Factory.fromPojo(category);
     }
 
     private void saveCategoryCategoryOptionLinks(Category category) {

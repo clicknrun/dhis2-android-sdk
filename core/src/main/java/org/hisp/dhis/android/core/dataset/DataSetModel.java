@@ -28,7 +28,6 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
@@ -39,6 +38,7 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
+import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.data.database.DbPeriodTypeColumnAdapter;
@@ -77,43 +77,51 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
         }
     }
 
-    public static DataSetModel create(Cursor cursor) {
+    static DataSetModel create(Cursor cursor) {
         return AutoValue_DataSetModel.createFromCursor(cursor);
     }
 
-    public static DataSetModel create(DataSet dataSet) {
+    public static ModelFactory<DataSetModel, DataSet> Factory
+            = new ModelFactory<DataSetModel, DataSet>() {
+        @Override
+        public DataSetModel fromCursor(Cursor cursor) {
+            return create(cursor);
+        }
 
-        return DataSetModel.builder()
-                .uid(dataSet.uid())
-                .code(dataSet.code())
-                .name(dataSet.name())
-                .displayName(dataSet.displayName())
-                .created(dataSet.created())
-                .lastUpdated(dataSet.lastUpdated())
-                .shortName(dataSet.shortName())
-                .displayShortName(dataSet.displayShortName())
-                .description(dataSet.description())
-                .displayDescription(dataSet.displayDescription())
-                .periodType(dataSet.periodType())
-                .categoryCombo(dataSet.categoryComboUid())
-                .mobile(dataSet.mobile())
-                .version(dataSet.version())
-                .expiryDays(dataSet.expiryDays())
-                .timelyDays(dataSet.timelyDays())
-                .notifyCompletingUser(dataSet.notifyCompletingUser())
-                .openFuturePeriods(dataSet.openFuturePeriods())
-                .fieldCombinationRequired(dataSet.fieldCombinationRequired())
-                .validCompleteOnly(dataSet.validCompleteOnly())
-                .noValueRequiresComment(dataSet.noValueRequiresComment())
-                .skipOffline(dataSet.skipOffline())
-                .dataElementDecoration(dataSet.dataElementDecoration())
-                .renderAsTabs(dataSet.renderAsTabs())
-                .renderHorizontally(dataSet.renderHorizontally())
-                .build();
-    }
+        @Override
+        public DataSetModel fromPojo(DataSet dataSet) {
+            return DataSetModel.builder()
+                    .uid(dataSet.uid())
+                    .code(dataSet.code())
+                    .name(dataSet.name())
+                    .displayName(dataSet.displayName())
+                    .created(dataSet.created())
+                    .lastUpdated(dataSet.lastUpdated())
+                    .shortName(dataSet.shortName())
+                    .displayShortName(dataSet.displayShortName())
+                    .description(dataSet.description())
+                    .displayDescription(dataSet.displayDescription())
+                    .periodType(dataSet.periodType())
+                    .categoryCombo(dataSet.categoryComboUid())
+                    .mobile(dataSet.mobile())
+                    .version(dataSet.version())
+                    .expiryDays(dataSet.expiryDays())
+                    .timelyDays(dataSet.timelyDays())
+                    .notifyCompletingUser(dataSet.notifyCompletingUser())
+                    .openFuturePeriods(dataSet.openFuturePeriods())
+                    .fieldCombinationRequired(dataSet.fieldCombinationRequired())
+                    .validCompleteOnly(dataSet.validCompleteOnly())
+                    .noValueRequiresComment(dataSet.noValueRequiresComment())
+                    .skipOffline(dataSet.skipOffline())
+                    .dataElementDecoration(dataSet.dataElementDecoration())
+                    .renderAsTabs(dataSet.renderAsTabs())
+                    .renderHorizontally(dataSet.renderHorizontally())
+                    .build();
+        }
+    };
 
     public static Builder builder() {
-        return new $$AutoValue_DataSetModel.Builder();
+        return new $AutoValue_DataSetModel.Builder();
     }
 
     @Nullable
@@ -176,10 +184,6 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
     @Nullable
     @ColumnName(Columns.RENDER_HORIZONTALLY)
     public abstract Boolean renderHorizontally();
-
-    @NonNull
-    public abstract ContentValues toContentValues();
-
 
     @Override
     public void bindToStatement(@NonNull SQLiteStatement sqLiteStatement) {

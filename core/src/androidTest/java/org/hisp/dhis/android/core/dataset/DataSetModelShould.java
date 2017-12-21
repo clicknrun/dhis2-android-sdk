@@ -28,7 +28,6 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import android.database.Cursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.category.Category;
@@ -65,7 +64,7 @@ import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.fillNamea
 public class DataSetModelShould extends NameableModelShould<DataSetModel, DataSet> {
 
     public DataSetModelShould() {
-        super(DataSetModel.Columns.all(), 25);
+        super(DataSetModel.Columns.all(), 25, DataSetModel.Factory);
     }
 
     @Override
@@ -101,16 +100,6 @@ public class DataSetModelShould extends NameableModelShould<DataSetModel, DataSe
                 0, false, false,
                 false, false, false,
                 false, false, new ArrayList<DataSetDataElement>(), DELETED);
-    }
-
-    @Override
-    protected DataSetModel createModelFromCursor(Cursor cursor) {
-        return DataSetModel.create(cursor);
-    }
-
-    @Override
-    protected DataSetModel createModelFromPojo(DataSet pojo) {
-        return DataSetModel.create(pojo);
     }
 
     @Override

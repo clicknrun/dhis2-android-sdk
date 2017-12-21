@@ -34,8 +34,8 @@ import org.junit.Test;
 public abstract class NameableModelShould<M extends BaseNameableObjectModel,
         P extends BaseNameableObject> extends IdentifiableModelShould<M, P> {
 
-    public NameableModelShould(String[] columns, int columnsLength) {
-        super(columns, columnsLength);
+    public NameableModelShould(String[] columns, int columnsLength, ModelFactory<M, P> modelFactory) {
+        super(columns, columnsLength, modelFactory);
     }
 
     @Test

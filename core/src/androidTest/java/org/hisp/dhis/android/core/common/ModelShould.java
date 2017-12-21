@@ -28,7 +28,6 @@
 
 package org.hisp.dhis.android.core.common;
 
-import android.database.Cursor;
 import android.database.MatrixCursor;
 
 import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
@@ -42,21 +41,19 @@ public abstract class ModelShould<M extends BaseModel, P> {
     protected final P pojo;
     protected final String[] columns;
     protected final int columnsLength;
+    protected final ModelFactory<M, P> modelFactory;
 
-    public ModelShould(String[] columns, int columnsLength) {
+    public ModelShould(String[] columns, int columnsLength, ModelFactory<M, P> modelFactory) {
         this.model = buildModel();
         this.pojo = buildPojo();
         this.columns = columns;
         this.columnsLength = columnsLength;
+        this.modelFactory = modelFactory;
     }
 
     protected abstract M buildModel();
 
     protected abstract P buildPojo();
-
-    protected abstract M createModelFromCursor(Cursor cursor);
-
-    protected abstract M createModelFromPojo(P pojo);
 
     protected abstract Object[] getModelAsObjectArray();
 
@@ -66,7 +63,7 @@ public abstract class ModelShould<M extends BaseModel, P> {
         cursor.addRow(getModelAsObjectArray());
         cursor.moveToFirst();
 
-        M modelFromDB = createModelFromCursor(cursor);
+        M modelFromDB = modelFactory.fromCursor(cursor);
         cursor.close();
 
         assertThat(modelFromDB).isEqualTo(model);
@@ -74,7 +71,7 @@ public abstract class ModelShould<M extends BaseModel, P> {
 
     @Test
     public void create_model_from_pojo() {
-        assertThat(createModelFromPojo(pojo)).isEqualTo(model);
+        assertThat(modelFactory.fromPojo(pojo)).isEqualTo(model);
     }
 
     @Test

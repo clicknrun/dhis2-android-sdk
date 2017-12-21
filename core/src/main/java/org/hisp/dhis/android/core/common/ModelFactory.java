@@ -28,18 +28,9 @@
 
 package org.hisp.dhis.android.core.common;
 
-import org.hisp.dhis.android.core.utils.ColumnsAsserts;
-import org.junit.Test;
+import android.database.Cursor;
 
-public abstract class IdentifiableModelShould<M extends BaseIdentifiableObjectModel,
-        P extends BaseIdentifiableObject> extends ModelShould<M, P> {
-
-    public IdentifiableModelShould(String[] columns, int columnsLength, ModelFactory<M, P> modelFactory) {
-        super(columns, columnsLength, modelFactory);
-    }
-
-    @Test
-    public void have_identifiable_model_columns() {
-        ColumnsAsserts.testIdentifiableModelColumns(columns);
-    }
+public interface ModelFactory<M extends Model, P> {
+    public M fromCursor(Cursor cursor);
+    public M fromPojo(P p);
 }
