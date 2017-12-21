@@ -61,7 +61,7 @@ public abstract class CategoryCombo extends BaseIdentifiableObject {
 
     public static final Fields<CategoryCombo> allFields = Fields.<CategoryCombo>builder().fields(
             uid, code, name, displayName, created, lastUpdated, deleted,
-            categories.with(Category.allFields),
+            categories.with(Category.uid),
             categoryOptionCombos.with(CategoryOptionCombo.allFields)).build();
 
     @Nullable

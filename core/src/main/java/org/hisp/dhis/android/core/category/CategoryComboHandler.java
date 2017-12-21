@@ -36,16 +36,13 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
     private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
     private final ObjectStore<CategoryComboCategoryOptionComboLinkModel> categoryComboCategoryOptionComboStore;
 
-    private final CategoryHandler categoryHandler;
     private final CategoryOptionComboHandler categoryOptionComboHandler;
 
     private CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store,
                                  ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
                                  ObjectStore<CategoryComboCategoryOptionComboLinkModel> categoryComboCategoryOptionComboStore,
-                                 CategoryHandler categoryHandler,
                                  CategoryOptionComboHandler categoryOptionComboHandler) {
         super(store);
-        this.categoryHandler = categoryHandler;
         this.categoryOptionComboHandler = categoryOptionComboHandler;
         this.categoryComboCategoryStore = categoryComboCategoryStore;
         this.categoryComboCategoryOptionComboStore = categoryComboCategoryOptionComboStore;
@@ -53,7 +50,6 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
 
     @Override
     protected void afterObjectPersisted(CategoryCombo categoryCombo) {
-        this.categoryHandler.handleMany(categoryCombo.categories());
         this.categoryOptionComboHandler.handleMany(categoryCombo.categoryOptionCombos());
         saveCategoryComboCategoryLinks(categoryCombo);
         saveCategoryComboCategoryOptionComboLinks(categoryCombo);
@@ -69,9 +65,6 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
                 CategoryComboStoreFactory.create(databaseAdapter),
                 CategoryComboCategoryLinkStoreFactory.create(databaseAdapter),
                 CategoryComboCategoryOptionComboLinkStoreFactory.create(databaseAdapter),
-                new CategoryHandler(CategoryStoreFactory.create(databaseAdapter),
-                        CategoryCategoryOptionLinkStoreFactory.create(databaseAdapter),
-                        new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter))),
                 new CategoryOptionComboHandler(CategoryOptionComboStoreFactory.create(databaseAdapter),
                         CategoryOptionComboCategoryOptionLinkStoreFactory.create(databaseAdapter),
                         new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter))));

@@ -30,6 +30,7 @@ package org.hisp.dhis.android.core.category;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.ObjectStore;
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 public class CategoryHandler extends GenericHandlerImpl<Category, CategoryModel> {
 
@@ -54,6 +55,12 @@ public class CategoryHandler extends GenericHandlerImpl<Category, CategoryModel>
     @Override
     protected CategoryModel pojoToModel(Category category) {
         return CategoryModel.Factory.fromPojo(category);
+    }
+
+    public static CategoryHandler create(DatabaseAdapter databaseAdapter) {
+        return new CategoryHandler(CategoryStoreFactory.create(databaseAdapter),
+                CategoryCategoryOptionLinkStoreFactory.create(databaseAdapter),
+                new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter)));
     }
 
     private void saveCategoryCategoryOptionLinks(Category category) {

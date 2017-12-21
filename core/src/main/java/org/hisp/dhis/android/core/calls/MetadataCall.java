@@ -29,10 +29,14 @@ package org.hisp.dhis.android.core.calls;
 
 import android.support.annotation.NonNull;
 
+import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryComboService;
+import org.hisp.dhis.android.core.category.CategoryEndpointCall;
+import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryService;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
@@ -110,6 +114,7 @@ public class MetadataCall implements Call<Response> {
     private final DataSetService dataSetService;
     private final DataElementService dataElementService;
     private final CategoryComboService categoryComboService;
+    private final CategoryService categoryService;
     private final SystemInfoStore systemInfoStore;
     private final ResourceStore resourceStore;
     private final UserStore userStore;
@@ -135,6 +140,7 @@ public class MetadataCall implements Call<Response> {
     private final GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
     private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
     private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
+    private final GenericHandler<Category, CategoryModel> categoryHandler;
 
     private boolean isExecuted;
 
@@ -150,6 +156,7 @@ public class MetadataCall implements Call<Response> {
                         @NonNull DataSetService dataSetService,
                         @NonNull DataElementService dataElementService,
                         @NonNull CategoryComboService categoryComboService,
+                        @NonNull CategoryService categoryService,
                         @NonNull SystemInfoStore systemInfoStore,
                         @NonNull ResourceStore resourceStore,
                         @NonNull UserStore userStore,
@@ -176,7 +183,8 @@ public class MetadataCall implements Call<Response> {
                         @NonNull GenericHandler<DataSet, DataSetModel> dataSetHandler,
                         @NonNull GenericHandler<OptionSet, OptionSetModel> optionSetHandler,
                         @NonNull GenericHandler<DataElement, DataElementModel> dataElementHandler,
-                        @NonNull GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler) {
+                        @NonNull GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
+                        @NonNull GenericHandler<Category, CategoryModel> categoryHandler) {
         this.databaseAdapter = databaseAdapter;
         this.systemInfoService = systemInfoService;
         this.userService = userService;
@@ -187,6 +195,7 @@ public class MetadataCall implements Call<Response> {
         this.dataSetService = dataSetService;
         this.dataElementService = dataElementService;
         this.categoryComboService = categoryComboService;
+        this.categoryService = categoryService;
         this.systemInfoStore = systemInfoStore;
         this.resourceStore = resourceStore;
         this.userStore = userStore;
@@ -213,6 +222,7 @@ public class MetadataCall implements Call<Response> {
         this.optionSetHandler = optionSetHandler;
         this.dataElementHandler = dataElementHandler;
         this.categoryComboHandler = categoryComboHandler;
+        this.categoryHandler = categoryHandler;
     }
 
     @Override
@@ -314,8 +324,18 @@ public class MetadataCall implements Call<Response> {
                 return response;
             }
 
-            response = new CategoryComboEndpointCall(data, categoryComboService, categoryComboHandler,
+            Response<Payload<CategoryCombo>> categoryComboResponse =
+                    new CategoryComboEndpointCall(data, categoryComboService, categoryComboHandler,
                     getCategoryComboUids(dataSets)).call();
+            response = categoryComboResponse;
+
+            if (!response.isSuccessful()) {
+                return response;
+            }
+
+            List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
+            response = new CategoryEndpointCall(data, categoryService, categoryHandler,
+                    getCategoryUids(categoryCombos)).call();
 
             if (!response.isSuccessful()) {
                 return response;
@@ -502,6 +522,16 @@ public class MetadataCall implements Call<Response> {
         for (DataSet dataSet : dataSets) {
             for (DataSetDataElement dataSetElement : dataSet.dataSetElements()) {
                 uids.add(dataSetElement.dataElement().uid());
+            }
+        }
+        return uids;
+    }
+
+    private Set<String> getCategoryUids(List<CategoryCombo> categoryCombos) {
+        Set<String> uids = new HashSet<>();
+        for (CategoryCombo cc : categoryCombos) {
+            for (Category c : cc.categories()) {
+                uids.add(c.uid());
             }
         }
         return uids;
