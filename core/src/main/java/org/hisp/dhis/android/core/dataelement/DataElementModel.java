@@ -39,6 +39,7 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
+import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.data.database.DbValueTypeColumnAdapter;
@@ -74,30 +75,40 @@ public abstract class DataElementModel extends BaseNameableObjectModel implement
         return AutoValue_DataElementModel.createFromCursor(cursor);
     }
 
-    public static DataElementModel create(DataElement dataElement) {
-        OptionSet optionSet = dataElement.optionSet();
-        return DataElementModel.builder()
-                .uid(dataElement.uid())
-                .code(dataElement.code())
-                .name(dataElement.name())
-                .displayName(dataElement.displayName())
-                .created(dataElement.created())
-                .lastUpdated(dataElement.lastUpdated())
-                .shortName(dataElement.shortName())
-                .displayShortName(dataElement.displayShortName())
-                .description(dataElement.description())
-                .displayDescription(dataElement.displayDescription())
-                .valueType(dataElement.valueType())
-                .zeroIsSignificant(dataElement.zeroIsSignificant())
-                .aggregationType(dataElement.aggregationType())
-                .formName(dataElement.formName())
-                .numberType(dataElement.numberType())
-                .domainType(dataElement.domainType())
-                .dimension(dataElement.dimension())
-                .displayFormName(dataElement.displayFormName())
-                .optionSet(optionSet != null ? optionSet.uid() : null)
-                .build();
-    }
+    public static ModelFactory<DataElementModel, DataElement> Factory
+            = new ModelFactory<DataElementModel, DataElement>() {
+
+        @Override
+        public DataElementModel fromCursor(Cursor cursor) {
+            return create(cursor);
+        }
+
+        @Override
+        public DataElementModel fromPojo(DataElement dataElement) {
+            OptionSet optionSet = dataElement.optionSet();
+            return DataElementModel.builder()
+                    .uid(dataElement.uid())
+                    .code(dataElement.code())
+                    .name(dataElement.name())
+                    .displayName(dataElement.displayName())
+                    .created(dataElement.created())
+                    .lastUpdated(dataElement.lastUpdated())
+                    .shortName(dataElement.shortName())
+                    .displayShortName(dataElement.displayShortName())
+                    .description(dataElement.description())
+                    .displayDescription(dataElement.displayDescription())
+                    .valueType(dataElement.valueType())
+                    .zeroIsSignificant(dataElement.zeroIsSignificant())
+                    .aggregationType(dataElement.aggregationType())
+                    .formName(dataElement.formName())
+                    .numberType(dataElement.numberType())
+                    .domainType(dataElement.domainType())
+                    .dimension(dataElement.dimension())
+                    .displayFormName(dataElement.displayFormName())
+                    .optionSet(optionSet != null ? optionSet.uid() : null)
+                    .build();
+        }
+    };
 
     public static Builder builder() {
         return new $$AutoValue_DataElementModel.Builder();

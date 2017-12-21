@@ -148,7 +148,7 @@ public abstract class DataElement extends BaseNameableObject {
             @JsonProperty(DIMENSION) String dimension,
             @JsonProperty(DISPLAY_FORM_NAME) String displayFormName,
             @JsonProperty(OPTION_SET) OptionSet optionSet,
-            @JsonProperty(CATEGORY_COMBO)CategoryCombo categoryCombo,
+            @JsonProperty(CATEGORY_COMBO) CategoryCombo categoryCombo,
             @JsonProperty(DELETED) Boolean deleted) {
 
         return new AutoValue_DataElement(uid, code, name,
