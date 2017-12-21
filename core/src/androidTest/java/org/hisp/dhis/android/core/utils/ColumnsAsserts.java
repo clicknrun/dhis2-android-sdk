@@ -32,28 +32,39 @@ import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static com.google.common.truth.Truth.assertThat;
+
 /**
  * A collection of convenience functions/abstractions to be used by the tests.
  */
-public class AsObjectArrrayTestUtils {
+public class ColumnsAsserts {
 
-    private static Object[] getModelAsObjectArray(BaseModel m) {
-        return new Object[] {
-                m.id()
-        };
+    public static void testIdentifiableModelColumns(List<String> columnsList) {
+        assertThat(columnsList.contains(BaseIdentifiableObjectModel.Columns.UID)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseIdentifiableObjectModel.Columns.CODE)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseIdentifiableObjectModel.Columns.NAME)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseIdentifiableObjectModel.Columns.DISPLAY_NAME)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseIdentifiableObjectModel.Columns.CREATED)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseIdentifiableObjectModel.Columns.LAST_UPDATED)).isEqualTo(true);
     }
 
-    public static Object[] getIdentifiableModelAsObjectArray(BaseIdentifiableObjectModel m) {
-        return Utils.appendInNewArray(getModelAsObjectArray(m),
-                m.uid(), m.code(), m.name(), m.displayName(),
-                m.createdStr(), m.lastUpdatedStr()
-        );
+    public static void testIdentifiableModelColumns(String[] columns) {
+        testIdentifiableModelColumns(Arrays.asList(columns));
     }
 
-    public static Object[] getNameableModelAsObjectArray(BaseNameableObjectModel m) {
-        return Utils.appendInNewArray(getIdentifiableModelAsObjectArray(m),
-                m.shortName(), m.displayShortName(),
-                m.description(), m.displayDescription()
-        );
+    public static void testNameableModelColumns(List<String> columnsList) {
+        testIdentifiableModelColumns(columnsList);
+
+        assertThat(columnsList.contains(BaseNameableObjectModel.Columns.SHORT_NAME)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseNameableObjectModel.Columns.DISPLAY_SHORT_NAME)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseNameableObjectModel.Columns.DESCRIPTION)).isEqualTo(true);
+        assertThat(columnsList.contains(BaseNameableObjectModel.Columns.DISPLAY_DESCRIPTION)).isEqualTo(true);
+    }
+
+    public static void testNameableModelColumns(String[] columns) {
+        testNameableModelColumns(Arrays.asList(columns));
     }
 }

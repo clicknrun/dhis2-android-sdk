@@ -28,58 +28,56 @@
 
 package org.hisp.dhis.android.core.category;
 
-import android.content.ContentValues;
-import android.database.MatrixCursor;
+import android.database.Cursor;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
-import org.hisp.dhis.android.core.utils.ColumnsTestUtils;
-import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
-import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
-import org.hisp.dhis.android.core.utils.Utils;
-import org.junit.Test;
+import org.hisp.dhis.android.core.common.IdentifiableModelShould;
+import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CODE;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CREATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DELETED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DISPLAY_NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.LAST_UPDATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.UID;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.fillIdentifiableModelProperties;
 
 @RunWith(AndroidJUnit4.class)
-public class CategoryModelTests {
-    private final CategoryModel cm;
+public class CategoryModelTests extends IdentifiableModelShould<CategoryModel, Category> {
 
     public CategoryModelTests() {
+        super(CategoryModel.Columns.all(), 6);
+    }
+
+    @Override
+    protected CategoryModel buildModel() {
         CategoryModel.Builder categoryModelBuilder = CategoryModel.builder();
-        FillPropertiesTestUtils.fillIdentifiableModelProperties(categoryModelBuilder);
-        this.cm = categoryModelBuilder.build();
+        fillIdentifiableModelProperties(categoryModelBuilder);
+        return categoryModelBuilder.build();
     }
 
-    @Test
-    public void create_shouldConvertToCategoryModel() {
-        MatrixCursor cursor = new MatrixCursor(CategoryModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(AsObjectArrrayTestUtils.getIdentifiableModelAsObjectArray(cm)));
-        cursor.moveToFirst();
-
-        CategoryModel modelFromDB = CategoryModel.create(cursor);
-        cursor.close();
-
-        assertThat(modelFromDB).isEqualTo(cm);
+    @Override
+    protected Category buildPojo() {
+        return Category.create(UID, CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED,
+                new ArrayList<CategoryOption>(), DELETED);
     }
 
-    @Test
-    public void create_shouldConvertToContentValues() {
-        ContentValues contentValues = cm.toContentValues();
-
-        ContentValuesTestUtils.testIdentifiableModelContentValues(contentValues, cm);
+    @Override
+    protected CategoryModel createModelFromCursor(Cursor cursor) {
+        return CategoryModel.create(cursor);
     }
 
-    @Test
-    public void columns_shouldReturnModelColumns() {
-        String[] columnArray = CategoryModel.Columns.all();
-        List<String> columnsList = Arrays.asList(columnArray);
-        assertThat(columnArray.length).isEqualTo(7);
+    @Override
+    protected CategoryModel createModelFromPojo(Category pojo) {
+        return CategoryModel.create(pojo);
+    }
 
-        ColumnsTestUtils.testIdentifiableModelColumns(columnsList);
+    @Override
+    protected Object[] getModelAsObjectArray() {
+        return ColumnsArrayUtils.getIdentifiableModelAsObjectArray(model);
     }
 }

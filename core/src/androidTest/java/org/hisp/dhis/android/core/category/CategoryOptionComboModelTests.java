@@ -32,8 +32,8 @@ import android.content.ContentValues;
 import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
-import org.hisp.dhis.android.core.utils.ColumnsTestUtils;
+import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
+import org.hisp.dhis.android.core.utils.ColumnsAsserts;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -61,7 +61,7 @@ public class CategoryOptionComboModelTests {
     @Test
     public void create_shouldConvertToCategoryOptionComboModel() {
         MatrixCursor cursor = new MatrixCursor(CategoryOptionComboModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(AsObjectArrrayTestUtils.getIdentifiableModelAsObjectArray(cocm),
+        cursor.addRow(Utils.appendInNewArray(ColumnsArrayUtils.getIdentifiableModelAsObjectArray(cocm),
                 toInteger(cocm.ignoreApproval())));
         cursor.moveToFirst();
 
@@ -85,9 +85,9 @@ public class CategoryOptionComboModelTests {
     public void columns_shouldReturnModelColumns() {
         String[] columnArray = CategoryOptionComboModel.Columns.all();
         List<String> columnsList = Arrays.asList(columnArray);
-        assertThat(columnArray.length).isEqualTo(8);
+        assertThat(columnArray.length).isEqualTo(7);
 
-        ColumnsTestUtils.testIdentifiableModelColumns(columnsList);
+        ColumnsAsserts.testIdentifiableModelColumns(columnsList);
 
         assertThat(columnsList.contains(
                 CategoryOptionComboModel.Columns.IGNORE_APPROVAL)).isEqualTo(true);

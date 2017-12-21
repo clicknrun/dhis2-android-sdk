@@ -32,8 +32,8 @@ import android.content.ContentValues;
 import android.database.MatrixCursor;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
-import org.hisp.dhis.android.core.utils.ColumnsTestUtils;
+import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
+import org.hisp.dhis.android.core.utils.ColumnsAsserts;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -64,7 +64,7 @@ public class CategoryOptionModelTests {
     @Test
     public void create_shouldConvertToCategoryOptionModel() {
         MatrixCursor cursor = new MatrixCursor(CategoryOptionModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(AsObjectArrrayTestUtils.getIdentifiableModelAsObjectArray(com),
+        cursor.addRow(Utils.appendInNewArray(ColumnsArrayUtils.getIdentifiableModelAsObjectArray(com),
                 com.shortName(), com.displayShortName(), com.startDateStr(), com.endDateStr()));
         cursor.moveToFirst();
 
@@ -92,7 +92,7 @@ public class CategoryOptionModelTests {
         List<String> columnsList = Arrays.asList(columnArray);
         assertThat(columnArray.length).isEqualTo(11);
 
-        ColumnsTestUtils.testIdentifiableModelColumns(columnsList);
+        ColumnsAsserts.testIdentifiableModelColumns(columnsList);
 
         assertThat(columnsList.contains(CategoryOptionModel.Columns.SHORT_NAME)).isEqualTo(true);
         assertThat(columnsList.contains(CategoryOptionModel.Columns.DISPLAY_SHORT_NAME)).isEqualTo(true);

@@ -34,8 +34,8 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
-import org.hisp.dhis.android.core.utils.AsObjectArrrayTestUtils;
-import org.hisp.dhis.android.core.utils.ColumnsTestUtils;
+import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
+import org.hisp.dhis.android.core.utils.ColumnsAsserts;
 import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
 import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
@@ -77,7 +77,7 @@ public class DataSetModelTests {
     @Test
     public void create_shouldConvertToDataSetModel() {
         MatrixCursor cursor = new MatrixCursor(DataSetModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(AsObjectArrrayTestUtils.getNameableModelAsObjectArray(dm),
+        cursor.addRow(Utils.appendInNewArray(ColumnsArrayUtils.getNameableModelAsObjectArray(dm),
                 dm.periodType(), dm.categoryCombo(), toInteger(dm.mobile()), dm.version(),
                 dm.expiryDays(), dm.timelyDays(), toInteger(dm.notifyCompletingUser()),
                 dm.openFuturePeriods(), toInteger(dm.fieldCombinationRequired()),
@@ -120,9 +120,9 @@ public class DataSetModelTests {
     public void columns_shouldReturnModelColumns() {
         String[] columnArray = DataSetModel.Columns.all();
         List<String> columnsList = Arrays.asList(columnArray);
-        assertThat(columnArray.length).isEqualTo(26);
+        assertThat(columnArray.length).isEqualTo(25);
 
-        ColumnsTestUtils.testNameableModelColumns(columnsList);
+        ColumnsAsserts.testNameableModelColumns(columnsList);
 
         assertThat(columnsList.contains(Columns.PERIOD_TYPE)).isEqualTo(true);
         assertThat(columnsList.contains(Columns.CATEGORY_COMBO)).isEqualTo(true);

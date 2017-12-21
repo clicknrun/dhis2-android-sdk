@@ -28,39 +28,62 @@
 
 package org.hisp.dhis.android.core.utils;
 
+import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
 import org.hisp.dhis.android.core.common.BaseModel;
 import org.hisp.dhis.android.core.common.BaseNameableObjectModel;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
  * A collection of convenience functions/abstractions to be used by the tests.
  */
 public class FillPropertiesTestUtils {
+    public static final String UID = "test_uid";
+    public static final String CODE = "test_code";
+    public static final String NAME = "test_name";
+    public static final String DISPLAY_NAME = "test_display_name";
+    public static final Date CREATED = parseDate("2012-10-20T18:20:27.132");
+    public static final Date LAST_UPDATED = parseDate("2017-12-20T15:08:27.882");
+
+    public static final String SHORT_NAME = "test_short_name";
+    public static final String DISPLAY_SHORT_NAME = "test_display_short_name";
+    public static final String DESCRIPTION = "test_description";
+    public static final String DISPLAY_DESCRIPTION = "test_display_description";
+
+    public static final boolean DELETED = false;
+
+    private static Date parseDate(String dateStr) {
+        try {
+            return BaseIdentifiableObject.DATE_FORMAT.parse(dateStr);
+        } catch (ParseException e) {
+            return new Date();
+        }
+    }
 
     private static void fillModelProperties(BaseModel.Builder builder) {
-        builder
-                .id(2L);
+        /*builder
+                .id(2L);*/
     }
 
     public static void fillIdentifiableModelProperties(BaseIdentifiableObjectModel.Builder builder) {
         fillModelProperties(builder);
         builder
-                .uid("test_uid")
-                .code("test_code")
-                .name("test_name")
-                .displayName("test_display_name")
-                .created(new Date())
-                .lastUpdated(new Date());
+                .uid(UID)
+                .code(CODE)
+                .name(NAME)
+                .displayName(DISPLAY_NAME)
+                .created(CREATED)
+                .lastUpdated(LAST_UPDATED);
     }
 
     public static void fillNameableModelProperties(BaseNameableObjectModel.Builder builder) {
         fillIdentifiableModelProperties(builder);
         builder
-                .shortName("test_short_name")
-                .displayShortName("test_display_short_name")
-                .description("test_description")
-                .displayDescription("test_display_description");
+                .shortName(SHORT_NAME)
+                .displayShortName(DISPLAY_SHORT_NAME)
+                .description(DESCRIPTION)
+                .displayDescription(DISPLAY_DESCRIPTION);
     }
 }

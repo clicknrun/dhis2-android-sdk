@@ -26,60 +26,66 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.category;
+package org.hisp.dhis.android.core.common;
 
-import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
 import org.hisp.dhis.android.core.utils.ColumnsAsserts;
-import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
-import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 
-@RunWith(AndroidJUnit4.class)
-public class CategoryComboModelTests {
-    private final CategoryComboModel ccm;
+public abstract class IdentifiableModelShould<M extends BaseIdentifiableObjectModel,
+        P extends IdentifiableObject> {
 
-    public CategoryComboModelTests() {
-        CategoryComboModel.Builder categoryComboModelBuilder = CategoryComboModel.builder();
-        FillPropertiesTestUtils.fillIdentifiableModelProperties(categoryComboModelBuilder);
-        this.ccm = categoryComboModelBuilder.build();
+    protected final M model;
+    protected final P pojo;
+    protected final String[] columns;
+    protected final int columnsLength;
+
+    public IdentifiableModelShould(String[] columns, int columnsLength) {
+        this.model = buildModel();
+        this.pojo = buildPojo();
+        this.columns = columns;
+        this.columnsLength = columnsLength;
     }
 
+    protected abstract M buildModel();
+
+    protected abstract P buildPojo();
+
+    protected abstract M createModelFromCursor(Cursor cursor);
+
+    protected abstract M createModelFromPojo(P pojo);
+
+    protected abstract Object[] getModelAsObjectArray();
+
     @Test
-    public void create_shouldConvertToCategoryComboModel() {
-        MatrixCursor cursor = new MatrixCursor(ColumnsArrayUtils.getColumnsWithId(
-                CategoryComboModel.Columns.all()));
-        cursor.addRow(ColumnsArrayUtils.getIdentifiableModelAsObjectArray(ccm));
+    public void create_model_from_cursor() {
+        MatrixCursor cursor = new MatrixCursor(ColumnsArrayUtils.getColumnsWithId(columns));
+        cursor.addRow(getModelAsObjectArray());
         cursor.moveToFirst();
 
-        CategoryComboModel modelFromDB = CategoryComboModel.create(cursor);
+        M modelFromDB = createModelFromCursor(cursor);
         cursor.close();
 
-        assertThat(modelFromDB).isEqualTo(ccm);
+        assertThat(modelFromDB).isEqualTo(model);
     }
 
     @Test
-    public void create_shouldConvertToContentValues() {
-        ContentValues contentValues = ccm.toContentValues();
-
-        ContentValuesTestUtils.testIdentifiableModelContentValues(contentValues, ccm);
+    public void create_model_from_pojo() {
+        assertThat(createModelFromPojo(pojo)).isEqualTo(model);
     }
 
     @Test
-    public void columns_shouldReturnModelColumns() {
-        String[] columnArray = CategoryComboModel.Columns.all();
-        List<String> columnsList = Arrays.asList(columnArray);
-        assertThat(columnArray.length).isEqualTo(6);
+    public void have_identifiable_model_columns() {
+        ColumnsAsserts.testIdentifiableModelColumns(columns);
+    }
 
-        ColumnsAsserts.testIdentifiableModelColumns(columnsList);
+    @Test
+    public void have_correct_number_of_columns() {
+        assertThat(columns.length).isEqualTo(columnsLength);
     }
 }
