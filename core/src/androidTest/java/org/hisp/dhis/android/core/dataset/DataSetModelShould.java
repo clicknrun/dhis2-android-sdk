@@ -28,36 +28,53 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import android.content.ContentValues;
-import android.database.MatrixCursor;
+import android.database.Cursor;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hisp.dhis.android.core.category.Category;
+import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.category.CategoryOptionCombo;
+import org.hisp.dhis.android.core.common.NameableModelShould;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.hisp.dhis.android.core.dataset.DataSetModel.Columns;
 import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
-import org.hisp.dhis.android.core.utils.ColumnsAsserts;
-import org.hisp.dhis.android.core.utils.ContentValuesTestUtils;
-import org.hisp.dhis.android.core.utils.FillPropertiesTestUtils;
 import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.hisp.dhis.android.core.AndroidTestUtils.toInteger;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CODE;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.CREATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DELETED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DESCRIPTION;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DISPLAY_DESCRIPTION;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DISPLAY_NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.DISPLAY_SHORT_NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.LAST_UPDATED;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.SHORT_NAME;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.UID;
+import static org.hisp.dhis.android.core.utils.FillPropertiesTestUtils.fillNameableModelProperties;
 
 @RunWith(AndroidJUnit4.class)
-public class DataSetModelTests {
-    private final DataSetModel dm;
+public class DataSetModelShould extends NameableModelShould<DataSetModel, DataSet> {
 
-    public DataSetModelTests() {
-        DataSetModel.Builder dataModelBuilder = DataSetModel.builder();
-        FillPropertiesTestUtils.fillNameableModelProperties(dataModelBuilder);
-        this.dm = dataModelBuilder
+    public DataSetModelShould() {
+        super(DataSetModel.Columns.all(), 25);
+    }
+
+    @Override
+    protected DataSetModel buildModel() {
+        DataSetModel.Builder dataSetModelBuilder = DataSetModel.builder();
+        fillNameableModelProperties(dataSetModelBuilder);
+        dataSetModelBuilder
                 .periodType(PeriodType.Monthly)
-                .categoryCombo("test_categoryCombo")
+                .categoryCombo("cc_uid")
                 .mobile(false)
                 .version(1)
                 .expiryDays(10)
@@ -70,59 +87,46 @@ public class DataSetModelTests {
                 .skipOffline(false)
                 .dataElementDecoration(false)
                 .renderAsTabs(false)
-                .renderHorizontally(false)
-                .build();
+                .renderHorizontally(false);
+        return dataSetModelBuilder.build();
+    }
+
+    @Override
+    protected DataSet buildPojo() {
+        return DataSet.create(UID, CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED, SHORT_NAME,
+                DISPLAY_SHORT_NAME, DESCRIPTION, DISPLAY_DESCRIPTION, PeriodType.Monthly,
+                CategoryCombo.create("cc_uid", CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED,
+                        new ArrayList<Category>(), new ArrayList<CategoryOptionCombo>(), DELETED),
+                false, 1, 10, 100, false,
+                0, false, false,
+                false, false, false,
+                false, false, new ArrayList<DataSetDataElement>(), DELETED);
+    }
+
+    @Override
+    protected DataSetModel createModelFromCursor(Cursor cursor) {
+        return DataSetModel.create(cursor);
+    }
+
+    @Override
+    protected DataSetModel createModelFromPojo(DataSet pojo) {
+        return DataSetModel.create(pojo);
+    }
+
+    @Override
+    protected Object[] getModelAsObjectArray() {
+        return Utils.appendInNewArray(ColumnsArrayUtils.getNameableModelAsObjectArray(model),
+                model.periodType(), model.categoryCombo(), toInteger(model.mobile()), model.version(),
+                model.expiryDays(), model.timelyDays(), toInteger(model.notifyCompletingUser()),
+                model.openFuturePeriods(), toInteger(model.fieldCombinationRequired()),
+                toInteger(model.validCompleteOnly()), toInteger(model.noValueRequiresComment()),
+                toInteger(model.skipOffline()), toInteger(model.dataElementDecoration()),
+                toInteger(model.renderAsTabs()), toInteger(model.renderHorizontally()));
     }
 
     @Test
-    public void create_shouldConvertToDataSetModel() {
-        MatrixCursor cursor = new MatrixCursor(DataSetModel.Columns.all());
-        cursor.addRow(Utils.appendInNewArray(ColumnsArrayUtils.getNameableModelAsObjectArray(dm),
-                dm.periodType(), dm.categoryCombo(), toInteger(dm.mobile()), dm.version(),
-                dm.expiryDays(), dm.timelyDays(), toInteger(dm.notifyCompletingUser()),
-                dm.openFuturePeriods(), toInteger(dm.fieldCombinationRequired()),
-                toInteger(dm.validCompleteOnly()), toInteger(dm.noValueRequiresComment()),
-                toInteger(dm.skipOffline()),toInteger(dm.dataElementDecoration()),
-                toInteger(dm.renderAsTabs()), toInteger(dm.renderHorizontally())
-        ));
-        cursor.moveToFirst();
-
-        DataSetModel modelFromDB = DataSetModel.create(cursor);
-        cursor.close();
-
-        assertThat(modelFromDB).isEqualTo(dm);
-    }
-
-    @Test
-    public void create_shouldConvertToContentValues() {
-        ContentValues contentValues = dm.toContentValues();
-
-        ContentValuesTestUtils.testNameableModelContentValues(contentValues, dm);
-
-        assertThat(contentValues.getAsString(Columns.PERIOD_TYPE)).isEqualTo(dm.periodType().name());
-        assertThat(contentValues.getAsString(Columns.CATEGORY_COMBO)).isEqualTo(dm.categoryCombo());
-        assertThat(contentValues.getAsBoolean(Columns.MOBILE)).isEqualTo(dm.mobile());
-        assertThat(contentValues.getAsInteger(Columns.VERSION)).isEqualTo(dm.version());
-        assertThat(contentValues.getAsInteger(Columns.EXPIRY_DAYS)).isEqualTo(dm.expiryDays());
-        assertThat(contentValues.getAsInteger(Columns.TIMELY_DAYS)).isEqualTo(dm.timelyDays());
-        assertThat(contentValues.getAsBoolean(Columns.NOTIFY_COMPLETING_USER)).isEqualTo(dm.notifyCompletingUser());
-        assertThat(contentValues.getAsInteger(Columns.OPEN_FUTURE_PERIODS)).isEqualTo(dm.openFuturePeriods());
-        assertThat(contentValues.getAsBoolean(Columns.FIELD_COMBINATION_REQUIRED)).isEqualTo(dm.fieldCombinationRequired());
-        assertThat(contentValues.getAsBoolean(Columns.VALID_COMPLETE_ONLY)).isEqualTo(dm.validCompleteOnly());
-        assertThat(contentValues.getAsBoolean(Columns.NO_VALUE_REQUIRES_COMMENT)).isEqualTo(dm.noValueRequiresComment());
-        assertThat(contentValues.getAsBoolean(Columns.SKIP_OFFLINE)).isEqualTo(dm.skipOffline());
-        assertThat(contentValues.getAsBoolean(Columns.DATA_ELEMENT_DECORATION)).isEqualTo(dm.dataElementDecoration());
-        assertThat(contentValues.getAsBoolean(Columns.RENDER_AS_TABS)).isEqualTo(dm.renderAsTabs());
-        assertThat(contentValues.getAsBoolean(Columns.RENDER_HORIZONTALLY)).isEqualTo(dm.renderHorizontally());
-    }
-
-    @Test
-    public void columns_shouldReturnModelColumns() {
-        String[] columnArray = DataSetModel.Columns.all();
-        List<String> columnsList = Arrays.asList(columnArray);
-        assertThat(columnArray.length).isEqualTo(25);
-
-        ColumnsAsserts.testNameableModelColumns(columnsList);
+    public void have_extra_data_set_model_columns() {
+        List<String> columnsList = Arrays.asList(columns);
 
         assertThat(columnsList.contains(Columns.PERIOD_TYPE)).isEqualTo(true);
         assertThat(columnsList.contains(Columns.CATEGORY_COMBO)).isEqualTo(true);
