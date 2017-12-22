@@ -33,8 +33,6 @@ import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryEndpointCall;
-import org.hisp.dhis.android.core.category.CategoryModel;
-import org.hisp.dhis.android.core.category.CategoryService;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
@@ -107,7 +105,6 @@ public class MetadataCall implements Call<Response> {
     private final OrganisationUnitService organisationUnitService;
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
-    private final CategoryService categoryService;
     private final SystemInfoStore systemInfoStore;
     private final ResourceStore resourceStore;
     private final UserStore userStore;
@@ -131,7 +128,6 @@ public class MetadataCall implements Call<Response> {
     private final TrackedEntityStore trackedEntityStore;
     private final GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
     private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
-    private final GenericHandler<Category, CategoryModel> categoryHandler;
 
     private final Retrofit retrofit;
 
@@ -146,7 +142,6 @@ public class MetadataCall implements Call<Response> {
                         @NonNull OrganisationUnitService organisationUnitService,
                         @NonNull TrackedEntityService trackedEntityService,
                         @NonNull OptionSetService optionSetService,
-                        @NonNull CategoryService categoryService,
                         @NonNull SystemInfoStore systemInfoStore,
                         @NonNull ResourceStore resourceStore,
                         @NonNull UserStore userStore,
@@ -172,7 +167,6 @@ public class MetadataCall implements Call<Response> {
                         @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
                         @NonNull GenericHandler<OptionSet, OptionSetModel> optionSetHandler,
                         @NonNull GenericHandler<DataElement, DataElementModel> dataElementHandler,
-                        @NonNull GenericHandler<Category, CategoryModel> categoryHandler,
                         @NonNull Retrofit retrofit) {
         this.databaseAdapter = databaseAdapter;
         this.systemInfoService = systemInfoService;
@@ -181,7 +175,6 @@ public class MetadataCall implements Call<Response> {
         this.organisationUnitService = organisationUnitService;
         this.trackedEntityService = trackedEntityService;
         this.optionSetService = optionSetService;
-        this.categoryService = categoryService;
         this.systemInfoStore = systemInfoStore;
         this.resourceStore = resourceStore;
         this.userStore = userStore;
@@ -206,7 +199,6 @@ public class MetadataCall implements Call<Response> {
         this.organisationUnitProgramLinkStore = organisationUnitProgramLinkStore;
         this.optionSetHandler = optionSetHandler;
         this.dataElementHandler = dataElementHandler;
-        this.categoryHandler = categoryHandler;
 
         this.retrofit = retrofit;
     }
@@ -318,8 +310,7 @@ public class MetadataCall implements Call<Response> {
             }
 
             List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
-            response = new CategoryEndpointCall(data, categoryService, categoryHandler,
-                    getCategoryUids(categoryCombos)).call();
+            response = CategoryEndpointCall.create(data, getCategoryUids(categoryCombos)).call();
 
             if (!response.isSuccessful()) {
                 return response;

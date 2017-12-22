@@ -40,7 +40,7 @@ import java.util.Set;
 public class CategoryEndpointCall extends GenericEndpointCallImpl<Category> {
     private final CategoryService categoryService;
 
-    public CategoryEndpointCall(GenericCallData data, CategoryService categoryService,
+    private CategoryEndpointCall(GenericCallData data, CategoryService categoryService,
                                 GenericHandler<Category, CategoryModel> categoryHandler,
                                 Set<String> uids) {
         super(data, categoryHandler, ResourceModel.Type.CATEGORY, uids, null);
@@ -52,5 +52,10 @@ public class CategoryEndpointCall extends GenericEndpointCallImpl<Category> {
             throws IOException {
         return categoryService.getCategories(Category.allFields,
                 Category.lastUpdated.gt(lastUpdated), Category.uid.in(uids), Boolean.FALSE);
+    }
+
+    public static CategoryEndpointCall create(GenericCallData data, Set<String> uids) {
+        return new CategoryEndpointCall(data, data.retrofit().create(CategoryService.class),
+                CategoryHandler.create(data.databaseAdapter()), uids);
     }
 }

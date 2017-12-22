@@ -30,8 +30,6 @@ package org.hisp.dhis.android.core.common;
 import org.hisp.dhis.android.core.calls.MetadataCall;
 import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
-import org.hisp.dhis.android.core.category.CategoryModel;
-import org.hisp.dhis.android.core.category.CategoryService;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
@@ -221,9 +219,6 @@ public class MetadataCallTests {
     private OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
 
     @Mock
-    private GenericHandler<Category, CategoryModel>  categoryHandler;
-
-    @Mock
     private GenericHandler<DataElement, DataElementModel> dataElementHandler;
 
     @Mock
@@ -243,9 +238,6 @@ public class MetadataCallTests {
 
     @Mock
     private OptionSetService optionSetService;
-
-    @Mock
-    private CategoryService categoryService;
 
     @Mock
     private Date serverDateTime;
@@ -329,9 +321,6 @@ public class MetadataCallTests {
         when(optionSetService.optionSets(
                 anyBoolean(), any(Fields.class), any(Filter.class))
         ).thenReturn(optionSetCall);
-        when(categoryService.getCategories(
-                any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
-                .thenReturn(categoryCall);
 
         when(systemInfo.serverDate()).thenReturn(serverDateTime);
         when(userCredentials.userRoles()).thenReturn(userRoles);
@@ -353,7 +342,7 @@ public class MetadataCallTests {
         metadataCall = new MetadataCall(
                 databaseAdapter, systemInfoService, userService,
                 programService, organisationUnitService, trackedEntityService, optionSetService,
-                categoryService, systemInfoStore, resourceStore, userStore,
+                systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
@@ -361,7 +350,7 @@ public class MetadataCallTests {
                 programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
                 organisationUnitProgramLinkStore, optionSetHandler, dataElementHandler,
-                categoryHandler, retrofit);
+                retrofit);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);
 

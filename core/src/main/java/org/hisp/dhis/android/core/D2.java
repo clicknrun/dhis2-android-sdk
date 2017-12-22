@@ -37,10 +37,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hisp.dhis.android.core.calls.Call;
 import org.hisp.dhis.android.core.calls.MetadataCall;
 import org.hisp.dhis.android.core.calls.TrackedEntityInstancePostCall;
-import org.hisp.dhis.android.core.category.Category;
-import org.hisp.dhis.android.core.category.CategoryHandler;
-import org.hisp.dhis.android.core.category.CategoryModel;
-import org.hisp.dhis.android.core.category.CategoryService;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.configuration.ConfigurationModel;
@@ -142,7 +138,6 @@ public final class D2 {
     private final OrganisationUnitService organisationUnitService;
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
-    private final CategoryService categoryService;
 
     // stores
     private final UserStore userStore;
@@ -181,7 +176,6 @@ public final class D2 {
 
     // handlers
     private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
-    private final GenericHandler<Category, CategoryModel> categoryHandler;
     private final OptionSetHandler optionSetHandler;
 
     @VisibleForTesting
@@ -198,7 +192,6 @@ public final class D2 {
         this.optionSetService = retrofit.create(OptionSetService.class);
         this.trackedEntityInstanceService = retrofit.create(TrackedEntityInstanceService.class);
         this.eventService = retrofit.create(EventService.class);
-        this.categoryService = retrofit.create(CategoryService.class);
 
         // stores
         this.userStore =
@@ -261,7 +254,6 @@ public final class D2 {
         // handlers
         this.optionSetHandler = OptionSetHandler.create(databaseAdapter);
         this.dataElementHandler = DataElementHandler.create(databaseAdapter, this.optionSetHandler);
-        this.categoryHandler = CategoryHandler.create(databaseAdapter);
     }
 
     @NonNull
@@ -310,14 +302,14 @@ public final class D2 {
         return new MetadataCall(
                 databaseAdapter, systemInfoService, userService, programService, organisationUnitService,
                 trackedEntityService, optionSetService,
-                categoryService, systemInfoStore, resourceStore, userStore,
+                systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
                 programStageDataElementStore, programStageSectionStore,
                 programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore,
-                optionSetHandler, dataElementHandler, categoryHandler, retrofit);
+                optionSetHandler, dataElementHandler, retrofit);
     }
 
     @NonNull
