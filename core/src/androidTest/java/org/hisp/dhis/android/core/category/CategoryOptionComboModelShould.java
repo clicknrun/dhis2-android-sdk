@@ -31,6 +31,7 @@ package org.hisp.dhis.android.core.category;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.common.IdentifiableModelShould;
+import org.hisp.dhis.android.core.common.ObjectWithUid;
 import org.hisp.dhis.android.core.utils.ColumnsArrayUtils;
 import org.hisp.dhis.android.core.utils.Utils;
 import org.junit.Test;
@@ -68,7 +69,7 @@ public class CategoryOptionComboModelShould extends IdentifiableModelShould<Cate
     @Override
     protected CategoryOptionCombo buildPojo() {
         return CategoryOptionCombo.create(UID, CODE, NAME, DISPLAY_NAME, CREATED, LAST_UPDATED,
-                false, new ArrayList<CategoryOption>(), DELETED);
+                false, new ArrayList<ObjectWithUid>(), DELETED);
     }
 
     @Override

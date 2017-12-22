@@ -5,7 +5,6 @@ import android.support.test.runner.AndroidJUnit4;
 import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.common.D2Factory;
 import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceStoreImpl;
@@ -37,15 +36,9 @@ public class DataSetEndpointCallRealIntegrationShould extends AbsStoreTestCase {
     }
 
     private DataSetEndpointCall createCall() {
-        DataSetService dataSetService =
-                d2.retrofit().create(DataSetService.class);
-
-        GenericHandler<DataSet, DataSetModel> dataSetHandler =
-                DataSetHandler.create(databaseAdapter());
-
         ResourceHandler resourceHandler =
                 new ResourceHandler(new ResourceStoreImpl(databaseAdapter()));
-        GenericCallData data = GenericCallData.create(databaseAdapter(), resourceHandler);
+        GenericCallData data = GenericCallData.create(databaseAdapter(), resourceHandler, d2.retrofit());
 
         Set<String> uids = new HashSet<>();
 
@@ -53,7 +46,7 @@ public class DataSetEndpointCallRealIntegrationShould extends AbsStoreTestCase {
         uids.add("Lpw6GcnTrmS");
         uids.add("TuL8IOPzpHh");
 
-        return new DataSetEndpointCall(data, dataSetService, dataSetHandler, uids);
+        return DataSetEndpointCall.create(data, uids);
     }
 
     // @Test

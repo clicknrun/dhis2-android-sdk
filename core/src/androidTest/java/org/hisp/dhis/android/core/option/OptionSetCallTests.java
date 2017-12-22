@@ -211,8 +211,9 @@ public class OptionSetCallTests extends AbsStoreTestCase {
         Set<String> uids = new HashSet<>();
         uids.add("POc7DkGU3QU");
 
+        // TODO fix
         GenericCallData data = GenericCallData.create(databaseAdapter(),
-                new ResourceHandler(resourceStore));
+                new ResourceHandler(resourceStore), null);
 
         GenericHandler<OptionSet, OptionSetModel> optionSetHandler = OptionSetHandler.create(databaseAdapter());
 
