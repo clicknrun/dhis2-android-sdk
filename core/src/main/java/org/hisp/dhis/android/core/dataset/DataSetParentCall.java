@@ -40,15 +40,16 @@ import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
-import org.hisp.dhis.android.core.organisationunit.OrganisationUnit;
 import org.hisp.dhis.android.core.user.User;
-import org.hisp.dhis.android.core.user.UserRole;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Response;
+
+import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getAssignedDataSetUids;
+import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getCategoryComboUids;
+import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getCategoryUids;
+import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getDataElementUids;
 
 public class DataSetParentCall implements Call<Response> {
     private boolean isExecuted;
@@ -115,77 +116,5 @@ public class DataSetParentCall implements Call<Response> {
         } else {
             return response;
         }
-    }
-
-    private Set<String> getAssignedDataSetUids(User user) {
-        if (user == null || user.userCredentials() == null || user.userCredentials().userRoles() == null) {
-            return null;
-        }
-
-        Set<String> dataSetUids = new HashSet<>();
-
-        getDataSetUidsFromUserRoles(user, dataSetUids);
-        getDataSetUidsFromOrganisationUnits(user, dataSetUids);
-
-        return dataSetUids;
-    }
-
-    private void getDataSetUidsFromOrganisationUnits(User user, Set<String> dataSetUids) {
-        List<OrganisationUnit> organisationUnits = user.organisationUnits();
-
-        if (organisationUnits != null) {
-            for (OrganisationUnit organisationUnit : organisationUnits) {
-                addDataSets(organisationUnit.dataSets(), dataSetUids);
-            }
-        }
-    }
-
-    private void getDataSetUidsFromUserRoles(User user, Set<String> dataSetUids) {
-        List<UserRole> userRoles = user.userCredentials().userRoles();
-
-        if (userRoles != null) {
-            for (UserRole userRole : userRoles) {
-                addDataSets(userRole.dataSets(), dataSetUids);
-            }
-        }
-    }
-
-    private void addDataSets(List<DataSet> dataSets, Set<String> dataSetUids) {
-        if (dataSets != null) {
-            for (DataSet dataSet : dataSets) {
-                dataSetUids.add(dataSet.uid());
-            }
-        }
-    }
-
-    private Set<String> getCategoryComboUids(List<DataSet> dataSets) {
-        Set<String> uids = new HashSet<>();
-        for (DataSet dataSet : dataSets) {
-            uids.add(dataSet.categoryComboUid());
-            for (DataElementCategoryCombo dataSetElement : dataSet.dataSetElements()) {
-                uids.add(dataSetElement.categoryComboUid());
-            }
-        }
-        return uids;
-    }
-
-    private Set<String> getDataElementUids(List<DataSet> dataSets) {
-        Set<String> uids = new HashSet<>();
-        for (DataSet dataSet : dataSets) {
-            for (DataElementCategoryCombo dataSetElement : dataSet.dataSetElements()) {
-                uids.add(dataSetElement.dataElement().uid());
-            }
-        }
-        return uids;
-    }
-
-    private Set<String> getCategoryUids(List<CategoryCombo> categoryCombos) {
-        Set<String> uids = new HashSet<>();
-        for (CategoryCombo cc : categoryCombos) {
-            for (Category c : cc.categories()) {
-                uids.add(c.uid());
-            }
-        }
-        return uids;
     }
 }
