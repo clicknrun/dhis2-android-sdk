@@ -29,6 +29,7 @@
 package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.ObjectWithUid;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -45,14 +46,10 @@ public class CategoryMocks {
                 false, getCategoryOptions(),null);
     }
 
-    public static List<CategoryOption> getCategoryOptions() throws ParseException {
-        return new ArrayList<>(Arrays.asList(new CategoryOption[] {
-                CategoryOption.create("OUUdG3sdOqb", null, null, null,
-                        null, null, null, null,
-                        null, null, null),
-                CategoryOption.create("RkbOhHwiOgW", null, null, null,
-                        null, null, null, null,
-                        null, null, null)
+    public static List<ObjectWithUid> getCategoryOptions() throws ParseException {
+        return new ArrayList<>(Arrays.asList(new ObjectWithUid[] {
+                ObjectWithUid.create("OUUdG3sdOqb"),
+                ObjectWithUid.create("RkbOhHwiOgW")
         }));
     }
 }
