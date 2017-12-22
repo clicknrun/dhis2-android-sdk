@@ -34,7 +34,9 @@ import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryEndpointCall;
+import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.GenericCallData;
+import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
@@ -77,44 +79,41 @@ public class DataSetParentCall implements Call<Response> {
             isExecuted = true;
         }
 
-        Response response;
         Transaction transaction = data.databaseAdapter().beginNewTransaction();
         try {
-            Set<String> dataSetUids = getAssignedDataSetUids(user);
+            Response<Payload<DataSet>> dataSetResponse = handleEndpointCall(
+                    DataSetEndpointCall.create(data, getAssignedDataSetUids(user)));
 
-            Response<Payload<DataSet>> dataSetResponse
-                    = DataSetEndpointCall.create(data, dataSetUids).call();
-            response = dataSetResponse;
-            if (!response.isSuccessful()) {
-                return response;
-            }
             List<DataSet> dataSets = dataSetResponse.body().items();
-
-            response = DataElementEndpointCall.create(data, getDataElementUids(dataSets)).call();
-
-            if (!response.isSuccessful()) {
-                return response;
-            }
+            handleEndpointCall(DataElementEndpointCall.create(data,
+                    getDataElementUids(dataSets)));
 
             Response<Payload<CategoryCombo>> categoryComboResponse =
-                    CategoryComboEndpointCall.create(data, getCategoryComboUids(dataSets)).call();
-            response = categoryComboResponse;
-
-            if (!response.isSuccessful()) {
-                return response;
-            }
+                    handleEndpointCall(CategoryComboEndpointCall.create(data,
+                            getCategoryComboUids(dataSets)));
 
             List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
-            response = CategoryEndpointCall.create(data, getCategoryUids(categoryCombos)).call();
-
-            if (!response.isSuccessful()) {
-                return response;
-            }
+            Response<Payload<Category>> categoryResponse =
+                    handleEndpointCall(CategoryEndpointCall.create(data,
+                            getCategoryUids(categoryCombos)));
             
             transaction.setSuccessful();
-            return response;
-        } finally {
+            return categoryResponse;
+        }
+        finally {
             transaction.end();
+        }
+    }
+
+    private <M extends BaseIdentifiableObject> Response<Payload<M>>
+        handleEndpointCall(GenericEndpointCallImpl<M> endpointCall)
+            throws Exception {
+        Response<Payload<M>> response = endpointCall.call();
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Unsuccessful call: " + endpointCall);
+        } else {
+            return response;
         }
     }
 
