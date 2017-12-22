@@ -12,19 +12,5 @@
   "dimensionItem": "i4Nbp8S2G6A",
   "startDate": "2016-04-01T00:00:00.000",
   "endDate": "2018-08-01T00:00:00.000",
-  "dimensionItemType": "CATEGORY_OPTION",
-  "user": {
-    "id": "GOLswS44mh8"
-  },
-  "translations": [],
-  "categories": [
-    {
-      "id": "yY2bQYqNt0o"
-    }
-  ],
-  "userGroupAccesses": [],
-  "attributeValues": [],
-  "categoryOptionGroups": [],
-  "userAccesses": [],
-  "legendSets": []
+  "dimensionItemType": "CATEGORY_OPTION"
 }
