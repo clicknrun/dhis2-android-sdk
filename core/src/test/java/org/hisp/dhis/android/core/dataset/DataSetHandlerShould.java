@@ -64,7 +64,7 @@ public class DataSetHandlerShould {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        dataSetHandler = new DataSetHandler(dataSetStore, dataSetDataElementStore);
+        dataSetHandler = new DataSetHandler(dataSetStore);
         when(dataSet.uid()).thenReturn("test_data_uid_uid");
         when(dataSet.dataSetElements()).thenReturn(Lists.newArrayList(
                 decc1, decc2));
