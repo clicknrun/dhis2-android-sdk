@@ -28,28 +28,26 @@
 
 package org.hisp.dhis.android.core.category;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.BaseObjectShould;
+import org.hisp.dhis.android.core.common.ObjectShould;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class CategoryOptionTests {
+public class CategoryOptionShould extends BaseObjectShould implements ObjectShould {
 
+    public CategoryOptionShould() {
+        super("category/categoryOption.json");
+    }
+
+    @Override
     @Test
-    public void categoryOption_shouldMapFromJsonString() throws IOException, ParseException {
-        ObjectMapper objectMapper = Inject.objectMapper();
-        InputStream jsonStream = this.getClass().getClassLoader()
-                .getResourceAsStream("category/categoryOption.json");
-
+    public void map_from_json_string() throws IOException, ParseException {
         CategoryOption option = objectMapper.readValue(jsonStream, CategoryOption.class);
-
 
         assertThat(option.uid()).isEqualTo("i4Nbp8S2G6A");
         assertThat(option.created()).isEqualTo(
