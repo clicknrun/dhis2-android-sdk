@@ -30,24 +30,21 @@ package org.hisp.dhis.android.core.category;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.ObjectStore;
+import org.hisp.dhis.android.core.common.ObjectWithUid;
 
 public class CategoryOptionComboHandler extends GenericHandlerImpl<CategoryOptionCombo, CategoryOptionComboModel> {
 
     private final ObjectStore<CategoryOptionComboCategoryOptionLinkModel> CategoryOptionComboCategoryOptionStore;
 
-    private final CategoryOptionHandler categoryOptionHandler;
-
     public CategoryOptionComboHandler(IdentifiableObjectStore<CategoryOptionComboModel> store,
-                                      ObjectStore<CategoryOptionComboCategoryOptionLinkModel> CategoryOptionComboCategoryOptionStore,
-                                      CategoryOptionHandler categoryOptionHandler) {
+                                      ObjectStore<CategoryOptionComboCategoryOptionLinkModel>
+                                              CategoryOptionComboCategoryOptionStore) {
         super(store);
-        this.categoryOptionHandler = categoryOptionHandler;
         this.CategoryOptionComboCategoryOptionStore = CategoryOptionComboCategoryOptionStore;
     }
 
     @Override
     protected void afterObjectPersisted(CategoryOptionCombo categoryOptionCombo) {
-        categoryOptionHandler.handleMany(categoryOptionCombo.categoryOptions());
         saveCategoryOptionComboCategoryOptionLinks(categoryOptionCombo);
     }
 
@@ -57,7 +54,7 @@ public class CategoryOptionComboHandler extends GenericHandlerImpl<CategoryOptio
     }
 
     private void saveCategoryOptionComboCategoryOptionLinks(CategoryOptionCombo categoryOptionCombo) {
-        for (CategoryOption categoryOption : categoryOptionCombo.categoryOptions()) {
+        for (ObjectWithUid categoryOption : categoryOptionCombo.categoryOptions()) {
             this.CategoryOptionComboCategoryOptionStore.insert(
                     CategoryOptionComboCategoryOptionLinkModel.create(
                             categoryOptionCombo.uid(),

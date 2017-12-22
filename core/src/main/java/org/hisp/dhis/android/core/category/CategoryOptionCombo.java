@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.ObjectWithUid;
 import org.hisp.dhis.android.core.data.api.Field;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.NestedField;
@@ -56,11 +57,11 @@ public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
     public static final Field<CategoryOptionCombo, Boolean> deleted = Field.create(DELETED);
 
     public static final Field<CategoryOptionCombo, Boolean> ignoreApproval = Field.create(IGNORE_APPROVAL);
-    public static final NestedField<CategoryOptionCombo, CategoryOption> categoryOptions = NestedField.create(CATEGORY_OPTIONS);
+    public static final NestedField<CategoryOptionCombo, ObjectWithUid> categoryOptions = NestedField.create(CATEGORY_OPTIONS);
 
     public static final Fields<CategoryOptionCombo> allFields = Fields.<CategoryOptionCombo>builder().fields(
             uid, code, name, displayName, created, lastUpdated, deleted, ignoreApproval,
-            categoryOptions.with(CategoryOption.allFields)).build();
+            categoryOptions.with(ObjectWithUid.uid)).build();
 
     @Nullable
     @JsonProperty(IGNORE_APPROVAL)
@@ -68,7 +69,7 @@ public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
 
     @Nullable
     @JsonProperty(CATEGORY_OPTIONS)
-    public abstract List<CategoryOption> categoryOptions();
+    public abstract List<ObjectWithUid> categoryOptions();
 
     @JsonCreator
     public static CategoryOptionCombo create(
@@ -80,7 +81,7 @@ public abstract class CategoryOptionCombo extends BaseIdentifiableObject {
             @JsonProperty(LAST_UPDATED) Date lastUpdated,
 
             @JsonProperty(IGNORE_APPROVAL) Boolean ignoreApproval,
-            @JsonProperty(CATEGORY_OPTIONS) List<CategoryOption> categoryOptions,
+            @JsonProperty(CATEGORY_OPTIONS) List<ObjectWithUid> categoryOptions,
 
             @JsonProperty(DELETED) Boolean deleted) {
 
