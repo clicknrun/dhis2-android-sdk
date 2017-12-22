@@ -60,11 +60,10 @@ public class CategoryShould extends BaseObjectShould implements ObjectShould {
         assertThat(category.displayName()).isEqualTo("Implementing Partner");
 
         // checking options
-        assertThat(category.categoryOptions().size()).isEqualTo(3);
+        assertThat(category.categoryOptions().size()).isEqualTo(2);
         assertThat(category.categoryOptions().get(0).uid()).isEqualTo("C6nZpLKjEJr");
         assertThat(category.categoryOptions().get(0).name())
                 .isEqualTo("African Medical and Research Foundation");
         assertThat(category.categoryOptions().get(1).uid()).isEqualTo("CW81uF03hvV");
-        assertThat(category.categoryOptions().get(2).uid()).isEqualTo("B3nxOazOO2G");
     }
 }
