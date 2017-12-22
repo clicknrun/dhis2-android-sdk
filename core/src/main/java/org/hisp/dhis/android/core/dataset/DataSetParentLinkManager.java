@@ -27,22 +27,38 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
-import org.hisp.dhis.android.core.common.GenericHandlerImpl;
-import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
+import org.hisp.dhis.android.core.common.ObjectStore;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
+import java.util.List;
 
-    DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore) {
-        super(dataSetStore);
+public class DataSetParentLinkManager {
+    private final ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore;
+
+    private DataSetParentLinkManager(
+            ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore) {
+        this.dataSetDataElementStore = dataSetDataElementStore;
     }
 
-    @Override
-    protected DataSetModel pojoToModel(DataSet dataSet) {
-        return DataSetModel.Factory.fromPojo(dataSet);
+    private void saveDataSetDataElementLink(DataSet dataSet) {
+        for (DataElementCategoryCombo dataSetDataElement : dataSet.dataSetElements()) {
+            this.dataSetDataElementStore.insert(
+                    DataSetDataElementLinkModel.create(
+                            dataSet.uid(),
+                            dataSetDataElement.dataElement().uid(),
+                            dataSetDataElement.categoryComboUid()
+                    ));
+        }
     }
 
-    public static DataSetHandler create(DatabaseAdapter databaseAdapter) {
-        return new DataSetHandler(DataSetStoreFactory.create(databaseAdapter));
+    public void saveDataSetDataElementLink(List<DataSet> dataSets) {
+        for (DataSet dataSet : dataSets) {
+            saveDataSetDataElementLink(dataSet);
+        }
+    }
+
+    static DataSetParentLinkManager create(DatabaseAdapter databaseAdapter) {
+        return new DataSetParentLinkManager(
+                DataSetDataElementLinkStoreFactory.create(databaseAdapter));
     }
 }

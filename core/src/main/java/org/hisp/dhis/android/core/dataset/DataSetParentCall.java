@@ -27,8 +27,6 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
-import android.support.annotation.NonNull;
-
 import org.hisp.dhis.android.core.calls.Call;
 import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
@@ -56,11 +54,12 @@ public class DataSetParentCall implements Call<Response> {
 
     private final User user;
     private final GenericCallData data;
+    private final DataSetParentLinkManager linkManager;
 
-    public DataSetParentCall(@NonNull User user,
-                             @NonNull GenericCallData data) {
+    private DataSetParentCall(User user, GenericCallData data, DataSetParentLinkManager linkManager) {
         this.data = data;
         this.user = user;
+        this.linkManager = linkManager;
     }
 
     @Override
@@ -97,6 +96,8 @@ public class DataSetParentCall implements Call<Response> {
             Response<Payload<Category>> categoryResponse =
                     handleEndpointCall(CategoryEndpointCall.create(data,
                             getCategoryUids(categoryCombos)));
+
+            linkManager.saveDataSetDataElementLink(dataSets);
             
             transaction.setSuccessful();
             return categoryResponse;
@@ -116,5 +117,10 @@ public class DataSetParentCall implements Call<Response> {
         } else {
             return response;
         }
+    }
+
+    public static DataSetParentCall create(User user, GenericCallData data) {
+        return new DataSetParentCall(user, data,
+                DataSetParentLinkManager.create(data.databaseAdapter()));
     }
 }
