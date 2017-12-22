@@ -76,7 +76,7 @@ public class GenericHandlerTests {
         genericHandler = new GenericHandlerImpl<DataElement, DataElementModel>(store) {
             @Override
             protected DataElementModel pojoToModel(DataElement dataElement) {
-                return DataElementModel.create(dataElement);
+                return DataElementModel.Factory.fromPojo(dataElement);
             }
 
             @Override

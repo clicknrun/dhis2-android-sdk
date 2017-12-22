@@ -28,9 +28,12 @@
 package org.hisp.dhis.android.core.common;
 
 import org.hisp.dhis.android.core.calls.MetadataCall;
+import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CategoryComboService;
+import org.hisp.dhis.android.core.category.CategoryModel;
+import org.hisp.dhis.android.core.category.CategoryService;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
@@ -144,6 +147,9 @@ public class MetadataCallTests {
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private retrofit2.Call<Payload<CategoryCombo>> categoryComboCall;
 
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private retrofit2.Call<Payload<Category>> categoryCall;
+
     @Mock
     private SystemInfo systemInfo;
 
@@ -223,6 +229,9 @@ public class MetadataCallTests {
     private GenericHandler<CategoryCombo, CategoryComboModel>  categoryComboHandler;
 
     @Mock
+    private GenericHandler<Category, CategoryModel>  categoryHandler;
+
+    @Mock
     private GenericHandler<DataElement, DataElementModel> dataElementHandler;
 
     @Mock
@@ -251,6 +260,9 @@ public class MetadataCallTests {
 
     @Mock
     private CategoryComboService categoryComboService;
+
+    @Mock
+    private CategoryService categoryService;
 
     @Mock
     private Date serverDateTime;
@@ -283,6 +295,9 @@ public class MetadataCallTests {
 
     @Mock
     private Payload<CategoryCombo> categoryComboPayload;
+
+    @Mock
+    private Payload<Category> categoryPayload;
 
     @Mock
     private Payload<DataElement> dataElementPayload;
@@ -340,6 +355,9 @@ public class MetadataCallTests {
         when(categoryComboService.getCategoryCombos(
                 any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
                 .thenReturn(categoryComboCall);
+        when(categoryService.getCategories(
+                any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
+                .thenReturn(categoryCall);
 
         when(systemInfo.serverDate()).thenReturn(serverDateTime);
         when(userCredentials.userRoles()).thenReturn(userRoles);
@@ -361,7 +379,7 @@ public class MetadataCallTests {
         metadataCall = new MetadataCall(
                 databaseAdapter, systemInfoService, userService,
                 programService, organisationUnitService, trackedEntityService, optionSetService,
-                dataSetService, dataElementService, categoryComboService, systemInfoStore, resourceStore,
+                dataSetService, dataElementService, categoryComboService, categoryService, systemInfoStore, resourceStore,
                 userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
@@ -370,7 +388,7 @@ public class MetadataCallTests {
                 programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
                 organisationUnitProgramLinkStore, dataSetHandler, optionSetHandler, dataElementHandler,
-                categoryComboHandler);
+                categoryComboHandler, categoryHandler);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);
 
@@ -383,6 +401,7 @@ public class MetadataCallTests {
         when(dataSetCall.execute()).thenReturn(Response.success(dataSetPayload));
         when(dataElementCall.execute()).thenReturn(Response.success(dataElementPayload));
         when(categoryComboCall.execute()).thenReturn(Response.success(categoryComboPayload));
+        when(categoryCall.execute()).thenReturn(Response.success(categoryPayload));
     }
 
     @Test
