@@ -71,19 +71,17 @@ public class DataSetParentCall extends TransactionalCall {
                 CategoryComboEndpointCall.create(data,getCategoryComboUids(dataSets));
         Response<Payload<CategoryCombo>> categoryComboResponse = categoryComboEndpointCall.download();
 
-
         List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
         CategoryEndpointCall categoryEndpointCall =
                 CategoryEndpointCall.create(data, getCategoryUids(categoryCombos));
         Response<Payload<Category>> categoryResponse = categoryEndpointCall.download();
 
-
         categoryEndpointCall.persist();
         categoryComboEndpointCall.persist();
         dataElementEndpointCall.persist();
-        //dataSetEndpointCall.persist();
+        dataSetEndpointCall.persist();
 
-        //linkManager.saveDataSetDataElementLink(dataSets);
+        linkManager.saveDataSetDataElementLink(dataSets);
         //linkManager.saveCategoryComboLinks(categoryCombos);
 
         return categoryResponse;
