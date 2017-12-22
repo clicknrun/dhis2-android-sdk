@@ -91,9 +91,9 @@ class DataSetParentLinkManager {
             Category category = categoryCombo.categories().get(i);
             this.categoryComboCategoryStore.insert(
                     CategoryComboCategoryLinkModel.create(
-                            categoryCombo.uid(),
-                            category.uid(),
-                            i + 1));
+                            category,
+                            i + 1,
+                            categoryCombo));
         }
     }
 
@@ -101,8 +101,7 @@ class DataSetParentLinkManager {
         for (CategoryOptionCombo categoryOptionCombo : categoryCombo.categoryOptionCombos()) {
             this.categoryComboCategoryOptionComboStore.insert(
                     CategoryComboCategoryOptionComboLinkModel.create(
-                            categoryCombo.uid(),
-                            categoryOptionCombo.uid()));
+                            categoryCombo, categoryOptionCombo));
         }
     }
 }

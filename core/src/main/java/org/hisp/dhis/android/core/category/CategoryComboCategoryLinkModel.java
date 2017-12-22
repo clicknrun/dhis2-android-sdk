@@ -62,11 +62,11 @@ public abstract class CategoryComboCategoryLinkModel extends BaseModel implement
     }
 
     public static CategoryComboCategoryLinkModel create(
-            String categoryUid, String categoryComboUid, int sortOrder) {
+            Category category, int sortOrder, CategoryCombo categoryCombo) {
         return CategoryComboCategoryLinkModel.builder()
-                .category(categoryUid)
+                .category(category.uid())
                 .sortOrder(sortOrder)
-                .categoryCombo(categoryComboUid)
+                .categoryCombo(categoryCombo.uid())
                 .build();
     }
 

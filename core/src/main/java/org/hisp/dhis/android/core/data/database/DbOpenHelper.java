@@ -807,8 +807,8 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_CATEGORY_COMBO_CATEGORY_OPTION_COMBO_LINK_TABLE =
             SQLStatementBuilder.createModelTable(CategoryComboCategoryOptionComboLinkModel.TABLE,
-                    CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_OPTION_COMBO + " TEXT NOT NULL," +
-                            CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
+                    CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_COMBO + " TEXT NOT NULL," +
+                            CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_OPTION_COMBO + " TEXT NOT NULL," +
                             " FOREIGN KEY (" + CategoryComboCategoryOptionComboLinkModel.Columns.CATEGORY_COMBO + ") " +
                             " REFERENCES " + CategoryComboModel.TABLE + " (" + CategoryComboModel.Columns.UID + ")" +
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
