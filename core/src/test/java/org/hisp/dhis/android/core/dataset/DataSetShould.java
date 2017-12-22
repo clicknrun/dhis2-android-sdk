@@ -28,36 +28,26 @@
 
 package org.hisp.dhis.android.core.dataset;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.BaseObjectShould;
+import org.hisp.dhis.android.core.common.ObjectShould;
 import org.hisp.dhis.android.core.common.PeriodType;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
-
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class DataSetTests {
+public class DataSetShould extends BaseObjectShould implements ObjectShould {
 
-    @Test
-    public void equals_shouldConformToContract() {
-        EqualsVerifier.forClass(DataSetModel.builder().build().getClass())
-                .suppress(Warning.NULL_FIELDS)
-                .verify();
+    public DataSetShould() {
+        super("dataset/dataSet.json");
     }
 
+    @Override
     @Test
-    public void dataSet_shouldMapFromJsonString() throws IOException, ParseException {
-        ObjectMapper objectMapper = Inject.objectMapper();
-        InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream("dataset/dataSet.json");
-
+    public void map_from_json_string() throws IOException, ParseException {
         DataSet dataSet = objectMapper.readValue(jsonStream, DataSet.class);
 
         assertThat(dataSet.code()).isEqualTo("DS_394131");
