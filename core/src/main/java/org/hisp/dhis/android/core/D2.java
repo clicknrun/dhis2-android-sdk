@@ -54,7 +54,6 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementHandler;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
-import org.hisp.dhis.android.core.dataelement.DataElementService;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetHandler;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
@@ -152,7 +151,6 @@ public final class D2 {
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
     private final DataSetService dataSetService;
-    private final DataElementService dataElementService;
     private final CategoryComboService categoryComboService;
     private final CategoryService categoryService;
 
@@ -213,7 +211,6 @@ public final class D2 {
         this.trackedEntityInstanceService = retrofit.create(TrackedEntityInstanceService.class);
         this.eventService = retrofit.create(EventService.class);
         this.dataSetService = retrofit.create(DataSetService.class);
-        this.dataElementService = retrofit.create(DataElementService.class);
         this.categoryComboService = retrofit.create(CategoryComboService.class);
         this.categoryService = retrofit.create(CategoryService.class);
 
@@ -328,7 +325,7 @@ public final class D2 {
     public Call<Response> syncMetaData() {
         return new MetadataCall(
                 databaseAdapter, systemInfoService, userService, programService, organisationUnitService,
-                trackedEntityService, optionSetService, dataSetService, dataElementService, categoryComboService,
+                trackedEntityService, optionSetService, dataSetService, categoryComboService,
                 categoryService, systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
@@ -336,7 +333,7 @@ public final class D2 {
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
                 programStageDataElementStore, programStageSectionStore,
                 programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore,
-                dataSetHandler, optionSetHandler, dataElementHandler, categoryComboHandler, categoryHandler);
+                dataSetHandler, optionSetHandler, dataElementHandler, categoryComboHandler, categoryHandler, retrofit);
     }
 
     @NonNull

@@ -40,7 +40,6 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
-import org.hisp.dhis.android.core.dataelement.DataElementService;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
@@ -102,6 +101,7 @@ import javax.net.ssl.HttpsURLConnection;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -149,6 +149,8 @@ public class MetadataCallTests {
 
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private retrofit2.Call<Payload<Category>> categoryCall;
+
+    private Retrofit retrofit;
 
     @Mock
     private SystemInfo systemInfo;
@@ -256,9 +258,6 @@ public class MetadataCallTests {
     private DataSetService dataSetService;
 
     @Mock
-    private DataElementService dataElementService;
-
-    @Mock
     private CategoryComboService categoryComboService;
 
     @Mock
@@ -349,9 +348,6 @@ public class MetadataCallTests {
         when(dataSetService.getDataSets(
                 any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
                 .thenReturn(dataSetCall);
-        when(dataElementService.getDataElements(
-                any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
-                .thenReturn(dataElementCall);
         when(categoryComboService.getCategoryCombos(
                 any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
                 .thenReturn(categoryComboCall);
@@ -379,7 +375,7 @@ public class MetadataCallTests {
         metadataCall = new MetadataCall(
                 databaseAdapter, systemInfoService, userService,
                 programService, organisationUnitService, trackedEntityService, optionSetService,
-                dataSetService, dataElementService, categoryComboService, categoryService, systemInfoStore, resourceStore,
+                dataSetService, categoryComboService, categoryService, systemInfoStore, resourceStore,
                 userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
@@ -388,7 +384,7 @@ public class MetadataCallTests {
                 programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
                 organisationUnitProgramLinkStore, dataSetHandler, optionSetHandler, dataElementHandler,
-                categoryComboHandler, categoryHandler);
+                categoryComboHandler, categoryHandler, retrofit);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);
 

@@ -32,6 +32,7 @@ import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
+import org.hisp.dhis.android.core.option.OptionSetHandler;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ import java.util.Set;
 public class DataElementEndpointCall extends GenericEndpointCallImpl<DataElement> {
     private final DataElementService dataElementService;
 
-    public DataElementEndpointCall(GenericCallData data, DataElementService dataElementService,
+    DataElementEndpointCall(GenericCallData data, DataElementService dataElementService,
                                    GenericHandler<DataElement, DataElementModel> dataElementHandler,
                                    Set<String> uids) {
         super(data, dataElementHandler, ResourceModel.Type.DATA_ELEMENT, uids, null);
@@ -52,5 +53,11 @@ public class DataElementEndpointCall extends GenericEndpointCallImpl<DataElement
             throws IOException {
         return dataElementService.getDataElements(DataElement.allFields, DataElement.lastUpdated.gt(lastUpdated),
                 DataElement.uid.in(uids), Boolean.FALSE);
+    }
+
+    public static DataElementEndpointCall create(GenericCallData data, Set<String> uids) {
+        return new DataElementEndpointCall(data, data.retrofit().create(DataElementService.class),
+                DataElementHandler.create(data.databaseAdapter(),
+                        OptionSetHandler.create(data.databaseAdapter())), uids);
     }
 }

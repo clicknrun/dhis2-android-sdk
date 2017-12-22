@@ -101,6 +101,7 @@ import java.util.List;
 import java.util.Set;
 
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 @SuppressWarnings({"PMD.ExcessiveImports", "PMD.TooManyFields"})
 public class MetadataCall implements Call<Response> {
@@ -112,7 +113,6 @@ public class MetadataCall implements Call<Response> {
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
     private final DataSetService dataSetService;
-    private final DataElementService dataElementService;
     private final CategoryComboService categoryComboService;
     private final CategoryService categoryService;
     private final SystemInfoStore systemInfoStore;
@@ -142,6 +142,8 @@ public class MetadataCall implements Call<Response> {
     private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
     private final GenericHandler<Category, CategoryModel> categoryHandler;
 
+    private final Retrofit retrofit;
+
     private boolean isExecuted;
 
     private final OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
@@ -154,7 +156,6 @@ public class MetadataCall implements Call<Response> {
                         @NonNull TrackedEntityService trackedEntityService,
                         @NonNull OptionSetService optionSetService,
                         @NonNull DataSetService dataSetService,
-                        @NonNull DataElementService dataElementService,
                         @NonNull CategoryComboService categoryComboService,
                         @NonNull CategoryService categoryService,
                         @NonNull SystemInfoStore systemInfoStore,
@@ -184,7 +185,8 @@ public class MetadataCall implements Call<Response> {
                         @NonNull GenericHandler<OptionSet, OptionSetModel> optionSetHandler,
                         @NonNull GenericHandler<DataElement, DataElementModel> dataElementHandler,
                         @NonNull GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
-                        @NonNull GenericHandler<Category, CategoryModel> categoryHandler) {
+                        @NonNull GenericHandler<Category, CategoryModel> categoryHandler,
+                        @NonNull Retrofit retrofit) {
         this.databaseAdapter = databaseAdapter;
         this.systemInfoService = systemInfoService;
         this.userService = userService;
@@ -193,7 +195,6 @@ public class MetadataCall implements Call<Response> {
         this.trackedEntityService = trackedEntityService;
         this.optionSetService = optionSetService;
         this.dataSetService = dataSetService;
-        this.dataElementService = dataElementService;
         this.categoryComboService = categoryComboService;
         this.categoryService = categoryService;
         this.systemInfoStore = systemInfoStore;
@@ -223,6 +224,8 @@ public class MetadataCall implements Call<Response> {
         this.dataElementHandler = dataElementHandler;
         this.categoryComboHandler = categoryComboHandler;
         this.categoryHandler = categoryHandler;
+
+        this.retrofit = retrofit;
     }
 
     @Override
@@ -253,7 +256,7 @@ public class MetadataCall implements Call<Response> {
                 return response;
             }
             GenericCallData data = GenericCallData.create(databaseAdapter,
-                    new ResourceHandler(resourceStore));
+                    new ResourceHandler(resourceStore), retrofit);
 
             response = new UserCall(
                     userService,
@@ -317,8 +320,7 @@ public class MetadataCall implements Call<Response> {
             }
             List<DataSet> dataSets = dataSetResponse.body().items();
 
-            response = new DataElementEndpointCall(data, dataElementService, dataElementHandler,
-                    getDataElementUids(dataSets)).call();
+            response = DataElementEndpointCall.create(data, getDataElementUids(dataSets)).call();
 
             if (!response.isSuccessful()) {
                 return response;
