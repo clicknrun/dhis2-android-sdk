@@ -28,25 +28,25 @@
 
 package org.hisp.dhis.android.core.category;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.hisp.dhis.android.core.Inject;
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.BaseObjectShould;
+import org.hisp.dhis.android.core.common.ObjectShould;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class CategoryTests {
-    @Test
-    public void category_shouldMapFromJsonString() throws IOException, ParseException {
-        ObjectMapper objectMapper = Inject.objectMapper();
-        InputStream jsonStream = this.getClass().getClassLoader()
-                .getResourceAsStream("category/category.json");
+public class CategoryShould extends BaseObjectShould implements ObjectShould {
 
+    public CategoryShould() {
+        super("category/category.json");
+    }
+
+    @Override
+    @Test
+    public void map_from_json_string() throws IOException, ParseException {
         Category category = objectMapper.readValue(jsonStream, Category.class);
 
         assertThat(category.uid()).isEqualTo("LFsZ8v5v7rq");
