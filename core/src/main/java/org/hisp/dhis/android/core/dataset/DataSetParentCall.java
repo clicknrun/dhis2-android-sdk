@@ -79,12 +79,12 @@ public class DataSetParentCall extends TransactionalCall {
 
 
         categoryEndpointCall.persist();
-        categoryComboEndpointCall.persist();
+        //categoryComboEndpointCall.persist();
         dataElementEndpointCall.persist();
-        dataSetEndpointCall.persist();
+        //dataSetEndpointCall.persist();
 
-        linkManager.saveDataSetDataElementLink(dataSets);
-        linkManager.saveCategoryComboLinks(categoryCombos);
+        //linkManager.saveDataSetDataElementLink(dataSets);
+        //linkManager.saveCategoryComboLinks(categoryCombos);
 
         return categoryResponse;
     }
