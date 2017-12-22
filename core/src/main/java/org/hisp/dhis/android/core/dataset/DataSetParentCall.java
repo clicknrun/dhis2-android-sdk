@@ -27,16 +27,13 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
-import org.hisp.dhis.android.core.calls.Call;
+import org.hisp.dhis.android.core.calls.TransactionalCall;
 import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryEndpointCall;
-import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
 import org.hisp.dhis.android.core.user.User;
 
@@ -49,75 +46,39 @@ import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getCate
 import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getCategoryUids;
 import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getDataElementUids;
 
-public class DataSetParentCall implements Call<Response> {
-    private boolean isExecuted;
-
+public class DataSetParentCall extends TransactionalCall {
     private final User user;
-    private final GenericCallData data;
     private final DataSetParentLinkManager linkManager;
 
     private DataSetParentCall(User user, GenericCallData data, DataSetParentLinkManager linkManager) {
-        this.data = data;
+        super(data);
         this.user = user;
         this.linkManager = linkManager;
     }
 
-    @Override
-    public boolean isExecuted() {
-        synchronized (this) {
-            return isExecuted;
-        }
-    }
 
     @Override
-    public Response call() throws Exception {
-        synchronized (this) {
-            if (isExecuted) {
-                throw new IllegalStateException("Already executed");
-            }
+    public Response callBody() throws Exception {
+        Response<Payload<DataSet>> dataSetResponse = handleEndpointCall(
+                DataSetEndpointCall.create(data, getAssignedDataSetUids(user)));
 
-            isExecuted = true;
-        }
+        List<DataSet> dataSets = dataSetResponse.body().items();
+        handleEndpointCall(DataElementEndpointCall.create(data,
+                getDataElementUids(dataSets)));
 
-        Transaction transaction = data.databaseAdapter().beginNewTransaction();
-        try {
-            Response<Payload<DataSet>> dataSetResponse = handleEndpointCall(
-                    DataSetEndpointCall.create(data, getAssignedDataSetUids(user)));
+        Response<Payload<CategoryCombo>> categoryComboResponse =
+                handleEndpointCall(CategoryComboEndpointCall.create(data,
+                        getCategoryComboUids(dataSets)));
 
-            List<DataSet> dataSets = dataSetResponse.body().items();
-            handleEndpointCall(DataElementEndpointCall.create(data,
-                    getDataElementUids(dataSets)));
+        List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
+        Response<Payload<Category>> categoryResponse =
+                handleEndpointCall(CategoryEndpointCall.create(data,
+                        getCategoryUids(categoryCombos)));
 
-            Response<Payload<CategoryCombo>> categoryComboResponse =
-                    handleEndpointCall(CategoryComboEndpointCall.create(data,
-                            getCategoryComboUids(dataSets)));
+        linkManager.saveDataSetDataElementLink(dataSets);
+        linkManager.saveCategoryComboLinks(categoryCombos);
 
-            List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
-            Response<Payload<Category>> categoryResponse =
-                    handleEndpointCall(CategoryEndpointCall.create(data,
-                            getCategoryUids(categoryCombos)));
-
-            linkManager.saveDataSetDataElementLink(dataSets);
-            linkManager.saveCategoryComboLinks(categoryCombos);
-
-            transaction.setSuccessful();
-            return categoryResponse;
-        }
-        finally {
-            transaction.end();
-        }
-    }
-
-    private <M extends BaseIdentifiableObject> Response<Payload<M>>
-        handleEndpointCall(GenericEndpointCallImpl<M> endpointCall)
-            throws Exception {
-        Response<Payload<M>> response = endpointCall.call();
-
-        if (!response.isSuccessful()) {
-            throw new RuntimeException("Unsuccessful call: " + endpointCall);
-        } else {
-            return response;
-        }
+        return categoryResponse;
     }
 
     public static DataSetParentCall create(User user, GenericCallData data) {
