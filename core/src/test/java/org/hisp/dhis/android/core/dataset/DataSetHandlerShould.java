@@ -27,59 +27,16 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
-import org.assertj.core.util.Lists;
-import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.common.ObjectStore;
-import org.hisp.dhis.android.core.common.ObjectWithUid;
-import org.junit.Before;
+import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class DataSetHandlerShould {
 
-    @Mock
-    private DataSet dataSet;
-
-    @Mock
-    private IdentifiableObjectStore<DataSetModel> dataSetStore;
-
-    @Mock
-    private ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore;
-
-    private DataElementCategoryCombo decc1 = DataElementCategoryCombo.create(
-            ObjectWithUid.create("de1"), ObjectWithUid.create("cc1"));
-
-    private DataElementCategoryCombo decc2 = DataElementCategoryCombo.create(
-            ObjectWithUid.create("de2"), ObjectWithUid.create("cc2"));
-
-    private DataSetHandler dataSetHandler;
-
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        dataSetHandler = new DataSetHandler(dataSetStore);
-        when(dataSet.uid()).thenReturn("test_data_uid_uid");
-        when(dataSet.dataSetElements()).thenReturn(Lists.newArrayList(
-                decc1, decc2));
-    }
-
     @Test
-    public void store_links() throws Exception {
-        dataSetHandler.handle(dataSet);
-        verify(dataSetDataElementStore).insert(expectedLink(decc1));
-        verify(dataSetDataElementStore).insert(expectedLink(decc2));
-    }
-
-    private DataSetDataElementLinkModel expectedLink(DataElementCategoryCombo decc) {
-        return DataSetDataElementLinkModel.builder()
-                .dataSet(dataSet.uid()).dataElement(decc.dataElement().uid())
-                .categoryCombo(decc.categoryComboUid()).build();
+    public void extend_generic_handler_impl() {
+        GenericHandlerImpl<DataSet, DataSetModel> genericHandler = new DataSetHandler(null);
     }
 }

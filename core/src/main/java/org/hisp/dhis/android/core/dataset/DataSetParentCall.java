@@ -77,7 +77,7 @@ public class DataSetParentCall extends TransactionalCall {
         Response<Payload<Category>> categoryResponse = categoryEndpointCall.call();
 
         linkManager.saveCategoryComboLinks(categoryCombos);
-        linkManager.saveDataSetDataElementLink(dataSets);
+        linkManager.saveDataSetDataElementLinks(dataSets);
 
         return categoryResponse;
     }

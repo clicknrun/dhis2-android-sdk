@@ -45,7 +45,7 @@ class DataSetParentLinkManager {
     private final ObjectStore<CategoryComboCategoryOptionComboLinkModel>
             categoryComboCategoryOptionComboStore;
 
-    private DataSetParentLinkManager(
+    DataSetParentLinkManager(
             ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore,
             ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
             ObjectStore<CategoryComboCategoryOptionComboLinkModel>
@@ -62,7 +62,7 @@ class DataSetParentLinkManager {
                 CategoryComboCategoryOptionComboLinkStoreFactory.create(databaseAdapter));
     }
 
-    void saveDataSetDataElementLink(List<DataSet> dataSets) {
+    void saveDataSetDataElementLinks(List<DataSet> dataSets) {
         for (DataSet dataSet : dataSets) {
             saveDataSetDataElementLink(dataSet);
         }
