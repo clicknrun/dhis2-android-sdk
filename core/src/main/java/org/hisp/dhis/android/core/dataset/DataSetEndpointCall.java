@@ -40,7 +40,7 @@ import java.util.Set;
 public class DataSetEndpointCall extends GenericEndpointCallImpl<DataSet> {
     private final DataSetService dataSetService;
 
-    public DataSetEndpointCall(GenericCallData data, DataSetService dataSetService,
+    private DataSetEndpointCall(GenericCallData data, DataSetService dataSetService,
                                GenericHandler<DataSet, DataSetModel> dataSetHandler, Set<String> uids) {
         super(data, dataSetHandler, ResourceModel.Type.DATA_SET, uids, 64);
         this.dataSetService = dataSetService;
@@ -51,5 +51,10 @@ public class DataSetEndpointCall extends GenericEndpointCallImpl<DataSet> {
             throws IOException {
         return dataSetService.getDataSets(DataSet.allFields, DataSet.lastUpdated.gt(lastUpdated),
                 DataSet.uid.in(uids), Boolean.FALSE);
+    }
+
+    public static DataSetEndpointCall create(GenericCallData data, Set<String> uids) {
+        return new DataSetEndpointCall(data, data.retrofit().create(DataSetService.class),
+                DataSetHandler.create(data.databaseAdapter()), uids);
     }
 }

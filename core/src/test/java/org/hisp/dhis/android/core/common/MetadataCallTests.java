@@ -41,8 +41,6 @@ import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.dataset.DataSet;
-import org.hisp.dhis.android.core.dataset.DataSetModel;
-import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetModel;
 import org.hisp.dhis.android.core.option.OptionSetService;
@@ -225,9 +223,6 @@ public class MetadataCallTests {
     private OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
 
     @Mock
-    private GenericHandler<DataSet, DataSetModel> dataSetHandler;
-
-    @Mock
     private GenericHandler<CategoryCombo, CategoryComboModel>  categoryComboHandler;
 
     @Mock
@@ -253,9 +248,6 @@ public class MetadataCallTests {
 
     @Mock
     private OptionSetService optionSetService;
-
-    @Mock
-    private DataSetService dataSetService;
 
     @Mock
     private CategoryComboService categoryComboService;
@@ -345,9 +337,6 @@ public class MetadataCallTests {
         when(optionSetService.optionSets(
                 anyBoolean(), any(Fields.class), any(Filter.class))
         ).thenReturn(optionSetCall);
-        when(dataSetService.getDataSets(
-                any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
-                .thenReturn(dataSetCall);
         when(categoryComboService.getCategoryCombos(
                 any(Fields.class), any(Filter.class), any(Filter.class), anyBoolean()))
                 .thenReturn(categoryComboCall);
@@ -375,15 +364,14 @@ public class MetadataCallTests {
         metadataCall = new MetadataCall(
                 databaseAdapter, systemInfoService, userService,
                 programService, organisationUnitService, trackedEntityService, optionSetService,
-                dataSetService, categoryComboService, categoryService, systemInfoStore, resourceStore,
-                userStore,
+                categoryComboService, categoryService, systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
                 programTrackedEntityAttributeStore, programRuleVariableStore, programIndicatorStore,
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
                 programStageDataElementStore,
                 programStageSectionStore, programStageStore, relationshipStore, trackedEntityStore,
-                organisationUnitProgramLinkStore, dataSetHandler, optionSetHandler, dataElementHandler,
+                organisationUnitProgramLinkStore, optionSetHandler, dataElementHandler,
                 categoryComboHandler, categoryHandler, retrofit);
 
         when(databaseAdapter.beginNewTransaction()).thenReturn(transaction);

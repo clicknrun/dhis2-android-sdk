@@ -41,7 +41,7 @@ import java.util.Set;
 public class DataElementEndpointCall extends GenericEndpointCallImpl<DataElement> {
     private final DataElementService dataElementService;
 
-    DataElementEndpointCall(GenericCallData data, DataElementService dataElementService,
+    private DataElementEndpointCall(GenericCallData data, DataElementService dataElementService,
                                    GenericHandler<DataElement, DataElementModel> dataElementHandler,
                                    Set<String> uids) {
         super(data, dataElementHandler, ResourceModel.Type.DATA_ELEMENT, uids, null);

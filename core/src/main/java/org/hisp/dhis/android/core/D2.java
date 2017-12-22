@@ -54,10 +54,6 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementHandler;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
-import org.hisp.dhis.android.core.dataset.DataSet;
-import org.hisp.dhis.android.core.dataset.DataSetHandler;
-import org.hisp.dhis.android.core.dataset.DataSetModel;
-import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStore;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStoreImpl;
 import org.hisp.dhis.android.core.event.EventPostCall;
@@ -150,7 +146,6 @@ public final class D2 {
     private final OrganisationUnitService organisationUnitService;
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
-    private final DataSetService dataSetService;
     private final CategoryComboService categoryComboService;
     private final CategoryService categoryService;
 
@@ -190,7 +185,6 @@ public final class D2 {
     private final OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
 
     // handlers
-    private final GenericHandler<DataSet, DataSetModel> dataSetHandler;
     private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
     private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
     private final GenericHandler<Category, CategoryModel> categoryHandler;
@@ -210,7 +204,6 @@ public final class D2 {
         this.optionSetService = retrofit.create(OptionSetService.class);
         this.trackedEntityInstanceService = retrofit.create(TrackedEntityInstanceService.class);
         this.eventService = retrofit.create(EventService.class);
-        this.dataSetService = retrofit.create(DataSetService.class);
         this.categoryComboService = retrofit.create(CategoryComboService.class);
         this.categoryService = retrofit.create(CategoryService.class);
 
@@ -273,7 +266,6 @@ public final class D2 {
                 new OrganisationUnitProgramLinkStoreImpl(databaseAdapter);
 
         // handlers
-        this.dataSetHandler = DataSetHandler.create(databaseAdapter);
         this.optionSetHandler = OptionSetHandler.create(databaseAdapter);
         this.dataElementHandler = DataElementHandler.create(databaseAdapter, this.optionSetHandler);
         this.categoryComboHandler = CategoryComboHandler.create(databaseAdapter);
@@ -325,7 +317,7 @@ public final class D2 {
     public Call<Response> syncMetaData() {
         return new MetadataCall(
                 databaseAdapter, systemInfoService, userService, programService, organisationUnitService,
-                trackedEntityService, optionSetService, dataSetService, categoryComboService,
+                trackedEntityService, optionSetService, categoryComboService,
                 categoryService, systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
@@ -333,7 +325,7 @@ public final class D2 {
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
                 programStageDataElementStore, programStageSectionStore,
                 programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore,
-                dataSetHandler, optionSetHandler, dataElementHandler, categoryComboHandler, categoryHandler, retrofit);
+                optionSetHandler, dataElementHandler, categoryComboHandler, categoryHandler, retrofit);
     }
 
     @NonNull

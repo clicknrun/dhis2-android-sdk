@@ -45,12 +45,9 @@ import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
-import org.hisp.dhis.android.core.dataelement.DataElementService;
 import org.hisp.dhis.android.core.dataset.DataElementCategoryCombo;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetEndpointCall;
-import org.hisp.dhis.android.core.dataset.DataSetModel;
-import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetCall;
 import org.hisp.dhis.android.core.option.OptionSetModel;
@@ -112,7 +109,6 @@ public class MetadataCall implements Call<Response> {
     private final OrganisationUnitService organisationUnitService;
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
-    private final DataSetService dataSetService;
     private final CategoryComboService categoryComboService;
     private final CategoryService categoryService;
     private final SystemInfoStore systemInfoStore;
@@ -136,7 +132,6 @@ public class MetadataCall implements Call<Response> {
     private final ProgramStageStore programStageStore;
     private final RelationshipTypeStore relationshipStore;
     private final TrackedEntityStore trackedEntityStore;
-    private final GenericHandler<DataSet, DataSetModel> dataSetHandler;
     private final GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
     private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
     private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
@@ -155,7 +150,6 @@ public class MetadataCall implements Call<Response> {
                         @NonNull OrganisationUnitService organisationUnitService,
                         @NonNull TrackedEntityService trackedEntityService,
                         @NonNull OptionSetService optionSetService,
-                        @NonNull DataSetService dataSetService,
                         @NonNull CategoryComboService categoryComboService,
                         @NonNull CategoryService categoryService,
                         @NonNull SystemInfoStore systemInfoStore,
@@ -181,7 +175,6 @@ public class MetadataCall implements Call<Response> {
                         @NonNull RelationshipTypeStore relationshipStore,
                         @NonNull TrackedEntityStore trackedEntityStore,
                         @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
-                        @NonNull GenericHandler<DataSet, DataSetModel> dataSetHandler,
                         @NonNull GenericHandler<OptionSet, OptionSetModel> optionSetHandler,
                         @NonNull GenericHandler<DataElement, DataElementModel> dataElementHandler,
                         @NonNull GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
@@ -194,7 +187,6 @@ public class MetadataCall implements Call<Response> {
         this.organisationUnitService = organisationUnitService;
         this.trackedEntityService = trackedEntityService;
         this.optionSetService = optionSetService;
-        this.dataSetService = dataSetService;
         this.categoryComboService = categoryComboService;
         this.categoryService = categoryService;
         this.systemInfoStore = systemInfoStore;
@@ -219,7 +211,6 @@ public class MetadataCall implements Call<Response> {
         this.relationshipStore = relationshipStore;
         this.trackedEntityStore = trackedEntityStore;
         this.organisationUnitProgramLinkStore = organisationUnitProgramLinkStore;
-        this.dataSetHandler = dataSetHandler;
         this.optionSetHandler = optionSetHandler;
         this.dataElementHandler = dataElementHandler;
         this.categoryComboHandler = categoryComboHandler;
@@ -313,7 +304,7 @@ public class MetadataCall implements Call<Response> {
             Set<String> dataSetUids = getAssignedDataSetUids(user);
 
             Response<Payload<DataSet>> dataSetResponse
-                    = new DataSetEndpointCall(data, dataSetService, dataSetHandler, dataSetUids).call();
+                    = DataSetEndpointCall.create(data, dataSetUids).call();
             response = dataSetResponse;
             if (!response.isSuccessful()) {
                 return response;
