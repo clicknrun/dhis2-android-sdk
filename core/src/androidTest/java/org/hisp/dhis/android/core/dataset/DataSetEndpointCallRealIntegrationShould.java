@@ -10,6 +10,7 @@ import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceStoreImpl;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
@@ -64,5 +65,9 @@ public class DataSetEndpointCallRealIntegrationShould extends AbsStoreTestCase {
             the foreign keys constraints won't be satisfied */
         retrofit2.Response dataSetResponse = dataSetCall.call();
         assertThat(dataSetResponse.isSuccessful()).isTrue();
+    }
+
+    @Test
+    public void stub() {
     }
 }
