@@ -60,29 +60,24 @@ public class DataSetParentCall extends TransactionalCall {
     public Response callBody() throws Exception {
         DataSetEndpointCall dataSetEndpointCall
                 = DataSetEndpointCall.create(data, getAssignedDataSetUids(user));
-        Response<Payload<DataSet>> dataSetResponse = dataSetEndpointCall.download();
+        Response<Payload<DataSet>> dataSetResponse = dataSetEndpointCall.call();
 
         List<DataSet> dataSets = dataSetResponse.body().items();
         DataElementEndpointCall dataElementEndpointCall =
                 DataElementEndpointCall.create(data, getDataElementUids(dataSets));
-        dataElementEndpointCall.download();
+        dataElementEndpointCall.call();
 
         CategoryComboEndpointCall categoryComboEndpointCall =
                 CategoryComboEndpointCall.create(data,getCategoryComboUids(dataSets));
-        Response<Payload<CategoryCombo>> categoryComboResponse = categoryComboEndpointCall.download();
+        Response<Payload<CategoryCombo>> categoryComboResponse = categoryComboEndpointCall.call();
 
         List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
         CategoryEndpointCall categoryEndpointCall =
                 CategoryEndpointCall.create(data, getCategoryUids(categoryCombos));
-        Response<Payload<Category>> categoryResponse = categoryEndpointCall.download();
+        Response<Payload<Category>> categoryResponse = categoryEndpointCall.call();
 
-        categoryEndpointCall.persist();
-        categoryComboEndpointCall.persist();
-        dataElementEndpointCall.persist();
-        dataSetEndpointCall.persist();
-
-        linkManager.saveDataSetDataElementLink(dataSets);
         linkManager.saveCategoryComboLinks(categoryCombos);
+        linkManager.saveDataSetDataElementLink(dataSets);
 
         return categoryResponse;
     }

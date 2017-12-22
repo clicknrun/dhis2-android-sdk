@@ -73,7 +73,7 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
         return persist();
     }
 
-    public final Response<Payload<P>> download() throws Exception {
+    private Response<Payload<P>> download() throws Exception {
         synchronized (this) {
             if (isExecuted) {
                 throw new IllegalArgumentException("Already executed");
@@ -101,7 +101,7 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
     protected abstract retrofit2.Call<Payload<P>> getCall(Set<String> uids,
                                                           String lastUpdated) throws IOException;
 
-    public Response<Payload<P>> persist() {
+    private Response<Payload<P>> persist() {
         if (response == null) {
             throw new RuntimeException("Trying to process call without download data");
         }
