@@ -99,7 +99,7 @@ public class DataSetModelShould extends NameableModelShould<DataSetModel, DataSe
                 false, 1, 10, 100, false,
                 0, false, false,
                 false, false, false,
-                false, false, new ArrayList<DataSetDataElement>(), DELETED);
+                false, false, new ArrayList<DataElementCategoryCombo>(), DELETED);
     }
 
     @Override
