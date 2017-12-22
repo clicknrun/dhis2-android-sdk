@@ -98,7 +98,8 @@ public class DataSetParentCall implements Call<Response> {
                             getCategoryUids(categoryCombos)));
 
             linkManager.saveDataSetDataElementLink(dataSets);
-            
+            linkManager.saveCategoryComboLinks(categoryCombos);
+
             transaction.setSuccessful();
             return categoryResponse;
         }

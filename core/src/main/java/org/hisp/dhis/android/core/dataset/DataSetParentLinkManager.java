@@ -27,17 +27,45 @@
  */
 package org.hisp.dhis.android.core.dataset;
 
+import org.hisp.dhis.android.core.category.Category;
+import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkModel;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryOptionCombo;
 import org.hisp.dhis.android.core.common.ObjectStore;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 import java.util.List;
 
-public class DataSetParentLinkManager {
+class DataSetParentLinkManager {
     private final ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore;
+    private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
+    private final ObjectStore<CategoryComboCategoryOptionComboLinkModel>
+            categoryComboCategoryOptionComboStore;
 
     private DataSetParentLinkManager(
-            ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore) {
+            ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore,
+            ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
+            ObjectStore<CategoryComboCategoryOptionComboLinkModel>
+                    categoryComboCategoryOptionComboStore) {
         this.dataSetDataElementStore = dataSetDataElementStore;
+        this.categoryComboCategoryStore = categoryComboCategoryStore;
+        this.categoryComboCategoryOptionComboStore = categoryComboCategoryOptionComboStore;
+    }
+
+    static DataSetParentLinkManager create(DatabaseAdapter databaseAdapter) {
+        return new DataSetParentLinkManager(
+                DataSetDataElementLinkStoreFactory.create(databaseAdapter),
+                CategoryComboCategoryLinkStoreFactory.create(databaseAdapter),
+                CategoryComboCategoryOptionComboLinkStoreFactory.create(databaseAdapter));
+    }
+
+    void saveDataSetDataElementLink(List<DataSet> dataSets) {
+        for (DataSet dataSet : dataSets) {
+            saveDataSetDataElementLink(dataSet);
+        }
     }
 
     private void saveDataSetDataElementLink(DataSet dataSet) {
@@ -51,14 +79,30 @@ public class DataSetParentLinkManager {
         }
     }
 
-    public void saveDataSetDataElementLink(List<DataSet> dataSets) {
-        for (DataSet dataSet : dataSets) {
-            saveDataSetDataElementLink(dataSet);
+    void saveCategoryComboLinks(List<CategoryCombo> categoryCombos) {
+        for (CategoryCombo categoryCombo : categoryCombos) {
+            saveCategoryComboCategoryLink(categoryCombo);
+            saveCategoryComboCategoryOptionComboLink(categoryCombo);
         }
     }
 
-    static DataSetParentLinkManager create(DatabaseAdapter databaseAdapter) {
-        return new DataSetParentLinkManager(
-                DataSetDataElementLinkStoreFactory.create(databaseAdapter));
+    private void saveCategoryComboCategoryLink(CategoryCombo categoryCombo) {
+        for (int i = 0; i < categoryCombo.categories().size(); i++) {
+            Category category = categoryCombo.categories().get(i);
+            this.categoryComboCategoryStore.insert(
+                    CategoryComboCategoryLinkModel.create(
+                            categoryCombo.uid(),
+                            category.uid(),
+                            i + 1));
+        }
+    }
+
+    private void saveCategoryComboCategoryOptionComboLink(CategoryCombo categoryCombo) {
+        for (CategoryOptionCombo categoryOptionCombo : categoryCombo.categoryOptionCombos()) {
+            this.categoryComboCategoryOptionComboStore.insert(
+                    CategoryComboCategoryOptionComboLinkModel.create(
+                            categoryCombo.uid(),
+                            categoryOptionCombo.uid()));
+        }
     }
 }

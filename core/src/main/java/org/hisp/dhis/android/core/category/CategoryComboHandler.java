@@ -27,32 +27,23 @@
  */
 package org.hisp.dhis.android.core.category;
 
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.common.ObjectStore;
+import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, CategoryComboModel> {
-    private final ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore;
-    private final ObjectStore<CategoryComboCategoryOptionComboLinkModel> categoryComboCategoryOptionComboStore;
 
     private final CategoryOptionComboHandler categoryOptionComboHandler;
 
     private CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store,
-                                 ObjectStore<CategoryComboCategoryLinkModel> categoryComboCategoryStore,
-                                 ObjectStore<CategoryComboCategoryOptionComboLinkModel> categoryComboCategoryOptionComboStore,
                                  CategoryOptionComboHandler categoryOptionComboHandler) {
         super(store);
         this.categoryOptionComboHandler = categoryOptionComboHandler;
-        this.categoryComboCategoryStore = categoryComboCategoryStore;
-        this.categoryComboCategoryOptionComboStore = categoryComboCategoryOptionComboStore;
     }
 
     @Override
     protected void afterObjectPersisted(CategoryCombo categoryCombo) {
         this.categoryOptionComboHandler.handleMany(categoryCombo.categoryOptionCombos());
-        saveCategoryComboCategoryLinks(categoryCombo);
-        saveCategoryComboCategoryOptionComboLinks(categoryCombo);
     }
 
     @Override
@@ -63,29 +54,9 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
     public static CategoryComboHandler create(DatabaseAdapter databaseAdapter) {
         return new CategoryComboHandler(
                 CategoryComboStoreFactory.create(databaseAdapter),
-                CategoryComboCategoryLinkStoreFactory.create(databaseAdapter),
-                CategoryComboCategoryOptionComboLinkStoreFactory.create(databaseAdapter),
                 new CategoryOptionComboHandler(CategoryOptionComboStoreFactory.create(databaseAdapter),
                         CategoryOptionComboCategoryOptionLinkStoreFactory.create(databaseAdapter)));
     }
 
-    private void saveCategoryComboCategoryLinks(CategoryCombo categoryCombo) {
-        for (int i = 0; i < categoryCombo.categories().size(); i++) {
-            Category category = categoryCombo.categories().get(i);
-            this.categoryComboCategoryStore.insert(
-                    CategoryComboCategoryLinkModel.create(
-                            categoryCombo.uid(),
-                            category.uid(),
-                            i + 1));
-        }
-    }
 
-    private void saveCategoryComboCategoryOptionComboLinks(CategoryCombo categoryCombo) {
-        for (CategoryOptionCombo categoryOptionCombo : categoryCombo.categoryOptionCombos()) {
-            this.categoryComboCategoryOptionComboStore.insert(
-                    CategoryComboCategoryOptionComboLinkModel.create(
-                            categoryCombo.uid(),
-                            categoryOptionCombo.uid()));
-        }
-    }
 }
