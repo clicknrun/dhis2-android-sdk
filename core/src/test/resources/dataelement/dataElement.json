@@ -20,29 +20,10 @@
   "url": "",
   "optionSetValue": true,
   "dimensionItemType": "DATA_ELEMENT",
-  "access": {
-    "read": true,
-    "update": true,
-    "externalize": false,
-    "delete": true,
-    "write": true,
-    "manage": true
-  },
   "optionSet": {
     "id": "fUS7fy2HbaI"
   },
   "categoryCombo": {
     "id": "p0KPaWEg3cf"
-  },
-  "user": {
-    "id": "GOLswS44mh8"
-  },
-  "dataSetElements": [],
-  "translations": [],
-  "userGroupAccesses": [],
-  "dataElementGroups": [],
-  "attributeValues": [],
-  "userAccesses": [],
-  "legendSets": [],
-  "aggregationLevels": []
+  }
 }
