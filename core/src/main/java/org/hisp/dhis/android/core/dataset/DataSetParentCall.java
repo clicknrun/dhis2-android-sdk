@@ -34,6 +34,7 @@ import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryEndpointCall;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.Payload;
+import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
 import org.hisp.dhis.android.core.user.User;
 
@@ -64,16 +65,24 @@ public class DataSetParentCall extends TransactionalCall {
         Response<Payload<DataSet>> dataSetResponse = dataSetEndpointCall.download();
 
         List<DataSet> dataSets = dataSetResponse.body().items();
-        DataElementEndpointCall.create(data, getDataElementUids(dataSets)).call();
+        DataElementEndpointCall dataElementEndpointCall =
+                DataElementEndpointCall.create(data, getDataElementUids(dataSets));
+        dataElementEndpointCall.download();
 
-        Response<Payload<CategoryCombo>> categoryComboResponse =
-                CategoryComboEndpointCall.create(data,
-                        getCategoryComboUids(dataSets)).call();
+        CategoryComboEndpointCall categoryComboEndpointCall =
+                CategoryComboEndpointCall.create(data,getCategoryComboUids(dataSets));
+        Response<Payload<CategoryCombo>> categoryComboResponse = categoryComboEndpointCall.download();
+
 
         List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
-        Response<Payload<Category>> categoryResponse = CategoryEndpointCall.create(data,
-                        getCategoryUids(categoryCombos)).call();
+        CategoryEndpointCall categoryEndpointCall =
+                CategoryEndpointCall.create(data, getCategoryUids(categoryCombos));
+        Response<Payload<Category>> categoryResponse = categoryEndpointCall.download();
 
+
+        categoryEndpointCall.persist();
+        categoryComboEndpointCall.persist();
+        dataElementEndpointCall.persist();
         dataSetEndpointCall.persist();
 
         linkManager.saveDataSetDataElementLink(dataSets);
