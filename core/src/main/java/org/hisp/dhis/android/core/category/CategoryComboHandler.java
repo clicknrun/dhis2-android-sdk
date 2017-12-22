@@ -57,6 +57,4 @@ public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, Cate
                 new CategoryOptionComboHandler(CategoryOptionComboStoreFactory.create(databaseAdapter),
                         CategoryOptionComboCategoryOptionLinkStoreFactory.create(databaseAdapter)));
     }
-
-
 }
