@@ -59,7 +59,7 @@ public class SQLStatementBuilderTests {
     @Test
     public void update_shouldGenerateUpdateTableStatement() throws Exception {
         assertThat(builder.update()).isEqualTo(
-                "UPDATE Test_Table SET Test_Column_Name1=?, Test_Column_Name2=?;"
+                "UPDATE Test_Table SET Test_Column_Name1=?, Test_Column_Name2=? WHERE uid=?;"
         );
     }
 
