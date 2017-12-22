@@ -37,6 +37,7 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseModel;
+import org.hisp.dhis.android.core.common.ObjectWithUid;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.utils.Utils;
 
@@ -61,10 +62,10 @@ public abstract class CategoryOptionComboCategoryOptionLinkModel extends BaseMod
     }
 
     public static CategoryOptionComboCategoryOptionLinkModel create(
-            String categoryOptionUid, String categoryOptionComboUid) {
+            ObjectWithUid categoryOption, CategoryOptionCombo categoryOptionCombo) {
         return CategoryOptionComboCategoryOptionLinkModel.builder()
-                .categoryOption(categoryOptionUid)
-                .categoryOptionCombo(categoryOptionComboUid)
+                .categoryOption(categoryOption.uid())
+                .categoryOptionCombo(categoryOptionCombo.uid())
                 .build();
     }
 

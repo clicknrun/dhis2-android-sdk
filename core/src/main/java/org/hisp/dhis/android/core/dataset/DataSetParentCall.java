@@ -79,7 +79,7 @@ public class DataSetParentCall extends TransactionalCall {
 
 
         categoryEndpointCall.persist();
-        //categoryComboEndpointCall.persist();
+        categoryComboEndpointCall.persist();
         dataElementEndpointCall.persist();
         //dataSetEndpointCall.persist();
 

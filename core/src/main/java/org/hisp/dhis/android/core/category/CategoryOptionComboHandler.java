@@ -57,8 +57,7 @@ public class CategoryOptionComboHandler extends GenericHandlerImpl<CategoryOptio
         for (ObjectWithUid categoryOption : categoryOptionCombo.categoryOptions()) {
             this.CategoryOptionComboCategoryOptionStore.insert(
                     CategoryOptionComboCategoryOptionLinkModel.create(
-                            categoryOptionCombo.uid(),
-                            categoryOption.uid()));
+                            categoryOption, categoryOptionCombo));
         }
     }
 }
