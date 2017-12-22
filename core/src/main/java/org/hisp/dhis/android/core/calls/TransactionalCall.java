@@ -27,10 +27,7 @@
  */
 package org.hisp.dhis.android.core.calls;
 
-import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.GenericCallData;
-import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
-import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.Transaction;
 
 import retrofit2.Response;
@@ -69,18 +66,6 @@ public abstract class TransactionalCall implements Call<Response> {
             return response;
         } finally {
             transaction.end();
-        }
-    }
-
-    protected <M extends BaseIdentifiableObject> Response<Payload<M>>
-        handleEndpointCall(GenericEndpointCallImpl<M> endpointCall)
-            throws Exception {
-        Response<Payload<M>> response = endpointCall.call();
-
-        if (!response.isSuccessful()) {
-            throw new RuntimeException("Unsuccessful call: " + endpointCall);
-        } else {
-            return response;
         }
     }
 }

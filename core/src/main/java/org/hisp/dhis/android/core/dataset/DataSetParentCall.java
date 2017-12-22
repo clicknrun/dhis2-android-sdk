@@ -59,21 +59,22 @@ public class DataSetParentCall extends TransactionalCall {
 
     @Override
     public Response callBody() throws Exception {
-        Response<Payload<DataSet>> dataSetResponse = handleEndpointCall(
-                DataSetEndpointCall.create(data, getAssignedDataSetUids(user)));
+        DataSetEndpointCall dataSetEndpointCall
+                = DataSetEndpointCall.create(data, getAssignedDataSetUids(user));
+        Response<Payload<DataSet>> dataSetResponse = dataSetEndpointCall.download();
 
         List<DataSet> dataSets = dataSetResponse.body().items();
-        handleEndpointCall(DataElementEndpointCall.create(data,
-                getDataElementUids(dataSets)));
+        DataElementEndpointCall.create(data, getDataElementUids(dataSets)).call();
 
         Response<Payload<CategoryCombo>> categoryComboResponse =
-                handleEndpointCall(CategoryComboEndpointCall.create(data,
-                        getCategoryComboUids(dataSets)));
+                CategoryComboEndpointCall.create(data,
+                        getCategoryComboUids(dataSets)).call();
 
         List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
-        Response<Payload<Category>> categoryResponse =
-                handleEndpointCall(CategoryEndpointCall.create(data,
-                        getCategoryUids(categoryCombos)));
+        Response<Payload<Category>> categoryResponse = CategoryEndpointCall.create(data,
+                        getCategoryUids(categoryCombos)).call();
+
+        dataSetEndpointCall.persist();
 
         linkManager.saveDataSetDataElementLink(dataSets);
         linkManager.saveCategoryComboLinks(categoryCombos);

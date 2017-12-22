@@ -48,6 +48,8 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
     private Set<String> uids;
     private Integer limit;
 
+    private Response<Payload<P>> response;
+
     public GenericEndpointCallImpl(GenericCallData data, GenericHandler<P, ?> handler,
                                    ResourceModel.Type resourceType, Set<String> uids,
                                    Integer limit) {
@@ -67,6 +69,11 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
 
     @Override
     public final Response<Payload<P>> call() throws Exception {
+        download();
+        return persist();
+    }
+
+    public final Response<Payload<P>> download() throws Exception {
         synchronized (this) {
             if (isExecuted) {
                 throw new IllegalArgumentException("Already executed");
@@ -82,18 +89,22 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
         }
 
         String lastUpdated = data.resourceHandler().getLastUpdated(resourceType);
-        Response<Payload<P>> response = getCall(uids, lastUpdated).execute();
+        response = getCall(uids, lastUpdated).execute();
 
-        if (response != null && response.isSuccessful()) {
-            processResponse(response);
+        if (response == null && !response.isSuccessful()) {
+            throw new RuntimeException("Call returned unsuccessful response: " + response);
+        } else {
+            return response;
         }
-        return response;
     }
 
-    protected abstract retrofit2.Call<Payload<P>> getCall(Set<String> uids, String lastUpdated)
-            throws IOException;
+    protected abstract retrofit2.Call<Payload<P>> getCall(Set<String> uids,
+                                                          String lastUpdated) throws IOException;
 
-    private void processResponse(Response<Payload<P>> response) {
+    public Response<Payload<P>> persist() {
+        if (response == null) {
+            throw new RuntimeException("Trying to process call without download data");
+        }
         List<P> pojoList = response.body().items();
         if (pojoList != null && !pojoList.isEmpty()) {
             Transaction transaction = data.databaseAdapter().beginNewTransaction();
@@ -107,5 +118,6 @@ public abstract class GenericEndpointCallImpl<P extends BaseIdentifiableObject>
                 transaction.end();
             }
         }
+        return response;
     }
 }
