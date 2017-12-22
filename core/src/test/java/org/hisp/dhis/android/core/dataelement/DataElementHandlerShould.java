@@ -42,7 +42,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
-public class DataElementHandlerTests {
+public class DataElementHandlerShould {
 
     @Mock
     private IdentifiableObjectStore<DataElementModel> dataElementStore;
@@ -68,7 +68,7 @@ public class DataElementHandlerTests {
     }
 
     @Test
-    public void handle_shouldCallOptionSetHandler() throws Exception {
+    public void call_option_set_handler() throws Exception {
         dataElementHandler.handle(dataElement);
         verify(optionSetHandler).handle(optionSet);
     }
