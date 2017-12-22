@@ -11,19 +11,6 @@
   "externalAccess": false,
   "isDefault": false,
   "skipTotal": false,
-  "access": {
-    "read": true,
-    "update": true,
-    "externalize": false,
-    "delete": true,
-    "write": true,
-    "manage": true
-  },
-  "user": {
-    "id": "GOLswS44mh8"
-  },
-  "userGroupAccesses": [],
-  "attributeValues": [],
   "categoryOptionCombos": [
     {
       "id": "NZAKyj67WW2"
@@ -33,79 +20,8 @@
     },
     {
       "id": "Gmbgme7z9BF"
-    },
-    {
-      "id": "Ifqide84xSh"
-    },
-    {
-      "id": "quwbAxfBdQU"
-    },
-    {
-      "id": "HVFCn1yjoGx"
-    },
-    {
-      "id": "Tk8loZNEo4E"
-    },
-    {
-      "id": "s3jlIgFCbUb"
-    },
-    {
-      "id": "mcwaItVPoeA"
-    },
-    {
-      "id": "L4P9VSgHkF6"
-    },
-    {
-      "id": "MaXD86iob3M"
-    },
-    {
-      "id": "vP9xV78M67W"
-    },
-    {
-      "id": "PvFFIeF2J9x"
-    },
-    {
-      "id": "RgrNGmlMOAJ"
-    },
-    {
-      "id": "AKQ15Z2uqit"
-    },
-    {
-      "id": "w0tNkmER8Lb"
-    },
-    {
-      "id": "SeTGOtrbip1"
-    },
-    {
-      "id": "xQbMVHxaUiW"
-    },
-    {
-      "id": "w3BcsdjOcfk"
-    },
-    {
-      "id": "b19Ye0TWs1D"
-    },
-    {
-      "id": "YEmiuCcgNQI"
-    },
-    {
-      "id": "Gqs7snASTtF"
-    },
-    {
-      "id": "Tzg8I9KyEwd"
-    },
-    {
-      "id": "R3oRRwMRfMT"
     }
   ],
-  "translations": [
-    {
-      "property": "NAME",
-      "locale": "fr",
-      "value": "French"
-    }
-  ],
-  "userAccesses": [],
   "categories": [
     {
       "id": "KfdsGBcoiCa"

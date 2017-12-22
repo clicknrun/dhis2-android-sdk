@@ -65,7 +65,6 @@ public class CategoryComboShould extends BaseObjectShould implements ObjectShoul
         // categoryOptionCombos
         assertThat(combo.categoryOptionCombos().get(0).uid()).isEqualTo("NZAKyj67WW2");
         assertThat(combo.categoryOptionCombos().get(1).uid()).isEqualTo("CYHGl18lR0W");
-        assertThat(combo.categoryOptionCombos().get(9).uid()).isEqualTo("L4P9VSgHkF6");
-        assertThat(combo.categoryOptionCombos().get(23).uid()).isEqualTo("R3oRRwMRfMT");
+        assertThat(combo.categoryOptionCombos().get(2).uid()).isEqualTo("Gmbgme7z9BF");
     }
 }
