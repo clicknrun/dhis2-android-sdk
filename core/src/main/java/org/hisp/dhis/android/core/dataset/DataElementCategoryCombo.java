@@ -28,44 +28,40 @@
 
 package org.hisp.dhis.android.core.dataset;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
-import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
+import org.hisp.dhis.android.core.common.ObjectWithUid;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.api.NestedField;
-import org.hisp.dhis.android.core.dataelement.DataElement;
 
 @AutoValue
-public abstract class DataSetDataElement {
-    private final static String DATA_SET = "dataSet";
+public abstract class DataElementCategoryCombo {
     private final static String DATA_ELEMENT = "dataElement";
     private final static String CATEGORY_COMBO = "categoryCombo";
 
-    public static final NestedField<DataSetDataElement, DataSet> dataSet = NestedField.create(DATA_SET);
-    public static final NestedField<DataSetDataElement, DataElement> dataElement = NestedField.create(DATA_ELEMENT);
-    public static final NestedField<DataSetDataElement, CategoryCombo> categoryCombo = NestedField.create(CATEGORY_COMBO);
+    public static final NestedField<DataElementCategoryCombo, ObjectWithUid> dataElement =
+            NestedField.create(DATA_ELEMENT);
+    public static final NestedField<DataElementCategoryCombo, ObjectWithUid> categoryCombo =
+            NestedField.create(CATEGORY_COMBO);
 
-    public static final Fields<DataSetDataElement> allFields = Fields.<DataSetDataElement>builder().fields(
-            dataSet.with(DataSet.uid),
-            dataElement.with(DataElement.uid),
-            categoryCombo.with(CategoryCombo.uid)).build();
+    public static final Fields<DataElementCategoryCombo> allFields =
+            Fields.<DataElementCategoryCombo>builder().fields(
+            dataElement.with(ObjectWithUid.uid),
+            categoryCombo.with(ObjectWithUid.uid)).build();
 
-    @Nullable
-    @JsonProperty(DATA_SET)
-    public abstract DataSet dataSet();
-
-    @Nullable
+    @NonNull
     @JsonProperty(DATA_ELEMENT)
-    public abstract DataElement dataElement();
+    public abstract ObjectWithUid dataElement();
 
     @Nullable
     @JsonProperty(CATEGORY_COMBO)
-    public abstract CategoryCombo categoryCombo();
+    public abstract ObjectWithUid categoryCombo();
 
     public String categoryComboUid() {
         return categoryCombo() != null ? categoryCombo().uid() :
@@ -73,11 +69,10 @@ public abstract class DataSetDataElement {
     }
 
     @JsonCreator
-    public static DataSetDataElement create(
-            @JsonProperty(DATA_SET) DataSet dataSet,
-            @JsonProperty(DATA_ELEMENT) DataElement dataElement,
-            @JsonProperty(CATEGORY_COMBO) CategoryCombo categoryCombo) {
+    public static DataElementCategoryCombo create(
+            @JsonProperty(DATA_ELEMENT) ObjectWithUid dataElement,
+            @JsonProperty(CATEGORY_COMBO) ObjectWithUid categoryCombo) {
 
-        return new AutoValue_DataSetDataElement(dataSet, dataElement, categoryCombo);
+        return new AutoValue_DataElementCategoryCombo(dataElement, categoryCombo);
     }
 }

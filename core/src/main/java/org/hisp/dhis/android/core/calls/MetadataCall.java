@@ -46,9 +46,9 @@ import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.dataelement.DataElementService;
+import org.hisp.dhis.android.core.dataset.DataElementCategoryCombo;
 import org.hisp.dhis.android.core.dataset.DataSet;
 import org.hisp.dhis.android.core.dataset.DataSetEndpointCall;
-import org.hisp.dhis.android.core.dataset.DataSetDataElement;
 import org.hisp.dhis.android.core.dataset.DataSetModel;
 import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.option.OptionSet;
@@ -510,7 +510,7 @@ public class MetadataCall implements Call<Response> {
         Set<String> uids = new HashSet<>();
         for (DataSet dataSet : dataSets) {
             uids.add(dataSet.categoryComboUid());
-            for (DataSetDataElement dataSetElement : dataSet.dataSetElements()) {
+            for (DataElementCategoryCombo dataSetElement : dataSet.dataSetElements()) {
                 uids.add(dataSetElement.categoryComboUid());
             }
         }
@@ -520,7 +520,7 @@ public class MetadataCall implements Call<Response> {
     private Set<String> getDataElementUids(List<DataSet> dataSets) {
         Set<String> uids = new HashSet<>();
         for (DataSet dataSet : dataSets) {
-            for (DataSetDataElement dataSetElement : dataSet.dataSetElements()) {
+            for (DataElementCategoryCombo dataSetElement : dataSet.dataSetElements()) {
                 uids.add(dataSetElement.dataElement().uid());
             }
         }

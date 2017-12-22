@@ -40,7 +40,7 @@ public abstract class BaseIdentifiableObject implements IdentifiableObject {
     within models which extend BaseIdentifiableObject */
     public static final SafeDateFormat DATE_FORMAT = new SafeDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
-    protected static final String UID = "id";
+    public static final String UID = "id";
     protected static final String CODE = "code";
     protected static final String NAME = "name";
     protected static final String DISPLAY_NAME = "displayName";

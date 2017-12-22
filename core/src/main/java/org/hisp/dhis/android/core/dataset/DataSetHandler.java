@@ -35,7 +35,7 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
     private final ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore;
 
-    private DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore,
+    DataSetHandler(IdentifiableObjectStore<DataSetModel> dataSetStore,
                            ObjectStore<DataSetDataElementLinkModel> dataSetDataElementStore) {
         super(dataSetStore);
         this.dataSetDataElementStore = dataSetDataElementStore;
@@ -56,8 +56,8 @@ public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
         saveDataSetDataElementLinks(dataSet);
     }
 
-    public void saveDataSetDataElementLinks(DataSet dataSet) {
-        for (DataSetDataElement dataSetDataElement : dataSet.dataSetElements()) {
+    private void saveDataSetDataElementLinks(DataSet dataSet) {
+        for (DataElementCategoryCombo dataSetDataElement : dataSet.dataSetElements()) {
             this.dataSetDataElementStore.insert(
                     DataSetDataElementLinkModel.create(
                             dataSet.uid(),
