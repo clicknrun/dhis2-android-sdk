@@ -9,21 +9,5 @@
   "displayShortName": "CARE International, Provide access to primary health care",
   "externalAccess": false,
   "ignoreApproval": false,
-  "dimensionItem": "ranftQIH5M9",
-  "categoryCombo": {
-    "id": "O4VaNks6tta"
-  },
-  "translations": [],
-  "categoryOptions": [
-    {
-      "id": "OUUdG3sdOqb"
-    },
-    {
-      "id": "RkbOhHwiOgW"
-    }
-  ],
-  "userGroupAccesses": [],
-  "attributeValues": [],
-  "userAccesses": [],
-  "legendSets": []
+  "dimensionItem": "ranftQIH5M9"
 }

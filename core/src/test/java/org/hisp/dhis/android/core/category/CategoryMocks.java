@@ -42,17 +42,6 @@ public class CategoryMocks {
                 "CARE International, Provide access to primary health care",
                 BaseIdentifiableObject.parseDate("2013-12-20T22:17:20.428"),
                 BaseIdentifiableObject.parseDate("2013-12-20T22:17:20.428"),
-                false, getCategoryOptions(),null);
-    }
-
-    public static List<CategoryOption> getCategoryOptions() throws ParseException {
-        return new ArrayList<>(Arrays.asList(new CategoryOption[] {
-                CategoryOption.create("OUUdG3sdOqb", null, null, null,
-                        null, null, null, null,
-                        null, null, null),
-                CategoryOption.create("RkbOhHwiOgW", null, null, null,
-                        null, null, null, null,
-                        null, null, null)
-        }));
+                false, null,null);
     }
 }
