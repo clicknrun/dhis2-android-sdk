@@ -34,7 +34,6 @@ import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryEndpointCall;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
 import org.hisp.dhis.android.core.user.User;
 
@@ -56,7 +55,6 @@ public class DataSetParentCall extends TransactionalCall {
         this.user = user;
         this.linkManager = linkManager;
     }
-
 
     @Override
     public Response callBody() throws Exception {
