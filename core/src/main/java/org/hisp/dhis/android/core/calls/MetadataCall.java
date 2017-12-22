@@ -29,21 +29,14 @@ package org.hisp.dhis.android.core.calls;
 
 import android.support.annotation.NonNull;
 
-import org.hisp.dhis.android.core.category.Category;
-import org.hisp.dhis.android.core.category.CategoryCombo;
-import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
-import org.hisp.dhis.android.core.category.CategoryEndpointCall;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
-import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
-import org.hisp.dhis.android.core.dataset.DataElementCategoryCombo;
-import org.hisp.dhis.android.core.dataset.DataSet;
-import org.hisp.dhis.android.core.dataset.DataSetEndpointCall;
+import org.hisp.dhis.android.core.dataset.DataSetParentCall;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetCall;
 import org.hisp.dhis.android.core.option.OptionSetModel;
@@ -285,33 +278,7 @@ public class MetadataCall implements Call<Response> {
                 return response;
             }
 
-            Set<String> dataSetUids = getAssignedDataSetUids(user);
-
-            Response<Payload<DataSet>> dataSetResponse
-                    = DataSetEndpointCall.create(data, dataSetUids).call();
-            response = dataSetResponse;
-            if (!response.isSuccessful()) {
-                return response;
-            }
-            List<DataSet> dataSets = dataSetResponse.body().items();
-
-            response = DataElementEndpointCall.create(data, getDataElementUids(dataSets)).call();
-
-            if (!response.isSuccessful()) {
-                return response;
-            }
-
-            Response<Payload<CategoryCombo>> categoryComboResponse =
-                    CategoryComboEndpointCall.create(data, getCategoryComboUids(dataSets)).call();
-            response = categoryComboResponse;
-
-            if (!response.isSuccessful()) {
-                return response;
-            }
-
-            List<CategoryCombo> categoryCombos = categoryComboResponse.body().items();
-            response = CategoryEndpointCall.create(data, getCategoryUids(categoryCombos)).call();
-
+            response = new DataSetParentCall(user, data).call();
             if (!response.isSuccessful()) {
                 return response;
             }
@@ -438,77 +405,5 @@ public class MetadataCall implements Call<Response> {
                 }
             }
         }
-    }
-
-    private Set<String> getAssignedDataSetUids(User user) {
-        if (user == null || user.userCredentials() == null || user.userCredentials().userRoles() == null) {
-            return null;
-        }
-
-        Set<String> dataSetUids = new HashSet<>();
-
-        getDataSetUidsFromUserRoles(user, dataSetUids);
-        getDataSetUidsFromOrganisationUnits(user, dataSetUids);
-
-        return dataSetUids;
-    }
-
-    private void getDataSetUidsFromOrganisationUnits(User user, Set<String> dataSetUids) {
-        List<OrganisationUnit> organisationUnits = user.organisationUnits();
-
-        if (organisationUnits != null) {
-            for (OrganisationUnit organisationUnit : organisationUnits) {
-                addDataSets(organisationUnit.dataSets(), dataSetUids);
-            }
-        }
-    }
-
-    private void getDataSetUidsFromUserRoles(User user, Set<String> dataSetUids) {
-        List<UserRole> userRoles = user.userCredentials().userRoles();
-
-        if (userRoles != null) {
-            for (UserRole userRole : userRoles) {
-                addDataSets(userRole.dataSets(), dataSetUids);
-            }
-        }
-    }
-
-    private void addDataSets(List<DataSet> dataSets, Set<String> dataSetUids) {
-        if (dataSets != null) {
-            for (DataSet dataSet : dataSets) {
-                dataSetUids.add(dataSet.uid());
-            }
-        }
-    }
-
-    private Set<String> getCategoryComboUids(List<DataSet> dataSets) {
-        Set<String> uids = new HashSet<>();
-        for (DataSet dataSet : dataSets) {
-            uids.add(dataSet.categoryComboUid());
-            for (DataElementCategoryCombo dataSetElement : dataSet.dataSetElements()) {
-                uids.add(dataSetElement.categoryComboUid());
-            }
-        }
-        return uids;
-    }
-
-    private Set<String> getDataElementUids(List<DataSet> dataSets) {
-        Set<String> uids = new HashSet<>();
-        for (DataSet dataSet : dataSets) {
-            for (DataElementCategoryCombo dataSetElement : dataSet.dataSetElements()) {
-                uids.add(dataSetElement.dataElement().uid());
-            }
-        }
-        return uids;
-    }
-
-    private Set<String> getCategoryUids(List<CategoryCombo> categoryCombos) {
-        Set<String> uids = new HashSet<>();
-        for (CategoryCombo cc : categoryCombos) {
-            for (Category c : cc.categories()) {
-                uids.add(c.uid());
-            }
-        }
-        return uids;
     }
 }
