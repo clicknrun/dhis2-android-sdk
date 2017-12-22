@@ -32,8 +32,6 @@ import android.support.annotation.NonNull;
 import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboEndpointCall;
-import org.hisp.dhis.android.core.category.CategoryComboModel;
-import org.hisp.dhis.android.core.category.CategoryComboService;
 import org.hisp.dhis.android.core.category.CategoryEndpointCall;
 import org.hisp.dhis.android.core.category.CategoryModel;
 import org.hisp.dhis.android.core.category.CategoryService;
@@ -109,7 +107,6 @@ public class MetadataCall implements Call<Response> {
     private final OrganisationUnitService organisationUnitService;
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
-    private final CategoryComboService categoryComboService;
     private final CategoryService categoryService;
     private final SystemInfoStore systemInfoStore;
     private final ResourceStore resourceStore;
@@ -134,7 +131,6 @@ public class MetadataCall implements Call<Response> {
     private final TrackedEntityStore trackedEntityStore;
     private final GenericHandler<OptionSet, OptionSetModel> optionSetHandler;
     private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
-    private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
     private final GenericHandler<Category, CategoryModel> categoryHandler;
 
     private final Retrofit retrofit;
@@ -150,7 +146,6 @@ public class MetadataCall implements Call<Response> {
                         @NonNull OrganisationUnitService organisationUnitService,
                         @NonNull TrackedEntityService trackedEntityService,
                         @NonNull OptionSetService optionSetService,
-                        @NonNull CategoryComboService categoryComboService,
                         @NonNull CategoryService categoryService,
                         @NonNull SystemInfoStore systemInfoStore,
                         @NonNull ResourceStore resourceStore,
@@ -177,7 +172,6 @@ public class MetadataCall implements Call<Response> {
                         @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
                         @NonNull GenericHandler<OptionSet, OptionSetModel> optionSetHandler,
                         @NonNull GenericHandler<DataElement, DataElementModel> dataElementHandler,
-                        @NonNull GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
                         @NonNull GenericHandler<Category, CategoryModel> categoryHandler,
                         @NonNull Retrofit retrofit) {
         this.databaseAdapter = databaseAdapter;
@@ -187,7 +181,6 @@ public class MetadataCall implements Call<Response> {
         this.organisationUnitService = organisationUnitService;
         this.trackedEntityService = trackedEntityService;
         this.optionSetService = optionSetService;
-        this.categoryComboService = categoryComboService;
         this.categoryService = categoryService;
         this.systemInfoStore = systemInfoStore;
         this.resourceStore = resourceStore;
@@ -213,7 +206,6 @@ public class MetadataCall implements Call<Response> {
         this.organisationUnitProgramLinkStore = organisationUnitProgramLinkStore;
         this.optionSetHandler = optionSetHandler;
         this.dataElementHandler = dataElementHandler;
-        this.categoryComboHandler = categoryComboHandler;
         this.categoryHandler = categoryHandler;
 
         this.retrofit = retrofit;
@@ -318,8 +310,7 @@ public class MetadataCall implements Call<Response> {
             }
 
             Response<Payload<CategoryCombo>> categoryComboResponse =
-                    new CategoryComboEndpointCall(data, categoryComboService, categoryComboHandler,
-                    getCategoryComboUids(dataSets)).call();
+                    CategoryComboEndpointCall.create(data, getCategoryComboUids(dataSets)).call();
             response = categoryComboResponse;
 
             if (!response.isSuccessful()) {

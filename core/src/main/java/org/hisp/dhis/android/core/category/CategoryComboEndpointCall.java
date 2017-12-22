@@ -32,6 +32,9 @@ import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
+import org.hisp.dhis.android.core.dataset.DataSetEndpointCall;
+import org.hisp.dhis.android.core.dataset.DataSetHandler;
+import org.hisp.dhis.android.core.dataset.DataSetService;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;
@@ -40,7 +43,7 @@ import java.util.Set;
 public class CategoryComboEndpointCall extends GenericEndpointCallImpl<CategoryCombo> {
     private final CategoryComboService categoryComboService;
 
-    public CategoryComboEndpointCall(GenericCallData data, CategoryComboService categoryComboService,
+    private CategoryComboEndpointCall(GenericCallData data, CategoryComboService categoryComboService,
                                      GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler,
                                      Set<String> uids) {
         super(data, categoryComboHandler, ResourceModel.Type.CATEGORY_COMBO, uids, null);
@@ -52,5 +55,10 @@ public class CategoryComboEndpointCall extends GenericEndpointCallImpl<CategoryC
             throws IOException {
         return categoryComboService.getCategoryCombos(CategoryCombo.allFields,
                 CategoryCombo.lastUpdated.gt(lastUpdated), CategoryCombo.uid.in(uids), Boolean.FALSE);
+    }
+
+    public static CategoryComboEndpointCall create(GenericCallData data, Set<String> uids) {
+        return new CategoryComboEndpointCall(data, data.retrofit().create(CategoryComboService.class),
+                CategoryComboHandler.create(data.databaseAdapter()), uids);
     }
 }

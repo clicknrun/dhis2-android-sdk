@@ -38,10 +38,6 @@ import org.hisp.dhis.android.core.calls.Call;
 import org.hisp.dhis.android.core.calls.MetadataCall;
 import org.hisp.dhis.android.core.calls.TrackedEntityInstancePostCall;
 import org.hisp.dhis.android.core.category.Category;
-import org.hisp.dhis.android.core.category.CategoryCombo;
-import org.hisp.dhis.android.core.category.CategoryComboHandler;
-import org.hisp.dhis.android.core.category.CategoryComboModel;
-import org.hisp.dhis.android.core.category.CategoryComboService;
 import org.hisp.dhis.android.core.category.CategoryHandler;
 import org.hisp.dhis.android.core.category.CategoryModel;
 import org.hisp.dhis.android.core.category.CategoryService;
@@ -146,7 +142,6 @@ public final class D2 {
     private final OrganisationUnitService organisationUnitService;
     private final TrackedEntityService trackedEntityService;
     private final OptionSetService optionSetService;
-    private final CategoryComboService categoryComboService;
     private final CategoryService categoryService;
 
     // stores
@@ -186,7 +181,6 @@ public final class D2 {
 
     // handlers
     private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
-    private final GenericHandler<CategoryCombo, CategoryComboModel> categoryComboHandler;
     private final GenericHandler<Category, CategoryModel> categoryHandler;
     private final OptionSetHandler optionSetHandler;
 
@@ -204,7 +198,6 @@ public final class D2 {
         this.optionSetService = retrofit.create(OptionSetService.class);
         this.trackedEntityInstanceService = retrofit.create(TrackedEntityInstanceService.class);
         this.eventService = retrofit.create(EventService.class);
-        this.categoryComboService = retrofit.create(CategoryComboService.class);
         this.categoryService = retrofit.create(CategoryService.class);
 
         // stores
@@ -268,7 +261,6 @@ public final class D2 {
         // handlers
         this.optionSetHandler = OptionSetHandler.create(databaseAdapter);
         this.dataElementHandler = DataElementHandler.create(databaseAdapter, this.optionSetHandler);
-        this.categoryComboHandler = CategoryComboHandler.create(databaseAdapter);
         this.categoryHandler = CategoryHandler.create(databaseAdapter);
     }
 
@@ -317,7 +309,7 @@ public final class D2 {
     public Call<Response> syncMetaData() {
         return new MetadataCall(
                 databaseAdapter, systemInfoService, userService, programService, organisationUnitService,
-                trackedEntityService, optionSetService, categoryComboService,
+                trackedEntityService, optionSetService,
                 categoryService, systemInfoStore, resourceStore, userStore,
                 userCredentialsStore, userRoleStore, userRoleProgramLinkStore, organisationUnitStore,
                 userOrganisationUnitLinkStore, programStore, trackedEntityAttributeStore,
@@ -325,7 +317,7 @@ public final class D2 {
                 programStageSectionProgramIndicatorLinkStore, programRuleActionStore, programRuleStore,
                 programStageDataElementStore, programStageSectionStore,
                 programStageStore, relationshipStore, trackedEntityStore, organisationUnitProgramLinkStore,
-                optionSetHandler, dataElementHandler, categoryComboHandler, categoryHandler, retrofit);
+                optionSetHandler, dataElementHandler, categoryHandler, retrofit);
     }
 
     @NonNull
