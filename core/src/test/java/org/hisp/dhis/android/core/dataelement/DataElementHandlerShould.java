@@ -28,6 +28,7 @@
 package org.hisp.dhis.android.core.dataelement;
 
 import org.hisp.dhis.android.core.common.GenericHandler;
+import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.option.OptionSetModel;
@@ -71,5 +72,11 @@ public class DataElementHandlerShould {
     public void call_option_set_handler() throws Exception {
         dataElementHandler.handle(dataElement);
         verify(optionSetHandler).handle(optionSet);
+    }
+
+    @Test
+    public void extend_generic_handler_impl() {
+        GenericHandlerImpl<DataElement, DataElementModel> genericHandler = new DataElementHandler(
+                null,null);
     }
 }
