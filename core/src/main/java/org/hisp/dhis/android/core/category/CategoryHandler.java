@@ -27,6 +27,7 @@
  */
 package org.hisp.dhis.android.core.category;
 
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.ObjectStore;
@@ -36,11 +37,11 @@ public class CategoryHandler extends GenericHandlerImpl<Category, CategoryModel>
 
     private final ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore;
 
-    private final CategoryOptionHandler categoryOptionHandler;
+    private final GenericHandler<CategoryOption, CategoryOptionModel> categoryOptionHandler;
 
     public CategoryHandler(IdentifiableObjectStore<CategoryModel> store,
                            ObjectStore<CategoryCategoryOptionLinkModel> categoryCategoryOptionStore,
-                           CategoryOptionHandler categoryOptionHandler) {
+                           GenericHandler<CategoryOption, CategoryOptionModel> categoryOptionHandler) {
         super(store);
         this.categoryOptionHandler = categoryOptionHandler;
         this.categoryCategoryOptionStore = categoryCategoryOptionStore;
