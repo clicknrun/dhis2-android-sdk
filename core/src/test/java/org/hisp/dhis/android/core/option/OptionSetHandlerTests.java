@@ -27,6 +27,7 @@
  */
 package org.hisp.dhis.android.core.option;
 
+import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,5 +70,11 @@ public class OptionSetHandlerTests {
     public void handle_shouldCallOptionSetHandler() throws Exception {
         optionSetHandler.handle(optionSet);
         verify(optionHandler).handleOptions(options);
+    }
+
+    @Test
+    public void extend_generic_handler_impl() {
+        GenericHandlerImpl<OptionSet, OptionSetModel> genericHandler =
+                new OptionSetHandler(null,null);
     }
 }
