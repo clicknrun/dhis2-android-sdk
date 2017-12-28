@@ -73,7 +73,7 @@ public class CategoryHandlerShould {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         categoryHandler = new CategoryHandler(categoryStore, categoryCategoryOptionStore, categoryOptionHandler);
-        when(category.uid()).thenReturn("test_data_element_uid");
+        when(category.uid()).thenReturn("test_category_uid");
         when(category.categoryOptions()).thenReturn(categoryOptions);
     }
 
