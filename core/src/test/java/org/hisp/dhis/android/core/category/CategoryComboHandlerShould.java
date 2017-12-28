@@ -30,34 +30,54 @@ package org.hisp.dhis.android.core.category;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.GenericHandlerImpl;
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
-import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-public class CategoryComboHandler extends GenericHandlerImpl<CategoryCombo, CategoryComboModel> {
+import java.util.List;
 
-    private final GenericHandler<CategoryOptionCombo, CategoryOptionComboModel>
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@RunWith(JUnit4.class)
+public class CategoryComboHandlerShould {
+
+    @Mock
+    private IdentifiableObjectStore<CategoryComboModel> categoryComboStore;
+
+    @Mock
+    private GenericHandler<CategoryOptionCombo, CategoryOptionComboModel>
             categoryOptionComboHandler;
 
-    CategoryComboHandler(IdentifiableObjectStore<CategoryComboModel> store,
-                                 GenericHandler<CategoryOptionCombo, CategoryOptionComboModel>
-                                         categoryOptionComboHandler) {
-        super(store);
-        this.categoryOptionComboHandler = categoryOptionComboHandler;
+    @Mock
+    private CategoryCombo categoryCombo;
+
+    @Mock
+    private List<CategoryOptionCombo> categoryOptionCombos;
+
+    // object to test
+    private CategoryComboHandler categoryComboHandler;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        categoryComboHandler = new CategoryComboHandler(categoryComboStore, categoryOptionComboHandler);
+        when(categoryCombo.uid()).thenReturn("test_category_combo_uid");
+        when(categoryCombo.categoryOptionCombos()).thenReturn(categoryOptionCombos);
     }
 
-    @Override
-    protected void afterObjectPersisted(CategoryCombo categoryCombo) {
-        this.categoryOptionComboHandler.handleMany(categoryCombo.categoryOptionCombos());
+    @Test
+    public void call_category_option_combo_handler() throws Exception {
+        categoryComboHandler.handle(categoryCombo);
+        verify(categoryOptionComboHandler).handleMany(categoryOptionCombos);
     }
 
-    @Override
-    protected CategoryComboModel pojoToModel(CategoryCombo categoryCombo) {
-        return CategoryComboModel.Factory.fromPojo(categoryCombo);
-    }
-
-    public static CategoryComboHandler create(DatabaseAdapter databaseAdapter) {
-        return new CategoryComboHandler(
-                CategoryComboStoreFactory.create(databaseAdapter),
-                new CategoryOptionComboHandler(CategoryOptionComboStoreFactory.create(databaseAdapter),
-                        CategoryOptionComboCategoryOptionLinkStoreFactory.create(databaseAdapter)));
+    @Test
+    public void extend_generic_handler_impl() {
+        GenericHandlerImpl<CategoryCombo, CategoryComboModel> genericHandler =
+                new CategoryComboHandler(null,null);
     }
 }
