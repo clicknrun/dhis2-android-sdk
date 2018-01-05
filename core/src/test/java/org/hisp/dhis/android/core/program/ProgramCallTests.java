@@ -39,7 +39,7 @@ import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.option.OptionSet;
-import org.hisp.dhis.android.core.option.OptionSetStoreFactory;
+import org.hisp.dhis.android.core.option.OptionSetStore;
 import org.hisp.dhis.android.core.option.OptionStore;
 import org.hisp.dhis.android.core.relationship.RelationshipType;
 import org.hisp.dhis.android.core.relationship.RelationshipTypeStore;
@@ -121,7 +121,7 @@ public class ProgramCallTests {
     private OptionStore optionStore;
 
     @Mock
-    private OptionSetStoreFactory optionSetStore;
+    private OptionSetStore optionSetStore;
 
     @Mock
     private ProgramStageDataElementStore programStageDataElementStore;

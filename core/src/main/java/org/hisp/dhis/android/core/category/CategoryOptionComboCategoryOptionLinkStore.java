@@ -26,16 +26,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.category;
 
-import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkModel;
 import org.hisp.dhis.android.core.common.ObjectStore;
 import org.hisp.dhis.android.core.common.StoreFactory;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-public class PeriodStoreFactory {
-    public static ObjectStore<PeriodModel> create(DatabaseAdapter databaseAdapter) {
-        return StoreFactory.objectStore(databaseAdapter, PeriodModel.TABLE,
-                PeriodModel.Columns.all());
+public class CategoryOptionComboCategoryOptionLinkStore {
+    public static ObjectStore<CategoryOptionComboCategoryOptionLinkModel> create(DatabaseAdapter databaseAdapter) {
+        return StoreFactory.objectStore(databaseAdapter, CategoryOptionComboCategoryOptionLinkModel.TABLE,
+                CategoryOptionComboCategoryOptionLinkModel.Columns.all());
     }
 }

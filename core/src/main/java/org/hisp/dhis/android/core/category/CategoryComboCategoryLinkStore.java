@@ -32,9 +32,9 @@ import org.hisp.dhis.android.core.common.ObjectStore;
 import org.hisp.dhis.android.core.common.StoreFactory;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-public class CategoryOptionComboCategoryOptionLinkStoreFactory {
-    public static ObjectStore<CategoryOptionComboCategoryOptionLinkModel> create(DatabaseAdapter databaseAdapter) {
-        return StoreFactory.objectStore(databaseAdapter, CategoryOptionComboCategoryOptionLinkModel.TABLE,
-                CategoryOptionComboCategoryOptionLinkModel.Columns.all());
+public class CategoryComboCategoryLinkStore {
+    public static ObjectStore<CategoryComboCategoryLinkModel> create(DatabaseAdapter databaseAdapter) {
+        return StoreFactory.objectStore(databaseAdapter, CategoryComboCategoryLinkModel.TABLE,
+                CategoryComboCategoryLinkModel.Columns.all());
     }
 }

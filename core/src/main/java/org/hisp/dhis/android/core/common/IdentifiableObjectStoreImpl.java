@@ -41,7 +41,7 @@ public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel &
 
     private final SQLStatementWrapper statements;
 
-    public IdentifiableObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
+    IdentifiableObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLStatementWrapper statements,
                                    SQLStatementBuilder builder) {
         super(databaseAdapter, statements.insert, builder);
         this.statements = statements;

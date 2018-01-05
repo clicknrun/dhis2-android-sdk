@@ -59,9 +59,9 @@ public class CategoryHandler extends GenericHandlerImpl<Category, CategoryModel>
     }
 
     public static CategoryHandler create(DatabaseAdapter databaseAdapter) {
-        return new CategoryHandler(CategoryStoreFactory.create(databaseAdapter),
-                CategoryCategoryOptionLinkStoreFactory.create(databaseAdapter),
-                new CategoryOptionHandler(CategoryOptionStoreFactory.create(databaseAdapter)));
+        return new CategoryHandler(CategoryStore.create(databaseAdapter),
+                CategoryCategoryOptionLinkStore.create(databaseAdapter),
+                new CategoryOptionHandler(CategoryOptionStore.create(databaseAdapter)));
     }
 
     private void saveCategoryCategoryOptionLinks(Category category) {

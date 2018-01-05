@@ -51,7 +51,7 @@ public class DataElementHandler extends GenericHandlerImpl<DataElement, DataElem
 
     public static DataElementHandler create(DatabaseAdapter databaseAdapter,
                                             OptionSetHandler optionSetHandler) {
-        return new DataElementHandler(DataElementStoreFactory.create(databaseAdapter), optionSetHandler);
+        return new DataElementHandler(DataElementStore.create(databaseAdapter), optionSetHandler);
     }
 
     @Override

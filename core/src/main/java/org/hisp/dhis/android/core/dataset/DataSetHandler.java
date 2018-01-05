@@ -43,6 +43,6 @@ public class DataSetHandler extends GenericHandlerImpl<DataSet, DataSetModel> {
     }
 
     public static DataSetHandler create(DatabaseAdapter databaseAdapter) {
-        return new DataSetHandler(DataSetStoreFactory.create(databaseAdapter));
+        return new DataSetHandler(DataSetStore.create(databaseAdapter));
     }
 }

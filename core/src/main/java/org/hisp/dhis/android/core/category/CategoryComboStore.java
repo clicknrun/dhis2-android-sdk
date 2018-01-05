@@ -26,15 +26,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.option;
+package org.hisp.dhis.android.core.category;
 
 import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.StoreFactory;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-public class OptionSetStoreFactory {
-    public static IdentifiableObjectStore<OptionSetModel> create(DatabaseAdapter databaseAdapter) {
-        return StoreFactory.identifiableStore(databaseAdapter,
-                OptionSetModel.TABLE, OptionSetModel.Columns.all());
+public class CategoryComboStore {
+    public static IdentifiableObjectStore<CategoryComboModel> create(DatabaseAdapter databaseAdapter) {
+        return StoreFactory.identifiableStore(databaseAdapter, CategoryComboModel.TABLE,
+                CategoryComboModel.Columns.all());
     }
 }

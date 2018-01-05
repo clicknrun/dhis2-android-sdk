@@ -30,9 +30,9 @@ package org.hisp.dhis.android.core.dataset;
 import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkModel;
-import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryLinkStore;
 import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkModel;
-import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkStoreFactory;
+import org.hisp.dhis.android.core.category.CategoryComboCategoryOptionComboLinkStore;
 import org.hisp.dhis.android.core.category.CategoryOptionCombo;
 import org.hisp.dhis.android.core.common.ObjectStore;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
@@ -57,9 +57,9 @@ class DataSetParentLinkManager {
 
     static DataSetParentLinkManager create(DatabaseAdapter databaseAdapter) {
         return new DataSetParentLinkManager(
-                DataSetDataElementLinkStoreFactory.create(databaseAdapter),
-                CategoryComboCategoryLinkStoreFactory.create(databaseAdapter),
-                CategoryComboCategoryOptionComboLinkStoreFactory.create(databaseAdapter));
+                DataSetDataElementLinkStore.create(databaseAdapter),
+                CategoryComboCategoryLinkStore.create(databaseAdapter),
+                CategoryComboCategoryOptionComboLinkStore.create(databaseAdapter));
     }
 
     void saveDataSetDataElementLinks(List<DataSet> dataSets) {

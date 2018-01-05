@@ -26,15 +26,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.hisp.dhis.android.core.dataset;
+package org.hisp.dhis.android.core.category;
 
-import org.hisp.dhis.android.core.common.ObjectStore;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.StoreFactory;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
-public class DataSetDataElementLinkStoreFactory {
-    public static ObjectStore<DataSetDataElementLinkModel> create(DatabaseAdapter databaseAdapter) {
-        return StoreFactory.objectStore(databaseAdapter, DataSetDataElementLinkModel.TABLE,
-                DataSetDataElementLinkModel.Columns.all());
+public class CategoryStore {
+    public static IdentifiableObjectStore<CategoryModel> create(DatabaseAdapter databaseAdapter) {
+        return StoreFactory.identifiableStore(databaseAdapter, CategoryModel.TABLE,
+                CategoryModel.Columns.all());
     }
 }

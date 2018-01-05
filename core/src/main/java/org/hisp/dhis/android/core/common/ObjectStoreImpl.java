@@ -40,7 +40,7 @@ public class ObjectStoreImpl<M extends Model & StatementBinder> implements Objec
     protected final SQLiteStatement insertStatement;
     protected final SQLStatementBuilder builder;
 
-    public ObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLiteStatement insertStatement,
+    ObjectStoreImpl(DatabaseAdapter databaseAdapter, SQLiteStatement insertStatement,
                        SQLStatementBuilder builder) {
         this.databaseAdapter = databaseAdapter;
         this.insertStatement = insertStatement;

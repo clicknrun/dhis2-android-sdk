@@ -40,7 +40,7 @@ public class OptionSetHandler extends GenericHandlerImpl<OptionSet, OptionSetMod
     }
 
     public static OptionSetHandler create(DatabaseAdapter databaseAdapter) {
-        return new OptionSetHandler(OptionSetStoreFactory.create(databaseAdapter),
+        return new OptionSetHandler(OptionSetStore.create(databaseAdapter),
                 new OptionHandler(new OptionStoreImpl(databaseAdapter)));
     }
 
