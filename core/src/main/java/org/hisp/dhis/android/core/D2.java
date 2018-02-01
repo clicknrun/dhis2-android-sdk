@@ -81,6 +81,8 @@ import org.hisp.dhis.android.core.dataset.DataSetOrganisationUnitLinkModel;
 import org.hisp.dhis.android.core.dataset.DataSetOrganisationUnitLinkStore;
 import org.hisp.dhis.android.core.dataset.DataSetParentCall;
 import org.hisp.dhis.android.core.dataset.DataSetStore;
+import org.hisp.dhis.android.core.dataset.PeriodModel;
+import org.hisp.dhis.android.core.dataset.PeriodStore;
 import org.hisp.dhis.android.core.enrollment.EnrollmentHandler;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStore;
 import org.hisp.dhis.android.core.enrollment.EnrollmentStoreImpl;
@@ -253,6 +255,7 @@ public final class D2 {
     private final IdentifiableObjectStore<IndicatorModel> indicatorStore;
     private final IdentifiableObjectStore<IndicatorTypeModel> indicatorTypeStore;
     private final ObjectStore<DataSetIndicatorLinkModel> dataSetIndicatorLinkStore;
+    private final ObjectStore<PeriodModel> periodStore;
 
     //Handlers
     private final UserCredentialsHandler userCredentialsHandler;
@@ -367,6 +370,7 @@ public final class D2 {
         this.indicatorStore = IndicatorStore.create(databaseAdapter());
         this.indicatorTypeStore = IndicatorTypeStore.create(databaseAdapter());
         this.dataSetIndicatorLinkStore = DataSetIndicatorLinkStore.create(databaseAdapter());
+        this.periodStore = PeriodStore.create(databaseAdapter());
 
         //handlers
         userCredentialsHandler = new UserCredentialsHandler(userCredentialsStore);
@@ -497,6 +501,7 @@ public final class D2 {
         deletableStoreList.add(indicatorStore);
         deletableStoreList.add(indicatorTypeStore);
         deletableStoreList.add(dataSetIndicatorLinkStore);
+        deletableStoreList.add(periodStore);
         return new LogOutUserCallable(
                 deletableStoreList
         );
