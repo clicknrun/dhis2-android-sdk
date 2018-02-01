@@ -42,7 +42,7 @@ public class IndicatorTypeEndpointCall extends GenericEndpointCallImpl<Indicator
     private final IndicatorTypeService indicatorTypeService;
 
     private IndicatorTypeEndpointCall(GenericCallData data, IndicatorTypeService indicatorTypeService,
-                                      GenericHandler<IndicatorType, IndicatorTypeModel> indicatorTypeHandler,
+                                      GenericHandler<IndicatorType> indicatorTypeHandler,
                                       Set<String> uids) {
         super(data, indicatorTypeHandler, ResourceModel.Type.INDICATOR_TYPE, uids, null);
         this.indicatorTypeService = indicatorTypeService;

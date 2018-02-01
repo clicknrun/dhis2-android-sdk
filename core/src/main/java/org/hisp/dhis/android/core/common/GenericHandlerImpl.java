@@ -33,7 +33,7 @@ import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
 
 public abstract class GenericHandlerImpl<
         P extends BaseIdentifiableObject,
-        M extends BaseIdentifiableObjectModel & StatementBinder> implements GenericHandler<P, M> {
+        M extends BaseIdentifiableObjectModel & StatementBinder> implements GenericHandler<P> {
 
     private final IdentifiableObjectStore<M> store;
 

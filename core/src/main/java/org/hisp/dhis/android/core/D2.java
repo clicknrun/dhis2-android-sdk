@@ -264,7 +264,7 @@ public final class D2 {
     private final OrganisationUnitHandler organisationUnitHandler;
 
     // handlers
-    private final GenericHandler<DataElement, DataElementModel> dataElementHandler;
+    private final GenericHandler<DataElement> dataElementHandler;
     private final OptionSetHandler optionSetHandler;
 
     @VisibleForTesting

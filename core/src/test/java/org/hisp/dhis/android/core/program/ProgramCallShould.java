@@ -38,7 +38,6 @@ import org.hisp.dhis.android.core.data.api.Filter;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.dataelement.DataElement;
-import org.hisp.dhis.android.core.dataelement.DataElementModel;
 import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.relationship.RelationshipType;
 import org.hisp.dhis.android.core.relationship.RelationshipTypeStore;
@@ -159,7 +158,7 @@ public class ProgramCallShould {
     private Date serverDate;
 
     @Mock
-    private GenericHandler<DataElement, DataElementModel> dataElementHandler;
+    private GenericHandler<DataElement> dataElementHandler;
 
     // the call we are testing
     private Call<Response<Payload<Program>>> programSyncCall;
