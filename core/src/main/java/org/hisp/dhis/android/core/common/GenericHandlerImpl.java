@@ -67,12 +67,12 @@ public abstract class GenericHandlerImpl<
         this.afterObjectPersisted(p);
     }
 
-    /*
-     * Method is not abstract since empty action is the default action and we don't want it to
-     * be unnecessarily written in every child.
-     */
     @SuppressWarnings("PMD.EmptyMethodInAbstractClassShouldBeAbstract")
-    protected void afterObjectPersisted(P p) {}
+    protected void afterObjectPersisted(P p) {
+        /* Method is not abstract since empty action is the default action and we don't want it to
+         * be unnecessarily written in every child.
+         */
+    }
 
     protected abstract M pojoToModel(P p);
 }
