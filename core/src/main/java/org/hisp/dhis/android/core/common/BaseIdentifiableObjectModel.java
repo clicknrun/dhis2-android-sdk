@@ -52,6 +52,8 @@ public abstract class BaseIdentifiableObjectModel extends BaseModel implements I
         public static final String CREATED = "created";
         public static final String LAST_UPDATED = "lastUpdated";
 
+        protected Columns() {}
+
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(), UID, CODE, NAME, DISPLAY_NAME,
                     CREATED, LAST_UPDATED);

@@ -51,6 +51,8 @@ public abstract class DataSetDataElementLinkModel extends BaseModel implements U
         public static final String DATA_SET = "dataSet";
         public static final String DATA_ELEMENT = "dataElement";
 
+        private Columns() {}
+
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(),
                     DATA_SET, DATA_ELEMENT);

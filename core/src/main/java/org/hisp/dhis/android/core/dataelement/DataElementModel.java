@@ -65,6 +65,8 @@ public abstract class DataElementModel extends BaseNameableObjectModel implement
         public static final String OPTION_SET = "optionSet";
         public static final String CATEGORY_COMBO = "categoryCombo";
 
+        private Columns() {}
+
         public static String[] all() {
             return Utils.appendInNewArray(BaseNameableObjectModel.Columns.all(),
                     VALUE_TYPE, ZERO_IS_SIGNIFICANT, AGGREGATION_TYPE, FORM_NAME, NUMBER_TYPE,

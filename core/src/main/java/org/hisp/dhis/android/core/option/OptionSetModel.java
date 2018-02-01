@@ -54,6 +54,8 @@ public abstract class OptionSetModel extends BaseIdentifiableObjectModel impleme
         public static final String VERSION = "version";
         public static final String VALUE_TYPE = "valueType";
 
+        private Columns() {}
+
         public static String[] all() {
             return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),
                     VERSION, VALUE_TYPE);

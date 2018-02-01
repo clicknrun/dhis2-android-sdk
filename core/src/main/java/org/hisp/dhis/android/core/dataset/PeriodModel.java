@@ -59,6 +59,8 @@ public abstract class PeriodModel extends BaseModel implements UpdateWhereStatem
         public static final String START_DATE = "startDate";
         public static final String END_DATE = "endDate";
 
+        private Columns() {}
+
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(),
                     PERIOD_TYPE, START_DATE, END_DATE);

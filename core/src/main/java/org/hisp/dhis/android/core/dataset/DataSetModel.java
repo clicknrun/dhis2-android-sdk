@@ -68,6 +68,8 @@ public abstract class DataSetModel extends BaseNameableObjectModel implements St
         public static final String RENDER_AS_TABS = "renderAsTabs";
         public static final String RENDER_HORIZONTALLY = "renderHorizontally";
 
+        private Columns() {}
+
         public static String[] all() {
             return Utils.appendInNewArray(BaseNameableObjectModel.Columns.all(),
                     PERIOD_TYPE, CATEGORY_COMBO, MOBILE, VERSION, EXPIRY_DAYS, TIMELY_DAYS,
