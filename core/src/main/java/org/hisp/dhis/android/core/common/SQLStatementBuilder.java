@@ -36,6 +36,7 @@ public class SQLStatementBuilder {
     final String tableName;
     public final String[] columns;
     private final String[] updateWhereColumns;
+    private final static String TEXT = " TEXT";
 
     @SuppressWarnings("PMD.UseVarargs")
     SQLStatementBuilder(String tableName, String[] columns, String[] updateWhereColumns) {
@@ -109,21 +110,21 @@ public class SQLStatementBuilder {
 
     private static String[] identifiableColumns() {
         return Utils.appendInNewArray(idColumn(),
-                BaseIdentifiableObjectModel.Columns.UID + " TEXT NOT NULL UNIQUE",
-                BaseIdentifiableObjectModel.Columns.CODE + " TEXT",
-                BaseIdentifiableObjectModel.Columns.NAME + " TEXT",
-                BaseIdentifiableObjectModel.Columns.DISPLAY_NAME + " TEXT",
-                BaseIdentifiableObjectModel.Columns.CREATED + " TEXT",
-                BaseIdentifiableObjectModel.Columns.LAST_UPDATED + " TEXT"
+                BaseIdentifiableObjectModel.Columns.UID + TEXT + " NOT NULL UNIQUE",
+                BaseIdentifiableObjectModel.Columns.CODE + TEXT,
+                BaseIdentifiableObjectModel.Columns.NAME + TEXT,
+                BaseIdentifiableObjectModel.Columns.DISPLAY_NAME + TEXT,
+                BaseIdentifiableObjectModel.Columns.CREATED + TEXT,
+                BaseIdentifiableObjectModel.Columns.LAST_UPDATED + TEXT
         );
     }
 
     private static String[] nameableColumns() {
         return Utils.appendInNewArray(identifiableColumns(),
-                BaseNameableObjectModel.Columns.SHORT_NAME + " TEXT",
-                BaseNameableObjectModel.Columns.DISPLAY_SHORT_NAME + " TEXT",
-                BaseNameableObjectModel.Columns.DESCRIPTION + " TEXT",
-                BaseNameableObjectModel.Columns.DISPLAY_DESCRIPTION + " TEXT"
+                BaseNameableObjectModel.Columns.SHORT_NAME + TEXT,
+                BaseNameableObjectModel.Columns.DISPLAY_SHORT_NAME + TEXT,
+                BaseNameableObjectModel.Columns.DESCRIPTION + TEXT,
+                BaseNameableObjectModel.Columns.DISPLAY_DESCRIPTION + TEXT
         );
     }
 
