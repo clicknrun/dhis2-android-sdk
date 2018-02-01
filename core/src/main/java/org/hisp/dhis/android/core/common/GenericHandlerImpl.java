@@ -58,8 +58,9 @@ public abstract class GenericHandlerImpl<
 
     private void deleteOrPersist(P p) {
         M m = pojoToModel(p);
-        if (isDeleted(p) && m.uid() != null) {
-            store.delete(m.uid());
+        String modelUid = m.uid();
+        if (isDeleted(p) && modelUid != null) {
+            store.delete(modelUid);
         } else {
             store.updateOrInsert(m);
         }
