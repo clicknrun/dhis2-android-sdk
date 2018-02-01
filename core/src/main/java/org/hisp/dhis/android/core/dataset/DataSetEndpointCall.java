@@ -37,7 +37,7 @@ import org.hisp.dhis.android.core.resource.ResourceModel;
 import java.io.IOException;
 import java.util.Set;
 
-public class DataSetEndpointCall extends GenericEndpointCallImpl<DataSet> {
+public final class DataSetEndpointCall extends GenericEndpointCallImpl<DataSet> {
     private final DataSetService dataSetService;
 
     private DataSetEndpointCall(GenericCallData data, DataSetService dataSetService,
