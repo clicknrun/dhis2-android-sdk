@@ -43,7 +43,6 @@ import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.data.database.DbValueTypeColumnAdapter;
-import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.utils.Utils;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
