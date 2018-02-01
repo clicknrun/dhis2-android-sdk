@@ -88,7 +88,6 @@ public abstract class DataElementModel extends BaseNameableObjectModel implement
 
         @Override
         public DataElementModel fromPojo(DataElement dataElement) {
-            OptionSet optionSet = dataElement.optionSet();
             return DataElementModel.builder()
                     .uid(dataElement.uid())
                     .code(dataElement.code())
@@ -108,7 +107,7 @@ public abstract class DataElementModel extends BaseNameableObjectModel implement
                     .domainType(dataElement.domainType())
                     .dimension(dataElement.dimension())
                     .displayFormName(dataElement.displayFormName())
-                    .optionSet(optionSet != null ? optionSet.uid() : null)
+                    .optionSet(dataElement.optionSetUid())
                     .categoryCombo(dataElement.categoryComboUid())
                     .build();
         }
