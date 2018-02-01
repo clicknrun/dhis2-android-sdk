@@ -35,6 +35,7 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 
 public abstract class BaseModel implements Model {
 
+    @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
     public abstract static class Columns {
         public static final String ID = BaseColumns._ID;
 
