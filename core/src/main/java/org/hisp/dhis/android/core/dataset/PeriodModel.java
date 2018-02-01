@@ -55,9 +55,9 @@ public abstract class PeriodModel extends BaseModel implements UpdateWhereStatem
     public static final String TABLE = "Period";
 
     public static class Columns extends BaseModel.Columns {
-        public static final String PERIOD_TYPE = "periodType";
-        public static final String START_DATE = "startDate";
-        public static final String END_DATE = "endDate";
+        static final String PERIOD_TYPE = "periodType";
+        static final String START_DATE = "startDate";
+        static final String END_DATE = "endDate";
 
         private Columns() {}
 
@@ -66,7 +66,7 @@ public abstract class PeriodModel extends BaseModel implements UpdateWhereStatem
                     PERIOD_TYPE, START_DATE, END_DATE);
         }
 
-        public static String[] whereUpdate() {
+        static String[] whereUpdate() {
             return new String[]{PERIOD_TYPE, START_DATE, END_DATE};
         }
     }
