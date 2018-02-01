@@ -50,11 +50,14 @@ import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getIndi
 public class DataSetParentCall extends TransactionalCall {
     private final User user;
     private final DataSetParentLinkManager linkManager;
+    private final PeriodHandler periodHandler;
 
-    private DataSetParentCall(User user, GenericCallData data, DataSetParentLinkManager linkManager) {
+    private DataSetParentCall(User user, GenericCallData data, DataSetParentLinkManager linkManager,
+                              PeriodHandler periodHandler) {
         super(data);
         this.user = user;
         this.linkManager = linkManager;
+        this.periodHandler = periodHandler;
     }
 
     @Override
@@ -80,6 +83,8 @@ public class DataSetParentCall extends TransactionalCall {
         linkManager.saveDataSetDataElementAndIndicatorLinks(dataSets);
         linkManager.saveDataSetOrganisationUnitLinks(user);
 
+        periodHandler.generateAndPersist();
+
         return dataElementResponse;
     }
 
@@ -91,7 +96,8 @@ public class DataSetParentCall extends TransactionalCall {
         @Override
         public Call<Response> create(User user, GenericCallData data) {
             return new DataSetParentCall(user, data,
-                    DataSetParentLinkManager.create(data.databaseAdapter()));
+                    DataSetParentLinkManager.create(data.databaseAdapter()),
+                    PeriodHandler.create(data.databaseAdapter()));
         }
     };
 }
