@@ -42,8 +42,8 @@ public class SQLStatementBuilder {
     @SuppressFBWarnings
     SQLStatementBuilder(String tableName, String[] columns, String[] updateWhereColumns) {
         this.tableName = tableName;
-        this.columns = columns;
-        this.updateWhereColumns = updateWhereColumns;
+        this.columns = columns.clone();
+        this.updateWhereColumns = updateWhereColumns.clone();
     }
 
     private String commaSeparatedColumns() {
