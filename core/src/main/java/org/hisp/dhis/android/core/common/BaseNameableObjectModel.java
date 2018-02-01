@@ -40,13 +40,11 @@ import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 public abstract class BaseNameableObjectModel extends BaseIdentifiableObjectModel implements NameableObject {
 
-    public static class Columns extends BaseIdentifiableObjectModel.Columns {
+    public abstract static class Columns extends BaseIdentifiableObjectModel.Columns {
         public static final String SHORT_NAME = "shortName";
         public static final String DISPLAY_SHORT_NAME = "displayShortName";
         public static final String DESCRIPTION = "description";
         public static final String DISPLAY_DESCRIPTION = "displayDescription";
-
-        protected Columns() {}
 
         public static String[] all() {
             return Utils.appendInNewArray(BaseIdentifiableObjectModel.Columns.all(),

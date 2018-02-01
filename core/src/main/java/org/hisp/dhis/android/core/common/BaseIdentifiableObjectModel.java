@@ -44,15 +44,13 @@ import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
 public abstract class BaseIdentifiableObjectModel extends BaseModel implements IdentifiableObject {
 
-    public static class Columns extends BaseModel.Columns {
+    public abstract static class Columns extends BaseModel.Columns {
         public static final String UID = "uid";
         public static final String CODE = "code";
         public static final String NAME = "name";
         public static final String DISPLAY_NAME = "displayName";
         public static final String CREATED = "created";
         public static final String LAST_UPDATED = "lastUpdated";
-
-        protected Columns() {}
 
         public static String[] all() {
             return Utils.appendInNewArray(BaseModel.Columns.all(), UID, CODE, NAME, DISPLAY_NAME,

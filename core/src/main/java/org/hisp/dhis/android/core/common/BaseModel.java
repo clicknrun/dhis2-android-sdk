@@ -35,10 +35,8 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 
 public abstract class BaseModel implements Model {
 
-    public static class Columns {
+    public abstract static class Columns {
         public static final String ID = BaseColumns._ID;
-
-        protected Columns() {}
 
         public static String[] all() {
             return new String[] {};
