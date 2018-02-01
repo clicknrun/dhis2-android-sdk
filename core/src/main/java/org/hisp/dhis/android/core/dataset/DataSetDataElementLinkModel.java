@@ -58,7 +58,7 @@ public abstract class DataSetDataElementLinkModel extends BaseModel implements U
                     DATA_SET, DATA_ELEMENT);
         }
 
-        public static String[] whereUpdate() {
+        static String[] whereUpdate() {
             return new String[]{DATA_SET, DATA_ELEMENT};
         }
     }
