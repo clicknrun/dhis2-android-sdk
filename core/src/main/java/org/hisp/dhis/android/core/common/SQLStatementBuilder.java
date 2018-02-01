@@ -32,14 +32,11 @@ import org.hisp.dhis.android.core.utils.Utils;
 
 import java.util.Arrays;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 public class SQLStatementBuilder {
     final String tableName;
     public final String[] columns;
     private final String[] updateWhereColumns;
 
-    @SuppressFBWarnings
     SQLStatementBuilder(String tableName, String[] columns, String[] updateWhereColumns) {
         this.tableName = tableName;
         this.columns = columns.clone();
