@@ -34,6 +34,7 @@ public final class StoreFactory {
 
     private StoreFactory() {}
 
+    @SuppressWarnings("PMD.UseVarargs")
     public static <I extends BaseIdentifiableObjectModel & StatementBinder> IdentifiableObjectStore<I>
     identifiableStore(DatabaseAdapter databaseAdapter, String tableName, String[] columns) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(tableName, columns, new String[]{});
@@ -41,6 +42,7 @@ public final class StoreFactory {
         return new IdentifiableObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
     }
 
+    @SuppressWarnings("PMD.UseVarargs")
     static <I extends BaseModel & StatementBinder> ObjectStore<I>
     objectStore(DatabaseAdapter databaseAdapter, String tableName, String[] columns) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(tableName, columns, new String[]{});
@@ -48,6 +50,7 @@ public final class StoreFactory {
                 statementBuilder.insert()), statementBuilder);
     }
 
+    @SuppressWarnings("PMD.UseVarargs")
     public static <I extends BaseModel & UpdateWhereStatementBinder> ObjectWithoutUidStore<I>
     objectWithoutUidStore(DatabaseAdapter databaseAdapter, String tableName, String[] columns,
                           String[] whereUpdateColumns) {

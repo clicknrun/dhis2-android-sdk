@@ -37,6 +37,7 @@ public class SQLStatementBuilder {
     public final String[] columns;
     private final String[] updateWhereColumns;
 
+    @SuppressWarnings("PMD.UseVarargs")
     SQLStatementBuilder(String tableName, String[] columns, String[] updateWhereColumns) {
         this.tableName = tableName;
         this.columns = columns.clone();
@@ -47,7 +48,7 @@ public class SQLStatementBuilder {
         return commaSeparatedArrayValues(columns);
     }
 
-    private static String commaSeparatedArrayValues(String[] values) {
+    private static String commaSeparatedArrayValues(String... values) {
         String withBrackets = Arrays.toString(values);
         return withBrackets.substring(1, withBrackets.length() - 1);
     }
@@ -60,7 +61,7 @@ public class SQLStatementBuilder {
         return commaSeparatedArrayValues(array);
     }
 
-    private String commaSeparatedColumnEqualInterrogationMark(String[] cols) {
+    private String commaSeparatedColumnEqualInterrogationMark(String... cols) {
         String[] array = new String[cols.length];
         for (int i = 0; i < cols.length; i++) {
             array[i] = cols[i] + "=?";
@@ -68,7 +69,7 @@ public class SQLStatementBuilder {
         return commaSeparatedArrayValues(array);
     }
 
-    private String andSeparatedColumnEqualInterrogationMark(String[] cols) {
+    private String andSeparatedColumnEqualInterrogationMark(String... cols) {
         return commaSeparatedColumnEqualInterrogationMark(cols)
                 .replace(",", " AND ");
     }
@@ -96,6 +97,7 @@ public class SQLStatementBuilder {
                 " WHERE " + whereClause + ";";
     }
 
+    @SuppressWarnings("PMD.UseVarargs")
     private static String createTableWrapper(String tableName, String[] columnsWithAttributes) {
         return "CREATE TABLE " + tableName + " (" +
                 commaSeparatedArrayValues(columnsWithAttributes) + ");";
