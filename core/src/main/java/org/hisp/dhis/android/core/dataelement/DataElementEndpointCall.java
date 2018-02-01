@@ -38,7 +38,6 @@ import org.hisp.dhis.android.core.resource.ResourceModel;
 import java.io.IOException;
 import java.util.Set;
 
-@SuppressWarnings("PMD")
 public class DataElementEndpointCall extends GenericEndpointCallImpl<DataElement> {
     private final DataElementService dataElementService;
 

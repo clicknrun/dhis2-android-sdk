@@ -67,7 +67,6 @@ public abstract class GenericHandlerImpl<
         this.afterObjectPersisted(p);
     }
 
-    @SuppressWarnings("PMD")
     protected void afterObjectPersisted(P p) {}
 
     protected abstract M pojoToModel(P p);

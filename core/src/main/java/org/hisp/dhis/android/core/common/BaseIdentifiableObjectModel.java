@@ -42,7 +42,6 @@ import java.util.Date;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 
-@SuppressWarnings("PMD")
 public abstract class BaseIdentifiableObjectModel extends BaseModel implements IdentifiableObject {
 
     public static class Columns extends BaseModel.Columns {

@@ -129,7 +129,6 @@ public abstract class DataElement extends BaseNameableObject {
     @JsonProperty(CATEGORY_COMBO)
     public abstract ObjectWithUid categoryCombo();
 
-    @SuppressWarnings("PMD")
     public String categoryComboUid() {
         return categoryCombo() != null ? categoryCombo().uid() :
                 CategoryComboModel.DEFAULT_UID;

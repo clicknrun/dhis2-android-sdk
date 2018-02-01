@@ -33,7 +33,6 @@ import android.support.annotation.Nullable;
 
 import com.gabrielittner.auto.value.cursor.ColumnName;
 
-@SuppressWarnings("PMD")
 public abstract class BaseModel implements Model {
 
     public static class Columns {
