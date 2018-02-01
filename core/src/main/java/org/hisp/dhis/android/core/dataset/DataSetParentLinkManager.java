@@ -78,9 +78,7 @@ class DataSetParentLinkManager {
     }
 
     private void saveDataSetIndicatorLink(DataSet dataSet) {
-        List<ObjectWithUid> indicators = dataSet.indicators();
-        assert indicators != null;
-        for (ObjectWithUid indicator : indicators) {
+        for (ObjectWithUid indicator : dataSet.indicators()) {
             this.dataSetIndicatorStore.updateOrInsertWhere(
                     DataSetIndicatorLinkModel.create(
                             dataSet.uid(),
