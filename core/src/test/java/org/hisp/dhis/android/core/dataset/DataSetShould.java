@@ -53,7 +53,7 @@ public class DataSetShould extends BaseObjectShould implements ObjectShould {
 
         assertThat(dataSet.code()).isEqualTo("DS_394131");
         assertThat(dataSet.lastUpdated()).isEqualTo(
-                BaseIdentifiableObject.DATE_FORMAT.parse("2015-08-09T12:35:36.743"));
+                BaseIdentifiableObject.parseDate("2015-08-09T12:35:36.743"));
         assertThat(dataSet.uid()).isEqualTo("lyLU2wR22tC");
         assertThat(dataSet.created()).isEqualTo(
                 BaseIdentifiableObject.DATE_FORMAT.parse("2012-06-10T00:36:10.036"));
