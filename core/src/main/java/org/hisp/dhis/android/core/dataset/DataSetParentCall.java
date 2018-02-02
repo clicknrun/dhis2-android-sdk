@@ -33,6 +33,8 @@ import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
+import org.hisp.dhis.android.core.datavalue.DataValue;
+import org.hisp.dhis.android.core.datavalue.DataValueEndpointCall;
 import org.hisp.dhis.android.core.indicator.Indicator;
 import org.hisp.dhis.android.core.indicator.IndicatorEndpointCall;
 import org.hisp.dhis.android.core.indicator.IndicatorTypeEndpointCall;
@@ -44,8 +46,11 @@ import retrofit2.Response;
 
 import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getAssignedDataSetUids;
 import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getDataElementUids;
+import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getDataSetsUids;
 import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getIndicatorTypeUids;
 import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getIndicatorUids;
+import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getOrganisationUnitUids;
+import static org.hisp.dhis.android.core.dataset.DataSetParentUidsHelper.getPeriodsIds;
 
 public class DataSetParentCall extends TransactionalCall {
     private final User user;
@@ -54,12 +59,14 @@ public class DataSetParentCall extends TransactionalCall {
     private final DataElementEndpointCall.Factory dataElementCallFactory;
     private final IndicatorEndpointCall.Factory indicatorCallFactory;
     private final IndicatorTypeEndpointCall.Factory indicatorTypeCallFactory;
+    private final DataValueEndpointCall.Factory dataValueCallFactory;
 
     private DataSetParentCall(User user, GenericCallData data, DataSetParentLinkManager linkManager,
                               DataSetEndpointCall.Factory dataSetCallFactory,
                               DataElementEndpointCall.Factory dataElementCallFactory,
                               IndicatorEndpointCall.Factory indicatorCallFactory,
-                              IndicatorTypeEndpointCall.Factory indicatorTypeCallFactory) {
+                              IndicatorTypeEndpointCall.Factory indicatorTypeCallFactory,
+                              DataValueEndpointCall.Factory dataValueCallFactory) {
         super(data);
         this.user = user;
         this.linkManager = linkManager;
@@ -67,6 +74,7 @@ public class DataSetParentCall extends TransactionalCall {
         this.dataElementCallFactory = dataElementCallFactory;
         this.indicatorCallFactory = indicatorCallFactory;
         this.indicatorTypeCallFactory = indicatorTypeCallFactory;
+        this.dataValueCallFactory = dataValueCallFactory;
     }
 
     @Override
@@ -89,6 +97,10 @@ public class DataSetParentCall extends TransactionalCall {
                 = indicatorTypeCallFactory.create(data, getIndicatorTypeUids(indicators));
         indicatorTypeEndpointCall.call();
 
+        DataValueEndpointCall dataValueEndpointCall = dataValueCallFactory.create(data, getDataSetsUids(),
+                getPeriodsIds(), getOrganisationUnitUids(user));
+        dataValueEndpointCall.call();
+
         linkManager.saveDataSetDataElementAndIndicatorLinks(dataSets);
         linkManager.saveDataSetOrganisationUnitLinks(user);
 
@@ -107,7 +119,8 @@ public class DataSetParentCall extends TransactionalCall {
                     DataSetEndpointCall.FACTORY,
                     DataElementEndpointCall.FACTORY,
                     IndicatorEndpointCall.FACTORY,
-                    IndicatorTypeEndpointCall.FACTORY);
+                    IndicatorTypeEndpointCall.FACTORY,
+                    DataValueEndpointCall.FACTORY);
         }
     };
 }
