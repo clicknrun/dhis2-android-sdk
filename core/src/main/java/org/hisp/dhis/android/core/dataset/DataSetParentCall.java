@@ -33,7 +33,6 @@ import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.dataelement.DataElement;
 import org.hisp.dhis.android.core.dataelement.DataElementEndpointCall;
-import org.hisp.dhis.android.core.datavalue.DataValue;
 import org.hisp.dhis.android.core.datavalue.DataValueEndpointCall;
 import org.hisp.dhis.android.core.indicator.Indicator;
 import org.hisp.dhis.android.core.indicator.IndicatorEndpointCall;
