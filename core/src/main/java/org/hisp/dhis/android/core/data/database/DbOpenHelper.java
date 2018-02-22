@@ -1049,8 +1049,7 @@ public class DbOpenHelper extends CustomSQLBriteOpenHelper {
                     PeriodModel.Columns.PERIOD_ID + " TEXT," +
                             PeriodModel.Columns.PERIOD_TYPE + " TEXT," +
                             PeriodModel.Columns.START_DATE + " TEXT," +
-                            PeriodModel.Columns.END_DATE + " TEXT," +
-                            " UNIQUE (" + PeriodModel.Columns.PERIOD_ID + ")"
+                            PeriodModel.Columns.END_DATE + " TEXT"
             );
 
     /**
