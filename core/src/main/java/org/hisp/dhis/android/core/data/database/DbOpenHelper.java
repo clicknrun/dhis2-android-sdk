@@ -1007,7 +1007,6 @@ public class DbOpenHelper extends CustomSQLBriteOpenHelper {
                             DataSetIndicatorLinkModel.Columns.INDICATOR + ")"
             );
 
-    // TODO Add Period as foreign key.
     private static final String CREATE_DATA_VALUE_TABLE =
             SQLStatementBuilder.createModelTable(DataValueModel.TABLE,
                     DataValueModel.Columns.DATA_ELEMENT + " TEXT NOT NULL," +
@@ -1024,6 +1023,9 @@ public class DbOpenHelper extends CustomSQLBriteOpenHelper {
                             " FOREIGN KEY (" + DataValueModel.Columns.DATA_ELEMENT + ") " +
                             " REFERENCES " + DataElementModel.TABLE + " (" + DataElementModel.Columns.UID + ")" +
                             " ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                            " FOREIGN KEY (" + DataValueModel.Columns.PERIOD + ") " +
+                            " REFERENCES " + PeriodModel.TABLE + " (" +
+                            PeriodModel.Columns.PERIOD_ID + ")" +
                             " FOREIGN KEY (" + DataValueModel.Columns.ORGANISATION_UNIT + ") " +
                             " REFERENCES " + OrganisationUnitModel.TABLE + " (" +
                             OrganisationUnitModel.Columns.UID + ")" +
@@ -1049,7 +1051,8 @@ public class DbOpenHelper extends CustomSQLBriteOpenHelper {
                     PeriodModel.Columns.PERIOD_ID + " TEXT," +
                             PeriodModel.Columns.PERIOD_TYPE + " TEXT," +
                             PeriodModel.Columns.START_DATE + " TEXT," +
-                            PeriodModel.Columns.END_DATE + " TEXT"
+                            PeriodModel.Columns.END_DATE + " TEXT," +
+                            " UNIQUE (" + PeriodModel.Columns.PERIOD_ID + ")"
             );
 
     /**
