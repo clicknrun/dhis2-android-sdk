@@ -113,7 +113,7 @@ public class DataSetParentCall extends TransactionalCall {
         dataValueEndpointCall.call();
 
         linkManager.saveDataSetDataElementAndIndicatorLinks(dataSets);
-        linkManager.saveDataSetOrganisationUnitLinks(organisationUnits);
+        linkManager.saveDataSetOrganisationUnitLinks(organisationUnits, dataSetUids);
 
         return dataElementResponse;
     }
