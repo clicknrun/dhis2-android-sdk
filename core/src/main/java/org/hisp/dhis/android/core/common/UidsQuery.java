@@ -21,6 +21,7 @@ public abstract class UidsQuery extends BaseQuery {
     }
 
     public static UidsQuery create(Set<String> uids, Integer limit) {
-        return new AutoValue_UidsQuery(1, BaseQuery.DEFAULT_PAGE_SIZE, false, uids, limit);
+        return new AutoValue_UidsQuery(uids, 1, BaseQuery.DEFAULT_PAGE_SIZE, BaseQuery.DEFAULT_IS_PAGING,
+                BaseQuery.DEFAULT_IS_TRANSLATION_ON, BaseQuery.DEFAULT_TRANSLATION_LOCALE, uids, limit);
     }
 }

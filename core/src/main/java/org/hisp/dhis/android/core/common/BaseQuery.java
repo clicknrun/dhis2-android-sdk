@@ -11,6 +11,8 @@ public abstract class BaseQuery {
     public static final String DEFAULT_TRANSLATION_LOCALE = Locale.ENGLISH.toString();
     public static final boolean DEFAULT_IS_TRANSLATION_ON = false;
 
+    // TODO refactor BaseQuery - UidsQuery
+
     @Nullable
     public abstract Set<String> uIds();
 
