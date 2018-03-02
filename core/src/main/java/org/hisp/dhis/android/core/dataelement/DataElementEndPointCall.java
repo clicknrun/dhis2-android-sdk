@@ -3,12 +3,9 @@ package org.hisp.dhis.android.core.dataelement;
 import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.calls.Call;
-import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
-import org.hisp.dhis.android.core.option.OptionSet;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
@@ -71,7 +68,7 @@ public class DataElementEndPointCall implements
                 ResourceModel.Type.DATA_ELEMENT);
 
         Response<Payload<DataElement>> dataElementByUids =
-                dataElementService.getDataElements(getFields(),
+                dataElementService.getDataElements(DataElement.allFields,
                         DataElement.uid.in(dataElementQuery.uIds()),
                         DataElement.lastUpdated.gt(lastSyncedDataElements),
                         dataElementQuery.isTranslationOn(),
@@ -87,8 +84,7 @@ public class DataElementEndPointCall implements
                         dataElementByUids.body().items();
 
                 for (DataElement dataElement : dataElements) {
-                    dataElementHandler.handleDataElement(
-                            dataElement);
+                    dataElementHandler.handle(dataElement);
                 }
                 resourceHandler.handleResource(ResourceModel.Type.DATA_ELEMENT,
                         serverDate);
@@ -98,19 +94,5 @@ public class DataElementEndPointCall implements
             }
         }
         return dataElementByUids;
-    }
-
-
-    private Fields<DataElement> getFields() {
-        return Fields.<DataElement>builder().fields(
-                DataElement.uid, DataElement.code, DataElement.name, DataElement.displayName,
-                DataElement.created, DataElement.lastUpdated, DataElement.shortName,
-                DataElement.displayShortName, DataElement.description,
-                DataElement.displayDescription, DataElement.aggregationType,
-                DataElement.deleted, DataElement.dimension, DataElement.displayFormName,
-                DataElement.domainType, DataElement.formName, DataElement.numberType,
-                DataElement.valueType, DataElement.zeroIsSignificant,
-                DataElement.optionSet.with(OptionSet.uid, OptionSet.version),
-                DataElement.categoryCombo.with(CategoryCombo.uid)).build();
     }
 }
