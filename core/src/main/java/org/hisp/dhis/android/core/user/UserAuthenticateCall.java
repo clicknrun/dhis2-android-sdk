@@ -45,6 +45,7 @@ import org.hisp.dhis.android.core.utils.HeaderUtils;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import retrofit2.Response;
@@ -186,7 +187,7 @@ public final class UserAuthenticateCall implements Call<Response<User>> {
             organisationUnitHandler.handleOrganisationUnits(
                     user.organisationUnits(),
                     OrganisationUnitModel.Scope.SCOPE_DATA_CAPTURE,
-                    user.uid(), serverDate);
+                    user.uid(), serverDate, new HashSet<String>());
         }
     }
 }
