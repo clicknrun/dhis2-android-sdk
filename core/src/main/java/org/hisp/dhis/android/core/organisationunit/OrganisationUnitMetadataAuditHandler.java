@@ -55,7 +55,7 @@ public class OrganisationUnitMetadataAuditHandler implements MetadataAuditHandle
                     OrganisationUnitQuery.defaultQuery(user, isTranslationOn, translationLocale,
                             metadataAudit.getUid());
             organisationUnitFactory.newEndPointCall(metadataAudit.getCreatedAt(),
-                    organisationUnitQuery).call();
+                    organisationUnitQuery, new HashSet<String>()).call();
         } else {
             if (metadataAudit.getType() == AuditType.DELETE) {
                 organisationUnit = organisationUnit.toBuilder().deleted(true).build();

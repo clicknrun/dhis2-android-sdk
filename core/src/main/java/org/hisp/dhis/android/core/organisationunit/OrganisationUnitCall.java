@@ -27,8 +27,6 @@
  */
 package org.hisp.dhis.android.core.organisationunit;
 
-import static org.hisp.dhis.android.core.organisationunit.OrganisationUnitTree.findRoots;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -61,13 +59,15 @@ public class OrganisationUnitCall implements Call<Response<Payload<OrganisationU
     private final Date serverDate;
     private boolean isExecuted;
     private final OrganisationUnitQuery query;
+    private final Set<String> programUids;
 
     public OrganisationUnitCall(@NonNull OrganisationUnitService organisationUnitService,
                                 @NonNull DatabaseAdapter database,
                                 @NonNull ResourceHandler resourceHandler,
                                 @NonNull Date serverDate,
                                 @NonNull OrganisationUnitHandler organisationUnitHandler,
-                                @NonNull OrganisationUnitQuery query) {
+                                @NonNull OrganisationUnitQuery query,
+                                @NonNull Set<String> programUids) {
 
         this.organisationUnitService = organisationUnitService;
         this.database = database;
@@ -75,6 +75,7 @@ public class OrganisationUnitCall implements Call<Response<Payload<OrganisationU
         this.serverDate = new Date(serverDate.getTime());
         this.organisationUnitHandler = organisationUnitHandler;
         this.query = query;
+        this.programUids = programUids;
     }
 
     @Override
@@ -140,7 +141,7 @@ public class OrganisationUnitCall implements Call<Response<Payload<OrganisationU
             organisationUnitHandler.handleOrganisationUnits(
                     response.body().items(),
                     OrganisationUnitModel.Scope.SCOPE_DATA_CAPTURE,
-                    query.user().uid(), serverDate);
+                    query.user().uid(), serverDate, programUids);
         }
         return response;
     }

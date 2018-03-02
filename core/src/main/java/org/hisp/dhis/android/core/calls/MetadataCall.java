@@ -208,7 +208,9 @@ public class MetadataCall implements Call<Response> {
                 return response;
             }
 
-            response = syncPrograms(serverDate, programAccessResponse.body().items());
+            Set<String> programUids = getProgramUidsWithDataReadAccess(
+                    programAccessResponse.body().items());
+            response = syncPrograms(serverDate, programUids);
 
             if (!response.isSuccessful()) {
                 return response;
@@ -226,7 +228,7 @@ public class MetadataCall implements Call<Response> {
                     isTranslationOn, translationLocale,
                     OrganisationUnitQuery.DEFAULT_UID);
             Response<Payload<OrganisationUnit>> organisationUnitResponse
-                    = getOrganisationUnits(serverDate, organisationUnitQuery);
+                    = getOrganisationUnits(serverDate, organisationUnitQuery, programUids);
             response = organisationUnitResponse;
 
             if (!response.isSuccessful()) {
@@ -310,9 +312,8 @@ public class MetadataCall implements Call<Response> {
     }
 
     @SuppressWarnings("PMD.NPathComplexity")
-    private Response syncPrograms(Date serverDate, List<Program> programsWithAccess)
+    private Response syncPrograms(Date serverDate, Set<String> programUids)
             throws Exception {
-        Set<String> programUids = getProgramUidsWithDataReadAccess(programsWithAccess);
 
         ProgramQuery programQuery = ProgramQuery.defaultQuery(programUids, isTranslationOn,
                 translationLocale);
@@ -324,10 +325,11 @@ public class MetadataCall implements Call<Response> {
     }
 
     public Response getOrganisationUnits(Date serverDate,
-                                         OrganisationUnitQuery organisationUnitQuery) throws Exception {
+                                         OrganisationUnitQuery organisationUnitQuery,
+                                         Set<String> programUids) throws Exception {
         Response response;
         response = organisationUnitFactory.newEndPointCall(serverDate,
-                organisationUnitQuery).call();
+                organisationUnitQuery, programUids).call();
         return response;
     }
 

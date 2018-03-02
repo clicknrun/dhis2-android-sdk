@@ -13,6 +13,7 @@ import org.hisp.dhis.android.core.user.UserStoreImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Retrofit;
 
@@ -62,12 +63,12 @@ public class OrganisationUnitFactory {
     }
 
     public OrganisationUnitCall newEndPointCall(Date serverDate,
-            OrganisationUnitQuery organisationUnitQuery)
+            OrganisationUnitQuery organisationUnitQuery, Set<String> programUids)
             throws Exception {
         return new OrganisationUnitCall(
                 organisationUnitService, databaseAdapter,
                 resourceHandler, serverDate,
-                organisationUnitHandler, organisationUnitQuery);
+                organisationUnitHandler, organisationUnitQuery, programUids);
     }
 
     public UserStore getUserStore() {
