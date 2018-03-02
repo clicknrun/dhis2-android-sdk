@@ -16,6 +16,7 @@ public abstract class DataValueQuery extends BaseQuery {
 
     public static DataValueQuery create(Set<String> dataSetUids, Set<String> periodIds, Set<String> orgUnitUids) {
         return new AutoValue_DataValueQuery(null, 1, BaseQuery.DEFAULT_PAGE_SIZE, BaseQuery.DEFAULT_IS_PAGING,
-                BaseQuery.DEFAULT_IS_TRANSLATION_ON, BaseQuery.DEFAULT_TRANSLATION_LOCALE,);
+                BaseQuery.DEFAULT_IS_TRANSLATION_ON, BaseQuery.DEFAULT_TRANSLATION_LOCALE,dataSetUids, periodIds,
+                orgUnitUids);
     }
 }
