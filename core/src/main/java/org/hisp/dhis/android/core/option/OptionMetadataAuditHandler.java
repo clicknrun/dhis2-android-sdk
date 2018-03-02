@@ -48,8 +48,7 @@ public class OptionMetadataAuditHandler implements MetadataAuditHandler {
                 OptionSetQuery optionSetQuery =
                         OptionSetQuery.defaultQuery(uIds, isTranslationOn, translationLocale);
 
-                optionSetFactory.newEndPointCall(optionSetQuery,
-                        metadataAudit.getCreatedAt()).call();
+                optionSetFactory.newEndPointCall(optionSetQuery).call();
 
             }
         } else {
