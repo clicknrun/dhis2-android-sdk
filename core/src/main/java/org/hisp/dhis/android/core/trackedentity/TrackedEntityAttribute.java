@@ -226,7 +226,7 @@ public abstract class TrackedEntityAttribute extends BaseNameableObject {
         public abstract Builder inherit(@Nullable Boolean inherit);
 
         @JsonProperty(STYLE)
-        public abstract Builder inherit(@Nullable ObjectStyle style);
+        public abstract Builder style(@Nullable ObjectStyle style);
 
         @JsonProperty(RENDER_TYPE)
         public abstract Builder renderType(@Nullable ValueTypeRendering renderType);

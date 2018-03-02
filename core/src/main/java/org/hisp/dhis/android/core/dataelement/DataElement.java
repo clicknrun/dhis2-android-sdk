@@ -197,10 +197,10 @@ public abstract class DataElement extends BaseNameableObject {
         @JsonProperty(CATEGORY_COMBO)
         public abstract Builder categoryCombo(@Nullable CategoryCombo categoryCombo);
 
-        @JsonProperty(CATEGORY_COMBO)
+        @JsonProperty(STYLE)
         public abstract Builder style(@Nullable ObjectStyle style);
 
-        @JsonProperty(CATEGORY_COMBO)
+        @JsonProperty(RENDER_TYPE)
         public abstract Builder renderType(@Nullable ValueTypeRendering renderType);
 
         public abstract DataElement build();
