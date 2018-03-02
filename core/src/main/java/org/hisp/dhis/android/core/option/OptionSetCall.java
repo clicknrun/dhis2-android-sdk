@@ -28,35 +28,33 @@
 
 package org.hisp.dhis.android.core.option;
 
+import android.support.annotation.NonNull;
+
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericEndpointCallImpl;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.common.UidsQuery;
 import org.hisp.dhis.android.core.data.api.Fields;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 
 import java.io.IOException;
-import java.util.Set;
 
-import retrofit2.Call;
-
-public class OptionSetCall extends GenericEndpointCallImpl<OptionSet, UidsQuery> {
+public class OptionSetCall extends GenericEndpointCallImpl<OptionSet, OptionSetQuery> {
     private final OptionSetService optionSetService;
-    private final UidsQuery uidsQuery;
 
-    public OptionSetCall(GenericCallData data, OptionSetService optionSetService,
-                         GenericHandler<OptionSet> optionSetHandler, Set<String> uids) {
-        super(data, optionSetHandler, ResourceModel.Type.OPTION_SET, UidsQuery.create(uids, 64));
-        this.uidsQuery = UidsQuery.create(uids, 64);
+    public OptionSetCall(GenericCallData data,
+                         OptionSetService optionSetService,
+                         GenericHandler<OptionSet> optionSetHandler,
+                         @NonNull OptionSetQuery query) {
+        super(data, optionSetHandler, ResourceModel.Type.OPTION_SET, query);
         this.optionSetService = optionSetService;
     }
 
     @Override
-    protected Call<Payload<OptionSet>> getCall(UidsQuery query, String lastUpdated) throws IOException {
-        return optionSetService.optionSets(false,
-                getFields(), OptionSet.uid.in(uidsQuery.uids()));
+    protected retrofit2.Call<Payload<OptionSet>> getCall(OptionSetQuery query, String lastUpdated) throws IOException {
+        return optionSetService.optionSets(false, getFields(), OptionSet.uid.in(query.uIds()),
+                query.isTranslationOn(), query.translationLocale());
     }
 
     private Fields<OptionSet> getFields() {

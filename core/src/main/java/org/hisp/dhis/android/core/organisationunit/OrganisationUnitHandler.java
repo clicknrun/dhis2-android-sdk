@@ -31,32 +31,40 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.hisp.dhis.android.core.program.Program;
+import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.user.UserOrganisationUnitLinkStore;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
+import static org.hisp.dhis.android.core.resource.ResourceModel.Type.ORGANISATION_UNIT;
 import static org.hisp.dhis.android.core.utils.Utils.isDeleted;
 
 public class OrganisationUnitHandler {
     private final OrganisationUnitStore organisationUnitStore;
     private final UserOrganisationUnitLinkStore userOrganisationUnitLinkStore;
     private final OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore;
-    private final Set<String> programUids;
+    private final ResourceHandler resourceHandler;
 
-    public OrganisationUnitHandler(@NonNull OrganisationUnitStore organisationUnitStore,
-                                   @NonNull UserOrganisationUnitLinkStore userOrganisationUnitLinkStore,
-                                   @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
-                                   @Nullable Set<String> programUids) {
+    public OrganisationUnitHandler(
+            @NonNull OrganisationUnitStore organisationUnitStore,
+            @NonNull UserOrganisationUnitLinkStore userOrganisationUnitLinkStore,
+            @NonNull OrganisationUnitProgramLinkStore organisationUnitProgramLinkStore,
+            @Nonnull ResourceHandler resourceHandler) {
         this.organisationUnitStore = organisationUnitStore;
         this.userOrganisationUnitLinkStore = userOrganisationUnitLinkStore;
         this.organisationUnitProgramLinkStore = organisationUnitProgramLinkStore;
-        this.programUids = programUids;
+        this.resourceHandler = resourceHandler;
     }
 
     public void handleOrganisationUnits(@NonNull List<OrganisationUnit> organisationUnits,
                                         @Nullable OrganisationUnitModel.Scope scope,
-                                        @NonNull String userUid) {
+                                        @NonNull String userUid,
+                                        @Nonnull Date serverDate,
+                                        @NonNull Set<String> programUids) {
         if (organisationUnits == null) {
             return;
         }
@@ -64,15 +72,45 @@ public class OrganisationUnitHandler {
         int size = organisationUnits.size();
         for (int i = 0; i < size; i++) {
             OrganisationUnit organisationUnit = organisationUnits.get(i);
+            handleOrganisationUnit(organisationUnit, scope, userUid, serverDate, programUids);
+        }
+    }
 
-            if (isDeleted(organisationUnit)) {
-                organisationUnitStore.delete(organisationUnit.uid());
-            } else {
-                String parentUid = null;
-                if (organisationUnit.parent() != null) {
-                    parentUid = organisationUnit.parent().uid();
-                }
-                int updatedRow = organisationUnitStore.update(
+    public void handleOrganisationUnit(@NonNull OrganisationUnit organisationUnit,
+                                       @Nullable OrganisationUnitModel.Scope scope,
+                                       @NonNull String userUid,
+                                       @Nonnull Date serverDate,
+                                       @NonNull Set<String> programUids) {
+        if (organisationUnit == null) {
+            return;
+        }
+
+        if (isDeleted(organisationUnit)) {
+            organisationUnitStore.delete(organisationUnit.uid());
+        } else {
+            String parentUid = null;
+            if (organisationUnit.parent() != null) {
+                parentUid = organisationUnit.parent().uid();
+            }
+            int updatedRow = organisationUnitStore.update(
+                    organisationUnit.uid(),
+                    organisationUnit.code(),
+                    organisationUnit.name(),
+                    organisationUnit.displayName(),
+                    organisationUnit.created(),
+                    organisationUnit.lastUpdated(),
+                    organisationUnit.shortName(),
+                    organisationUnit.displayShortName(),
+                    organisationUnit.description(),
+                    organisationUnit.displayDescription(),
+                    organisationUnit.path(),
+                    organisationUnit.openingDate(),
+                    organisationUnit.closedDate(),
+                    parentUid,
+                    organisationUnit.level(),
+                    organisationUnit.uid());
+            if (updatedRow <= 0) {
+                organisationUnitStore.insert(
                         organisationUnit.uid(),
                         organisationUnit.code(),
                         organisationUnit.name(),
@@ -87,40 +125,24 @@ public class OrganisationUnitHandler {
                         organisationUnit.openingDate(),
                         organisationUnit.closedDate(),
                         parentUid,
-                        organisationUnit.level(),
-                        organisationUnit.uid());
-                if (updatedRow <= 0) {
-                    organisationUnitStore.insert(
-                            organisationUnit.uid(),
-                            organisationUnit.code(),
-                            organisationUnit.name(),
-                            organisationUnit.displayName(),
-                            organisationUnit.created(),
-                            organisationUnit.lastUpdated(),
-                            organisationUnit.shortName(),
-                            organisationUnit.displayShortName(),
-                            organisationUnit.description(),
-                            organisationUnit.displayDescription(),
-                            organisationUnit.path(),
-                            organisationUnit.openingDate(),
-                            organisationUnit.closedDate(),
-                            parentUid,
-                            organisationUnit.level()
-                    );
-                }
-                addUserOrganisationUnitLink(scope, userUid, organisationUnit);
+                        organisationUnit.level()
+                );
+            }
+            addUserOrganisationUnitLink(scope, userUid, organisationUnit);
 
-                if (programUids != null) {
-                    addOrganisationUnitProgramLink(organisationUnit);
-                }
+            if (programUids != null) {
+                addOrganisationUnitProgramLink(organisationUnit, programUids);
             }
         }
+
+        resourceHandler.handleResource(ORGANISATION_UNIT, serverDate);
     }
 
     private void addUserOrganisationUnitLink(@Nullable OrganisationUnitModel.Scope scope,
                                              @NonNull String userUid, OrganisationUnit organisationUnit) {
         if (scope != null) {
-            int updatedLinkRow = userOrganisationUnitLinkStore.update(userUid, organisationUnit.uid(),
+            int updatedLinkRow = userOrganisationUnitLinkStore.update(userUid,
+                    organisationUnit.uid(),
                     scope.name(), userUid, organisationUnit.uid(), scope.name());
             if (updatedLinkRow <= 0) {
                 userOrganisationUnitLinkStore.insert(userUid, organisationUnit.uid(), scope.name());
@@ -128,7 +150,8 @@ public class OrganisationUnitHandler {
         }
     }
 
-    private void addOrganisationUnitProgramLink(@NonNull OrganisationUnit organisationUnit) {
+    private void addOrganisationUnitProgramLink(@NonNull OrganisationUnit organisationUnit,
+                                                @NonNull Set<String> programUids) {
         List<Program> orgUnitPrograms = organisationUnit.programs();
         assert orgUnitPrograms != null;
         assert programUids != null;

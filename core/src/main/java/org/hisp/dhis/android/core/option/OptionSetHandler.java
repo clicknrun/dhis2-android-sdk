@@ -53,6 +53,8 @@ public class OptionSetHandler extends IdentifiableHandlerImpl<OptionSet, OptionS
 
     @Override
     protected void afterObjectPersisted(OptionSet optionSet) {
-        optionHandler.handleOptions(optionSet.options());
+        if (optionSet.options() != null) {
+            optionHandler.handleOptions(optionSet.options());
+        }
     }
 }

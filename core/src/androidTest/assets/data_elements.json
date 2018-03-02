@@ -1,27 +1,64 @@
 {
+  "pager": {
+    "page": 1,
+    "pageCount": 1,
+    "total": 3,
+    "pageSize": 50
+  },
   "dataElements": [
     {
-      "code": "DE_2005735",
-      "lastUpdated": "2014-11-11T21:56:05.560",
-      "id": "g9eOBujte1U",
-      "href": "https://play.dhis2.org/android-current/api/dataElements/g9eOBujte1U",
-      "created": "2012-09-20T08:36:46.552",
-      "name": "MCH ANC Visit",
-      "shortName": "ANC Visit",
-      "aggregationType": "AVERAGE",
-      "domainType": "TRACKER",
-      "displayName": "MCH ANC Visit",
-      "publicAccess": "rw------",
-      "displayShortName": "ANC Visit",
-      "externalAccess": false,
-      "valueType": "TEXT",
-      "formName": "ANC Visit",
-      "dimensionItem": "g9eOBujte1U",
-      "displayFormName": "ANC Visit",
+      "code": "DE_1148614",
+      "created": "2011-04-20T17:54:58.775",
+      "lastUpdated": "2017-05-19T15:13:52.488",
+      "name": "Accute Flaccid Paralysis (Deaths < 5 yrs)",
+      "id": "FTRrcoaog83",
+      "shortName": "Accute Flaccid Paral (Deaths < 5 yrs)",
+      "aggregationType": "SUM",
+      "domainType": "AGGREGATE",
+      "displayName": "Accute Flaccid Paralysis (Deaths < 5 yrs)",
+      "displayFormName": "Accute Flaccid Paralysis (Deaths < 5 yrs)",
       "zeroIsSignificant": false,
-      "url": "",
-      "optionSetValue": true,
-      "dimensionItemType": "DATA_ELEMENT"
+      "displayShortName": "Accute Flaccid Paral (Deaths < 5 yrs)",
+      "valueType": "NUMBER",
+      "categoryCombo": {
+        "id": "p0KPaWEg3cf"
+      }
+    },
+    {
+      "code": "DE_359049",
+      "created": "2010-02-05T10:58:22.587",
+      "lastUpdated": "2017-05-19T15:13:52.487",
+      "name": "Acute Flaccid Paralysis (AFP) follow-up",
+      "id": "P3jJH5Tu5VC",
+      "shortName": "AFP follow-up",
+      "aggregationType": "SUM",
+      "domainType": "AGGREGATE",
+      "displayName": "Acute Flaccid Paralysis (AFP) follow-up",
+      "displayFormName": "Acute Flaccid Paralysis (AFP) follow-up",
+      "zeroIsSignificant": false,
+      "displayShortName": "AFP follow-up",
+      "valueType": "NUMBER",
+      "categoryCombo": {
+        "id": "t3aNCvHsoSn"
+      }
+    },
+    {
+      "code": "DE_388",
+      "created": "2011-12-24T12:24:25.088",
+      "lastUpdated": "2017-05-19T15:13:52.487",
+      "name": "Acute Flaccid Paralysis (AFP) new",
+      "id": "FQ2o8UBlcrS",
+      "shortName": "AFP new",
+      "aggregationType": "SUM",
+      "domainType": "AGGREGATE",
+      "displayName": "Acute Flaccid Paralysis (AFP) new",
+      "displayFormName": "Acute Flaccid Paralysis (AFP) new",
+      "zeroIsSignificant": false,
+      "displayShortName": "AFP new",
+      "valueType": "NUMBER",
+      "categoryCombo": {
+        "id": "t3aNCvHsoSn"
+      }
     }
   ]
 }

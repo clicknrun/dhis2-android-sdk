@@ -113,16 +113,18 @@ public class ProgramHandler {
                         program.programType(), relationshipTypeUid, program.relationshipText(),
                         relatedProgramUid, trackedEntityUid, categoryCombo, program.access().data().write());
             }
+
+            // programStageHandler will invoke programStageSectionHandler,
+            // programStageDataElementHandler,
+            // programIndicatorHandler, dataElement handler and optionSetHandler
+            programStageHandler.handleProgramStage(program.uid(), program.programStages());
+            programTrackedEntityAttributeHandler.handleProgramTrackedEntityAttributes(
+                    program.programTrackedEntityAttributes());
+            programIndicatorHandler.handleProgramIndicator(null, program.programIndicators());
+            programRuleHandler.handleProgramRules(program.programRules());
+            programRuleVariableHandler.handleProgramRuleVariables(program.programRuleVariables());
+            relationshipHandler.handleRelationshipType(program.relationshipType());
+            styleHandler.handle(program.style(), program.uid(), ProgramModel.TABLE);
         }
-        // programStageHandler will invoke programStageSectionHandler, programStageDataElementHandler,
-        // programIndicatorHandler, dataElement handler and optionSetHandler
-        programStageHandler.handleProgramStage(program.uid(), program.programStages());
-        programTrackedEntityAttributeHandler.handleProgramTrackedEntityAttributes(
-                program.programTrackedEntityAttributes());
-        programIndicatorHandler.handleProgramIndicator(null, program.programIndicators());
-        programRuleHandler.handleProgramRules(program.programRules());
-        programRuleVariableHandler.handleProgramRuleVariables(program.programRuleVariables());
-        relationshipHandler.handleRelationshipType(program.relationshipType());
-        styleHandler.handle(program.style(), program.uid(), ProgramModel.TABLE);
     }
 }

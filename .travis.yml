@@ -26,8 +26,12 @@ branches:
   - develop
 
 script:
+<<<<<<< HEAD
 - travis_wait 60 "./build.sh"
 
+=======
+- travis_wait 40 "./build.sh"
+>>>>>>> merge-blessed_repo_without_aggregates_code
 before_script:
 - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
 - emulator -avd test -no-audio -no-window &

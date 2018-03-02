@@ -30,8 +30,8 @@ package org.hisp.dhis.android.core.option;
 
 import android.support.annotation.Nullable;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
@@ -39,9 +39,8 @@ import org.hisp.dhis.android.core.common.ObjectStyle;
 import org.hisp.dhis.android.core.data.api.Field;
 import org.hisp.dhis.android.core.data.api.NestedField;
 
-import java.util.Date;
-
 @AutoValue
+@JsonDeserialize(builder = AutoValue_Option.Builder.class)
 public abstract class Option extends BaseIdentifiableObject {
     private static final String OPTION_SET = "optionSet";
     private final static String STYLE = "style";
@@ -64,18 +63,19 @@ public abstract class Option extends BaseIdentifiableObject {
     @JsonProperty(STYLE)
     public abstract ObjectStyle style();
 
-    @JsonCreator
-    public static Option create(
-            @JsonProperty(UID) String uid,
-            @JsonProperty(CODE) String code,
-            @JsonProperty(NAME) String name,
-            @JsonProperty(DISPLAY_NAME) String displayName,
-            @JsonProperty(CREATED) Date created,
-            @JsonProperty(LAST_UPDATED) Date lastUpdated,
-            @JsonProperty(OPTION_SET) OptionSet optionSet,
-            @JsonProperty(STYLE) ObjectStyle style,
-            @JsonProperty(DELETED) Boolean deleted) {
-        return new AutoValue_Option(uid, code, name, displayName, created, lastUpdated, deleted, optionSet, style);
+    abstract Option.Builder toBuilder();
+
+    static Option.Builder builder() {
+        return new AutoValue_Option.Builder();
     }
 
+    @AutoValue.Builder
+    public static abstract class Builder extends BaseIdentifiableObject.Builder<Option.Builder> {
+        @JsonProperty(OPTION_SET)
+        public abstract Option.Builder optionSet(OptionSet optionSet);
+
+        public abstract Option.Builder style(ObjectStyle style);
+
+        public abstract Option build();
+    }
 }

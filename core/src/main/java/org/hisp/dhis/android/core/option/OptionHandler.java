@@ -57,20 +57,24 @@ public class OptionHandler {
 
         for (int i = 0; i < size; i++) {
             Option option = options.get(i);
+            handleOption(option);
+        }
+    }
 
-            if (isDeleted(option)) {
-                optionStore.delete(option.uid());
-            } else {
-                int updatedRow = optionStore.update(option.uid(), option.code(), option.name(), option.displayName(),
-                        option.created(), option.lastUpdated(), option.optionSet().uid(), option.uid());
+    public void handleOption(Option option) {
+        if (isDeleted(option)) {
+            optionStore.delete(option.uid());
+        } else {
+            int updatedRow = optionStore.update(option.uid(), option.code(), option.name(),
+                    option.displayName(),
+                    option.created(), option.lastUpdated(), option.optionSet().uid(), option.uid());
 
-                if (updatedRow <= 0) {
-                    optionStore.insert(option.uid(), option.code(), option.name(), option.displayName(),
-                            option.created(), option.lastUpdated(), option.optionSet().uid());
-                }
-
-                styleHandler.handle(option.style(), option.uid(), OptionModel.TABLE);
+            if (updatedRow <= 0) {
+                optionStore.insert(option.uid(), option.code(), option.name(), option.displayName(),
+                        option.created(), option.lastUpdated(), option.optionSet().uid());
             }
+
+            styleHandler.handle(option.style(), option.uid(), OptionModel.TABLE);
         }
     }
 }

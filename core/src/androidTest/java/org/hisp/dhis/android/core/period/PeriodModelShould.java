@@ -29,6 +29,7 @@
 package org.hisp.dhis.android.core.period;
 
 import android.database.MatrixCursor;
+import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
@@ -44,6 +45,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class PeriodModelShould {
 
     @Test
+    @SmallTest
     public void create_model_when_created_from_database_cursor() throws ParseException {
         String periodId = "2018W1";
         String periodType = PeriodType.Weekly.toString();

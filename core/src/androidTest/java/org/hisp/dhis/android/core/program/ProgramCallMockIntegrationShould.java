@@ -29,45 +29,29 @@ package org.hisp.dhis.android.core.program;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.support.test.filters.MediumTest;
 import android.support.test.runner.AndroidJUnit4;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.calls.Call;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.category.CreateCategoryComboUtils;
-import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
 import org.hisp.dhis.android.core.common.D2Factory;
-import org.hisp.dhis.android.core.common.GenericHandler;
-import org.hisp.dhis.android.core.common.DictionaryTableHandler;
-import org.hisp.dhis.android.core.common.ObjectStyle;
-import org.hisp.dhis.android.core.common.ObjectStyleHandler;
+import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.Payload;
-import org.hisp.dhis.android.core.common.ValueTypeRendering;
-import org.hisp.dhis.android.core.common.ValueTypeRenderingHandler;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.data.file.AssetsFileReader;
-import org.hisp.dhis.android.core.data.server.Dhis2MockServer;
-import org.hisp.dhis.android.core.dataelement.DataElement;
-import org.hisp.dhis.android.core.dataelement.DataElementHandler;
+import org.hisp.dhis.android.core.data.server.api.Dhis2MockServer;
+import org.hisp.dhis.android.core.dataelement.DataElementFactory;
 import org.hisp.dhis.android.core.dataelement.DataElementModel;
-import org.hisp.dhis.android.core.option.OptionSet;
-import org.hisp.dhis.android.core.option.OptionSetHandler;
+import org.hisp.dhis.android.core.option.OptionSetFactory;
 import org.hisp.dhis.android.core.option.OptionSetModel;
-import org.hisp.dhis.android.core.relationship.RelationshipTypeHandler;
 import org.hisp.dhis.android.core.relationship.RelationshipTypeModel;
-import org.hisp.dhis.android.core.relationship.RelationshipTypeStore;
-import org.hisp.dhis.android.core.relationship.RelationshipTypeStoreImpl;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceStore;
 import org.hisp.dhis.android.core.resource.ResourceStoreImpl;
 import org.hisp.dhis.android.core.trackedentity.CreateTrackedEntityUtils;
-import org.hisp.dhis.android.core.trackedentity.TrackedEntityAttributeHandler;
 import org.hisp.dhis.android.core.trackedentity.TrackedEntityAttributeModel;
-import org.hisp.dhis.android.core.trackedentity.TrackedEntityAttributeStore;
-import org.hisp.dhis.android.core.trackedentity.TrackedEntityAttributeStoreImpl;
 import org.hisp.dhis.android.core.trackedentity.TrackedEntityModel;
 import org.junit.After;
 import org.junit.Before;
@@ -81,6 +65,8 @@ import java.util.Set;
 
 import retrofit2.Response;
 
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 @RunWith(AndroidJUnit4.class)
@@ -133,95 +119,23 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
 
         dhis2MockServer.enqueueMockResponse("programs_complete.json");
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setDateFormat(BaseIdentifiableObject.DATE_FORMAT.raw());
-        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
-        TrackedEntityAttributeStore trackedEntityAttributeStore =
-                new TrackedEntityAttributeStoreImpl(databaseAdapter());
-
-        TrackedEntityAttributeHandler trackedEntityAttributeHandler =
-                new TrackedEntityAttributeHandler(trackedEntityAttributeStore,
-                        ObjectStyleHandler.create(databaseAdapter()),
-                        ValueTypeRenderingHandler.create(databaseAdapter()));
-
-        ProgramTrackedEntityAttributeStore programTrackedEntityAttributeStore =
-                new ProgramTrackedEntityAttributeStoreImpl(databaseAdapter());
-
-        ProgramTrackedEntityAttributeHandler programTrackedEntityAttributeHandler =
-                new ProgramTrackedEntityAttributeHandler(
-                        programTrackedEntityAttributeStore,
-                        trackedEntityAttributeHandler
-                );
-
-        ProgramRuleVariableStore programRuleVariableStore =
-                new ProgramRuleVariableStoreImpl(databaseAdapter());
-        ProgramRuleVariableHandler programRuleVariableHandler =
-                new ProgramRuleVariableHandler(programRuleVariableStore);
-
-        ProgramIndicatorStore programIndicatorStore = new ProgramIndicatorStoreImpl(databaseAdapter());
-        ProgramStageSectionProgramIndicatorLinkStore programStageSectionProgramIndicatorLinkStore =
-                new ProgramStageSectionProgramIndicatorLinkStoreImpl(databaseAdapter());
-        ProgramIndicatorHandler programIndicatorHandler = new ProgramIndicatorHandler(
-                programIndicatorStore,
-                programStageSectionProgramIndicatorLinkStore
-        );
-
-        ProgramRuleActionStore programRuleActionStore = new ProgramRuleActionStoreImpl(databaseAdapter());
-        ProgramRuleActionHandler programRuleActionHandler = new ProgramRuleActionHandler(programRuleActionStore);
-        ProgramRuleStore programRuleStore = new ProgramRuleStoreImpl(databaseAdapter());
-        ProgramRuleHandler programRuleHandler = new ProgramRuleHandler(programRuleStore, programRuleActionHandler);
-
-        GenericHandler<OptionSet> optionSetHandler = OptionSetHandler.create(databaseAdapter());
-        GenericHandler<DataElement> dataElementHandler =
-                DataElementHandler.create(databaseAdapter(), optionSetHandler);
-        ProgramStageDataElementStore programStageDataElementStore =
-                new ProgramStageDataElementStoreImpl(databaseAdapter());
-
-        ProgramStageDataElementHandler programStageDataElementHandler = new ProgramStageDataElementHandler(
-                programStageDataElementStore, dataElementHandler
-        );
-
-        ProgramStageSectionStore programStageSectionStore = new ProgramStageSectionStoreImpl(databaseAdapter());
-        ProgramStageSectionHandler programStageSectionHandler = new ProgramStageSectionHandler(
-                programStageSectionStore,
-                programStageDataElementHandler,
-                programIndicatorHandler
-        );
-
-        DictionaryTableHandler<ObjectStyle> styleHandler = ObjectStyleHandler.create(databaseAdapter());
-        DictionaryTableHandler<ValueTypeRendering> renderTypeHandler
-                = ValueTypeRenderingHandler.create(databaseAdapter());
-
-        ProgramStageStore programStageStore = new ProgramStageStoreImpl(databaseAdapter());
-        ProgramStageHandler programStageHandler = new ProgramStageHandler(
-                programStageStore,
-                programStageSectionHandler,
-                programStageDataElementHandler,
-                styleHandler);
-
-        RelationshipTypeStore relationshipStore = new RelationshipTypeStoreImpl(databaseAdapter());
-        RelationshipTypeHandler relationshipTypeHandler = new RelationshipTypeHandler(relationshipStore);
-        ProgramService programService = d2.retrofit().create(ProgramService.class);
-        ProgramStore programStore = new ProgramStoreImpl(databaseAdapter());
-
-
-        ProgramHandler programHandler = new ProgramHandler(
-                programStore,
-                programRuleVariableHandler,
-                programStageHandler,
-                programIndicatorHandler,
-                programRuleHandler,
-                programTrackedEntityAttributeHandler,
-                relationshipTypeHandler,
-                styleHandler);
-
         ResourceStore resourceStore = new ResourceStoreImpl(databaseAdapter());
         ResourceHandler resourceHandler = new ResourceHandler(resourceStore);
+
+        GenericCallData data = GenericCallData.create(databaseAdapter(), resourceHandler, d2.retrofit());
+        OptionSetFactory optionSetFactory = new OptionSetFactory(data);
+
+        DataElementFactory dataElementFactory = new DataElementFactory(d2.retrofit(),
+                databaseAdapter(), resourceHandler);
+
+        ProgramFactory programFactory = new ProgramFactory(d2.retrofit(), databaseAdapter(),
+                optionSetFactory.getOptionSetHandler(), dataElementFactory, resourceHandler);
 
         Set<String> uids = new HashSet<>();
         uids.add("uid1");
         uids.add("uids2");
+        ProgramQuery programQuery = ProgramQuery.defaultQuery(uids,
+                DEFAULT_IS_TRANSLATION_ON, DEFAULT_TRANSLATION_LOCALE);
 
         ContentValues categoryCombo = CreateCategoryComboUtils.create(1L, "nM3u9s5a52V");
         database().insert(CategoryComboModel.TABLE, null, categoryCombo);
@@ -233,22 +147,17 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
         ContentValues trackedEntity = CreateTrackedEntityUtils.create(1L, "nEenWmSyUEp");
         database().insert(TrackedEntityModel.TABLE, null, trackedEntity);
 
-        programCall = new ProgramCall(
-                programService, databaseAdapter(), resourceStore, uids, programStore, new Date(),
-                trackedEntityAttributeStore, programTrackedEntityAttributeStore, programRuleVariableStore,
-                programIndicatorStore, programStageSectionProgramIndicatorLinkStore, programRuleActionStore,
-                programRuleStore, programStageDataElementStore,
-                programStageSectionStore, programStageStore, relationshipStore, dataElementHandler,
-                styleHandler, renderTypeHandler
-        );
+        programCall = programFactory.newEndPointCall(programQuery, new Date());
     }
 
     @Test
+    @MediumTest
     public void persist_program_when_call() throws Exception {
         // Fake call to api
         programCall.call();
 
-        Cursor programCursor = database().query(ProgramModel.TABLE, PROGRAM_PROJECTION, null, null, null, null, null);
+        Cursor programCursor = database().query(ProgramModel.TABLE, PROGRAM_PROJECTION, null, null,
+                null, null, null);
 
         assertThatCursor(programCursor).hasRow(
                 "IpHINAT79UW",
@@ -286,6 +195,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_program_stage_when_call() throws Exception {
         programCall.call();
         String[] projection = {
@@ -314,7 +224,8 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
                 ProgramStageModel.Columns.PROGRAM
         };
         Cursor programStageCursor = database().query(ProgramStageModel.TABLE, projection,
-                ProgramStageModel.Columns.UID + "=?", new String[]{"A03MvHHogjR"}, null, null, null);
+                ProgramStageModel.Columns.UID + "=?", new String[]{"A03MvHHogjR"}, null, null,
+                null);
 
         assertThatCursor(programStageCursor).hasRow(
                 "A03MvHHogjR",
@@ -344,12 +255,12 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     /**
-     * There is no ProgramStageSections in the payload in setUpMethod. Therefore we need to check that
+     * There is no ProgramStageSections in the payload in setUpMethod. Therefore we need to check
+     * that
      * no program stage sections exists in database
-     *
-     * @throws Exception
      */
     @Test
+    @MediumTest
     public void not_persist_program_stage_sections_when_call() throws Exception {
         programCall.call();
         String[] projection = {
@@ -364,7 +275,8 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
                 ProgramStageSectionModel.Columns.DESKTOP_RENDER_TYPE,
                 ProgramStageSectionModel.Columns.MOBILE_RENDER_TYPE
         };
-        Cursor programStageSectionCursor = database().query(ProgramStageSectionModel.TABLE, projection,
+        Cursor programStageSectionCursor = database().query(ProgramStageSectionModel.TABLE,
+                projection,
                 null, null, null, null, null);
 
         assertThatCursor(programStageSectionCursor).hasRow(
@@ -384,6 +296,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_program_stage_data_element_when_call() throws Exception {
         programCall.call();
 
@@ -404,7 +317,8 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
                 ProgramStageDataElementModel.Columns.PROGRAM_STAGE_SECTION
         };
 
-        Cursor programStageDataElementCursor = database().query(ProgramStageDataElementModel.TABLE, projection,
+        Cursor programStageDataElementCursor = database().query(ProgramStageDataElementModel.TABLE,
+                projection,
                 ProgramStageDataElementModel.Columns.PROGRAM_STAGE + "=?" +
                         " AND " +
                         ProgramStageDataElementModel.Columns.DATA_ELEMENT + "=?",
@@ -429,6 +343,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_data_element_when_call() throws Exception {
         programCall.call();
 
@@ -483,6 +398,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_option_set_when_call() throws Exception {
         programCall.call();
 
@@ -501,6 +417,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_program_rule_variables_on_call() throws Exception {
         programCall.call();
         String[] projection = {
@@ -518,8 +435,10 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
                 ProgramRuleVariableModel.Columns.PROGRAM_RULE_VARIABLE_SOURCE_TYPE
         };
 
-        Cursor programRuleVariableCursor = database().query(ProgramRuleVariableModel.TABLE, projection,
-                ProgramRuleVariableModel.Columns.UID + "=?", new String[]{"g2GooOydipB"}, null, null, null);
+        Cursor programRuleVariableCursor = database().query(ProgramRuleVariableModel.TABLE,
+                projection,
+                ProgramRuleVariableModel.Columns.UID + "=?", new String[]{"g2GooOydipB"}, null,
+                null, null);
 
         assertThatCursor(programRuleVariableCursor).hasRow(
                 "g2GooOydipB",
@@ -538,6 +457,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_program_tracker_entity_attributes_when_call() throws Exception {
         programCall.call();
         String[] projection = {
@@ -559,7 +479,8 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
                 ProgramTrackedEntityAttributeModel.Columns.SORT_ORDER
         };
 
-        Cursor programTrackedEntityAttributeCursor = database().query(ProgramTrackedEntityAttributeModel.TABLE,
+        Cursor programTrackedEntityAttributeCursor = database().query(
+                ProgramTrackedEntityAttributeModel.TABLE,
                 projection,
                 ProgramTrackedEntityAttributeModel.Columns.UID + "=?",
                 new String[]{"l2T72XzBCLd"},
@@ -586,6 +507,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_tracked_entity_attribute_when_call() throws Exception {
         programCall.call();
         String[] projection = {
@@ -614,8 +536,10 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
                 TrackedEntityAttributeModel.Columns.INHERIT
         };
 
-        Cursor trackedEntityAttributeCursor = database().query(TrackedEntityAttributeModel.TABLE, projection,
-                TrackedEntityAttributeModel.Columns.UID + "=?", new String[]{"w75KJ2mc4zz"}, null, null, null);
+        Cursor trackedEntityAttributeCursor = database().query(TrackedEntityAttributeModel.TABLE,
+                projection,
+                TrackedEntityAttributeModel.Columns.UID + "=?", new String[]{"w75KJ2mc4zz"}, null,
+                null, null);
 
         assertThatCursor(trackedEntityAttributeCursor).hasRow(
                 "w75KJ2mc4zz",
@@ -645,6 +569,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_program_indicators_when_call() throws Exception {
         programCall.call();
 
@@ -668,7 +593,8 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
         };
 
         Cursor programIndicatorCursor = database().query(ProgramIndicatorModel.TABLE, projection,
-                ProgramIndicatorModel.Columns.UID + "=?", new String[]{"rXoaHGAXWy9"}, null, null, null);
+                ProgramIndicatorModel.Columns.UID + "=?", new String[]{"rXoaHGAXWy9"}, null, null,
+                null);
         assertThatCursor(programIndicatorCursor).hasRow(
                 "rXoaHGAXWy9",
                 null,
@@ -683,7 +609,9 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
                 "Sum of BCG doses, measles doses and yellow fever doses." +
                         " If Apgar score over or equal to 2, multiply by 2.",
                 0, // false
-                "(#{A03MvHHogjR.bx6fsa0t90x} +  #{A03MvHHogjR.FqlgKAG8HOu} + #{A03MvHHogjR.rxBfISxXS2U}) " +
+                "(#{A03MvHHogjR.bx6fsa0t90x} +  #{A03MvHHogjR.FqlgKAG8HOu} + #{A03MvHHogjR"
+                        + ".rxBfISxXS2U}) "
+                        +
                         "* d2:condition('#{A03MvHHogjR.a3kGcGDCuk6} >= 2',1,2)",
                 "rXoaHGAXWy9",
                 null,
@@ -693,6 +621,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_program_rules_when_call() throws Exception {
         programCall.call();
         String[] projection = {
@@ -726,6 +655,7 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     @Test
+    @MediumTest
     public void persist_program_rule_actions_when_call() throws Exception {
         programCall.call();
 
@@ -749,7 +679,8 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
         };
 
         Cursor programRuleActionCursor = database().query(ProgramRuleActionModel.TABLE, projection,
-                ProgramRuleActionModel.Columns.UID + "=?", new String[]{"v434s5YPDcP"}, null, null, null);
+                ProgramRuleActionModel.Columns.UID + "=?", new String[]{"v434s5YPDcP"}, null, null,
+                null);
 
         assertThatCursor(programRuleActionCursor).hasRow(
                 "v434s5YPDcP",
@@ -772,12 +703,12 @@ public class ProgramCallMockIntegrationShould extends AbsStoreTestCase {
     }
 
     /**
-     * Relationship type doesn't exist for the program in the payload. Therefore we'll need to check that it doesn't
+     * Relationship type doesn't exist for the program in the payload. Therefore we'll need to check
+     * that it doesn't
      * exist in the database
-     *
-     * @throws Exception
      */
     @Test
+    @MediumTest
     public void not_persist_relationship_type_when_call() throws Exception {
         programCall.call();
 

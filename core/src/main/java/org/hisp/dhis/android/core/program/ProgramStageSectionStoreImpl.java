@@ -28,6 +28,10 @@
 
 package org.hisp.dhis.android.core.program;
 
+import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
+import static org.hisp.dhis.android.core.utils.Utils.isNull;
+
+import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,13 +40,15 @@ import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
 import java.util.Date;
 
-import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
-import static org.hisp.dhis.android.core.utils.Utils.isNull;
-
 @SuppressWarnings({
         "PMD.AvoidDuplicateLiterals"
 })
 public class ProgramStageSectionStoreImpl implements ProgramStageSectionStore {
+
+    private static final String EXIST_BY_UID_STATEMENT = "SELECT " +
+            ProgramStageSectionModel.Columns.UID +
+            " FROM " + ProgramStageSectionModel.TABLE +
+            " WHERE " + ProgramStageSectionModel.Columns.UID + " =?;";
 
     private static final String INSERT_STATEMENT = "INSERT INTO " +
             ProgramStageSectionModel.TABLE + " (" +
@@ -160,4 +166,11 @@ public class ProgramStageSectionStoreImpl implements ProgramStageSectionStore {
     public int delete() {
         return databaseAdapter.delete(ProgramStageSectionModel.TABLE);
     }
+
+    @Override
+    public Boolean exists(String uId) {
+        Cursor cursor = databaseAdapter.query(EXIST_BY_UID_STATEMENT, uId);
+        return cursor.getCount() > 0;
+    }
+
 }

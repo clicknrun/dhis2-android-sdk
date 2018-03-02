@@ -31,51 +31,77 @@ package org.hisp.dhis.android.core.program;
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
 import static org.hisp.dhis.android.core.utils.Utils.isNull;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.hisp.dhis.android.core.category.CategoryCombo;
+import org.hisp.dhis.android.core.common.Access;
+import org.hisp.dhis.android.core.common.DataAccess;
+import org.hisp.dhis.android.core.common.Store;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
+import org.hisp.dhis.android.core.relationship.RelationshipType;
+import org.hisp.dhis.android.core.trackedentity.TrackedEntity;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings({
-        "PMD.AvoidDuplicateLiterals"
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.NPathComplexity",
+        "PMD.CyclomaticComplexity",
+        "PMD.ModifiedCyclomaticComplexity",
+        "PMD.StdCyclomaticComplexity",
+        "PMD.AvoidInstantiatingObjectsInLoops",
+        "PMD.ExcessiveMethodLength"
 })
-public class ProgramStoreImpl implements ProgramStore {
-    private static final String INSERT_STATEMENT = "INSERT INTO " + ProgramModel.TABLE + " (" +
+public class ProgramStoreImpl extends Store implements ProgramStore {
+    private static final String FIELDS =
             ProgramModel.Columns.UID + ", " +
-            ProgramModel.Columns.CODE + ", " +
-            ProgramModel.Columns.NAME + ", " +
-            ProgramModel.Columns.DISPLAY_NAME + ", " +
-            ProgramModel.Columns.CREATED + ", " +
-            ProgramModel.Columns.LAST_UPDATED + ", " +
-            ProgramModel.Columns.SHORT_NAME + ", " +
-            ProgramModel.Columns.DISPLAY_SHORT_NAME + ", " +
-            ProgramModel.Columns.DESCRIPTION + ", " +
-            ProgramModel.Columns.DISPLAY_DESCRIPTION + ", " +
-            ProgramModel.Columns.VERSION + ", " +
-            ProgramModel.Columns.ONLY_ENROLL_ONCE + ", " +
-            ProgramModel.Columns.ENROLLMENT_DATE_LABEL + ", " +
-            ProgramModel.Columns.DISPLAY_INCIDENT_DATE + ", " +
-            ProgramModel.Columns.INCIDENT_DATE_LABEL + ", " +
-            ProgramModel.Columns.REGISTRATION + ", " +
-            ProgramModel.Columns.SELECT_ENROLLMENT_DATES_IN_FUTURE + ", " +
-            ProgramModel.Columns.DATA_ENTRY_METHOD + ", " +
-            ProgramModel.Columns.IGNORE_OVERDUE_EVENTS + ", " +
-            ProgramModel.Columns.RELATIONSHIP_FROM_A + ", " +
-            ProgramModel.Columns.SELECT_INCIDENT_DATES_IN_FUTURE + ", " +
-            ProgramModel.Columns.CAPTURE_COORDINATES + ", " +
-            ProgramModel.Columns.USE_FIRST_STAGE_DURING_REGISTRATION + ", " +
-            ProgramModel.Columns.DISPLAY_FRONT_PAGE_LIST + ", " +
-            ProgramModel.Columns.PROGRAM_TYPE + ", " +
-            ProgramModel.Columns.RELATIONSHIP_TYPE + ", " +
-            ProgramModel.Columns.RELATIONSHIP_TEXT + ", " +
-            ProgramModel.Columns.RELATED_PROGRAM + ", " +
-            ProgramModel.Columns.TRACKED_ENTITY + ", " +
-            ProgramModel.Columns.CATEGORY_COMBO + ", " +
-            ProgramModel.Columns.ACCESS_DATA_WRITE + ") " +
-            "VALUES (" +
+                    ProgramModel.Columns.CODE + ", " +
+                    ProgramModel.Columns.NAME + ", " +
+                    ProgramModel.Columns.DISPLAY_NAME + ", " +
+                    ProgramModel.Columns.CREATED + ", " +
+                    ProgramModel.Columns.LAST_UPDATED + ", " +
+                    ProgramModel.Columns.SHORT_NAME + ", " +
+                    ProgramModel.Columns.DISPLAY_SHORT_NAME + ", " +
+                    ProgramModel.Columns.DESCRIPTION + ", " +
+                    ProgramModel.Columns.DISPLAY_DESCRIPTION + ", " +
+                    ProgramModel.Columns.VERSION + ", " +
+                    ProgramModel.Columns.ONLY_ENROLL_ONCE + ", " +
+                    ProgramModel.Columns.ENROLLMENT_DATE_LABEL + ", " +
+                    ProgramModel.Columns.DISPLAY_INCIDENT_DATE + ", " +
+                    ProgramModel.Columns.INCIDENT_DATE_LABEL + ", " +
+                    ProgramModel.Columns.REGISTRATION + ", " +
+                    ProgramModel.Columns.SELECT_ENROLLMENT_DATES_IN_FUTURE + ", " +
+                    ProgramModel.Columns.DATA_ENTRY_METHOD + ", " +
+                    ProgramModel.Columns.IGNORE_OVERDUE_EVENTS + ", " +
+                    ProgramModel.Columns.RELATIONSHIP_FROM_A + ", " +
+                    ProgramModel.Columns.SELECT_INCIDENT_DATES_IN_FUTURE + ", " +
+                    ProgramModel.Columns.CAPTURE_COORDINATES + ", " +
+                    ProgramModel.Columns.USE_FIRST_STAGE_DURING_REGISTRATION + ", " +
+                    ProgramModel.Columns.DISPLAY_FRONT_PAGE_LIST + ", " +
+                    ProgramModel.Columns.PROGRAM_TYPE + ", " +
+                    ProgramModel.Columns.RELATIONSHIP_TYPE + ", " +
+                    ProgramModel.Columns.RELATIONSHIP_TEXT + ", " +
+                    ProgramModel.Columns.RELATED_PROGRAM + ", " +
+                    ProgramModel.Columns.TRACKED_ENTITY + ", " +
+                    ProgramModel.Columns.CATEGORY_COMBO + ", " +
+                    ProgramModel.Columns.ACCESS_DATA_WRITE;
+
+    private static final String EXIST_BY_UID_STATEMENT = "SELECT " +
+            ProgramModel.Columns.UID +
+            " FROM " + ProgramModel.TABLE +
+            " WHERE " + ProgramModel.Columns.UID + " =?;";
+
+    private static final String QUERY_STATEMENT = "SELECT " + FIELDS
+            + " FROM " + ProgramModel.TABLE + " WHERE " +
+            ProgramModel.Columns.UID + " =?";
+
+    private static final String INSERT_STATEMENT = "INSERT INTO " + ProgramModel.TABLE + " (" +
+            FIELDS + ") VALUES (" +
             "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
             "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
             "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -168,10 +194,13 @@ public class ProgramStoreImpl implements ProgramStore {
     ) {
 
         isNull(uid);
-        bindArguments(insertStatement, uid, code, name, displayName, created, lastUpdated, shortName, displayShortName,
-                description, displayDescription, version, onlyEnrollOnce, enrollmentDateLabel, displayIncidentDate,
+        bindArguments(insertStatement, uid, code, name, displayName, created, lastUpdated,
+                shortName, displayShortName,
+                description, displayDescription, version, onlyEnrollOnce, enrollmentDateLabel,
+                displayIncidentDate,
                 incidentDateLabel, registration, selectEnrollmentDatesInFuture, dataEntryMethod,
-                ignoreOverdueEvents, relationshipFromA, selectIncidentDatesInFuture, captureCoordinates,
+                ignoreOverdueEvents, relationshipFromA, selectIncidentDatesInFuture,
+                captureCoordinates,
                 useFirstStageDuringRegistration, displayInFrontPageList, programType,
                 relationshipType, relationshipText, relatedProgram, trackedEntity, categoryCombo, accessDataWrite);
 
@@ -216,16 +245,19 @@ public class ProgramStoreImpl implements ProgramStore {
                       @NonNull String whereProgramUid) {
         isNull(uid);
         isNull(whereProgramUid);
-        bindArguments(updateStatement, uid, code, name, displayName, created, lastUpdated, shortName, displayShortName,
-                description, displayDescription, version, onlyEnrollOnce, enrollmentDateLabel, displayIncidentDate,
+        bindArguments(updateStatement, uid, code, name, displayName, created, lastUpdated,
+                shortName, displayShortName,
+                description, displayDescription, version, onlyEnrollOnce, enrollmentDateLabel,
+                displayIncidentDate,
                 incidentDateLabel, registration, selectEnrollmentDatesInFuture, dataEntryMethod,
-                ignoreOverdueEvents, relationshipFromA, selectIncidentDatesInFuture, captureCoordinates,
+                ignoreOverdueEvents, relationshipFromA, selectIncidentDatesInFuture,
+                captureCoordinates,
                 useFirstStageDuringRegistration, displayInFrontPageList, programType,
                 relationshipType, relationshipText, relatedProgram, trackedEntity, categoryCombo,
                 accessDataWrite);
 
         // bind the where argument
-        sqLiteBind(updateStatement, 32, whereProgramUid);
+        sqLiteBind(updateStatement, 33, whereProgramUid);
 
         // execute and clear bindings
         int update = databaseAdapter.executeUpdateDelete(ProgramModel.TABLE, updateStatement);
@@ -246,6 +278,21 @@ public class ProgramStoreImpl implements ProgramStore {
         deleteStatement.clearBindings();
 
         return delete;
+    }
+
+    @Override
+    public Boolean exists(String programUId) {
+        Cursor cursor = databaseAdapter.query(EXIST_BY_UID_STATEMENT, programUId);
+        return cursor.getCount() > 0;
+    }
+
+    @Override
+    public Program queryByUid(String uid) {
+        Cursor cursor = databaseAdapter.query(QUERY_STATEMENT, uid);
+
+        Map<String, Program> programMap = mapFromCursor(cursor);
+
+        return programMap.get(uid);
     }
 
     private void bindArguments(@NonNull SQLiteStatement sqLiteStatement,
@@ -279,7 +326,7 @@ public class ProgramStoreImpl implements ProgramStore {
                                @Nullable String relatedProgram,
                                @Nullable String trackedEntity,
                                @Nullable String categoryCombo,
-                               @Nullable boolean accessDataWrite) {
+                               @Nullable Boolean accessDataWrite) {
         sqLiteBind(sqLiteStatement, 1, uid);
         sqLiteBind(sqLiteStatement, 2, code);
         sqLiteBind(sqLiteStatement, 3, name);
@@ -304,7 +351,7 @@ public class ProgramStoreImpl implements ProgramStore {
         sqLiteBind(sqLiteStatement, 22, captureCoordinates);
         sqLiteBind(sqLiteStatement, 23, useFirstStageDuringRegistration);
         sqLiteBind(sqLiteStatement, 24, displayInFrontPageList);
-        sqLiteBind(sqLiteStatement, 25, programType.name());
+        sqLiteBind(sqLiteStatement, 25, programType == null ? null : programType.name());
         sqLiteBind(sqLiteStatement, 26, relationshipType);
         sqLiteBind(sqLiteStatement, 27, relationshipText);
         sqLiteBind(sqLiteStatement, 28, relatedProgram);
@@ -316,5 +363,121 @@ public class ProgramStoreImpl implements ProgramStore {
     @Override
     public int delete() {
         return databaseAdapter.delete(ProgramModel.TABLE);
+    }
+
+    private Map<String, Program> mapFromCursor(Cursor cursor) {
+
+        Map<String, Program> programMap = new HashMap<>();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+
+                    String uid = getStringFromCursor(cursor, 0);
+                    String code = getStringFromCursor(cursor, 1);
+                    String name = getStringFromCursor(cursor, 2);
+                    String displayName = getStringFromCursor(cursor, 3);
+                    Date created = getDateFromCursor(cursor, 4);
+                    Date lastUpdated = getDateFromCursor(cursor, 5);
+                    String shortName = getStringFromCursor(cursor, 6);
+                    String displayShortName = getStringFromCursor(cursor, 7);
+                    String description = getStringFromCursor(cursor, 8);
+                    String displayDescription = getStringFromCursor(cursor, 9);
+                    Integer version = getIntegerFromCursor(cursor, 10);
+                    Boolean onlyEnrollOnce = getBooleanFromCursor(cursor, 11);
+                    String enrollmentDateLabel = getStringFromCursor(cursor, 12);
+                    Boolean displayIncidentDate = getBooleanFromCursor(cursor, 13);
+                    String incidentDateLabel = getStringFromCursor(cursor, 14);
+                    Boolean registration = getBooleanFromCursor(cursor, 15);
+                    Boolean selectEnrollmentDatesInFuture = getBooleanFromCursor(cursor, 16);
+                    Boolean dataEntryMethod = getBooleanFromCursor(cursor, 17);
+                    Boolean ignoreOverdueEvents = getBooleanFromCursor(cursor, 18);
+                    Boolean relationshipFromA = getBooleanFromCursor(cursor, 19);
+                    Boolean selectIncidentDatesInFuture = getBooleanFromCursor(cursor, 20);
+                    Boolean captureCoordinates = getBooleanFromCursor(cursor, 21);
+                    Boolean useFirstStageDuringRegistration = getBooleanFromCursor(cursor, 22);
+                    Boolean displayInFrontPageList = getBooleanFromCursor(cursor, 23);
+                    ProgramType programType = getProgramTypeFromCursor(cursor, 24);
+
+                    String relationshipTypeUid = getStringFromCursor(cursor, 25);
+
+                    RelationshipType relationshipType = null;
+                    Program relatedProgram = null;
+                    TrackedEntity trackedEntity = null;
+                    CategoryCombo categoryCombo = null;
+
+                    if (relationshipTypeUid != null) {
+                        relationshipType = RelationshipType.builder().uid(
+                                relationshipTypeUid).build();
+                    }
+
+                    String relationshipText = getStringFromCursor(cursor, 26);
+                    String relatedProgramUid = getStringFromCursor(cursor, 27);
+                    String trackedEntityUid = getStringFromCursor(cursor, 28);
+                    String categoryComboUid = getStringFromCursor(cursor, 29);
+                    Boolean accessDataWrite = getBooleanFromCursor(cursor, 30);
+
+                    if (relatedProgramUid != null) {
+                        relatedProgram = Program.builder().uid(relatedProgramUid).build();
+                    }
+
+                    if (trackedEntityUid != null) {
+                        trackedEntity = TrackedEntity.builder().uid(trackedEntityUid).build();
+                    }
+
+                    if (categoryComboUid != null) {
+                        categoryCombo = CategoryCombo.builder().uid(categoryComboUid).build();
+                    }
+
+                    Access access = Access.create(null, null, null, null, null,
+                            null, DataAccess.create(true, accessDataWrite));
+
+                    programMap.put(uid, Program.builder()
+                            .uid(uid)
+                            .code(code)
+                            .name(name)
+                            .displayName(displayName)
+                            .created(created)
+                            .lastUpdated(lastUpdated)
+                            .shortName(shortName)
+                            .displayShortName(displayShortName)
+                            .description(description)
+                            .displayDescription(displayDescription)
+                            .version(version)
+                            .onlyEnrollOnce(onlyEnrollOnce)
+                            .enrollmentDateLabel(enrollmentDateLabel)
+                            .displayIncidentDate(displayIncidentDate)
+                            .incidentDateLabel(incidentDateLabel)
+                            .registration(registration)
+                            .selectEnrollmentDatesInFuture(selectEnrollmentDatesInFuture)
+                            .dataEntryMethod(dataEntryMethod)
+                            .ignoreOverdueEvents(ignoreOverdueEvents)
+                            .relationshipFromA(relationshipFromA)
+                            .selectIncidentDatesInFuture(selectIncidentDatesInFuture)
+                            .captureCoordinates(captureCoordinates)
+                            .useFirstStageDuringRegistration(useFirstStageDuringRegistration)
+                            .displayFrontPageList(displayInFrontPageList)
+                            .programType(programType)
+                            .relationshipType(relationshipType)
+                            .relationshipText(relationshipText)
+                            .relatedProgram(relatedProgram)
+                            .trackedEntity(trackedEntity)
+                            .categoryCombo(categoryCombo)
+                            .access(access)
+                            .build());
+
+                } while (cursor.moveToNext());
+            }
+
+        } finally {
+            cursor.close();
+        }
+        return programMap;
+    }
+
+    @Nullable
+    private ProgramType getProgramTypeFromCursor(Cursor cursor, int index) {
+        return cursor.getString(index) == null ? null : ProgramType.valueOf(
+                cursor.getString(index));
     }
 }
