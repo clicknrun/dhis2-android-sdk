@@ -34,13 +34,13 @@ public class OptionSetMetadataAuditHandler implements MetadataAuditHandler {
             OptionSetQuery optionSetQuery = OptionSetQuery.defaultQuery(
                     uIds, isTranslationOn, translationLocale);
 
-            optionSetFactory.newEndPointCall(optionSetQuery, metadataAudit.getCreatedAt()).call();
+            optionSetFactory.newEndPointCall(optionSetQuery).call();
         } else {
             if (metadataAudit.getType() == AuditType.DELETE) {
                 optionSet = optionSet.toBuilder().deleted(true).build();
             }
 
-            optionSetFactory.getOptionSetHandler().handleOptionSet(optionSet);
+            optionSetFactory.getOptionSetHandler().afterObjectPersisted(optionSet);
         }
     }
 }
