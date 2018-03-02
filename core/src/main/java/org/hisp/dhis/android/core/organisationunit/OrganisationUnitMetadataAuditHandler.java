@@ -8,6 +8,7 @@ import org.hisp.dhis.android.core.audit.MetadataAuditHandler;
 import org.hisp.dhis.android.core.user.AuthenticatedUserModel;
 import org.hisp.dhis.android.core.user.User;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class OrganisationUnitMetadataAuditHandler implements MetadataAuditHandler {
@@ -71,7 +72,7 @@ public class OrganisationUnitMetadataAuditHandler implements MetadataAuditHandle
                 organisationUnitFactory.getOrganisationUnitHandler().handleOrganisationUnit(
                         organisationUnit, OrganisationUnitModel.Scope.SCOPE_DATA_CAPTURE,
                         authenticatedUserModelList.get(0).user(),
-                        metadataAudit.getCreatedAt());
+                        metadataAudit.getCreatedAt(), new HashSet<String>());
             }
         }
     }
