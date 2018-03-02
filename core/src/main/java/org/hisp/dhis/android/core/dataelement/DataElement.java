@@ -34,7 +34,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 
-import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboModel;
 import org.hisp.dhis.android.core.common.BaseNameableObject;
 import org.hisp.dhis.android.core.common.ObjectStyle;
@@ -195,7 +194,7 @@ public abstract class DataElement extends BaseNameableObject {
         public abstract Builder optionSet(@Nullable OptionSet optionSet);
 
         @JsonProperty(CATEGORY_COMBO)
-        public abstract Builder categoryCombo(@Nullable CategoryCombo categoryCombo);
+        public abstract Builder categoryCombo(@Nullable ObjectWithUid categoryCombo);
 
         @JsonProperty(STYLE)
         public abstract Builder style(@Nullable ObjectStyle style);
