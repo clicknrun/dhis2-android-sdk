@@ -30,6 +30,7 @@ package org.hisp.dhis.android.core.common;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
 import java.util.Set;
 
 public interface IdentifiableObjectStore<M extends BaseIdentifiableObjectModel & StatementBinder>
@@ -44,4 +45,6 @@ public interface IdentifiableObjectStore<M extends BaseIdentifiableObjectModel &
     Set<String> selectUids() throws RuntimeException;
 
     M queryByUid(String uid);
+
+    List<M> queryAll();
 }

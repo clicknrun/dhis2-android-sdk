@@ -1,14 +1,5 @@
 package org.hisp.dhis.android.core.dataelement;
 
-import static junit.framework.Assert.fail;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.audit.GenericClassParser;
 import org.hisp.dhis.android.core.audit.MetadataAudit;
@@ -18,6 +9,7 @@ import org.hisp.dhis.android.core.audit.MetadataSyncedListener;
 import org.hisp.dhis.android.core.audit.SyncedMetadata;
 import org.hisp.dhis.android.core.common.D2Factory;
 import org.hisp.dhis.android.core.common.HandlerFactory;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.data.file.AssetsFileReader;
@@ -30,12 +22,20 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 
+import static junit.framework.Assert.fail;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 public class DataElementChangeOnServerShould extends AbsStoreTestCase {
 
     @Mock
     private MetadataAuditHandlerFactory metadataAuditHandlerFactory;
 
-    private DataElementStore dataElementStore;
+    private IdentifiableObjectStore<DataElementModel> dataElementStore;
     private MetadataAuditListener metadataAuditListener;
 
     private Dhis2MockServer dhis2MockServer;
@@ -54,7 +54,7 @@ public class DataElementChangeOnServerShould extends AbsStoreTestCase {
                                 HandlerFactory.createResourceHandler(databaseAdapter())),
                         DEFAULT_IS_TRANSLATION_ON, DEFAULT_TRANSLATION_LOCALE));
 
-        dataElementStore = new DataElementStoreImpl(databaseAdapter());
+        dataElementStore = DataElementStore.create(databaseAdapter());
         metadataAuditListener = new MetadataAuditListener(metadataAuditHandlerFactory);
     }
 
@@ -84,10 +84,10 @@ public class DataElementChangeOnServerShould extends AbsStoreTestCase {
 
         metadataAuditListener.onMetadataChanged(DataElement.class, metadataAudit);
 
-        DataElement createdDataElement = dataElementStore.queryAll().get(0);
+        DataElementModel createdDataElementModel = dataElementStore.queryAll().get(0);
         DataElement expectedDataElement = metadataAudit.getValue();
 
-        verifyDataElement(createdDataElement, expectedDataElement);
+        assertThat(createdDataElementModel, is(DataElementModel.factory.fromPojo(expectedDataElement)));
     }
 
     @Test
@@ -114,10 +114,10 @@ public class DataElementChangeOnServerShould extends AbsStoreTestCase {
 
         metadataAuditListener.onMetadataChanged(DataElement.class, metadataAudit);
 
-        DataElement createdDataElement = dataElementStore.queryAll().get(0);
+        DataElementModel createdDataElementModel = dataElementStore.queryAll().get(0);
         DataElement expectedDataElement = parseDateElements(filename).items().get(0);
 
-        verifyDataElement(createdDataElement, expectedDataElement);
+        assertThat(createdDataElementModel, is(DataElementModel.factory.fromPojo(expectedDataElement)));
     }
 
     @Test
@@ -165,20 +165,5 @@ public class DataElementChangeOnServerShould extends AbsStoreTestCase {
         GenericClassParser parser = new GenericClassParser();
 
         return parser.parse(json, Payload.class, DataElement.class);
-    }
-
-    private void verifyDataElement(DataElement createdDataElement,
-            DataElement expectedDataElement) {
-        //compare without children because there are other tests (call, handler)
-        //that verify the tree is saved in database
-        assertThat(removeChildrenFromDataElement(createdDataElement),
-                is(removeChildrenFromDataElement(expectedDataElement)));
-    }
-
-    private DataElement removeChildrenFromDataElement(DataElement dataElement) {
-        dataElement = dataElement.toBuilder()
-                .categoryCombo(null).build();
-
-        return dataElement;
     }
 }

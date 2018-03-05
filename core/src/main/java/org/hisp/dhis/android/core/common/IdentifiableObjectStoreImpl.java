@@ -33,7 +33,9 @@ import android.support.annotation.NonNull;
 
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.hisp.dhis.android.core.utils.StoreUtils.sqLiteBind;
@@ -96,9 +98,31 @@ public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel &
     }
 
     @Override
+    public List<M> queryAll() {
+        Cursor cursor = databaseAdapter.query(statements.selectAll);
+        return getModelListFromCursor(cursor);
+    }
+
+    @Override
     public Boolean exists(String uId) {
         Cursor cursor = databaseAdapter.query(statements.selectOneByUid, uId);
         return cursor.getCount() > 0;
+    }
+
+    private List<M> getModelListFromCursor(Cursor cursor) {
+        List<M> modelList = new ArrayList<>(cursor.getCount());
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    M model = modelFactory.fromCursor(cursor);
+                    modelList.add(model);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
+        }
+        return modelList;
     }
 
     private Set<String> mapObjectsWithUidFromCursor(Cursor cursor) {
