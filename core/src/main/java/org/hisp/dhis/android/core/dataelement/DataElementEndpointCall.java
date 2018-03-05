@@ -52,8 +52,9 @@ public final class DataElementEndpointCall extends GenericEndpointCallImpl<DataE
 
     @Override
     protected Call<Payload<DataElement>> getCall(UidsQuery query, String lastUpdated) throws IOException {
-        return dataElementService.getDataElements(DataElement.allFields, DataElement.lastUpdated.gt(lastUpdated),
-                DataElement.uid.in(query.uids()), Boolean.FALSE);
+        return dataElementService.getDataElements(DataElement.allFields,
+                DataElement.uid.in(query.uids()), DataElement.lastUpdated.gt(lastUpdated),
+                query.isTranslationOn(), query.translationLocale());
     }
 
     public interface Factory {
