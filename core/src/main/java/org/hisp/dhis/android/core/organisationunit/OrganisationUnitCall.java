@@ -110,6 +110,11 @@ public class OrganisationUnitCall implements Call<Response<Payload<OrganisationU
                 Set<String> rootOrgUnitUids = findRoots(query.user().organisationUnits());
                 for (String uid : rootOrgUnitUids) {
                     response = getOrganisationUnitByUId(uid, lastUpdatedFilter);
+                    if (totalResponse == null) {
+                        totalResponse = response;
+                    } else  {
+                        totalResponse.body().items().addAll(response.body().items());
+                    }
                     if (!response.isSuccessful()) {
                         //stop early unsuccessful
                         totalResponse = response;

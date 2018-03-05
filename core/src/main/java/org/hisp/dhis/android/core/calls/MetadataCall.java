@@ -210,13 +210,14 @@ public class MetadataCall implements Call<Response> {
 
             Set<String> programUids = getProgramUidsWithDataReadAccess(
                     programAccessResponse.body().items());
-            response = syncPrograms(serverDate, programUids);
+            Response<Payload<Program>> programsResponse = syncPrograms(serverDate, programUids);
+            response = programsResponse;
 
             if (!response.isSuccessful()) {
                 return response;
             }
 
-            List<Program> programs = ((Response<Payload<Program>>) response).body().items();
+            List<Program> programs = programsResponse.body().items();
             response = syncTrackedEntities(serverDate, programs);
 
             if (!response.isSuccessful()) {
@@ -224,11 +225,10 @@ public class MetadataCall implements Call<Response> {
             }
 
             User user = userResponse.body();
-            OrganisationUnitQuery organisationUnitQuery = OrganisationUnitQuery.defaultQuery(user,
-                    isTranslationOn, translationLocale,
-                    OrganisationUnitQuery.DEFAULT_UID);
-            Response<Payload<OrganisationUnit>> organisationUnitResponse
-                    = getOrganisationUnits(serverDate, organisationUnitQuery, programUids);
+            OrganisationUnitQuery organisationUnitQuery = OrganisationUnitQuery.defaultQuery(
+                    user, isTranslationOn, translationLocale, OrganisationUnitQuery.DEFAULT_UID);
+            Response<Payload<OrganisationUnit>> organisationUnitResponse = organisationUnitFactory.newEndPointCall(
+                    serverDate, organisationUnitQuery, programUids).call();
             response = organisationUnitResponse;
 
             if (!response.isSuccessful()) {
@@ -312,25 +312,13 @@ public class MetadataCall implements Call<Response> {
     }
 
     @SuppressWarnings("PMD.NPathComplexity")
-    private Response syncPrograms(Date serverDate, Set<String> programUids)
+    private Response<Payload<Program>> syncPrograms(Date serverDate, Set<String> programUids)
             throws Exception {
 
         ProgramQuery programQuery = ProgramQuery.defaultQuery(programUids, isTranslationOn,
                 translationLocale);
 
-        Response response = programFactory.newEndPointCall(programQuery, serverDate)
-                .call();
-
-        return response;
-    }
-
-    public Response getOrganisationUnits(Date serverDate,
-                                         OrganisationUnitQuery organisationUnitQuery,
-                                         Set<String> programUids) throws Exception {
-        Response response;
-        response = organisationUnitFactory.newEndPointCall(serverDate,
-                organisationUnitQuery, programUids).call();
-        return response;
+        return programFactory.newEndPointCall(programQuery, serverDate).call();
     }
 
     /// Utilty methods:
@@ -408,7 +396,7 @@ public class MetadataCall implements Call<Response> {
         Set<String> programUids = new HashSet<>();
         for (Program program : programsWithAccess) {
             Access access = program.access();
-            if (access != null && access.data().read()) {
+            if (access != null && access.data() != null && access.data().read()) {
                 programUids.add(program.uid());
             }
         }
