@@ -39,7 +39,7 @@ public class DataElementMetadataAuditHandler implements MetadataAuditHandler {
             if (metadataAudit.getType() == AuditType.DELETE) {
                 dataElement = dataElement.toBuilder().deleted(true).build();
             }
-            dataElementFactory.getDataElementHandler().handleDataElement(dataElement);
+            dataElementFactory.getDataElementHandler().handle(dataElement);
         }
     }
 }
