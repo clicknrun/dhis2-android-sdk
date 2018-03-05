@@ -48,7 +48,7 @@ public class OptionSetHandler extends IdentifiableHandlerImpl<OptionSet, OptionS
 
     @Override
     protected OptionSetModel pojoToModel(OptionSet optionSet) {
-        return OptionSetModel.create(optionSet);
+        return OptionSetModel.factory.fromPojo(optionSet);
     }
 
     @Override

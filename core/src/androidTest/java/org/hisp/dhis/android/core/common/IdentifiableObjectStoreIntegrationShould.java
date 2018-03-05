@@ -58,7 +58,7 @@ public class IdentifiableObjectStoreIntegrationShould extends AbsStoreTestCase {
         this.model = StoreMocks.generateOptionSetModel();
         this.updatedModel = StoreMocks.generateUpdatedOptionSetModel();
         this.store = StoreFactory.identifiableStore(databaseAdapter(),
-                OptionSetModel.TABLE, OptionSetModel.Columns.all());
+                OptionSetModel.TABLE, OptionSetModel.Columns.all(), OptionSetModel.);
     }
 
     private Cursor getCursor() {

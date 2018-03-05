@@ -39,6 +39,7 @@ import com.gabrielittner.auto.value.cursor.ColumnName;
 import com.google.auto.value.AutoValue;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObjectModel;
+import org.hisp.dhis.android.core.common.ModelFactory;
 import org.hisp.dhis.android.core.common.StatementBinder;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.data.database.DbValueTypeColumnAdapter;
@@ -62,22 +63,31 @@ public abstract class OptionSetModel extends BaseIdentifiableObjectModel impleme
         }
     }
 
-    public static OptionSetModel create(Cursor cursor) {
+    static OptionSetModel create(Cursor cursor) {
         return AutoValue_OptionSetModel.createFromCursor(cursor);
     }
 
-    public static OptionSetModel create(OptionSet optionSet) {
-        return OptionSetModel.builder()
-                .uid(optionSet.uid())
-                .code(optionSet.code())
-                .name(optionSet.name())
-                .displayName(optionSet.displayName())
-                .created(optionSet.created())
-                .lastUpdated(optionSet.lastUpdated())
-                .version(optionSet.version())
-                .valueType(optionSet.valueType())
-                .build();
-    }
+    public static final ModelFactory<OptionSetModel, OptionSet> factory
+            = new ModelFactory<OptionSetModel, OptionSet>() {
+        @Override
+        public OptionSetModel fromPojo(OptionSet optionSet) {
+            return OptionSetModel.builder()
+                    .uid(optionSet.uid())
+                    .code(optionSet.code())
+                    .name(optionSet.name())
+                    .displayName(optionSet.displayName())
+                    .created(optionSet.created())
+                    .lastUpdated(optionSet.lastUpdated())
+                    .version(optionSet.version())
+                    .valueType(optionSet.valueType())
+                    .build();
+        }
+
+        @Override
+        public OptionSetModel fromCursor(Cursor cursor) {
+            return create(cursor);
+        }
+    };
 
     public static Builder builder() {
         return new $$AutoValue_OptionSetModel.Builder();

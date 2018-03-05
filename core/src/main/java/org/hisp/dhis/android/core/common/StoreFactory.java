@@ -36,10 +36,12 @@ public final class StoreFactory {
 
     @SuppressWarnings("PMD.UseVarargs")
     public static <I extends BaseIdentifiableObjectModel & StatementBinder> IdentifiableObjectStore<I>
-    identifiableStore(DatabaseAdapter databaseAdapter, String tableName, String[] columns) {
+    identifiableStore(DatabaseAdapter databaseAdapter, String tableName, String[] columns,
+                      LinkModelFactory<I> modelFactory) {
         SQLStatementBuilder statementBuilder = new SQLStatementBuilder(tableName, columns, new String[]{});
         SQLStatementWrapper statements = new SQLStatementWrapper(statementBuilder, databaseAdapter);
-        return new IdentifiableObjectStoreImpl<>(databaseAdapter, statements, statementBuilder);
+        return new IdentifiableObjectStoreImpl<>(databaseAdapter, statements, statementBuilder,
+                modelFactory);
     }
 
     @SuppressWarnings("PMD.UseVarargs")
