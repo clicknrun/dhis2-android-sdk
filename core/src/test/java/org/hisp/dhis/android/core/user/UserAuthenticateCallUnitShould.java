@@ -81,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -138,6 +139,9 @@ public class UserAuthenticateCallUnitShould {
 
     @Mock
     private AuthenticatedUserModel authenticatedUser;
+
+    @Mock
+    private Set<String> programUids;
 
     // call we are testing
     private Call<Response<User>> userAuthenticateCall;
@@ -305,7 +309,7 @@ public class UserAuthenticateCallUnitShould {
             verify(authenticatedUserStore, never()).insert(anyString(), anyString());
             verify(userHandler, never()).handleUser(any(User.class), any(Date.class));
             verify(organisationUnitHandler, never()).handleOrganisationUnits(any(ArrayList.class),
-                    any(OrganisationUnitModel.Scope.class), anyString(), any(Date.class));
+                    any(OrganisationUnitModel.Scope.class), anyString(), any(Date.class), programUids);
         }
     }
 
@@ -330,7 +334,7 @@ public class UserAuthenticateCallUnitShould {
         verify(authenticatedUserStore, never()).insert(anyString(), anyString());
         verify(userHandler, never()).handleUser(any(User.class), any(Date.class));
         verify(organisationUnitHandler, never()).handleOrganisationUnits(any(ArrayList.class),
-                any(OrganisationUnitModel.Scope.class), anyString(), any(Date.class));
+                any(OrganisationUnitModel.Scope.class), anyString(), any(Date.class), programUids);
 
     }
 
@@ -358,7 +362,7 @@ public class UserAuthenticateCallUnitShould {
 
         verify(organisationUnitHandler, times(1)).handleOrganisationUnits(
                 organisationUnits, OrganisationUnitModel.Scope.SCOPE_DATA_CAPTURE, user.uid(),
-                HttpHeaderDate.parse(headerDateValue).getDate());
+                HttpHeaderDate.parse(headerDateValue).getDate(), programUids);
     }
 
 
@@ -380,7 +384,7 @@ public class UserAuthenticateCallUnitShould {
         verify(userHandler, times(1)).handleUser(any(User.class), any(Date.class));
 
         verify(organisationUnitHandler, never()).handleOrganisationUnits(any(ArrayList.class),
-                any(OrganisationUnitModel.Scope.class), anyString(), any(Date.class));
+                any(OrganisationUnitModel.Scope.class), anyString(), any(Date.class), programUids);
     }
 
     @Test
