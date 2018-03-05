@@ -30,7 +30,6 @@ package org.hisp.dhis.android.core.program;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.support.test.filters.MediumTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -288,10 +287,7 @@ public class ProgramStageStoreShould extends AbsStoreTestCase {
         assertThatCursor(cursor).hasRow(UID);
 
         // delete the program stage
-        int delete = store.delete(UID);
-
-        // check that store returns 1 on successful delete
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramStageModel.TABLE, projection, null, null, null, null, null);
 

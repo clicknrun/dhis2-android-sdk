@@ -387,10 +387,7 @@ public class ProgramRuleVariableStoreShould extends AbsStoreTestCase {
         // check that program rule variable was successfully inserted
         assertThatCursor(cursor).hasRow(UID);
 
-        int delete = store.delete(UID);
-
-        // check that store returns 1 on successful delete
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramRuleVariableModel.TABLE, projection, null, null, null, null, null);
         // check that program rule variable is not in database

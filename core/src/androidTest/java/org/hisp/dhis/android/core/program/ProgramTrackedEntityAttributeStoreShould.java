@@ -326,10 +326,7 @@ public class ProgramTrackedEntityAttributeStoreShould extends AbsStoreTestCase {
         assertThatCursor(cursor).hasRow(UID);
 
         // delete the program tracked entity attribute
-        int delete = store.delete(UID);
-
-        // check that store returns 1 on successful delete
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramTrackedEntityAttributeModel.TABLE, projection,
                 null, null, null, null, null);
