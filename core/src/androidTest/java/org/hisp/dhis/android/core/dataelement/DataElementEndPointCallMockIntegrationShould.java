@@ -1,10 +1,5 @@
 package org.hisp.dhis.android.core.dataelement;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
-
 import android.support.test.filters.MediumTest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,12 +18,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
 
 public class DataElementEndPointCallMockIntegrationShould extends AbsStoreTestCase {
 
@@ -78,20 +77,16 @@ public class DataElementEndPointCallMockIntegrationShould extends AbsStoreTestCa
     private void verifyDownloadedDataElements(String fileName) throws IOException {
         Payload<DataElement> DataElementPayload = parseDataElementsResponse(fileName);
 
-        List<DataElement> downloadedDataElements =
+        List<DataElementModel> downloadedDataElements =
                 dataElementFactory.getDataElementStore().queryAll();
 
-        downloadedDataElements = ignoreCategoryCombo(downloadedDataElements);
         assertThat(downloadedDataElements.size(), is(DataElementPayload.items().size()));
-        assertThat(downloadedDataElements, is(ignoreCategoryCombo(DataElementPayload.items())));
-    }
 
-    private List<DataElement> ignoreCategoryCombo(List<DataElement> downloadedDataElements) {
-        List<DataElement> dataElements = new ArrayList<>();
-        for (DataElement dataElement : downloadedDataElements) {
-            dataElements.add(dataElement.toBuilder().categoryCombo(null).build());
+        for (int i = 0; i < downloadedDataElements.size(); i++) {
+            DataElement payloadItem = DataElementPayload.items().get(i);
+            DataElementModel downloadedModel = downloadedDataElements.get(i);
+            assertThat(downloadedModel, is(DataElementModel.factory.fromPojo(payloadItem)));
         }
-        return dataElements;
     }
 
     private Payload<DataElement> parseDataElementsResponse(String fileName)
