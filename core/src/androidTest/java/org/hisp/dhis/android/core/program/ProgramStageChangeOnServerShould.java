@@ -18,6 +18,7 @@ import org.hisp.dhis.android.core.audit.MetadataAuditListener;
 import org.hisp.dhis.android.core.audit.MetadataSyncedListener;
 import org.hisp.dhis.android.core.audit.SyncedMetadata;
 import org.hisp.dhis.android.core.common.D2Factory;
+import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.HandlerFactory;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.common.responses.BasicMetadataMockResponseList;
@@ -57,8 +58,7 @@ public class ProgramStageChangeOnServerShould extends AbsStoreTestCase {
 
         ResourceHandler resourceHandler = HandlerFactory.createResourceHandler(databaseAdapter());
 
-        OptionSetFactory optionSetFactory = new OptionSetFactory(d2.retrofit(), databaseAdapter(),
-                resourceHandler);
+        OptionSetFactory optionSetFactory = new OptionSetFactory(GenericCallData.create(d2));
 
         DataElementFactory dataElementFactory = new DataElementFactory(d2.retrofit(),
                 databaseAdapter(), resourceHandler);

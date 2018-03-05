@@ -199,10 +199,7 @@ public class ProgramIndicatorStoreShould extends AbsStoreTestCase {
         assertThatCursor(cursor).hasRow(UID);
 
         // delete the program indicator
-        int delete = store.delete(UID);
-
-        // check that store returns 1 when successfully deleting
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramIndicatorModel.TABLE, projection, null, null, null, null, null);
 

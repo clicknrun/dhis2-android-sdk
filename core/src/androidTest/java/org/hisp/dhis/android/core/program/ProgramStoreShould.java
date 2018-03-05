@@ -475,10 +475,7 @@ public class ProgramStoreShould extends AbsStoreTestCase {
         assertThatCursor(cursor).hasRow(UID);
 
         // delete the program
-        int delete = store.delete(UID);
-
-        // check that store returns 1 on successful delete
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramModel.TABLE, projection, null, null, null, null, null);
 
