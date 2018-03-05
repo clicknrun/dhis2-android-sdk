@@ -1,14 +1,11 @@
 package org.hisp.dhis.android.core.common.responses;
 
-import org.hisp.dhis.android.core.data.file.AssetsFileReader;
-import org.hisp.dhis.android.core.data.server.api.MetadataMockResponseList;
-
 import java.io.IOException;
 
-public class MetadataWithMultipleObjectsMockResponseList extends MetadataMockResponseList {
+public class MetadataWithMultipleObjectsMockResponseList extends BasicMetadataMockResponseList {
 
     public MetadataWithMultipleObjectsMockResponseList() throws IOException {
-        super(new AssetsFileReader());
+        super();
     }
 
     @Override
