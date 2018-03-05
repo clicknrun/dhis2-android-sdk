@@ -296,9 +296,7 @@ public class ProgramRuleStoreShould extends AbsStoreTestCase {
         assertThatCursor(cursor).hasRow(UID);
 
         // delete the program rule
-        int delete = store.delete(UID);
-
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramRuleModel.TABLE, projection, null, null, null, null, null);
 
