@@ -78,6 +78,6 @@ public class BasicMetadataMockResponseList extends MetadataMockResponseList {
 
     @Override
     protected String getIndicatorTypesMockResponse() {
-        return "indicators_types.json";
+        return "indicator_types.json";
     }
 }
