@@ -73,6 +73,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -146,6 +147,9 @@ public class OrganisationUnitCallUnitShould {
     @Mock
     private Date serverDate;
 
+    @Mock
+    private Set<String> programUids;
+
     //the call we are testing:
     private OrganisationUnitCall organisationUnitCall;
 
@@ -212,7 +216,7 @@ public class OrganisationUnitCallUnitShould {
                 userOrganisationUnitLinkStore, organisationUnitProgramLinkStore, resourceHandler);
 
         organisationUnitCall = new OrganisationUnitCall(organisationUnitService, database,
-                resourceHandler, serverDate, organisationUnitHandler, organisationUnitQuery);
+                resourceHandler, serverDate, organisationUnitHandler, organisationUnitQuery, programUids);
 
         //Return only one organisationUnit.
         when(user.organisationUnits()).thenReturn(Collections.singletonList(organisationUnit));
@@ -434,6 +438,6 @@ public class OrganisationUnitCallUnitShould {
                 userOrganisationUnitLinkStore, organisationUnitProgramLinkStore, resourceHandler);
 
         return new OrganisationUnitCall(mockService, database, resourceHandler,
-                serverDate, organisationUnitHandler, organisationUnitQuery);
+                serverDate, organisationUnitHandler, organisationUnitQuery, programUids);
     }
 }
