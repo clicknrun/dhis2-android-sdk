@@ -1,12 +1,6 @@
 package org.hisp.dhis.android.core.option;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
-import static org.mockito.Mockito.when;
-
 import org.hamcrest.MatcherAssert;
-import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
@@ -24,11 +18,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
-import java.util.Date;
-
 
 import okhttp3.mockwebserver.RecordedRequest;
 import retrofit2.Retrofit;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
+import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class OptionSetCallShould {
@@ -40,6 +37,9 @@ public class OptionSetCallShould {
 
     @Mock
     private GenericHandler<OptionSet> mockOptionSetHandler;
+
+    @Mock
+    private ResourceHandler resourceHandler;
 
     @Mock
     private GenericCallData genericCallData;
@@ -58,6 +58,7 @@ public class OptionSetCallShould {
         OptionSetService optionSetService = retrofit.create(OptionSetService.class);
 
         when(mockDatabase.beginNewTransaction()).thenReturn(mockTransaction);
+        when(genericCallData.resourceHandler()).thenReturn(resourceHandler);
 
         OptionSetQuery mockOptionSetQuery = OptionSetQuery.defaultQuery();
 
