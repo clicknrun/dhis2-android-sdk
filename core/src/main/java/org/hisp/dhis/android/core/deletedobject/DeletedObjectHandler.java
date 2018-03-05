@@ -15,7 +15,11 @@ public class DeletedObjectHandler {
 
     public void handle(String uid, String klass) {
         IdentifiableStore identifiableStore = getStore(klass);
-        identifiableStore.delete(uid);
+        try {
+            identifiableStore.delete(uid);
+        } catch (RuntimeException e) {
+            // Nothing has been deleted.
+        }
     }
 
     public IdentifiableStore getStore(String klass) {
