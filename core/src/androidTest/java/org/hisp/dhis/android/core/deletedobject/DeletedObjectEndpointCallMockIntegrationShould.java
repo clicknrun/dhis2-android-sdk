@@ -1,8 +1,5 @@
 package org.hisp.dhis.android.core.deletedobject;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-
 import android.support.test.filters.MediumTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -12,18 +9,20 @@ import org.hisp.dhis.android.core.category.CategoryOptionComboStoreImpl;
 import org.hisp.dhis.android.core.category.CategoryOptionStoreImpl;
 import org.hisp.dhis.android.core.category.CategoryStoreImpl;
 import org.hisp.dhis.android.core.common.D2Factory;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.IdentifiableStore;
 import org.hisp.dhis.android.core.common.responses.AlternativeMetadataMockResponseList;
 import org.hisp.dhis.android.core.common.responses.BasicMetadataMockResponseList;
-import org.hisp.dhis.android.core.common.responses
-        .MetadataWithDeletedCategoryComboOptionsMockResponseList;
+import org.hisp.dhis.android.core.common.responses.MetadataWithDeletedCategoryComboOptionsMockResponseList;
 import org.hisp.dhis.android.core.common.responses.MetadataWithDeletedProgramStagesMockResponseList;
 import org.hisp.dhis.android.core.common.responses.MetadataWithMultipleObjectsMockResponseList;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.data.file.AssetsFileReader;
 import org.hisp.dhis.android.core.data.server.api.Dhis2MockServer;
-import org.hisp.dhis.android.core.dataelement.DataElementStoreImpl;
-import org.hisp.dhis.android.core.option.OptionSetStoreImpl;
+import org.hisp.dhis.android.core.dataelement.DataElementModel;
+import org.hisp.dhis.android.core.dataelement.DataElementStore;
+import org.hisp.dhis.android.core.option.OptionSetModel;
+import org.hisp.dhis.android.core.option.OptionSetStore;
 import org.hisp.dhis.android.core.option.OptionStoreImpl;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitStoreImpl;
 import org.hisp.dhis.android.core.program.ProgramIndicatorStoreImpl;
@@ -45,6 +44,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 @RunWith(AndroidJUnit4.class)
 public class DeletedObjectEndpointCallMockIntegrationShould extends AbsStoreTestCase {
@@ -184,7 +186,7 @@ public class DeletedObjectEndpointCallMockIntegrationShould extends AbsStoreTest
     @MediumTest
     public void delete_the_given_deleted_option_sets() throws Exception {
         //given
-        OptionSetStoreImpl optionSetStore = new OptionSetStoreImpl(databaseAdapter());
+        IdentifiableObjectStore<OptionSetModel> optionSetStore = OptionSetStore.create(databaseAdapter());
         dhis2MockServer.enqueueMockResponses(new MetadataWithMultipleObjectsMockResponseList());
         d2.syncMetaData().call();
         verifyIfIsPersisted("VQ2lai3OfVG", optionSetStore);
@@ -205,7 +207,7 @@ public class DeletedObjectEndpointCallMockIntegrationShould extends AbsStoreTest
     @MediumTest
     public void delete_the_given_deleted_options() throws Exception {
         //given
-        OptionSetStoreImpl optionSetStore = new OptionSetStoreImpl(databaseAdapter());
+        IdentifiableObjectStore<OptionSetModel> optionSetStore = OptionSetStore.create(databaseAdapter());
         OptionStoreImpl optionStore = new OptionStoreImpl(databaseAdapter());
         dhis2MockServer.enqueueMockResponses(new MetadataWithMultipleObjectsMockResponseList());
         d2.syncMetaData().call();
@@ -268,7 +270,8 @@ public class DeletedObjectEndpointCallMockIntegrationShould extends AbsStoreTest
     @MediumTest
     public void delete_the_given_deleted_data_element() throws Exception {
         //given
-        DataElementStoreImpl dataElementStore = new DataElementStoreImpl(databaseAdapter());
+        IdentifiableObjectStore<DataElementModel> dataElementStore
+                = DataElementStore.create(databaseAdapter());
         dhis2MockServer.enqueueMockResponses(new MetadataWithMultipleObjectsMockResponseList());
         d2.syncMetaData().call();
         verifyIfIsPersisted("Ok9OQpitjQr", dataElementStore);
