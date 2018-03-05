@@ -1,15 +1,5 @@
 package org.hisp.dhis.android.core.option;
 
-import static junit.framework.Assert.fail;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.audit.GenericClassParser;
 import org.hisp.dhis.android.core.audit.MetadataAudit;
@@ -18,7 +8,7 @@ import org.hisp.dhis.android.core.audit.MetadataAuditListener;
 import org.hisp.dhis.android.core.audit.MetadataSyncedListener;
 import org.hisp.dhis.android.core.audit.SyncedMetadata;
 import org.hisp.dhis.android.core.common.D2Factory;
-import org.hisp.dhis.android.core.common.HandlerFactory;
+import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
@@ -32,6 +22,15 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import static junit.framework.Assert.fail;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class OptionChangeOnServerShould extends AbsStoreTestCase {
 
@@ -53,8 +52,7 @@ public class OptionChangeOnServerShould extends AbsStoreTestCase {
 
         MockitoAnnotations.initMocks(this);
 
-        optionSetFactory = new OptionSetFactory(d2.retrofit(), databaseAdapter(),
-                HandlerFactory.createResourceHandler(databaseAdapter()));
+        optionSetFactory = new OptionSetFactory(GenericCallData.create(d2));
 
         when(metadataAuditHandlerFactory.getByClass(any(Class.class))).thenReturn(
                 new OptionMetadataAuditHandler(optionSetFactory, DEFAULT_IS_TRANSLATION_ON,
@@ -168,7 +166,7 @@ public class OptionChangeOnServerShould extends AbsStoreTestCase {
                         .uid("Y1ILwhy5VDY")
                         .displayName("Example").build())).build();
 
-        optionSetFactory.getOptionSetHandler().handleOptionSet(optionSet);
+        optionSetFactory.getOptionSetHandler().handle(optionSet);
     }
 
     private Option getOptionExpected(String uid) throws IOException {

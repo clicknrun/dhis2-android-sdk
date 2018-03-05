@@ -159,11 +159,10 @@ public class OrganisationUnitStoreShould extends AbsStoreTestCase {
     @MediumTest
     public void delete_organisation_unit_in_data_base_when_delete() {
         database().insert(OrganisationUnitModel.TABLE, null, CreateOrganisationUnitUtils.createOrgUnit(2L, UID));
-        int returnValue = store.delete(UID);
+        store.delete(UID);
 
         Cursor cursor = database().query(OrganisationUnitModel.TABLE, PROJECTION, null, null, null, null, null);
 
-        assertThat(returnValue).isEqualTo(1);
         assertThatCursor(cursor).isExhausted();
     }
 

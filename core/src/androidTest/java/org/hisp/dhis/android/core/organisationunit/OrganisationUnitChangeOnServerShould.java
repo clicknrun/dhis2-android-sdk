@@ -32,6 +32,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashSet;
 
 public class OrganisationUnitChangeOnServerShould extends AbsStoreTestCase {
 
@@ -178,7 +179,8 @@ public class OrganisationUnitChangeOnServerShould extends AbsStoreTestCase {
 
         organisationUnitFactory.getOrganisationUnitHandler().handleOrganisationUnit(
                 organisationUnit,
-                OrganisationUnitModel.Scope.SCOPE_DATA_CAPTURE, "DXyJmlo9rge", new Date());
+                OrganisationUnitModel.Scope.SCOPE_DATA_CAPTURE, "DXyJmlo9rge", new Date(),
+                new HashSet<String>());
     }
 
     private OrganisationUnit getOrganisationUnitWithParent(OrganisationUnit organisationUnit) {

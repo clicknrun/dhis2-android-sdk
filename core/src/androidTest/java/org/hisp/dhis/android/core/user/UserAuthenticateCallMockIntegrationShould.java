@@ -28,13 +28,6 @@
 
 package org.hisp.dhis.android.core.user;
 
-import static com.google.common.truth.Truth.assertThat;
-
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
-import static org.hisp.dhis.android.core.data.api.ApiUtils.base64;
-import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
-
 import android.database.Cursor;
 import android.support.test.filters.MediumTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -57,7 +50,6 @@ import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceModel;
 import org.hisp.dhis.android.core.resource.ResourceStore;
 import org.hisp.dhis.android.core.resource.ResourceStoreImpl;
-
 import org.hisp.dhis.android.core.utils.HeaderUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -66,11 +58,16 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashSet;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
+import static org.hisp.dhis.android.core.data.api.ApiUtils.base64;
+import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
 
 // ToDo: implement integration tests for user authentication task
 // ToDo: more tests to verify correct store behaviour
@@ -238,8 +235,7 @@ public class UserAuthenticateCallMockIntegrationShould extends AbsStoreTestCase 
 
         OrganisationUnitHandler organisationUnitHandler = new OrganisationUnitHandler(
                 organisationUnitStore, new UserOrganisationUnitLinkStoreImpl(databaseAdapter()),
-                new OrganisationUnitProgramLinkStoreImpl(databaseAdapter()), resourceHandler,
-                new HashSet<String>());
+                new OrganisationUnitProgramLinkStoreImpl(databaseAdapter()), resourceHandler);
 
         UserQuery userQuery = UserQuery.defaultQuery(DEFAULT_IS_TRANSLATION_ON,
                 DEFAULT_TRANSLATION_LOCALE);

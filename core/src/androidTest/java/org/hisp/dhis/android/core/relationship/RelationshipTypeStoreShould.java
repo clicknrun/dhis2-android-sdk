@@ -187,8 +187,7 @@ public class RelationshipTypeStoreShould extends AbsStoreTestCase {
         // check that relationshipType was successfully inserted in database
         assertThatCursor(cursor).hasRow(UID).isExhausted();
 
-        int delete = store.delete(UID);
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(RelationshipTypeModel.TABLE, projection,
                 null, null, null, null, null);

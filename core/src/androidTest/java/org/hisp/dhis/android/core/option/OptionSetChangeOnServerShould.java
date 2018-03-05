@@ -1,15 +1,5 @@
 package org.hisp.dhis.android.core.option;
 
-import static junit.framework.Assert.fail;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.audit.GenericClassParser;
 import org.hisp.dhis.android.core.audit.MetadataAudit;
@@ -18,7 +8,8 @@ import org.hisp.dhis.android.core.audit.MetadataAuditListener;
 import org.hisp.dhis.android.core.audit.MetadataSyncedListener;
 import org.hisp.dhis.android.core.audit.SyncedMetadata;
 import org.hisp.dhis.android.core.common.D2Factory;
-import org.hisp.dhis.android.core.common.HandlerFactory;
+import org.hisp.dhis.android.core.common.GenericCallData;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
 import org.hisp.dhis.android.core.data.file.AssetsFileReader;
@@ -32,12 +23,21 @@ import org.mockito.MockitoAnnotations;
 import java.io.IOException;
 import java.util.List;
 
+import static junit.framework.Assert.fail;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 public class OptionSetChangeOnServerShould extends AbsStoreTestCase {
 
     @Mock
     private MetadataAuditHandlerFactory metadataAuditHandlerFactory;
 
-    private OptionSetStore optionSetStore;
+    private IdentifiableObjectStore<OptionSetModel> optionSetStore;
     private MetadataAuditListener metadataAuditListener;
 
     private Dhis2MockServer dhis2MockServer;
@@ -52,11 +52,10 @@ public class OptionSetChangeOnServerShould extends AbsStoreTestCase {
 
         when(metadataAuditHandlerFactory.getByClass(any(Class.class))).thenReturn(
                 new OptionSetMetadataAuditHandler(
-                        new OptionSetFactory(d2.retrofit(), databaseAdapter(),
-                                HandlerFactory.createResourceHandler(databaseAdapter())),
+                        new OptionSetFactory(GenericCallData.create(d2)),
                         DEFAULT_IS_TRANSLATION_ON, DEFAULT_TRANSLATION_LOCALE));
 
-        optionSetStore = new OptionSetStoreImpl(databaseAdapter());
+        optionSetStore = OptionSetStore.create(databaseAdapter());
         metadataAuditListener = new MetadataAuditListener(metadataAuditHandlerFactory);
     }
 
