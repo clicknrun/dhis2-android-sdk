@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(JUnit4.class)
 public class OrganisationUnitHandlerShould {
@@ -79,6 +80,8 @@ public class OrganisationUnitHandlerShould {
 
     private String PROGRAM_UID = "test_program_uid";
 
+    private Set<String> programUids;
+
     // object to test
     private OrganisationUnitHandler organisationUnitHandler;
 
@@ -93,8 +96,7 @@ public class OrganisationUnitHandlerShould {
         MockitoAnnotations.initMocks(this);
         organisationUnitHandler = new OrganisationUnitHandler(
                 organisationUnitStore, userOrganisationUnitLinkStore,
-                organisationUnitProgramLinkStore, resourceHandler,
-                Sets.newHashSet(Lists.newArrayList(PROGRAM_UID)));
+                organisationUnitProgramLinkStore, resourceHandler);
 
         when(organisationUnit.uid()).thenReturn("test_organisation_unit_uid");
         when(user.uid()).thenReturn("test_user_uid");
@@ -105,11 +107,13 @@ public class OrganisationUnitHandlerShould {
         scope = OrganisationUnitModel.Scope.SCOPE_DATA_CAPTURE;
         when(program.uid()).thenReturn("test_program_uid");
         when(organisationUnit.programs()).thenReturn(Collections.singletonList(program));
+
+        programUids = Sets.newHashSet(Lists.newArrayList(PROGRAM_UID));
     }
 
     public void do_nothing_when_passing_in_null_organisation_units() throws Exception {
         organisationUnitHandler.handleOrganisationUnits(
-                null, scope, user.uid(), new Date());
+                null, scope, user.uid(), new Date(), programUids);
 
         // verify that stores is never invoked
 
@@ -141,7 +145,7 @@ public class OrganisationUnitHandlerShould {
 
         // passing in null args to user uid and org unit scope. We don't want to invoke link store
         organisationUnitHandler.handleOrganisationUnits(
-                organisationUnits, scope, user.uid(), new Date());
+                organisationUnits, scope, user.uid(), new Date(), programUids);
 
         verify(organisationUnitStore, times(1)).delete(organisationUnit.uid());
 
@@ -180,8 +184,7 @@ public class OrganisationUnitHandlerShould {
                 anyString(), anyString(), anyString(), anyString(), anyString(), anyString())
         ).thenReturn(1);
 
-        organisationUnitHandler.handleOrganisationUnits(organisationUnits, scope, user.uid(),
-                new Date());
+        organisationUnitHandler.handleOrganisationUnits(organisationUnits, scope, user.uid(), new Date(), programUids);
 
         // verify that update is called once
         verify(organisationUnitStore, times(1)).update(
@@ -223,7 +226,7 @@ public class OrganisationUnitHandlerShould {
 
         // we pass in null as scope parameter for not invoking the link store
         organisationUnitHandler.handleOrganisationUnits(organisationUnits, null, user.uid(),
-                new Date());
+                new Date(), programUids);
 
         // verify that update is called once
         verify(organisationUnitStore, times(1)).update(
@@ -271,7 +274,7 @@ public class OrganisationUnitHandlerShould {
         ).thenReturn(0);
 
         organisationUnitHandler.handleOrganisationUnits(organisationUnits, scope, user.uid(),
-                new Date());
+                new Date(), programUids);
 
         // verify that insert is called once
         verify(organisationUnitStore, times(1)).insert(
@@ -317,7 +320,8 @@ public class OrganisationUnitHandlerShould {
                 0);
 
 
-        organisationUnitHandler.handleOrganisationUnits(organisationUnits, null, null, new Date());
+        organisationUnitHandler.handleOrganisationUnits(organisationUnits, null, null, new Date(),
+                programUids);
 
         // verify that insert is called once
         verify(organisationUnitStore, times(1)).insert(
