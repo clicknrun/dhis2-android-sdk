@@ -104,7 +104,8 @@ public class ProgramStoreImpl extends Store implements ProgramStore {
             FIELDS + ") VALUES (" +
             "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
             "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-            "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            "?);";
 
     private static final String UPDATE_STATEMENT = "UPDATE " + ProgramModel.TABLE + " SET " +
             ProgramModel.Columns.UID + " =?, " +
@@ -257,7 +258,7 @@ public class ProgramStoreImpl extends Store implements ProgramStore {
                 accessDataWrite);
 
         // bind the where argument
-        sqLiteBind(updateStatement, 33, whereProgramUid);
+        sqLiteBind(updateStatement, 32, whereProgramUid);
 
         // execute and clear bindings
         int update = databaseAdapter.executeUpdateDelete(ProgramModel.TABLE, updateStatement);
