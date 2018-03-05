@@ -6,8 +6,6 @@ import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.common.D2Factory;
 import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.data.database.AbsStoreTestCase;
-import org.hisp.dhis.android.core.resource.ResourceHandler;
-import org.hisp.dhis.android.core.resource.ResourceStoreImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,12 +28,8 @@ public class ProgramAccessEndpointCallRealIntegrationShould extends AbsStoreTest
     }
 
     private ProgramAccessEndpointCall createCall() {
-        ResourceHandler resourceHandler =
-                new ResourceHandler(new ResourceStoreImpl(databaseAdapter()));
-        GenericCallData data = GenericCallData.create(databaseAdapter(), resourceHandler, d2.retrofit());
         ProgramService service = d2.retrofit().create(ProgramService.class);
-
-        return ProgramAccessEndpointCall.FACTORY.create(data, service);
+        return ProgramAccessEndpointCall.FACTORY.create(GenericCallData.create(d2), service);
     }
 
     @Test

@@ -130,7 +130,7 @@ public class OrganisationUnitHandler {
             }
             addUserOrganisationUnitLink(scope, userUid, organisationUnit);
 
-            if (programUids != null) {
+            if (organisationUnit.programs() != null && programUids != null) {
                 addOrganisationUnitProgramLink(organisationUnit, programUids);
             }
         }
