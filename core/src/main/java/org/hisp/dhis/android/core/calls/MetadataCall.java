@@ -223,7 +223,7 @@ public class MetadataCall implements Call<Response> {
                 return response;
             }
 
-            User user = (User) response.body();
+            User user = userResponse.body();
             OrganisationUnitQuery organisationUnitQuery = OrganisationUnitQuery.defaultQuery(user,
                     isTranslationOn, translationLocale,
                     OrganisationUnitQuery.DEFAULT_UID);
