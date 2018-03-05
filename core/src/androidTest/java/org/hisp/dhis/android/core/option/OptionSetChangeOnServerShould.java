@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
-import java.util.List;
 
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.is;
@@ -85,7 +84,8 @@ public class OptionSetChangeOnServerShould extends AbsStoreTestCase {
 
         metadataAuditListener.onMetadataChanged(OptionSet.class, metadataAudit);
 
-        assertThat(optionSetStore.queryByUid(metadataAudit.getUid()), is(metadataAudit.getValue()));
+        assertThat(optionSetStore.queryByUid(metadataAudit.getUid()),
+                is(OptionSetModel.factory.fromPojo(metadataAudit.getValue())));
     }
 
 
@@ -113,18 +113,9 @@ public class OptionSetChangeOnServerShould extends AbsStoreTestCase {
 
         metadataAuditListener.onMetadataChanged(OptionSet.class, metadataAudit);
 
-        assertThat(getOptionSet(metadataAudit.getUid()), is(parseExpected(
-                filename).items().get(0)));
-    }
-
-    private OptionSet getOptionSet(String uid) {
-        OptionSet optionSet = optionSetStore.queryByUid(uid);
-
-        List<Option> options = new OptionStoreImpl(databaseAdapter()).queryByOptionSet(uid);
-
-        optionSet = optionSet.toBuilder().options(options).build();
-
-        return optionSet;
+        OptionSet expectedPojo = parseExpected(filename).items().get(0);
+        assertThat(optionSetStore.queryByUid(metadataAudit.getUid()),
+                is(OptionSetModel.factory.fromPojo(expectedPojo)));
     }
 
     @Test
