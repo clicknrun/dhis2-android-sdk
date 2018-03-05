@@ -288,9 +288,7 @@ public class TrackedEntityAttributeStoreShould extends AbsStoreTestCase {
         // check that tracked entity attribute was successfully inserted into database
         assertThatCursor(cursor).hasRow(UID);
 
-        int delete = store.delete(UID);
-
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(TrackedEntityAttributeModel.TABLE, projection, null, null, null, null, null);
 
