@@ -29,12 +29,14 @@
 package org.hisp.dhis.android.core.option;
 
 import android.database.Cursor;
+import android.support.test.filters.MediumTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hisp.dhis.android.core.common.BaseIdentifiableObject;
+import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.data.api.FieldsConverterFactory;
@@ -58,7 +60,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import static com.google.common.truth.Truth.assertThat;
-
 import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
 import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
 import static org.hisp.dhis.android.core.data.database.CursorAssert.assertThatCursor;
@@ -213,11 +214,10 @@ public class OptionSetCallMockIntegrationShould extends AbsStoreTestCase {
         OptionSetQuery optionSetQuery = OptionSetQuery.defaultQuery(uids,
                 DEFAULT_IS_TRANSLATION_ON, DEFAULT_TRANSLATION_LOCALE);
 
-        OptionSetFactory optionSetFactory =
-                new OptionSetFactory(retrofit, databaseAdapter(),
-                        new ResourceHandler(resourceStore));
+        GenericCallData data = GenericCallData.create(databaseAdapter(), retrofit);
+        OptionSetFactory optionSetFactory = new OptionSetFactory(data);
 
-        optionSetCall = optionSetFactory.newEndPointCall(optionSetQuery,new Date());
+        optionSetCall = optionSetFactory.newEndPointCall(optionSetQuery);
     }
 
 
