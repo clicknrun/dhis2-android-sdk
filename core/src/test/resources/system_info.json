@@ -1,5 +1,5 @@
 {
-  "contextPath": "https://play.dhis2.org/android-current",
+  "contextPath": "https://play.dhis2.org/dev",
   "userAgent": "PostmanRuntime/6.4.1",
   "calendar": "iso8601",
   "dateFormat": "yyyy-mm-dd",

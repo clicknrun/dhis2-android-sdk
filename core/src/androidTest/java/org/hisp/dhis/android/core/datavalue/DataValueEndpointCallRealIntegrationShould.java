@@ -32,7 +32,7 @@ public class DataValueEndpointCallRealIntegrationShould extends AbsStoreTestCase
     @Override
     public void setUp() throws IOException {
         super.setUp();
-        d2 = D2Factory.create("https://play.dhis2.org/android-current/api/", databaseAdapter());
+        d2 = D2Factory.create("https://play.dhis2.org/dev/api/", databaseAdapter());
         dataValueCall = createCall();
     }
 
