@@ -1,9 +1,5 @@
 package org.hisp.dhis.android.core.deleteobject;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.hisp.dhis.android.core.category.Category;
 import org.hisp.dhis.android.core.category.CategoryCombo;
 import org.hisp.dhis.android.core.category.CategoryComboStore;
@@ -12,16 +8,15 @@ import org.hisp.dhis.android.core.category.CategoryOptionCombo;
 import org.hisp.dhis.android.core.category.CategoryOptionComboStore;
 import org.hisp.dhis.android.core.category.CategoryOptionStore;
 import org.hisp.dhis.android.core.category.CategoryStore;
+import org.hisp.dhis.android.core.common.IdentifiableObjectStore;
 import org.hisp.dhis.android.core.common.IdentifiableStore;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataelement.DataElement;
-import org.hisp.dhis.android.core.dataelement.DataElementStore;
 import org.hisp.dhis.android.core.deletedobject.DeletedObject;
 import org.hisp.dhis.android.core.deletedobject.DeletedObjectHandler;
 import org.hisp.dhis.android.core.deletedobject.IdentifiableStoreFactory;
 import org.hisp.dhis.android.core.option.Option;
 import org.hisp.dhis.android.core.option.OptionSet;
-import org.hisp.dhis.android.core.option.OptionSetStore;
 import org.hisp.dhis.android.core.option.OptionStore;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnit;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitStore;
@@ -62,6 +57,10 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @RunWith(Parameterized.class)
 public class DeletedObjectHandlerShould {
 
@@ -79,9 +78,9 @@ public class DeletedObjectHandlerShould {
                 {ProgramRule.class, ProgramRuleStore.class},
                 {ProgramIndicator.class, ProgramIndicatorStore.class},
                 {Option.class, OptionStore.class},
-                {DataElement.class, DataElementStore.class},
+                {DataElement.class, IdentifiableObjectStore.class},
                 {TrackedEntity.class, TrackedEntityStore.class},
-                {OptionSet.class, OptionSetStore.class},
+                {OptionSet.class, IdentifiableObjectStore.class},
                 {OrganisationUnit.class, OrganisationUnitStore.class},
                 {User.class, UserStore.class},
                 {Program.class, ProgramStore.class},
