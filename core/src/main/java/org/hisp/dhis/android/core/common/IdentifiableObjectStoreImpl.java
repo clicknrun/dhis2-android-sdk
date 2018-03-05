@@ -94,7 +94,11 @@ public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel &
     @Override
     public M queryByUid(String uid) {
         Cursor cursor = databaseAdapter.query(statements.selectOneByUid, uid);
-        return modelFactory.fromCursor(cursor);
+        if (cursor.getCount() == 1) {
+            return modelFactory.fromCursor(cursor);
+        } else {
+            throw new RuntimeException("Unexpected rows matching query: " + cursor.getCount());
+        }
     }
 
     @Override
