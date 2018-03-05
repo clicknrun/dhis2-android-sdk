@@ -263,10 +263,7 @@ public class ProgramStageSectionStoreShould extends AbsStoreTestCase {
         assertThatCursor(cursor).hasRow(UID);
 
         // delete program stage section
-        int delete = store.delete(UID);
-
-        // check that store returns 1 (deletion happen)
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramStageSectionModel.TABLE, projection, null, null, null, null, null);
 
