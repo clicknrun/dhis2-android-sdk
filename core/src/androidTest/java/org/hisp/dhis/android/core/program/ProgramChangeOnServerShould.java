@@ -1,15 +1,5 @@
 package org.hisp.dhis.android.core.program;
 
-import static junit.framework.Assert.fail;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
-import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.audit.GenericClassParser;
 import org.hisp.dhis.android.core.audit.MetadataAudit;
@@ -18,6 +8,7 @@ import org.hisp.dhis.android.core.audit.MetadataAuditListener;
 import org.hisp.dhis.android.core.audit.MetadataSyncedListener;
 import org.hisp.dhis.android.core.audit.SyncedMetadata;
 import org.hisp.dhis.android.core.common.D2Factory;
+import org.hisp.dhis.android.core.common.GenericCallData;
 import org.hisp.dhis.android.core.common.HandlerFactory;
 import org.hisp.dhis.android.core.common.Payload;
 import org.hisp.dhis.android.core.common.responses.BasicMetadataMockResponseList;
@@ -34,6 +25,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
+
+import static junit.framework.Assert.fail;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_IS_TRANSLATION_ON;
+import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_LOCALE;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class ProgramChangeOnServerShould extends AbsStoreTestCase {
 
@@ -56,8 +56,7 @@ public class ProgramChangeOnServerShould extends AbsStoreTestCase {
 
         ResourceHandler resourceHandler = HandlerFactory.createResourceHandler(databaseAdapter());
 
-        OptionSetFactory optionSetFactory = new OptionSetFactory(d2.retrofit(), databaseAdapter(),
-                resourceHandler);
+        OptionSetFactory optionSetFactory = new OptionSetFactory(GenericCallData.create(d2));
 
         DataElementFactory dataElementFactory = new DataElementFactory(d2.retrofit(),
                 databaseAdapter(), resourceHandler);

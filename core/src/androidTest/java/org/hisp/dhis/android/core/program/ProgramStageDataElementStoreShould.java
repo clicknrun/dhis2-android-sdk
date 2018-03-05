@@ -494,10 +494,7 @@ public class ProgramStageDataElementStoreShould extends AbsStoreTestCase {
         // checking that psde was successfully inserted
         assertThatCursor(cursor).hasRow(UID);
 
-        int delete = store.delete(UID);
-
-        // checking that store returns 1 when successful delete
-        assertThat(delete).isEqualTo(1);
+        store.delete(UID);
 
         cursor = database().query(ProgramStageDataElementModel.TABLE, projection, null, null, null, null, null);
 

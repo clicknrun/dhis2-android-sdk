@@ -30,6 +30,7 @@ package org.hisp.dhis.android.core.common;
 
 import com.google.auto.value.AutoValue;
 
+import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.resource.ResourceHandler;
 import org.hisp.dhis.android.core.resource.ResourceStoreImpl;
@@ -54,5 +55,11 @@ public abstract class GenericCallData {
     public static GenericCallData create(DatabaseAdapter databaseAdapter, Retrofit retrofit) {
         return new AutoValue_GenericCallData(databaseAdapter,
                 new ResourceHandler(new ResourceStoreImpl(databaseAdapter)), retrofit, new Date());
+    }
+
+    public static GenericCallData create(D2 d2) {
+        return new AutoValue_GenericCallData(d2.databaseAdapter(),
+                new ResourceHandler(new ResourceStoreImpl(d2.databaseAdapter())),
+                d2.retrofit(), new Date());
     }
 }
