@@ -74,9 +74,11 @@ public class CategoryOptionStoreShould extends AbsStoreTestCase {
     }
 
     private void whenDeleteCategoryOptionInserted() {
-        int rowsAffected = store.delete(newCategoryOption.uid());
-
-        wasDeleted = rowsAffected >= 1;
+        wasDeleted = false;
+        try {
+            store.delete(newCategoryOption.uid());
+            wasDeleted = true;
+        } catch (RuntimeException ignored) {}
     }
 
     private void thenAssertLastInsertedIDIsOne(){

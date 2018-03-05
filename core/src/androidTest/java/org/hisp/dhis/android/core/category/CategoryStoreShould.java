@@ -1,9 +1,5 @@
 package org.hisp.dhis.android.core.category;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import android.support.test.filters.MediumTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -15,6 +11,10 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class CategoryStoreShould extends AbsStoreTestCase {
@@ -102,8 +102,11 @@ public class CategoryStoreShould extends AbsStoreTestCase {
     }
 
     private void whenDeleteCategoryInserted() {
-        int rowsAffected = store.delete(newCategory.uid());
-        wasDeleted = rowsAffected >= 1;
+        wasDeleted = false;
+        try {
+            store.delete(newCategory.uid());
+            wasDeleted = true;
+        } catch (RuntimeException e) {}
     }
 
     private void whenUpdateCategory() {
