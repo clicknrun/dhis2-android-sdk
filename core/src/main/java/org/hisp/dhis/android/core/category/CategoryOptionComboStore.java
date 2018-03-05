@@ -11,7 +11,7 @@ public interface CategoryOptionComboStore extends IdentifiableStore {
 
     long insert(@NonNull CategoryOptionCombo element);
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     int update(@NonNull CategoryOptionCombo categoryOptionCombo);
 

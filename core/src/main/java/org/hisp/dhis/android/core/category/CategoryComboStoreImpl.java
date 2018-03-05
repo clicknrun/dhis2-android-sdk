@@ -80,13 +80,17 @@ public class CategoryComboStoreImpl extends Store implements CategoryComboStore 
     }
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) {
 
         isNull(uid);
 
         bindForDelete(uid);
 
-        return execute(deleteStatement);
+        int deletedRows = execute(deleteStatement);
+
+        if (deletedRows != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
 
     }
 

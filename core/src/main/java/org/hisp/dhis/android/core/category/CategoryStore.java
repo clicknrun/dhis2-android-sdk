@@ -10,7 +10,7 @@ public interface CategoryStore extends IdentifiableStore {
 
     long insert(@NonNull Category category);
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     int update(@NonNull Category category);
 

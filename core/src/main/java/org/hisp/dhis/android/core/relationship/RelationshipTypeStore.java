@@ -60,7 +60,7 @@ public interface RelationshipTypeStore extends IdentifiableStore {
             @NonNull String whereRelationshipTypeUid
     );
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     List<RelationshipType> queryAll();
 

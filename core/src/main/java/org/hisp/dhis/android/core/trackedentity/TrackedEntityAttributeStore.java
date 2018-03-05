@@ -62,7 +62,7 @@ public interface TrackedEntityAttributeStore extends IdentifiableStore {
                @Nullable Boolean unique, @Nullable Boolean inherit, @NonNull String whereTrackedEntityAttributeUid
     );
 
-    int delete(String uid);
+    void delete(String uid);
 
     List<TrackedEntityAttribute> queryAll();
 

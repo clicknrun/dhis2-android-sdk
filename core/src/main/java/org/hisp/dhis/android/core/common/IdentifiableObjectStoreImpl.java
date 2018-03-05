@@ -83,8 +83,14 @@ public class IdentifiableObjectStoreImpl<M extends BaseIdentifiableObjectModel &
 
     @Override
     public Set<String> selectUids() throws RuntimeException {
-        Cursor cursor = databaseAdapter.query(statements.selectUids);
+        Cursor cursor = databaseAdapter.query(statements.selectAllUids);
         return mapObjectsWithUidFromCursor(cursor);
+    }
+
+    @Override
+    public Boolean exists(String uId) {
+        Cursor cursor = databaseAdapter.query(statements.selectOneByUid, uId);
+        return cursor.getCount() > 0;
     }
 
     private Set<String> mapObjectsWithUidFromCursor(Cursor cursor) {

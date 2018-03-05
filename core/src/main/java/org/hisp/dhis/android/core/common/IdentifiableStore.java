@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 public interface IdentifiableStore extends DeletableStore {
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid) throws RuntimeException;
 
     Boolean exists(String uid);
 

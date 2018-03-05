@@ -84,6 +84,11 @@ public class SQLStatementBuilder {
         return  "SELECT " + BaseIdentifiableObjectModel.Columns.UID + " FROM " + tableName;
     }
 
+    String selectOneByUid() {
+        return "SELECT " + commaSeparatedColumns() + " FROM " + tableName +
+                " WHERE " + BaseIdentifiableObjectModel.Columns.UID + "=?;";
+    }
+
     String selectAll() {
         return  "SELECT " + commaSeparatedColumns() + " FROM " + tableName;
     }

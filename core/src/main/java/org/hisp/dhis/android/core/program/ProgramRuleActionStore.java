@@ -56,7 +56,7 @@ public interface ProgramRuleActionStore extends IdentifiableStore {
             @Nullable String programRule, @NonNull String whereProgramRuleActionUid
     );
 
-    int delete(String uid);
+    void delete(String uid);
 
     ProgramRuleAction queryByUid(String uid);
 }

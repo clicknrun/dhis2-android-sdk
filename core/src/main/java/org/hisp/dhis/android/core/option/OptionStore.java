@@ -48,7 +48,7 @@ public interface OptionStore extends IdentifiableStore {
             @NonNull String optionSet, @NonNull String whereOptionUid
     );
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     List<Option> queryByOptionSet(String uid);
 

@@ -12,7 +12,7 @@ public interface CategoryComboStore extends IdentifiableStore {
 
     int update(@NonNull CategoryCombo oldCategoryCombo);
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     List<CategoryCombo> queryAll();
 

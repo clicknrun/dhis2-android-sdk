@@ -168,13 +168,16 @@ public class UserStoreImpl extends Store implements UserStore {
     }
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) {
         isNull(uid);
         sqLiteBind(deleteStatement, 1, uid);
 
         int delete = databaseAdapter.executeUpdateDelete(UserModel.TABLE, deleteStatement);
         deleteStatement.clearBindings();
-        return delete;
+
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override

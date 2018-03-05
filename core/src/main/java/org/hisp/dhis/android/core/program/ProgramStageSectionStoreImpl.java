@@ -135,13 +135,16 @@ public class ProgramStageSectionStoreImpl implements ProgramStageSectionStore {
     }
 
     @Override
-    public int delete(String uid) {
+    public void delete(String uid) {
         isNull(uid);
         sqLiteBind(deleteStatement, 1, uid);
         int delete = databaseAdapter.executeUpdateDelete(ProgramStageSectionModel.TABLE, deleteStatement);
         deleteStatement.clearBindings();
 
-        return delete;
+
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     private void bindArguments(@NonNull SQLiteStatement sqLiteStatement, @NonNull String uid, @Nullable String code,

@@ -154,7 +154,7 @@ public class ProgramTrackedEntityAttributeStoreImpl implements ProgramTrackedEnt
     }
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) {
         isNull(uid);
         // bind the where argument
         sqLiteBind(deleteStatement, 1, uid);
@@ -162,7 +162,10 @@ public class ProgramTrackedEntityAttributeStoreImpl implements ProgramTrackedEnt
         // execute and clear bindings
         int delete = databaseAdapter.executeUpdateDelete(ProgramTrackedEntityAttributeModel.TABLE, deleteStatement);
         deleteStatement.clearBindings();
-        return delete;
+
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     private void bindArguments(@NonNull SQLiteStatement sqLiteStatement, @NonNull String uid, @Nullable String code,

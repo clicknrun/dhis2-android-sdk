@@ -160,12 +160,15 @@ public class TrackedEntityStoreImpl implements TrackedEntityStore {
     }
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) {
         isNull(uid);
         sqLiteBind(deleteStatement, 1, uid);
         int rowId = deleteStatement.executeUpdateDelete();
         deleteStatement.clearBindings();
-        return rowId;
+
+        if (rowId != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override

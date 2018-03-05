@@ -53,7 +53,7 @@ public interface ProgramIndicatorStore extends IdentifiableStore {
                @Nullable Integer decimals, @Nullable String program, @NonNull String whereProgramIndicatorUid
     );
 
-    int delete(String uid);
+    void delete(String uid);
 
     ProgramIndicator queryByUid(String uid);
 }

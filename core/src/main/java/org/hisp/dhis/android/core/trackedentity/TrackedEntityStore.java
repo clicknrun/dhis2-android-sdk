@@ -50,7 +50,7 @@ public interface TrackedEntityStore extends IdentifiableStore {
                @Nullable String description, @Nullable String displayDescription, @NonNull String whereUid
     );
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     List<TrackedEntity> queryAll();
 }

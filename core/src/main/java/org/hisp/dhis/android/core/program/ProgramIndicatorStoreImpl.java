@@ -174,7 +174,7 @@ public class ProgramIndicatorStoreImpl extends Store implements ProgramIndicator
     }
 
     @Override
-    public int delete(String uid) {
+    public void delete(String uid) {
         isNull(uid);
         // bind the where argument
         sqLiteBind(deleteStatement, 1, uid);
@@ -183,7 +183,10 @@ public class ProgramIndicatorStoreImpl extends Store implements ProgramIndicator
         int delete = databaseAdapter.executeUpdateDelete(ProgramIndicatorModel.TABLE,
                 deleteStatement);
         deleteStatement.clearBindings();
-        return delete;
+
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override

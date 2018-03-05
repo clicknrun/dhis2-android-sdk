@@ -11,8 +11,10 @@ import org.hisp.dhis.android.core.category.CategoryStoreImpl;
 import org.hisp.dhis.android.core.common.IdentifiableStore;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.dataelement.DataElement;
+import org.hisp.dhis.android.core.dataelement.DataElementStore;
 import org.hisp.dhis.android.core.option.Option;
 import org.hisp.dhis.android.core.option.OptionSet;
+import org.hisp.dhis.android.core.option.OptionSetStore;
 import org.hisp.dhis.android.core.option.OptionStoreImpl;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnit;
 import org.hisp.dhis.android.core.organisationunit.OrganisationUnitStoreImpl;
@@ -84,7 +86,7 @@ public class IdentifiableStoreFactory {
             return new OrganisationUnitStoreImpl(databaseAdapter);
         }
         if (klass.equals(OptionSet.class.getSimpleName())) {
-            return new OptionSetStoreImpl(databaseAdapter);
+            return OptionSetStore.create(databaseAdapter);
         }
         if (klass.equals(TrackedEntity.class.getSimpleName())) {
             return new TrackedEntityStoreImpl(databaseAdapter);
@@ -93,7 +95,7 @@ public class IdentifiableStoreFactory {
             return new CategoryOptionStoreImpl(databaseAdapter);
         }
         if (klass.equals(DataElement.class.getSimpleName())) {
-            return new DataElementStoreImpl(databaseAdapter);
+            return DataElementStore.create(databaseAdapter);
         }
         if (klass.equals(Option.class.getSimpleName())) {
             return new OptionStoreImpl(databaseAdapter);
@@ -127,9 +129,6 @@ public class IdentifiableStoreFactory {
         }
         if (klass.equals(RelationshipType.class.getSimpleName())) {
             return new RelationshipTypeStoreImpl(databaseAdapter);
-        }
-        if (klass.equals(DataElement.class.getSimpleName())) {
-            return new DataElementStoreImpl(databaseAdapter);
         }
         throw new IllegalArgumentException("klass " + klass + "not supported ");
     }

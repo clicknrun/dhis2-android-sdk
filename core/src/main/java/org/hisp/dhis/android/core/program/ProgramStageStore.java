@@ -62,7 +62,7 @@ public interface ProgramStageStore extends IdentifiableStore {
                @NonNull String program, @NonNull String whereProgramStageUid
     );
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     ProgramStage queryByUid(String uid);
 }

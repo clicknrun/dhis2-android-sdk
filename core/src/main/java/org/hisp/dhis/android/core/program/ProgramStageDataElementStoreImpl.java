@@ -166,7 +166,7 @@ public class ProgramStageDataElementStoreImpl implements ProgramStageDataElement
     }
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) {
         isNull(uid);
         // bind the where argument
         sqLiteBind(deleteStatement, 1, uid);
@@ -175,7 +175,9 @@ public class ProgramStageDataElementStoreImpl implements ProgramStageDataElement
         int delete = databaseAdapter.executeUpdateDelete(ProgramStageDataElementModel.TABLE, deleteStatement);
         deleteStatement.clearBindings();
 
-        return delete;
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override

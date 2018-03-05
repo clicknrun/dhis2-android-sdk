@@ -48,7 +48,7 @@ public interface ProgramRuleStore extends IdentifiableStore {
             @Nullable String programStage, @NonNull String whereProgramRuleUid
     );
 
-    int delete(String uid);
+    void delete(String uid);
 
     ProgramRule queryByUid(String uid);
 }

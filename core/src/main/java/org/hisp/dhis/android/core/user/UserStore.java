@@ -54,7 +54,7 @@ public interface UserStore extends IdentifiableStore {
             @Nullable String languages, @Nullable String email, @Nullable String phoneNumber,
             @Nullable String nationality, @NonNull String whereUid);
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     @Override
     int delete();

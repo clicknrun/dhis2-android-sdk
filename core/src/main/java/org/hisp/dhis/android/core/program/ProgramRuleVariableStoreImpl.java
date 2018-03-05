@@ -167,7 +167,7 @@ public class ProgramRuleVariableStoreImpl extends Store implements ProgramRuleVa
     }
 
     @Override
-    public int delete(String uid) {
+    public void delete(String uid) throws RuntimeException {
         isNull(uid);
         // bind the where argument
         sqLiteBind(deleteStatement, 1, uid);
@@ -176,7 +176,11 @@ public class ProgramRuleVariableStoreImpl extends Store implements ProgramRuleVa
         int delete = databaseAdapter.executeUpdateDelete(ProgramRuleVariableModel.TABLE,
                 deleteStatement);
         deleteStatement.clearBindings();
-        return delete;
+
+
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override

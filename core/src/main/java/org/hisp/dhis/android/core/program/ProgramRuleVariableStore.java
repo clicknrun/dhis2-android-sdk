@@ -54,7 +54,7 @@ public interface ProgramRuleVariableStore extends IdentifiableStore {
             @NonNull String whereProgramRuleVariableUid
     );
 
-    int delete(String uid);
+    void delete(String uid) throws RuntimeException;
 
     ProgramRuleVariable queryByUid(String uid);
 }

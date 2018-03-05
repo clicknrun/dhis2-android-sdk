@@ -104,7 +104,7 @@ public interface ProgramStore extends IdentifiableStore {
             @Nullable Boolean accessDataWrite,
             @NonNull String whereProgramUid);
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid) throws RuntimeException;
 
     Program queryByUid(String uid);
 }

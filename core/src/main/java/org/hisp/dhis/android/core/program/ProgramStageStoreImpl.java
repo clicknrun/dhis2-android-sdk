@@ -213,7 +213,7 @@ public class ProgramStageStoreImpl extends Store implements ProgramStageStore {
     }
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) {
         isNull(uid);
         // bind the where argument
         sqLiteBind(deleteStatement, 1, uid);
@@ -222,7 +222,9 @@ public class ProgramStageStoreImpl extends Store implements ProgramStageStore {
         int delete = databaseAdapter.executeUpdateDelete(ProgramStageModel.TABLE, deleteStatement);
         deleteStatement.clearBindings();
 
-        return delete;
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override

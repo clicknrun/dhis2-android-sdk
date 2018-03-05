@@ -165,13 +165,16 @@ public class OrganisationUnitStoreImpl implements OrganisationUnitStore {
     }
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) {
         isNull(uid);
         sqLiteBind(deleteStatement, 1, uid);
 
         int ret = databaseAdapter.executeUpdateDelete(OrganisationUnitModel.TABLE, deleteStatement);
         deleteStatement.clearBindings();
-        return ret;
+
+        if (ret != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override

@@ -55,7 +55,7 @@ public interface OrganisationUnitStore extends IdentifiableStore {
             @Nullable String parent, @Nullable Integer level, @NonNull String whereUid
     );
 
-    int delete(@NonNull String uid);
+    void delete(@NonNull String uid);
 
     @Override
     int delete();

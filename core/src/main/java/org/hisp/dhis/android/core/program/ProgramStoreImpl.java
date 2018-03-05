@@ -268,7 +268,7 @@ public class ProgramStoreImpl extends Store implements ProgramStore {
 
 
     @Override
-    public int delete(@NonNull String uid) {
+    public void delete(@NonNull String uid) throws RuntimeException {
         isNull(uid);
         // bind the where argument
         sqLiteBind(deleteStatement, 1, uid);
@@ -277,7 +277,9 @@ public class ProgramStoreImpl extends Store implements ProgramStore {
         int delete = databaseAdapter.executeUpdateDelete(ProgramModel.TABLE, deleteStatement);
         deleteStatement.clearBindings();
 
-        return delete;
+        if (delete != 1) {
+            throw new RuntimeException("Deleted count != 1");
+        }
     }
 
     @Override
