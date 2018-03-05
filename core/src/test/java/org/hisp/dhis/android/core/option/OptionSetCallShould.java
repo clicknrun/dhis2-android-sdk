@@ -6,6 +6,9 @@ import static org.hisp.dhis.android.core.data.TestConstants.DEFAULT_TRANSLATION_
 import static org.mockito.Mockito.when;
 
 import org.hamcrest.MatcherAssert;
+import org.hisp.dhis.android.core.D2;
+import org.hisp.dhis.android.core.common.GenericCallData;
+import org.hisp.dhis.android.core.common.GenericHandler;
 import org.hisp.dhis.android.core.data.database.DatabaseAdapter;
 import org.hisp.dhis.android.core.data.database.Transaction;
 import org.hisp.dhis.android.core.data.file.ResourcesFileReader;
@@ -36,10 +39,10 @@ public class OptionSetCallShould {
     private Transaction mockTransaction;
 
     @Mock
-    private ResourceHandler mockResourceHandler;
+    private GenericHandler<OptionSet> mockOptionSetHandler;
 
     @Mock
-    private OptionSetHandler mockOptionSetHandler;
+    private GenericCallData genericCallData;
 
     private Dhis2MockServer dhis2MockServer;
 
@@ -52,15 +55,13 @@ public class OptionSetCallShould {
         Retrofit retrofit = RetrofitFactory.build(dhis2MockServer.getBaseEndpoint());
 
         MockitoAnnotations.initMocks(this);
-        OptionSetService mockService = retrofit.create(OptionSetService.class);
+        OptionSetService optionSetService = retrofit.create(OptionSetService.class);
 
         when(mockDatabase.beginNewTransaction()).thenReturn(mockTransaction);
 
-        OptionSetQuery optionSetQuery = OptionSetQuery.defaultQuery();
+        OptionSetQuery mockOptionSetQuery = OptionSetQuery.defaultQuery();
 
-        optionSetCall = new OptionSetCall(mockService, mockOptionSetHandler, mockDatabase,
-                mockResourceHandler, new Date(), optionSetQuery
-        );
+        optionSetCall = new OptionSetCall(genericCallData, optionSetService, mockOptionSetHandler, mockOptionSetQuery);
     }
 
     @After
