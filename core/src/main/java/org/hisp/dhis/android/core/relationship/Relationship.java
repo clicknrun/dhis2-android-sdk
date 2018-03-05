@@ -28,8 +28,6 @@
 
 package org.hisp.dhis.android.core.relationship;
 
-import android.support.annotation.Nullable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
@@ -42,6 +40,7 @@ import org.hisp.dhis.android.core.data.api.Field;
 public abstract class Relationship {
     private static final String TRACKED_ENTITY_INSTANCE_A = "trackedEntityInstanceA";
     private static final String TRACKED_ENTITY_INSTANCE_B = "trackedEntityInstanceB";
+    private static final String DISPLAY_NAME = "displayName";
     private static final String RELATIONSHIP_TYPE = "relationship";
 
 
@@ -50,6 +49,7 @@ public abstract class Relationship {
     public static final Field<Relationship, String> trackedEntityInstanceB
             = Field.create(TRACKED_ENTITY_INSTANCE_B);
     public static final Field<Relationship, String> relationship = Field.create(RELATIONSHIP_TYPE);
+    public static final Field<Relationship, String> displayName = Field.create(DISPLAY_NAME);
 
     @JsonProperty(TRACKED_ENTITY_INSTANCE_A)
     public abstract String trackedEntityInstanceA();
@@ -57,9 +57,11 @@ public abstract class Relationship {
     @JsonProperty(TRACKED_ENTITY_INSTANCE_B)
     public abstract String trackedEntityInstanceB();
 
-    @Nullable
     @JsonProperty(RELATIONSHIP_TYPE)
     public abstract String relationshipType();
+
+    @JsonProperty(DISPLAY_NAME)
+    public abstract String displayName();
 
     abstract Relationship.Builder toBuilder();
 
@@ -75,9 +77,11 @@ public abstract class Relationship {
         @JsonProperty(TRACKED_ENTITY_INSTANCE_B)
         public abstract Builder trackedEntityInstanceB(String trackedEntityInstanceB);
 
-        @Nullable
         @JsonProperty(RELATIONSHIP_TYPE)
         public abstract Builder relationshipType(String relationshipType);
+
+        @JsonProperty(DISPLAY_NAME)
+        public abstract Builder displayName(String displayName);
 
         public abstract Relationship build();
     }
